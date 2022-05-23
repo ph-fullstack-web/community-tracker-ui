@@ -1,6 +1,10 @@
-import { Container, Typography, Card, Divider, CardContent} from "@mui/material";
+import { Typography, Card, Divider, CardContent, IconButton } from "@mui/material";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useEffect } from "react";
 import useGetCommunities from "hooks/useGetCommunities";
+import Logo from "components/Layout/Logo";
+import PageTitle from "components/Layout/PageTitle";
+import PageContainer from "components/Layout/PageContainer";
 
 
 const Communities = () => {
@@ -10,34 +14,25 @@ const Communities = () => {
     }, [loading, communityData])
     
     return (
-        <Container maxWidth='xl' sx={{ 
-            borderRadius: '15px',
-            backgroundColor: "#F3F6F8",
-            padding: '1px'
-            }} 
-        >
-
-            <img alt="CSV Logo" src="/CSV Logo.svg" width="250" style={{marginTop: "20px"}}></img>
-
-            <Typography variant="h5"  align="center" sx={{
-                color:'gray',
-                marginTop: '5rem',
-                fontWeight: '700'
-            }}>Community selection page.</Typography>
-
+        <PageContainer>
+            <Logo/>
+            <PageTitle title={"Community selection page"} />
             <Card style={{
                 marginTop: '3rem',
-                marginBottom: '1rem'
+                marginBottom: '1rem',
+                border: '3px solid #9fafc1'
             }}>
                 <Typography component="label"  align="center" sx={{
-                        color:'gray',
-                        padding: '0.75rem',
+                        color:'#798da3',
+                        padding: '0.25em',
                         fontWeight: '700',
-                        display: "block"
+                        display: "block",
+                        backgroundColor: '#e6e6e6',
+                        
                     }}
                 >List of Communities
                 </Typography>
-                <Divider/>
+                <Divider style={{border: '2px solid #9fafc1'}} />
                 <CardContent className="community-container">
                     <div className="community-list" style={{
                         display: 'grid',
@@ -45,37 +40,60 @@ const Communities = () => {
                         gap: '5px',
                         alignItems: 'center',
                         justifyItems: 'center',
-                        color:'#FFFFFF'
+                        color:'#FFFFFF',
                     }}>
 
-                    {
-                        (communityData || []).map(community => (
-                            <Card key={community.name} elevation={2} className="community-list-item" style={{
-                                width: '300px',
-                                height: '150px',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                textAlign: 'center',
-                                padding: '0.5rem',
-                                marginTop: '1rem',
-                                color: '#FFFFFF',
-                                backgroundColor: community.color,
-                                cursor: 'pointer'
-                            }}>
-                                 <CardContent>
-                                        {community.name}
-                                </CardContent>
-                                <Divider/>
-                            </Card>
-                        ))
-                    }
-
+                        {
+                            (communityData || []).map(community => (
+                                <Card key={community.name} elevation={2} className="community-list-item" style={{
+                                    width: '250px',
+                                    height: '150px',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    textAlign: 'center',
+                                    padding: '0.5rem',
+                                    marginTop: '1rem',
+                                    color: '#FFFFFF',
+                                    backgroundColor: community.color,
+                                    cursor: 'pointer'
+                                }}>
+                                    <CardContent style={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        paddingTop: '0.2em'
+                                    }}>
+                                        <img src={community.image}
+                                            height="50px"
+                                            width="50px"
+                                            alt="cpver"
+                                        />
+                                        <Typography component="label"  align="center" sx={{
+                                                color:'#FFFFFF',
+                                                padding: '0.75rem',
+                                                paddingTop: '0',
+                                                fontWeight: '600',
+                                                fontStyle: 'italic',
+                                                display: "block"
+                                            }}
+                                        >{community.name}
+                                        </Typography>
+                                    </CardContent>
+                                    <Divider style={{borderColor: '#FFFFFF'}}/>
+                                </Card>
+                            ))
+                        }
+                        
+                        <IconButton title="Go to input community" color="primary" size="large" aria-label="Add community">
+                            <AddCircleOutlineIcon style={{
+                                color: '#74808d'
+                            }}/>
+                        </IconButton>
                     </div>
                 </CardContent>
             </Card>
 
-        </Container>
+        </PageContainer>
     )
 }
 
