@@ -43,24 +43,27 @@ const AddCommunity = (props) => {
     return ( 
         <Container maxWidth='lg' sx={{ 
             
-            borderRadius: '15px',  //use vh or rem
+            borderRadius: '3vh',  
             backgroundColor: "#F3F6F8",  
             }} >
             
-            <img src="/CSV Logo.svg" width="250" style={{marginTop: "20px"}}></img>
+            <img src="/CSV Logo.svg" width="250" style={{marginTop: "3vh"}}></img>
 
             <Typography variant="h5" align="center" sx={{
-                color:'gray'
+                color:'#808080'
             }}>Community Input Page</Typography>
 
                 <Grid container >
                     <Grid item xs={12} sm={5}>
-                        <TextField fullWidth value={communityName} onChange={handleCommunityNameChange} id="communityName" 
+                        <TextField fullWidth 
+                            value={communityName} 
+                            onChange={handleCommunityNameChange} 
+                            id="communityName" 
                             label="Name of Community" 
                             variant="outlined" 
                             sx={{
                                 mt: 5,
-                                backgroundColor: 'white'  // use hex code
+                                backgroundColor: '#FFFFFF'  
                             }}/>
                     </Grid>
                     <Grid item xs={0} sm={7}>
@@ -78,7 +81,7 @@ const AddCommunity = (props) => {
                             label="Community Assigned To"
                             onChange={handleManagerChange}
                             sx={{
-                                backgroundColor: "white"  //use hex code
+                                backgroundColor: "#FFFFFF" 
                             }}
                         >
                             <MenuItem value={'Baron'}>Baron</MenuItem>
@@ -110,7 +113,7 @@ const AddCommunity = (props) => {
                         multiline
                         rows={6}
                         sx={{
-                            backgroundColor: "white",
+                            backgroundColor: "#FFFFFF",
                             mt:5
                         }}
                         value={communityDescription}
