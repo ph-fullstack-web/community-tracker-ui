@@ -1,4 +1,4 @@
-import { Typography, Card, Divider, CardContent, IconButton } from "@mui/material";
+import { Typography, Card, Divider, CardContent, IconButton, Grid } from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useEffect } from "react";
 import useGetCommunities from "hooks/useGetCommunities";
@@ -33,25 +33,22 @@ const Communities = () => {
                 >List of Communities
                 </Typography>
                 <Divider style={{border: '2px solid #9fafc1'}} />
-                <CardContent className="community-container">
-                    <div className="community-list" style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'auto auto auto auto',
-                        gap: '5px',
-                        alignItems: 'center',
-                        justifyItems: 'center',
+                <CardContent container className="community-container">
+                    <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }} className="community-list" style={{
+                       
                         color:'#FFFFFF',
                     }}>
 
                         {
                             (communityData || []).map(community => (
+                                <Grid item xs={12} sm={12} md={4} lg={3} xl={3}>
+  
                                 <Card key={community.name} elevation={2} className="community-list-item" style={{
-                                    width: '250px',
-                                    height: '150px',
-                                    display: 'flex',
+                                    width: '100%',
+                                    height: '10rem',
+                                    display: 'block',
                                     flexDirection: 'column',
                                     textAlign: 'center',
-                                    padding: '0.5rem',
                                     marginTop: '1rem',
                                     color: '#FFFFFF',
                                     backgroundColor: community.color,
@@ -61,7 +58,7 @@ const Communities = () => {
                                         display: 'flex',
                                         flexDirection: 'column',
                                         alignItems: 'center',
-                                        paddingTop: '0.2em'
+                                        paddingTop: '1em'
                                     }}>
                                         <img src={community.image}
                                             height="50px"
@@ -81,15 +78,28 @@ const Communities = () => {
                                     </CardContent>
                                     <Divider style={{borderColor: '#FFFFFF'}}/>
                                 </Card>
+                                </Grid>
                             ))
                         }
                         
-                        <IconButton title="Go to input community" color="primary" size="large" aria-label="Add community">
-                            <AddCircleOutlineIcon style={{
-                                color: '#74808d'
-                            }}/>
-                        </IconButton>
-                    </div>
+                        <Grid item xs={12} sm={12} md={4} lg={3} style={{
+                            display: 'flex',
+                            justifyContent:'center',
+                            alignItems: 'center'
+                        }}>
+                            <IconButton title="Go to input community" color="primary" size="large" aria-label="Add community"
+                                style={{
+                                    height: '5rem',
+                                    width: '5rem'
+                                }}
+                            >
+                                <AddCircleOutlineIcon fontSize="large" style={{
+                                    color: '#74808d',
+                                    fontWeight:'700'
+                                }}/>
+                            </IconButton>
+                        </Grid>
+                    </Grid>
                 </CardContent>
             </Card>
 
