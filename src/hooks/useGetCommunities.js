@@ -1,29 +1,19 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import {getCommunities} from '../services/CommunityService';
 
 const useGetCommunities = () => {
-    const [loading, setLoading] = useState(false);
-    const [communities, setCommunities] = useState(null);
-
-    useEffect(() => {
-        setLoading(true);
-        const getCommunitiesData = async () => {
-            const data = await getCommunities();
-            setCommunities(data)
-            setLoading(false);
-        }
-        getCommunitiesData();
-
-        return () => {
-            setLoading(false)
-            setCommunities(null)
-        }
-    }, [])
+    
+    const {isLoading, isError, data, error} = useQuery('communities', () => getCommunities(), {
+        staleTime: 10000
+    });
 
     return {
-        loading,
-        data: communities
+        isLoading,
+        isError,
+        error,
+        data
     }
+
 }
 
 export default useGetCommunities;
