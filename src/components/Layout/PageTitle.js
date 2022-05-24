@@ -1,10 +1,10 @@
 import { Typography } from "@mui/material";
 
-const PageTitle = ({title}) => {
+const PageTitle = ({title = "Page Title"}) => {
 
     return (
         <Typography variant="h5"  align="center" sx={{
-            color:'gray',
+            color:'#b0c0cb',
             marginTop: '5rem',
             fontWeight: '700'
         }}>{title}</Typography>

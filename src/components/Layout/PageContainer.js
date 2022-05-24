@@ -5,7 +5,8 @@ const PageContainer = ({children}) => {
         <Container maxWidth='xl' sx={{ 
             borderRadius: '15px',
             backgroundColor: "#F3F6F8",
-            padding: '1px'
+            padding: '1px',
+            marginTop: '2rem'
             }} 
         >
             {children}
