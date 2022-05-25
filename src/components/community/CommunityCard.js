@@ -1,6 +1,6 @@
 import { Typography, Card, Divider, CardContent, Grid } from "@mui/material";
 
-const CommunityCard = ({ id, color, image, name }) => {
+const CommunityCard = ({ id, image, name }) => {
   return (
     <Grid
       key={id}
@@ -19,7 +19,7 @@ const CommunityCard = ({ id, color, image, name }) => {
       <Card
         elevation={2}
         className="community-list-item"
-        style={{
+        sx={{
           width: "100%",
           height: "10rem",
           display: "block",
@@ -27,7 +27,7 @@ const CommunityCard = ({ id, color, image, name }) => {
           textAlign: "center",
           marginTop: "1rem",
           color: "#FFFFFF",
-          backgroundColor: color,
+          backgroundColor: `primary.main`,
         }}
       >
         <CardContent

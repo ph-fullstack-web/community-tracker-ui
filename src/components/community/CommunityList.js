@@ -51,7 +51,18 @@ const CommunityList = () => {
         </Container>
       )}
       {
-          isError && <label>{`Error: ${error.message}`}</label>
+          isError && (
+            <Container
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                justifyItems: "center",
+                marginTop: "3rem",
+              }}
+            >
+              <label>{`Error: ${error.message}`}</label>
+            </Container>)
+          
       }
       <CardContent className="community-container">
         {!isLoading && communityData && (
@@ -66,11 +77,10 @@ const CommunityList = () => {
             >
               {(communityData || []).map((community) => (
                 <CommunityCard
-                  key={community.id}
-                  id={community.id}
-                  color={community.color}
-                  image={community.image}
-                  name={community.name}
+                  key={community.community_id}
+                  id={community.community_id}
+                  image={""}
+                  name={community.community_name}
                 />
               ))}
               <Grid
@@ -88,12 +98,13 @@ const CommunityList = () => {
                 <IconButton
                   title="Go to input community"
                   color="primary"
-                  size="large"
+                  size="medium"
                   aria-label="Add community"
                   style={{
                     height: "5rem",
                     width: "5rem",
                   }}
+                  onClick={() => {}}
                 >
                   <AddCircleOutlineIcon
                     fontSize="large"
