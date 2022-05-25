@@ -3,15 +3,14 @@ import {getCommunities} from '../services/CommunityService';
 
 const useGetCommunities = () => {
     
-    const {isLoading, isError, data, error} = useQuery('communities', () => getCommunities(), {
-        staleTime: 10000
-    });
+    const {isLoading, isError, data, error, refetch} = useQuery('communities', () => getCommunities());
 
     return {
         isLoading,
         isError,
         error,
-        data
+        data,
+        refetch
     }
 
 }

@@ -1,11 +1,18 @@
 import axiosInstance from './index';
 
 
-export const getCommunities =  async () =>  {
+export const getCommunities = async () =>  {
     try {
-        const response = await axiosInstance.get('/MOCKS/communities.json');
-        return response.data;
+        const response = await axiosInstance.get('/api/community');
+        if (response.status !== 200) {
+            throw new Error(response.data)
+        }
+        return response.data
     } catch (error) {
-        return error.response.data
+        if (error?.response?.data?.message) {
+            throw new Error(error.response.data.message)
+        }
+        throw new Error(error.message)
     }
+    
 }
