@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import Communities from "features/Communities";
-
+import routeList from "routes";
 
 function App() {
   const queryClient = new QueryClient();
@@ -9,7 +8,11 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-            <Route path="/communities" element={<Communities/>} />
+          {
+            routeList.map(({element: Element, name, path, exact}) => (
+              <Route key={name} path={path} exact={exact} element={Element} />
+            ))
+          }
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
