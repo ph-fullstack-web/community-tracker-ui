@@ -1,6 +1,6 @@
-import Logo from "components/Layout/Logo";
-import PageTitle from "components/Layout/PageTitle";
-import PageContainer from "components/Layout/PageContainer";
+import Logo from "layout/Logo";
+import PageTitle from "layout/PageTitle";
+import PageContainer from "layout/PageContainer";
 import CommunityList from "components/community/CommunityList";
 
 const Communities = () => {

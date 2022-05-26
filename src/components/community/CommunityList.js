@@ -9,7 +9,7 @@ import {
   Container,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import useGetCommunities from "hooks/useGetCommunities";
+import useGetCommunities from "hooks/Communities/useGetCommunities";
 import CommunityCard from "./CommunityCard";
 
 const CommunityList = () => {

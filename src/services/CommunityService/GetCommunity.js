@@ -1,4 +1,4 @@
-import axiosInstance from './index';
+import axiosInstance from '../index';
 
 
 export const getCommunities = async () =>  {

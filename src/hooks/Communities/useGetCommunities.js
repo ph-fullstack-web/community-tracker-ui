@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import {getCommunities} from '../services/CommunityService';
+import {getCommunities} from '../../services/CommunityService/GetCommunity';
 
 const useGetCommunities = () => {
     
