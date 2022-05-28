@@ -8,11 +8,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-          {
-            routeList.map(({element: Element, name, path, exact}) => (
-              <Route key={name} path={path} exact={exact} element={Element} />
-            ))
-          }
+          {routeList.map(({ element: Element, name, path }) => (
+            <Route key={name} path={path} element={Element} />
+          ))}
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
