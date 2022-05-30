@@ -1,9 +1,10 @@
-import { Container, FormGroup, Typography, TextField,
-         FormControl, Select, MenuItem, InputLabel, 
+import { TextField,FormControl, Select, MenuItem, InputLabel, 
          Button ,FormControlLabel, Checkbox , Grid, Box} from "@mui/material";
-
 import axios from "axios";
-import { useState } from "react";
+import Logo from "layout/Logo";
+import PageContainer from "layout/PageContainer";
+import PageTitle from "layout/PageTitle";
+import { useEffect, useState } from "react";
 
 
 const AddCommunity = (props) => {
@@ -11,6 +12,20 @@ const AddCommunity = (props) => {
     const [communityManager, setCommunityManager] = useState('')
     const [isActive, setIsActive] = useState(true)
     const [communityDescription, setCommunityDescription] = useState('')
+    const [communityManagers , setCommunityManagers] = useState([])
+
+    useEffect(() => {
+        let isMounted = true;
+          
+        axios({
+            method: "GET",
+            url: 'http://localhost:8000/api/managers'
+
+        }).then(res => {
+          if (isMounted) setCommunityManagers(res.data.data); 
+        })
+        return () => { isMounted = false }; 
+      },[]); 
 
 
     const handleCommunityNameChange = (e) => {
@@ -33,39 +48,45 @@ const AddCommunity = (props) => {
         //put http request here using axios
         //POST request to add community endpoint
 
-        console.log(communityName)
-        console.log(communityManager)
-        console.log(isActive)
-        console.log(communityDescription)
+        const data = {
+            Communityname: communityName,
+            Communitymgrpeopleid: communityManager,
+            Isactive: isActive,
+            Communitydescription: communityDescription
+        }
+
+        /*
+        axios({
+            method: "POST",
+            url: 'http://localhost:8000/api/community',
+            data: data
+
+        })
+        */
+
+        console.log(data)
+        
     }
 
+
     return ( 
-        <Container maxWidth='lg' sx={{ 
-            
-            borderRadius: '15px',
-            backgroundColor: "#F3F6F8",
-            }} >
-            
-            <img src="/CSV Logo.svg" width="250" style={{marginTop: "20px"}}></img>
-
-            <Typography variant="h5" align="center" sx={{
-                color:'gray'
-            }}>Community Input Page</Typography>
-
+        <PageContainer>
+            <Logo/>
+            <PageTitle title="Community Input Page"/>
                 <Grid container >
-                    <Grid item xs={12} md={5}>
+                    <Grid item xs={12} sm={5}>
                         <TextField fullWidth value={communityName} onChange={handleCommunityNameChange} id="communityName" 
                             label="Name of Community" 
                             variant="outlined" 
                             sx={{
                                 mt: 5,
-                                backgroundColor: 'white'
+                                backgroundColor: '#FFFFFF'
                             }}/>
                     </Grid>
-                    <Grid item xs={0} md={7}>
+                    <Grid item xs={0} sm={7}>
                     </Grid>
 
-                    <Grid item xs={12} md={5}>
+                    <Grid item xs={12} sm={5}>
                         <FormControl sx={{
                             mt: 5
                         }} fullWidth>
@@ -77,16 +98,19 @@ const AddCommunity = (props) => {
                             label="Community Assigned To"
                             onChange={handleManagerChange}
                             sx={{
-                                backgroundColor: "white"
+                                backgroundColor: "#FFFFFF"
                             }}
                         >
-                            <MenuItem value={'Baron'}>Baron</MenuItem>
-                            <MenuItem value={'Lloyd'}>Lloyd</MenuItem>
+                            {communityManagers.map((manager) => {
+                                return(
+                                    <MenuItem key={manager.people_id} value={manager.people_id}> {manager.first_name + " " + manager.last_name} </MenuItem>
+                                )
+                            })}
 
                         </Select>
                         </FormControl>                    
                     </Grid>
-                    <Grid item xs={12} md={7}>
+                    <Grid item xs={12} sm={7}>
                         <Box sx={{
                             display :"flex",
                             mt: 5,
@@ -98,7 +122,7 @@ const AddCommunity = (props) => {
                         </Box>
 
                     </Grid>
-                    <Grid item xs={12} md={7}>
+                    <Grid item xs={12} sm={7}>
                     <TextField
                         fullWidth
                         id="communityDesc"
@@ -113,9 +137,9 @@ const AddCommunity = (props) => {
                         onChange={handleDescriptionChange}
                     />                        
                     </Grid>
-                    <Grid item md={5}/>
-                    <Grid item md={8}/>
-                    <Grid item xs={12} md={4}>
+                    <Grid item sm={5}/>
+                    <Grid item sm={8}/>
+                    <Grid item xs={12} sm={4}>
                         <Button variant="contained" sx={{
                                 mt: 5,
                                 mb: 5,
@@ -124,9 +148,8 @@ const AddCommunity = (props) => {
 
                     </Grid>
                 </Grid>
-            
+        </PageContainer>
 
-        </Container>
      );
 }
  
