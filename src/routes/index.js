@@ -14,12 +14,12 @@ const routes = [
     name: "communities",
   },
   {
-    path: "/updatecommunity",
+    path: "communities/update/:id",
     element: <UpdateCommunity />,
     name: "updatecommunity",    
   },
   {
-    path: "/addcommunity",
+    path: "communities/add",
     element: <AddCommunity />,
     name: "addcommunity",    
   },

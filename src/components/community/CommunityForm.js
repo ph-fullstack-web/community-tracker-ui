@@ -2,14 +2,20 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { TextField,FormControl, Select, MenuItem, InputLabel, 
     Button ,FormControlLabel, Checkbox , Grid, Box} from "@mui/material";
+import { useParams } from "react-router-dom";
+import useGetManagers from "hooks/People/useGetManagers";
 
 const CommunityForm = () => {
     const [communityName, setCommunityName] = useState('')
     const [communityManager, setCommunityManager] = useState('')
     const [isActive, setIsActive] = useState(true)
     const [communityDescription, setCommunityDescription] = useState('')
-    const [communityManagers , setCommunityManagers] = useState([])
+    //const [communityManagers , setCommunityManagers] = useState([])
+    const { isLoading, data: communityManagers, isError, error } = useGetManagers();
+    const { id } = useParams()
 
+
+/*
     useEffect(() => {
         let isMounted = true;
           
@@ -22,7 +28,7 @@ const CommunityForm = () => {
         })
         return () => { isMounted = false }; 
       },[]); 
-
+*/
 
     const handleCommunityNameChange = (e) => {
         setCommunityName(e.target.value)
@@ -44,7 +50,7 @@ const CommunityForm = () => {
     const handleOnSave = (e) => {
         //put http request here using axios
         //POST request to add community endpoint
-
+        console.log(id)
         const data = {
             Communityname: communityName,
             Communitymgrpeopleid: communityManager,
@@ -95,11 +101,15 @@ const CommunityForm = () => {
                     backgroundColor: "#FFFFFF"
                 }}
             >
-                {communityManagers.map((manager) => {
-                    return(
-                        <MenuItem key={manager.people_id} value={manager.people_id}> {manager.first_name + " " + manager.last_name} </MenuItem>
-                    )
-                })}
+
+                {!isLoading && communityManagers && (
+                    communityManagers.map((manager) => {
+                        return(
+                            <MenuItem key={manager.people_id} value={manager.people_id}> {manager.first_name + " " + manager.last_name} </MenuItem>
+                        )
+                })
+                )
+}
 
             </Select>
             </FormControl>                    
