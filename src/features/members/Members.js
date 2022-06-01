@@ -1,10 +1,13 @@
 import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import Logo from 'layout/Logo';
 import PageTitle from 'layout/PageTitle';
 import PageContainer from 'layout/PageContainer';
 import MembersTable from './MembersTable';
 import SearchInput from './searchInput/SearchInput';
+import { Stack } from '@mui/material';
 
 const Members = () => {
   return (
@@ -17,7 +20,32 @@ const Members = () => {
           marginTop: '3rem',
           marginBottom: '1rem',
         }}>
-        <SearchInput />
+        <Stack direction="row" alignItems="center">
+          <Box>
+            <SearchInput />
+          </Box>
+          <Box>
+            <IconButton
+              title="Go to Input Page"
+              color="primary"
+              size="medium"
+              aria-label="Go to Input Page"
+              style={{
+                height: '5rem',
+                width: '5rem',
+              }}
+              onClick={() => {}}>
+              <AddCircleOutlineIcon
+                fontSize="large"
+                style={{
+                  color: '#74808d',
+                  fontWeight: '700',
+                }}
+              />
+            </IconButton>
+          </Box>
+        </Stack>
+
         <MembersTable />
       </Box>
     </PageContainer>
