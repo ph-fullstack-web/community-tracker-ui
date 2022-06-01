@@ -44,7 +44,7 @@ const CommunityForm = ({onClickHandler, buttonText}) => {
 
 
     return (
-    <form onSubmit={handleOnButtonClick}>
+    <Box component='form' onSubmit={handleOnButtonClick}>
         <Grid container >
             <Grid item xs={12} sm={5}>
                 <TextField 
@@ -128,7 +128,9 @@ const CommunityForm = ({onClickHandler, buttonText}) => {
 
             </Grid>
         </Grid>
-    </form>
+    </Box>
+
+
     )
 }
 
