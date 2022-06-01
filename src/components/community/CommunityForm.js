@@ -1,39 +1,21 @@
 import { useState, useEffect } from "react"
-import axios from "axios"
 import { TextField,FormControl, Select, MenuItem, InputLabel, 
     Button ,FormControlLabel, Checkbox , Grid, Box} from "@mui/material";
 import { useParams } from "react-router-dom";
 import useGetManagers from "hooks/People/useGetManagers";
 
-const CommunityForm = () => {
+const CommunityForm = ({onClickHandler, buttonText}) => {
     const [communityName, setCommunityName] = useState('')
     const [communityManager, setCommunityManager] = useState('')
     const [isActive, setIsActive] = useState(true)
     const [communityDescription, setCommunityDescription] = useState('')
-    //const [communityManagers , setCommunityManagers] = useState([])
     const { isLoading, data: communityManagers, isError, error } = useGetManagers();
     const { id } = useParams()
 
 
-/*
-    useEffect(() => {
-        let isMounted = true;
-          
-        axios({
-            method: "GET",
-            url: 'http://localhost:8000/api/managers'
-
-        }).then(res => {
-          if (isMounted) setCommunityManagers(res.data.data); 
-        })
-        return () => { isMounted = false }; 
-      },[]); 
-*/
-
     const handleCommunityNameChange = (e) => {
         setCommunityName(e.target.value)
     }
-
 
     const handleManagerChange = (e) => {
         setCommunityManager(e.target.value)
@@ -47,10 +29,8 @@ const CommunityForm = () => {
         setCommunityDescription(e.target.value)
     }
 
-    const handleOnSave = (e) => {
-        //put http request here using axios
-        //POST request to add community endpoint
-        console.log(id)
+    const handleOnButtonClick = async(e) => {
+
         const data = {
             Communityname: communityName,
             Communitymgrpeopleid: communityManager,
@@ -58,16 +38,8 @@ const CommunityForm = () => {
             Communitydescription: communityDescription
         }
 
-        /*
-        axios({
-            method: "POST",
-            url: 'http://localhost:8000/api/community',
-            data: data
+        const responseStatus = await onClickHandler(id,data)
 
-        })
-        */
-
-        console.log(data)
         
     }      
 
@@ -148,7 +120,7 @@ const CommunityForm = () => {
                     mt: 5,
                     mb: 5,
                     width: "100%"
-                    }} onClick={handleOnSave}>Save</Button>
+                    }} onClick={handleOnButtonClick}>{buttonText}</Button>
 
         </Grid>
     </Grid>

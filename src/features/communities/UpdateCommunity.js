@@ -2,6 +2,7 @@ import Logo from "layout/Logo";
 import PageTitle from "layout/PageTitle";
 import PageContainer from "layout/PageContainer";
 import CommunityForm from "components/community/CommunityForm";
+import UpdateCommunityService from "services/CommunityService/UpdateCommunityService";
 
 
 const UpdateCommunity = () => {
@@ -9,9 +10,9 @@ const UpdateCommunity = () => {
       <PageContainer>
         <Logo />
         <PageTitle title="Community Update Page." />
-        <CommunityForm />
+        <CommunityForm onClickHandler={UpdateCommunityService} buttonText={"UPDATE"}/>
       </PageContainer>
     );
   };
   
-  export default UpdateCommunity;
+export default UpdateCommunity;
