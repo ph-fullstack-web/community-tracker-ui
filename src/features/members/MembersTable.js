@@ -26,7 +26,7 @@ const MembersTable = () => {
   );
 
   return (
-    <Table sx={{ mt: 3, mb: 0.5 }} aria-label="members-table">
+    <Table sx={{ mt: 3, mb: 0.5, minWidth: 700 }} aria-label="members-table">
       <TableHead sx={{ backgroundColor: '#e5e5e5' }}>
         <TableRow>
           {titleCasedTableHeaders.map(header => (

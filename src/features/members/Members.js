@@ -44,7 +44,9 @@ const Members = () => {
           </Box>
         </Stack>
 
-        <MembersTable />
+        <Box sx={{ overflowX: 'auto' }}>
+          <MembersTable />
+        </Box>
       </Box>
     </PageContainer>
   );
