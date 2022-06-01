@@ -1,12 +1,5 @@
-//import { styled } from '@mui/material/styles';
-
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
+import { TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-
-// const CssTextField = styled(TextField)({
-//   borderColor: 'black',
-// });
 
 export default function SearchInput() {
   const inputStyle = { border: '2px solid black', borderRadius: 999 };
@@ -20,9 +13,6 @@ export default function SearchInput() {
             <SearchIcon sx={{ color: 'black' }} />
           </InputAdornment>
         ),
-        style: {
-          //border: '2px solid black',
-        },
       }}
       sx={{
         '& .MuiOutlinedInput-root': {

@@ -1,5 +1,4 @@
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
+import { Box, Stack, IconButton } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import Logo from 'layout/Logo';
@@ -7,7 +6,6 @@ import PageTitle from 'layout/PageTitle';
 import PageContainer from 'layout/PageContainer';
 import MembersTable from './MembersTable';
 import SearchInput from './searchInput/SearchInput';
-import { Stack } from '@mui/material';
 
 const Members = () => {
   return (
