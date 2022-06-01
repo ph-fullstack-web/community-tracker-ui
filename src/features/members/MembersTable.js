@@ -24,13 +24,7 @@ const MembersTable = () => {
   );
 
   return (
-    <Table
-      sx={{ minWidth: 650 }}
-      aria-label="members-table"
-      style={{
-        marginTop: '3rem',
-        marginBottom: '1rem',
-      }}>
+    <Table sx={{ mt: 3, mb: 0.5 }} aria-label="members-table">
       <TableHead sx={{ backgroundColor: '#e5e5e5' }}>
         <TableRow>
           {titleCasedTableHeaders.map(header => (
@@ -55,28 +49,6 @@ const MembersTable = () => {
             ))}
           </TableRow>
         ))}
-        {/* {rowData.map(row => (
-          <TableRow key={row.id}>
-            <TableCell component="th" scope="row" sx={tableCellStyle}>
-              {row.name}
-            </TableCell>
-            <TableCell align="center" sx={tableCellStyle}>
-              {row.assignedTo}
-            </TableCell>
-            <TableCell align="center" sx={tableCellStyle}>
-              {row.hiredDate}
-            </TableCell>
-            <TableCell align="center" sx={tableCellStyle}>
-              {row.state}
-            </TableCell>
-            <TableCell align="center" sx={tableCellStyle}>
-              {row.jobLevel}
-            </TableCell>
-            <TableCell align="center" sx={tableCellStyle}>
-              {row.project}
-            </TableCell>
-          </TableRow>
-        ))} */}
       </TableBody>
     </Table>
   );
