@@ -9,7 +9,6 @@ const UpdateCommunityService = async (id,data) => {
                 data
             }
         })
-    console.log(response.status)
     return response.status
     }
     catch(err){
