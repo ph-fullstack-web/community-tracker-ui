@@ -26,7 +26,7 @@ export default function AutocompleteInputChip(props) {
           <Chip label={option.label} {...getTagProps({ index })} />
         ))
       }
-      style={{ width: '100%' }}
+      sx={{ width: '100%' }}
       renderInput={(params) => (
         <TextField
           {...params}
