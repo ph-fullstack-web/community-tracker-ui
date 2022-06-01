@@ -9,6 +9,8 @@ import SearchIcon from '@mui/icons-material/Search';
 // });
 
 export default function SearchInput() {
+  const inputStyle = { border: '2px solid black', borderRadius: 999 };
+
   return (
     <TextField
       InputProps={{
@@ -19,14 +21,23 @@ export default function SearchInput() {
           </InputAdornment>
         ),
         style: {
-          borderRadius: 999,
-          border: '2px solid black',
+          //border: '2px solid black',
         },
       }}
       sx={{
+        '& .MuiOutlinedInput-root': {
+          '& > fieldset': inputStyle,
+        },
+        '& .MuiOutlinedInput-root.Mui-focused': {
+          '& > fieldset': inputStyle,
+        },
+        '& .MuiOutlinedInput-root:hover': {
+          '& > fieldset': inputStyle,
+        },
         input: {
-          py: 0.5,
+          py: 0.75,
           px: 0,
+          width: '55ch',
         },
       }}
     />
