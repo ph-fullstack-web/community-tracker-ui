@@ -47,7 +47,9 @@ const MembersTable = () => {
         {rowData.map(row => (
           <TableRow key={row.id}>
             {tableHeaders.map(header => (
-              <TableCell align="center" sx={tableCellStyle}>
+              <TableCell
+                align="center"
+                sx={{ ...tableCellStyle, backgroundColor: 'white' }}>
                 {row[header]}
               </TableCell>
             ))}
