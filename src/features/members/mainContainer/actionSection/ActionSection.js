@@ -6,7 +6,7 @@ import PlusIconButton from 'components/PlusIconButton';
 const ActionSection = () => {
   return (
     <Stack direction="row" alignItems="center">
-      <Box sx={{ width: '55ch', flex: '0 1 auto' }}>
+      <Box sx={{ width: { xs: '100%', md: '55ch' }, flex: '0 1 auto' }}>
         <SearchInput />
       </Box>
       <Box>
