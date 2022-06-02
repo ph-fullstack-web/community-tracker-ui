@@ -1,4 +1,5 @@
 import {
+  Box,
   Table,
   TableBody,
   TableCell,
@@ -26,35 +27,37 @@ const MembersTable = () => {
   );
 
   return (
-    <Table
-      sx={{ mt: 3, mb: 0.5, mx: { xs: 1, sm: 0 }, minWidth: 700 }}
-      aria-label="members-table">
-      <TableHead sx={{ backgroundColor: '#e5e5e5' }}>
-        <TableRow>
-          {titleCasedTableHeaders.map(header => (
-            <TableCell
-              key={header}
-              align="center"
-              sx={{ ...tableCellStyle, fontWeight: 'bold' }}>
-              {header}
-            </TableCell>
-          ))}
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {rowData.map(row => (
-          <TableRow key={row.id}>
-            {tableHeaders.map(header => (
+    <Box sx={{ overflowX: 'auto' }}>
+      <Table
+        sx={{ mt: 3, mb: 0.5, mx: { xs: 1, sm: 0 }, minWidth: 700 }}
+        aria-label="members-table">
+        <TableHead sx={{ backgroundColor: '#e5e5e5' }}>
+          <TableRow>
+            {titleCasedTableHeaders.map(header => (
               <TableCell
+                key={header}
                 align="center"
-                sx={{ ...tableCellStyle, backgroundColor: 'white' }}>
-                {row[header]}
+                sx={{ ...tableCellStyle, fontWeight: 'bold' }}>
+                {header}
               </TableCell>
             ))}
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHead>
+        <TableBody>
+          {rowData.map(row => (
+            <TableRow key={row.id}>
+              {tableHeaders.map(header => (
+                <TableCell
+                  align="center"
+                  sx={{ ...tableCellStyle, backgroundColor: 'white' }}>
+                  {row[header]}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Box>
   );
 };
 
