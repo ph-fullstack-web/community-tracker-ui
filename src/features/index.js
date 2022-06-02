@@ -1,3 +1,4 @@
-import Communities from "./communities/";
+import Communities from './communities/';
+import Members from './members/Members';
 
-export { Communities };
+export { Communities, Members };
