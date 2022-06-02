@@ -29,7 +29,7 @@ const MembersTable = () => {
   return (
     <Box sx={{ overflowX: 'auto' }}>
       <Table
-        sx={{ mt: 3, mb: 0.5, mx: { xs: 1, sm: 0 }, minWidth: 700 }}
+        sx={{ mt: 3, mb: 0.5, mx: { xs: 1, sm: 0 }, minWidth: 825 }}
         aria-label="members-table">
         <TableHead sx={{ backgroundColor: '#e5e5e5' }}>
           <TableRow>
