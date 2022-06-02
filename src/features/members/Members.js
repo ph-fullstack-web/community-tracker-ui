@@ -1,9 +1,9 @@
-import { Box, Stack, IconButton } from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Box, Stack } from '@mui/material';
 
 import Logo from 'layout/Logo';
 import PageTitle from 'layout/PageTitle';
 import PageContainer from 'layout/PageContainer';
+import PlusIconButton from 'components/PlusIconButton';
 import MembersTable from './MembersTable';
 import SearchInput from './searchInput/SearchInput';
 
@@ -23,23 +23,13 @@ const Members = () => {
             <SearchInput />
           </Box>
           <Box>
-            <IconButton
+            <PlusIconButton
               title="Go to Input Page"
-              color="primary"
-              size="medium"
-              aria-label="Go to Input Page"
-              sx={{
+              ariaLabel="Go to Input Page"
+              sxProp={{
                 ml: { xs: 1, sm: 3 },
               }}
-              onClick={() => {}}>
-              <AddCircleOutlineIcon
-                fontSize="large"
-                style={{
-                  color: '#74808d',
-                  fontWeight: '700',
-                }}
-              />
-            </IconButton>
+            />
           </Box>
         </Stack>
 
