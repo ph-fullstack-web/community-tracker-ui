@@ -6,6 +6,7 @@ export default function SearchInput() {
 
   return (
     <TextField
+      fullWidth
       InputProps={{
         placeholder: 'Search',
         startAdornment: (
@@ -15,6 +16,7 @@ export default function SearchInput() {
         ),
       }}
       sx={{
+        ml: { xs: 1, sm: 0 },
         '& .MuiOutlinedInput-root': {
           '& > fieldset': inputStyle,
         },
@@ -27,7 +29,6 @@ export default function SearchInput() {
         input: {
           py: 0.75,
           px: 0,
-          width: '55ch',
         },
       }}
     />

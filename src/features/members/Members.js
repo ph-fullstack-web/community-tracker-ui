@@ -19,7 +19,7 @@ const Members = () => {
           marginBottom: '1rem',
         }}>
         <Stack direction="row" alignItems="center">
-          <Box>
+          <Box sx={{ width: '55ch', flex: '0 1 auto' }}>
             <SearchInput />
           </Box>
           <Box>
@@ -28,9 +28,8 @@ const Members = () => {
               color="primary"
               size="medium"
               aria-label="Go to Input Page"
-              style={{
-                height: '5rem',
-                width: '5rem',
+              sx={{
+                ml: { xs: 1, sm: 3 },
               }}
               onClick={() => {}}>
               <AddCircleOutlineIcon
