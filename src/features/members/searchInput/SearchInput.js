@@ -2,7 +2,7 @@ import { TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function SearchInput() {
-  const inputStyle = { border: '1px solid black', borderRadius: 999 };
+  const inputStyle = { border: '2px solid #232323', borderRadius: 999 };
 
   return (
     <TextField
