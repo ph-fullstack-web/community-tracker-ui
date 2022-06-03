@@ -1,0 +1,7 @@
+{
+    "id" : 1 ,
+    "communityName": "Full stack",
+    "communityManagerId" : 5 ,
+    "isActive" : false ,
+    "communityDesc" : "Full stack Desc"
+}

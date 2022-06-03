@@ -1,6 +1,7 @@
 import axiosInstance from '../index';
 
-const AddCommunityService = async (data) => {
+const AddCommunityService = async ({data}) => {
+
     try{
         const response = await axiosInstance({
             method:"POST",

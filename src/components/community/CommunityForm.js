@@ -1,16 +1,29 @@
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { TextField,FormControl, Select, MenuItem, InputLabel, 
     Button ,FormControlLabel, Checkbox , Grid, Box} from "@mui/material";
 import { useParams } from "react-router-dom";
 import useGetManagers from "hooks/People/useGetManagers";
 
-const CommunityForm = ({onClickHandler, buttonText}) => {
+const CommunityForm = ({onClickHandler, buttonText , community}) => {
     const [communityName, setCommunityName] = useState('')
-    const [communityManager, setCommunityManager] = useState('')
+    const [communityManager, setCommunityManager] = useState("")
     const [isActive, setIsActive] = useState(true)
     const [communityDescription, setCommunityDescription] = useState('')
     const { isLoading, data: communityManagers, isError, error } = useGetManagers();
     const { id } = useParams()
+
+
+    useEffect(()=>{
+        if(community){
+            setCommunityName(community.communityName)
+            setCommunityManager(community.communityManagerId)
+            setIsActive(community.isActive)
+            setCommunityDescription(community.communityDesc)
+        }
+    },[communityName,communityManager,isActive,communityDescription])
+            
+    
+
 
 
     const handleCommunityNameChange = (e) => {
@@ -31,7 +44,6 @@ const CommunityForm = ({onClickHandler, buttonText}) => {
 
     const handleOnButtonClick = async(e) => {
         e.preventDefault()
-
         const data = {
             Communityname: communityName,
             Communitymgrpeopleid: communityManager,
@@ -39,7 +51,7 @@ const CommunityForm = ({onClickHandler, buttonText}) => {
             Communitydescription: communityDescription
         }
 
-        const responseStatus = await onClickHandler(id,data)       
+        const responseStatus = await onClickHandler({id,data})       
     }      
 
 
@@ -48,6 +60,9 @@ const CommunityForm = ({onClickHandler, buttonText}) => {
         <Grid container >
             <Grid item xs={12} sm={5}>
                 <TextField 
+                    inputProps={{
+                        readOnly: community ? true : false,
+                      }}
                     required
                     fullWidth value={communityName} 
                     onChange={handleCommunityNameChange} id="communityName" 
@@ -67,6 +82,7 @@ const CommunityForm = ({onClickHandler, buttonText}) => {
                 }} fullWidth>
                 <InputLabel id="communityAssigned">Community Assigned To</InputLabel>
                 <Select
+                    inputProps={{ readOnly: community ? true : false }}
                     required
                     id="communityManager"
                     value={communityManager}
@@ -97,12 +113,19 @@ const CommunityForm = ({onClickHandler, buttonText}) => {
                     justifyContent: "center",
                     
                 }}>
-                    <FormControlLabel control={<Checkbox checked={isActive} onChange={handleActiveChange}/>} label="Active" align='center' />
+                    <FormControlLabel                      
+                         control={
+                        <Checkbox 
+                            checked={isActive} 
+                            onChange={handleActiveChange}/>} label="Active" align='center' />
                 </Box>
 
             </Grid>
             <Grid item xs={12} sm={7}>
             <TextField
+                InputProps={{
+                    readOnly: community ? true : false,
+                    }}
                 required
                 fullWidth
                 id="communityDesc"
