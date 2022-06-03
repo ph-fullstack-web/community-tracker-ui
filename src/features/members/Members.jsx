@@ -6,7 +6,7 @@ import MembersMainContainer from './MembersMainContainer';
 const Members = () => {
   return (
     <PageContainer>
-      <Logo />
+
       <PageTitle title="Resource Details Page." />
 
       <MembersMainContainer />
