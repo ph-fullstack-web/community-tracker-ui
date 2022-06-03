@@ -6,7 +6,6 @@ import CommunityList from "components/community/CommunityList";
 const Communities = () => {
   return (
     <PageContainer>
-      <Logo />
       <PageTitle title="Community selection page." />
 
       <CommunityList />
