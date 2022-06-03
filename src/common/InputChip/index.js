@@ -35,7 +35,6 @@ export default function AutocompleteInputChip(props) {
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
               handlePressEnter(e.target.value);
-              //e.target.value = '';
             }
           }}
         />
