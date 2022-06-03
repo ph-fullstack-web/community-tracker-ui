@@ -1,5 +1,6 @@
-import Communities from "./communities/";
-import AddCommunity from "./communities/AddCommunity"
-import  UpdateCommunity  from "./communities/UpdateCommunity";
+import Communities from './communities/';
+import AddCommunity from './communities/AddCommunity';
+import UpdateCommunity from './communities/UpdateCommunity';
+import Members from './members/';
 
-export { Communities , AddCommunity , UpdateCommunity};
+export { Communities, AddCommunity, UpdateCommunity, Members };
