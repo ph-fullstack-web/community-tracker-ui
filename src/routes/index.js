@@ -1,3 +1,4 @@
+import { AddCommunity , UpdateCommunity} from "features";
 import { lazy } from "react";
 
 
@@ -11,6 +12,16 @@ const routes = [
     path: "/communities",
     element: <Communities />,
     name: "communities",
+  },
+  {
+    path: "communities/update/:id",
+    element: <UpdateCommunity />,
+    name: "updatecommunity",    
+  },
+  {
+    path: "communities/add",
+    element: <AddCommunity />,
+    name: "addcommunity",    
   },
 ];
 
