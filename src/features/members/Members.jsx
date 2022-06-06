@@ -1,4 +1,3 @@
-import Logo from 'layout/Logo';
 import PageTitle from 'layout/PageTitle';
 import PageContainer from 'layout/PageContainer';
 import MembersMainContainer from './MembersMainContainer';

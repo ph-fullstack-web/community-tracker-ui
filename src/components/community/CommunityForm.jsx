@@ -12,7 +12,6 @@ const CommunityForm = ({onClickHandler, buttonText , community}) => {
     const { isLoading, data: communityManagers, isError, error } = useGetManagers();
     const { id } = useParams()
 
-
     useEffect(()=>{
         if(community){
             setCommunityName(community.communityName)
@@ -20,11 +19,8 @@ const CommunityForm = ({onClickHandler, buttonText , community}) => {
             setIsActive(community.isActive)
             setCommunityDescription(community.communityDesc)
         }
-    },[communityName,communityManager,isActive,communityDescription])
+    },[community])
             
-    
-
-
 
     const handleCommunityNameChange = (e) => {
         setCommunityName(e.target.value)
@@ -37,7 +33,7 @@ const CommunityForm = ({onClickHandler, buttonText , community}) => {
     const handleActiveChange = (e) => {
         setIsActive(!isActive)
     }
-
+    
     const handleDescriptionChange = (e) => {
         setCommunityDescription(e.target.value)
     }
