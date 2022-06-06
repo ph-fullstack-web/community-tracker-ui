@@ -1,13 +1,14 @@
 import createTheme from '@mui/material/styles/createTheme';
 
-const DARK_LIGHT = '#CACAFF'
-const DARK_MEDIUM = '#000048'
-const DARK_DARK = '#00002F'
-const PLUM_MEDIUM = '#7373D8'
-const BLUE_MEDIUM = '#6AA2DC'
-const TEAL_MEDIUM = '#26EFE9'
-const WHITE = '#FFFFFF'
-const BLACK = '#000000'
+const DARK_LIGHT = '#CACAFF';
+const DARK_MEDIUM = '#000048';
+const PLUM_MEDIUM = '#7373D8';
+const BLUE_MEDIUM = '#6AA2DC';
+const TEAL_MEDIUM = '#26EFE9';
+const BLACK = '#000000';
+
+export const DARK_DARK = '#00002F';
+export const WHITE = '#FFFFFF';
 
 const theme = createTheme({
   palette: {

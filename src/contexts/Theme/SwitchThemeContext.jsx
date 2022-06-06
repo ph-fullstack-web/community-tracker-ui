@@ -1,6 +1,8 @@
 import { createContext, useState } from 'react';
-import { ThemeProvider } from '@mui/material';
-import systemTheme from 'theme'
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import createTheme from '@mui/material/styles/createTheme';
+
+import systemTheme, { DARK_DARK, WHITE } from 'theme';
 
 const SwitchThemeContext = createContext(null);
 
@@ -9,7 +11,7 @@ const SwitchThemeContextProvider = ({ children }) => {
 
   const localStorageTheme = window.localStorage.getItem('theme');
 
-  theme = localStorageTheme
+  theme = localStorageTheme;
 
   if (!localStorageTheme) {
     const darkThemeMediaQuery = window.matchMedia(
@@ -25,16 +27,29 @@ const SwitchThemeContextProvider = ({ children }) => {
 
   const [currentTheme, setCurrentTheme] = useState(theme);
   const currentThemePalette = systemTheme.palette[currentTheme];
-  
+
   const setAndStoreCurrentTheme = theme => {
     localStorage.setItem('theme', theme);
     setCurrentTheme(theme);
   };
 
+  const defaultBackground = currentTheme === 'dark' ? DARK_DARK : WHITE;
+
+  const extendedTheme = createTheme({
+    ...systemTheme,
+    palette: {
+      ...systemTheme.palette,
+      background: { default: defaultBackground },
+    },
+  });
+
   return (
     <SwitchThemeContext.Provider
       value={{ currentTheme, currentThemePalette, setAndStoreCurrentTheme }}>
-      <ThemeProvider theme={systemTheme}>{children}</ThemeProvider>
+      <ThemeProvider theme={extendedTheme}>
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
     </SwitchThemeContext.Provider>
   );
 };
