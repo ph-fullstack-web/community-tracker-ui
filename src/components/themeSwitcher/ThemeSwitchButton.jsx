@@ -1,4 +1,4 @@
-import { useContext, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import {
   IconButton,
   Popper,
@@ -10,18 +10,12 @@ import {
 } from '@mui/material';
 import Brightness6Icon from '@mui/icons-material/Brightness6';
 
-import { SwitchThemeContext } from 'contexts/Theme/SwitchThemeContext';
-import { convertCamelCaseToTitleCase } from 'utils/Format/Case';
+import useSwitchThemeContext from 'hooks/Theme/useSwitchThemeContext';
 
 const options = ['blue', 'plum', 'teal', 'dark'];
 
-const optionsTitledCase = options.map(option =>
-  convertCamelCaseToTitleCase(option)
-);
-
 const ThemeSwitchButton = () => {
-  const { currentTheme, setAndStoreCurrentTheme } =
-    useContext(SwitchThemeContext);
+  const { currentTheme, setAndStoreCurrentTheme } = useSwitchThemeContext();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
 
@@ -63,7 +57,7 @@ const ThemeSwitchButton = () => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
-                  {optionsTitledCase.map(option => (
+                  {options.map(option => (
                     <MenuItem
                       key={option}
                       selected={option === currentTheme}

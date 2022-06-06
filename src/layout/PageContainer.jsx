@@ -1,9 +1,8 @@
-import { useContext } from 'react';
 import { Container } from '@mui/material';
-import { SwitchThemeContext } from 'contexts/Theme/SwitchThemeContext';
+import useSwitchThemeContext from 'hooks/Theme/useSwitchThemeContext';
 
 const PageContainer = ({ children }) => {
-  const { currentTheme, currentThemePalette } = useContext(SwitchThemeContext);
+  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
   return (
     <Container
       maxWidth="xl"

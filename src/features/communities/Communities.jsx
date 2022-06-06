@@ -4,11 +4,10 @@ import PageContainer from 'layout/PageContainer';
 import CommunityList from 'components/community/CommunityList';
 
 import { Typography } from '@mui/material';
-import { useContext } from 'react';
-import { SwitchThemeContext } from 'contexts/Theme/SwitchThemeContext';
+import useSwitchThemeContext from 'hooks/Theme/useSwitchThemeContext';
 
 const Communities = () => {
-  const { currentTheme } = useContext(SwitchThemeContext);
+  const { currentTheme } = useSwitchThemeContext();
 
   return (
     <PageContainer>
