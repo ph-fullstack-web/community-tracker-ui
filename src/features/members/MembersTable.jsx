@@ -48,6 +48,7 @@ const MembersTable = () => {
             <TableRow key={row.id}>
               {tableHeaders.map(header => (
                 <TableCell
+                  key={header}
                   align="center"
                   sx={{ ...tableCellStyle, backgroundColor: 'white' }}>
                   {row[header]}
