@@ -11,8 +11,13 @@ import {
 import Brightness6Icon from '@mui/icons-material/Brightness6';
 
 import { SwitchThemeContext } from 'contexts/Theme/SwitchThemeContext';
+import { convertCamelCaseToTitleCase } from 'utils/Format/Case';
 
 const options = ['blue', 'plum', 'teal', 'dark'];
+
+const optionsTitledCase = options.map(option =>
+  convertCamelCaseToTitleCase(option)
+);
 
 const ThemeSwitchButton = () => {
   const { currentTheme, setAndStoreCurrentTheme } =
@@ -58,7 +63,7 @@ const ThemeSwitchButton = () => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
-                  {options.map(option => (
+                  {optionsTitledCase.map(option => (
                     <MenuItem
                       key={option}
                       selected={option === currentTheme}
