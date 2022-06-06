@@ -1,18 +1,14 @@
-import Logo from 'layout/Logo';
 import PageTitle from 'layout/PageTitle';
 import PageContainer from 'layout/PageContainer';
 import MembersMainContainer from './MembersMainContainer';
-import ThemeSwitchButton from 'components/themeSwitcher/ThemeSwitchButton';
-
-import { Stack } from '@mui/material';
+import Navbar from 'layout/Navbar';
 
 const Members = () => {
   return (
     <PageContainer>
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Logo /> <ThemeSwitchButton />
-      </Stack>
+      <Navbar />
       <PageTitle title="Resource Details Page." />
+
       <MembersMainContainer />
     </PageContainer>
   );
