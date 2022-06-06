@@ -1,12 +1,11 @@
 import createTheme from '@mui/material/styles/createTheme';
-import grey from '@mui/material/colors/grey';
 
 const theme = createTheme({
   palette: {
     dark: {
-      main: grey[900],
-      light: grey[500],
-      medium: grey[700],
+      light: '#B0B0FF',
+      medium: '#00007b',
+      main: '#000048',
     },
     plum: {
       light: '#85A0F9',
