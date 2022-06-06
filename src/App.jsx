@@ -2,17 +2,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import routeList from 'routes';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
 
 import { SwitchThemeContextProvider } from 'contexts/Theme/SwitchThemeContext';
-
-import theme from 'theme';
 
 function App() {
   const queryClient = new QueryClient();
   return (
     <SwitchThemeContextProvider>
-      <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>
             <Routes>
@@ -23,7 +19,6 @@ function App() {
           </BrowserRouter>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
-      </ThemeProvider>
     </SwitchThemeContextProvider>
   );
 }
