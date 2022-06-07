@@ -15,7 +15,8 @@ import useSwitchThemeContext from 'hooks/Theme/useSwitchThemeContext';
 const options = ['blue', 'plum', 'teal', 'dark'];
 
 const ThemeSwitchButton = () => {
-  const { currentTheme, setAndStoreCurrentTheme } = useSwitchThemeContext();
+  const { currentTheme, currentThemePalette, setAndStoreCurrentTheme } =
+    useSwitchThemeContext();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
 
@@ -59,7 +60,17 @@ const ThemeSwitchButton = () => {
               transformOrigin:
                 placement === 'bottom' ? 'center top' : 'center bottom',
             }}>
-            <Paper>
+            <Paper
+              sx={{
+                '& .MuiList-root': {
+                  border:
+                    currentTheme === 'dark'
+                      ? `1px solid ${currentThemePalette.light}`
+                      : null,
+                  backgroundColor: currentThemePalette.bgPrimary,
+                  color: currentThemePalette.text,
+                },
+              }}>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
                   {options.map(option => (
