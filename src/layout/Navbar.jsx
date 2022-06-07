@@ -1,9 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Box, Button } from "@mui/material";
-import Logo from "./Logo";
-import { useToggle } from "hooks";
-import LoginModal from "components/login/LoginModal";
+import React from 'react';
+import { Box, Button } from '@mui/material';
+import Logo from './Logo';
+import { useToggle } from 'hooks';
+import LoginModal from 'components/login/LoginModal';
 
 const Navbar = () => {
   const [toggle, setToggle] = useToggle();
