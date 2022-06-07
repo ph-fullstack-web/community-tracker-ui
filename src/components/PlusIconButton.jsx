@@ -1,5 +1,6 @@
 import IconButton from '@mui/material/IconButton';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import useSwitchThemeContext from 'hooks/Theme/useSwitchThemeContext';
 
 const PlusIconButton = ({
   title,
@@ -9,6 +10,8 @@ const PlusIconButton = ({
   sxProp,
   onClickCallback,
 }) => {
+  const { currentThemePalette } = useSwitchThemeContext();
+
   return (
     <IconButton
       title={title}
@@ -20,7 +23,7 @@ const PlusIconButton = ({
       <AddCircleOutlineIcon
         fontSize="large"
         style={{
-          color: '#74808d',
+          color: currentThemePalette.main,
           fontWeight: '700',
         }}
       />
