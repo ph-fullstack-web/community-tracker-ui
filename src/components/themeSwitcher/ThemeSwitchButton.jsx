@@ -62,6 +62,7 @@ const ThemeSwitchButton = () => {
             <Paper
               sx={{
                 '& .MuiList-root': {
+                  borderRadius: currentTheme === 'dark' ? 1 : null,
                   border:
                     currentTheme === 'dark'
                       ? `1px solid ${currentThemePalette.light}`
