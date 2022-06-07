@@ -13,6 +13,7 @@ export const WHITE = '#FFFFFF';
 const theme = createTheme({
   palette: {
     dark: {
+      main: DARK_LIGHT,
       light: DARK_LIGHT,
       medium: DARK_MEDIUM,
       dark: DARK_DARK,
@@ -21,6 +22,7 @@ const theme = createTheme({
       text: DARK_LIGHT,
     },
     plum: {
+      main: PLUM_MEDIUM,
       light: '#85A0F9',
       medium: PLUM_MEDIUM,
       dark: '#2E308E',
@@ -29,6 +31,7 @@ const theme = createTheme({
       text: BLACK,
     },
     blue: {
+      main: BLUE_MEDIUM,
       light: '#92BBE6',
       medium: BLUE_MEDIUM,
       dark: '#2F78C4',
@@ -37,6 +40,7 @@ const theme = createTheme({
       text: BLACK,
     },
     teal: {
+      main: TEAL_MEDIUM,
       light: '#97F5F7',
       medium: TEAL_MEDIUM,
       dark: '#06C7CC',

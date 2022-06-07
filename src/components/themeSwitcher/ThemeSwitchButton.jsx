@@ -38,7 +38,12 @@ const ThemeSwitchButton = () => {
 
   return (
     <>
-      <IconButton variant="outlined" onClick={handleToggle} ref={anchorRef}>
+      <div>{currentTheme}</div>
+      <IconButton
+        variant="outlined"
+        onClick={handleToggle}
+        ref={anchorRef}
+        color={currentTheme}>
         <Brightness6Icon />
       </IconButton>
       <Popper
