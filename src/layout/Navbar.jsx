@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Box, Button } from "@mui/material";
 import Logo from "./Logo";
 import { useToggle } from "hooks";

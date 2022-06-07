@@ -5,49 +5,38 @@ import { useParams } from "react-router-dom";
 import useGetManagers from "hooks/People/useGetManagers";
 
 const CommunityForm = ({onClickHandler, buttonText , community}) => {
-    const [communityName, setCommunityName] = useState('')
-    const [communityManager, setCommunityManager] = useState("")
-    const [isActive, setIsActive] = useState(true)
-    const [communityDescription, setCommunityDescription] = useState('')
-    const { isLoading, data: communityManagers, isError, error } = useGetManagers();
+    const [communityDetails, setCommunityDetails] = useState({
+        communityName : '',
+        communityManager : '',
+        isActive: true,
+        communityDescription: ''
+    })
+    const { isLoading, data: communityManagers} = useGetManagers();
     const { id } = useParams()
 
     useEffect(()=>{
         if(community){
-            setCommunityName(community.communityName)
-            setCommunityManager(community.communityManagerId)
-            setIsActive(community.isActive)
-            setCommunityDescription(community.communityDesc)
+            setCommunityDetails(community)
         }
     },[community])
-            
-
-    const handleCommunityNameChange = (e) => {
-        setCommunityName(e.target.value)
+   
+    const handleFieldChange = (e) => {
+        setCommunityDetails({ ...communityDetails, [e.target.name]: e.target.value });
     }
 
-    const handleManagerChange = (e) => {
-        setCommunityManager(e.target.value)
-    }
-
-    const handleActiveChange = (e) => {
-        setIsActive(!isActive)
-    }
-    
-    const handleDescriptionChange = (e) => {
-        setCommunityDescription(e.target.value)
-    }
-
-    const handleOnButtonClick = async(e) => {
+    const handleOnButtonClick = (e) => {
         e.preventDefault()
+        
         const data = {
-            Communityname: communityName,
-            Communitymgrpeopleid: communityManager,
-            Isactive: isActive,
-            Communitydescription: communityDescription
+            Communityname: communityDetails.communityName,
+            Communitymgrpeopleid: communityDetails.communityManager,
+            Isactive: communityDetails.isActive,
+            Communitydescription: communityDetails.communityDescription
         }
+        
+        console.log(data)
+    onClickHandler({id,data})
 
-        const responseStatus = await onClickHandler({id,data})       
     }      
 
 
@@ -60,8 +49,10 @@ const CommunityForm = ({onClickHandler, buttonText , community}) => {
                         readOnly: community ? true : false,
                       }}
                     required
-                    fullWidth value={communityName} 
-                    onChange={handleCommunityNameChange} id="communityName" 
+                    fullWidth value={communityDetails.communityName} 
+                    onChange={handleFieldChange} 
+                    id="communityName" 
+                    name='communityName'
                     label="Name of Community" 
                     variant="outlined" 
                     sx={{
@@ -81,9 +72,10 @@ const CommunityForm = ({onClickHandler, buttonText , community}) => {
                     inputProps={{ readOnly: community ? true : false }}
                     required
                     id="communityManager"
-                    value={communityManager}
+                    name="communityManager"
+                    value={communityDetails.communityManager}
                     label="Community Assigned To"
-                    onChange={handleManagerChange}
+                    onChange={handleFieldChange}
                     sx={{
                         backgroundColor: "#FFFFFF"
                     }}
@@ -112,8 +104,9 @@ const CommunityForm = ({onClickHandler, buttonText , community}) => {
                     <FormControlLabel                      
                          control={
                         <Checkbox 
-                            checked={isActive} 
-                            onChange={handleActiveChange}/>} label="Active" align='center' />
+                            name="isActive"
+                            checked={communityDetails.isActive} 
+                            onChange={(e) => setCommunityDetails({ ...communityDetails, [e.target.name]: !communityDetails.isActive})}/>} label="Active" align='center' />
                 </Box>
 
             </Grid>
@@ -124,7 +117,8 @@ const CommunityForm = ({onClickHandler, buttonText , community}) => {
                     }}
                 required
                 fullWidth
-                id="communityDesc"
+                id="communityDescription"
+                name="communityDescription"
                 label="Community Description"
                 multiline
                 rows={6}
@@ -132,8 +126,8 @@ const CommunityForm = ({onClickHandler, buttonText , community}) => {
                     backgroundColor: "white",
                     mt:5
                 }}
-                value={communityDescription}
-                onChange={handleDescriptionChange}
+                value={communityDetails.communityDescription}
+                onChange={handleFieldChange}
             />                        
             </Grid>
             <Grid item sm={5}/>

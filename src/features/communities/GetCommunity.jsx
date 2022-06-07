@@ -5,13 +5,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useTransition } from "react";
 import useGetCommunityById from "hooks/Communities/useGetCommunityById";
 
-//import communityData from 'MOCKS/communityById.json';
+
 
 const GetCommunity =  () => {
+  // eslint-disable-next-line
     const [isPending, startTransition] = useTransition();
     const navigate = useNavigate()
     const {id} = useParams()
-    const { isLoading, data: communityData, isError, error } = useGetCommunityById(id)
+    const {data: communityData} = useGetCommunityById(id)
 
     const onClick = () => {
       startTransition(() => {

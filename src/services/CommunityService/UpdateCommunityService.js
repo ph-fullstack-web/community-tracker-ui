@@ -5,14 +5,12 @@ const UpdateCommunityService = async ({id,data}) => {
         const response = await axiosInstance({
             method:"POST",
             url: `/api/community/update/${id}`,
-            data: {
-                data
-            }
+            data: data
         })
     return response.status
     }
     catch(err){
-        return 404
+        throw new Error(err.message)
     }
 
 }
