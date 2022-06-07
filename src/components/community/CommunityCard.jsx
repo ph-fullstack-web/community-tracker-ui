@@ -1,4 +1,5 @@
 import { Typography, Card, Divider, CardContent, Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const CommunityCard = ({ id, image, name }) => {
   return (
@@ -37,7 +38,10 @@ const CommunityCard = ({ id, image, name }) => {
             alignItems: "center",
             paddingTop: "1em",
             cursor: "pointer",
+            textDecoration: "none"
           }}
+          component={Link}
+          to={`/communities/update/${id}`}
         >
           <img src={image} height="60px" width="60px" alt="community icon" />
           <Typography
@@ -50,6 +54,7 @@ const CommunityCard = ({ id, image, name }) => {
               fontWeight: "600",
               fontStyle: "italic",
               display: "block",
+              cursor: "pointer",
             }}
           >
             {name}
