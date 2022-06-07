@@ -1,5 +1,4 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
 import {
   Box,
   Button,
@@ -8,7 +7,7 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
-} from "@mui/material";
+} from '@mui/material';
 
 const LoginModal = ({ open, handleClose }) => {
   return (
@@ -16,12 +15,11 @@ const LoginModal = ({ open, handleClose }) => {
       <DialogTitle>Login Modal</DialogTitle>
       <DialogContent>
         <Box
-          sx={{ height: "20vh" }}
+          sx={{ height: '20vh' }}
           component="form"
           display="flex"
           flexDirection="column"
-          justifyContent="space-evenly"
-        >
+          justifyContent="space-evenly">
           <TextField label="Cognizant ID" required />
           <TextField label="Password" required />
         </Box>

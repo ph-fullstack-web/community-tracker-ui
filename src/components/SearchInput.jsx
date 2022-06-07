@@ -1,8 +1,13 @@
 import { TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import useSwitchThemeContext from 'hooks/Theme/useSwitchThemeContext';
 
 export default function SearchInput() {
-  const inputStyle = { border: '2px solid #232323', borderRadius: 999 };
+  const { currentThemePalette } = useSwitchThemeContext();
+  const inputStyle = {
+    border: `2px solid ${currentThemePalette.main}`,
+    borderRadius: 999,
+  };
 
   return (
     <TextField
@@ -11,7 +16,7 @@ export default function SearchInput() {
         placeholder: 'Search',
         startAdornment: (
           <InputAdornment position="start">
-            <SearchIcon sx={{ color: 'black' }} />
+            <SearchIcon sx={{ color: currentThemePalette.main }} />
           </InputAdornment>
         ),
       }}
@@ -21,7 +26,7 @@ export default function SearchInput() {
           '& > fieldset': inputStyle,
         },
         '& .MuiOutlinedInput-root.Mui-focused': {
-          '& > fieldset': inputStyle,
+          '& > fieldset': { ...inputStyle, borderWidth: 3 },
         },
         '& .MuiOutlinedInput-root:hover': {
           '& > fieldset': inputStyle,
@@ -29,6 +34,7 @@ export default function SearchInput() {
         input: {
           py: 0.75,
           px: 0,
+          color: currentThemePalette.text,
         },
       }}
     />
