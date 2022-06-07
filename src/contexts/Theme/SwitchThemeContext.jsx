@@ -35,20 +35,23 @@ const SwitchThemeContextProvider = ({ children }) => {
 
   const defaultBackground = currentTheme === 'dark' ? DARK_DARK : WHITE;
 
-  const extendedTheme = createTheme({
-    ...systemTheme,
-    palette: {
-      ...systemTheme.palette,
-      background: { default: defaultBackground },
-    },
-  });
+  const extendedTheme = theme =>
+    createTheme({
+      ...systemTheme,
+      palette: {
+        ...systemTheme.palette,
+        background: { default: defaultBackground },
+      },
+    });
 
   return (
     <SwitchThemeContext.Provider
       value={{ currentTheme, currentThemePalette, setAndStoreCurrentTheme }}>
-      <ThemeProvider theme={extendedTheme}>
-        <CssBaseline />
-        {children}
+      <ThemeProvider theme={systemTheme}>
+        <ThemeProvider theme={extendedTheme}>
+          <CssBaseline />
+          {children}
+        </ThemeProvider>
       </ThemeProvider>
     </SwitchThemeContext.Provider>
   );
