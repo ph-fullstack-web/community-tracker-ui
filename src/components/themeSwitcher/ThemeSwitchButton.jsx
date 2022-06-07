@@ -39,7 +39,6 @@ const ThemeSwitchButton = () => {
 
   return (
     <>
-      <div>{currentTheme}</div>
       <IconButton
         variant="outlined"
         onClick={handleToggle}
