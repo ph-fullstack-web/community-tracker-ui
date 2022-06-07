@@ -1,5 +1,6 @@
 import { Container } from '@mui/material';
 import useSwitchThemeContext from 'hooks/Theme/useSwitchThemeContext';
+import Navbar from './Navbar';
 
 const PageContainer = ({ children }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
@@ -17,6 +18,7 @@ const PageContainer = ({ children }) => {
         padding: '1px',
         marginTop: '2rem',
       }}>
+      <Navbar />
       {children}
     </Container>
   );
