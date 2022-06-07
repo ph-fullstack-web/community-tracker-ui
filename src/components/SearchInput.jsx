@@ -16,7 +16,7 @@ export default function SearchInput() {
         placeholder: 'Search',
         startAdornment: (
           <InputAdornment position="start">
-            <SearchIcon sx={{ color: 'black' }} />
+            <SearchIcon sx={{ color: currentThemePalette.main }} />
           </InputAdornment>
         ),
       }}
