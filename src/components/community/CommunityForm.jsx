@@ -1,45 +1,42 @@
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { TextField,FormControl, Select, MenuItem, InputLabel, 
     Button ,FormControlLabel, Checkbox , Grid, Box} from "@mui/material";
 import { useParams } from "react-router-dom";
 import useGetManagers from "hooks/People/useGetManagers";
 
-const CommunityForm = ({onClickHandler, buttonText}) => {
-    const [communityName, setCommunityName] = useState('')
-    const [communityManager, setCommunityManager] = useState('')
-    const [isActive, setIsActive] = useState(true)
-    const [communityDescription, setCommunityDescription] = useState('')
-    const { isLoading, data: communityManagers, isError, error } = useGetManagers();
+const CommunityForm = ({onClickHandler, buttonText , community}) => {
+
+    const [communityDetails, setCommunityDetails] = useState({
+        communityName : '',
+        communityManagerId : '',
+        isActive: true,
+        communityDescription: ''
+    })
+    const { isLoading, data: communityManagers} = useGetManagers();
     const { id } = useParams()
 
-
-    const handleCommunityNameChange = (e) => {
-        setCommunityName(e.target.value)
-    }
-
-    const handleManagerChange = (e) => {
-        setCommunityManager(e.target.value)
-    }
-
-    const handleActiveChange = (e) => {
-        setIsActive(!isActive)
-    }
-
-    const handleDescriptionChange = (e) => {
-        setCommunityDescription(e.target.value)
-    }
-
-    const handleOnButtonClick = async(e) => {
-        e.preventDefault()
-
-        const data = {
-            Communityname: communityName,
-            Communitymgrpeopleid: communityManager,
-            Isactive: isActive,
-            Communitydescription: communityDescription
+    useEffect(()=>{
+        if(community){
+            setCommunityDetails(community)
         }
+    },[community])
+   
+    const handleFieldChange = (e) => {
+        setCommunityDetails({ ...communityDetails, [e.target.name]: e.target.value });
+    }
 
-        const responseStatus = await onClickHandler(id,data)       
+    const handleOnButtonClick = (e) => {
+        e.preventDefault()
+        
+        const data = {
+            Communityname: communityDetails.communityName,
+            Communitymgrpeopleid: communityDetails.communityManagerId,
+            Isactive: communityDetails.isActive,
+            Communitydescription: communityDetails.communityDescription
+        }
+        
+    onClickHandler({id , data})
+
     }      
 
 
@@ -48,9 +45,14 @@ const CommunityForm = ({onClickHandler, buttonText}) => {
         <Grid container >
             <Grid item xs={12} sm={5}>
                 <TextField 
-                    required
-                    fullWidth value={communityName} 
-                    onChange={handleCommunityNameChange} id="communityName" 
+                    inputProps={{
+                        readOnly: community ? true : false,
+                      }}
+                    required={community ? false : true}
+                    fullWidth value={communityDetails.communityName} 
+                    onChange={handleFieldChange} 
+                    id="communityName" 
+                    name='communityName'
                     label="Name of Community" 
                     variant="outlined" 
                     sx={{
@@ -67,11 +69,13 @@ const CommunityForm = ({onClickHandler, buttonText}) => {
                 }} fullWidth>
                 <InputLabel id="communityAssigned">Community Assigned To</InputLabel>
                 <Select
+                    inputProps={{ readOnly: community ? true : false }}
                     required
                     id="communityManager"
-                    value={communityManager}
+                    name="communityManagerId"
+                    value={communityDetails.communityManagerId}
                     label="Community Assigned To"
-                    onChange={handleManagerChange}
+                    onChange={handleFieldChange}
                     sx={{
                         backgroundColor: "#FFFFFF"
                     }}
@@ -97,15 +101,24 @@ const CommunityForm = ({onClickHandler, buttonText}) => {
                     justifyContent: "center",
                     
                 }}>
-                    <FormControlLabel control={<Checkbox checked={isActive} onChange={handleActiveChange}/>} label="Active" align='center' />
+                    <FormControlLabel                      
+                         control={
+                        <Checkbox 
+                            name="isActive"
+                            checked={communityDetails.isActive} 
+                            onChange={!community ? (e) => setCommunityDetails({ ...communityDetails, [e.target.name]: !communityDetails.isActive}) : ()=>{}}/>} label="Active" align='center' />
                 </Box>
 
             </Grid>
             <Grid item xs={12} sm={7}>
             <TextField
+                InputProps={{
+                    readOnly: community ? true : false,
+                    }}
                 required
                 fullWidth
-                id="communityDesc"
+                id="communityDescription"
+                name="communityDescription"
                 label="Community Description"
                 multiline
                 rows={6}
@@ -113,8 +126,8 @@ const CommunityForm = ({onClickHandler, buttonText}) => {
                     backgroundColor: "white",
                     mt:5
                 }}
-                value={communityDescription}
-                onChange={handleDescriptionChange}
+                value={communityDetails.communityDescription}
+                onChange={handleFieldChange}
             />                        
             </Grid>
             <Grid item sm={5}/>
