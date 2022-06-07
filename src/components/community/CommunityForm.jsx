@@ -5,9 +5,10 @@ import { useParams } from "react-router-dom";
 import useGetManagers from "hooks/People/useGetManagers";
 
 const CommunityForm = ({onClickHandler, buttonText , community}) => {
+
     const [communityDetails, setCommunityDetails] = useState({
         communityName : '',
-        communityManager : '',
+        communityManagerId : '',
         isActive: true,
         communityDescription: ''
     })
@@ -29,13 +30,12 @@ const CommunityForm = ({onClickHandler, buttonText , community}) => {
         
         const data = {
             Communityname: communityDetails.communityName,
-            Communitymgrpeopleid: communityDetails.communityManager,
+            Communitymgrpeopleid: communityDetails.communityManagerId,
             Isactive: communityDetails.isActive,
             Communitydescription: communityDetails.communityDescription
         }
         
-        console.log(data)
-    onClickHandler({id,data})
+    onClickHandler({id , data})
 
     }      
 
@@ -48,7 +48,7 @@ const CommunityForm = ({onClickHandler, buttonText , community}) => {
                     inputProps={{
                         readOnly: community ? true : false,
                       }}
-                    required
+                    required={community ? false : true}
                     fullWidth value={communityDetails.communityName} 
                     onChange={handleFieldChange} 
                     id="communityName" 
@@ -72,8 +72,8 @@ const CommunityForm = ({onClickHandler, buttonText , community}) => {
                     inputProps={{ readOnly: community ? true : false }}
                     required
                     id="communityManager"
-                    name="communityManager"
-                    value={communityDetails.communityManager}
+                    name="communityManagerId"
+                    value={communityDetails.communityManagerId}
                     label="Community Assigned To"
                     onChange={handleFieldChange}
                     sx={{
@@ -106,7 +106,7 @@ const CommunityForm = ({onClickHandler, buttonText , community}) => {
                         <Checkbox 
                             name="isActive"
                             checked={communityDetails.isActive} 
-                            onChange={(e) => setCommunityDetails({ ...communityDetails, [e.target.name]: !communityDetails.isActive})}/>} label="Active" align='center' />
+                            onChange={!community ? (e) => setCommunityDetails({ ...communityDetails, [e.target.name]: !communityDetails.isActive}) : ()=>{}}/>} label="Active" align='center' />
                 </Box>
 
             </Grid>

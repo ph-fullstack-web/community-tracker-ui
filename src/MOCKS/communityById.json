@@ -3,5 +3,5 @@
     "communityName": "Full stack",
     "communityManagerId" : 5 ,
     "isActive" : false ,
-    "communityDesc" : "Full stack Desc"
+    "communityDescription" : "Full stack Desc"
 }
