@@ -3,8 +3,10 @@ import { Box, Stack } from '@mui/material';
 import SearchInput from 'components/SearchInput';
 import PlusIconButton from 'components/PlusIconButton';
 import MembersTable from './MembersTable';
+import { useNavigate } from 'react-router-dom';
 
 const MembersMainContainer = () => {
+  const navigator = useNavigate()
   return (
     <Box
       style={{
@@ -22,6 +24,7 @@ const MembersMainContainer = () => {
             sxProp={{
               ml: { xs: 1, sm: 3 },
             }}
+            onClickCallback={() => navigator('/resources/create')}
           />
         </Box>
       </Stack>
