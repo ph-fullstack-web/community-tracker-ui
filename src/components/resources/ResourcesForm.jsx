@@ -211,7 +211,21 @@ const ResourcesForm = () => {
                   sx={{
                     backgroundColor: "#FFFFFF",
                   }}
-                ></Select>
+                >
+                  <MenuItem value="">Select Project Lead</MenuItem>
+                  {!isLoading &&
+                    (communityManagers || []).map((manager) => {
+                      return (
+                        <MenuItem
+                          key={manager.people_id}
+                          value={manager.people_id}
+                        >
+                          {" "}
+                          {manager.full_name}{" "}
+                        </MenuItem>
+                      );
+                    })}
+                </Select>
               </FormControl>
             </Grid>
           </Grid>
