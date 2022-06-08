@@ -14,6 +14,8 @@ choose
 Would like to install them now? Yes
 Which package manager do you want to use? npm
 
+npm install prettier eslint-config-prettier eslint-plugin-prettier --save dev
+//if encounter error. remove dev
 
 create .prettierrc file and add the following
 {
