@@ -1,4 +1,4 @@
-import { AddCommunity, UpdateCommunity, CreateResource } from 'features';
+import { AddCommunity, UpdateCommunity, CreateResource, UpdateResource } from 'features';
 import { lazy } from 'react';
 
 /* TODO:
@@ -37,6 +37,11 @@ const routes = [
     path: '/resources/create',
     element: <CreateResource/>,
     name: 'createresource'
+  },
+  {
+    path: '/resources/update/:id',
+    element: <UpdateResource/>,
+    name: 'updateresource'
   }
 ];
 
