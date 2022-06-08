@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Box,
   Skeleton,
@@ -6,6 +7,8 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  TableFooter,
+  TablePagination,
 } from '@mui/material';
 import useSwitchThemeContext from 'hooks/Theme/useSwitchThemeContext';
 import { convertCamelCaseToTitleCase } from 'utils/Format/Case';
@@ -20,8 +23,8 @@ const MembersTableBodyCell = ({ children, sxProp }) => {
 };
 
 const MembersTable = () => {
-  const { isLoading, data: membersData, isError, error } = useGetMembers();
-  const { currentThemePalette } = useSwitchThemeContext();
+  const { isLoading, data: membersRows, isError, error } = useGetMembers();
+  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
   const tableCellStyle = {
     border: `2px solid ${currentThemePalette.light}`,
@@ -50,6 +53,18 @@ const MembersTable = () => {
   const rowPlaceholders = [...Array(5).keys()];
   const columnPlaceholders = [...Array(6).keys()];
 
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <Box sx={{ overflowX: 'auto' }}>
       <Table
@@ -67,16 +82,15 @@ const MembersTable = () => {
                   backgroundColor: currentThemePalette.bgSecondary,
                 }}>
                 {isLoading && <Skeleton />}
-                {/* TODO: fix isError render */}
                 {isError && <div>{error.message}</div>}
                 {!isLoading && header}
               </TableCell>
             ))}
           </TableRow>
         </TableHead>
-        <TableBody>
-          {isLoading &&
-            rowPlaceholders.map(slot => (
+        {isLoading && (
+          <TableBody>
+            {rowPlaceholders.map(slot => (
               <TableRow key={slot}>
                 {columnPlaceholders.map(innerSlot => (
                   <TableCell
@@ -91,31 +105,92 @@ const MembersTable = () => {
                 ))}
               </TableRow>
             ))}
-          {!isLoading &&
-            membersData &&
-            membersData.map(row => (
-              <TableRow key={row.people_id}>
-                <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                  {row.full_name}
-                </MembersTableBodyCell>
-                <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                  {row.assigned_to}
-                </MembersTableBodyCell>
-                <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                  {row.hired_date_formatted}
-                </MembersTableBodyCell>
-                <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                  {row.state}
-                </MembersTableBodyCell>
-                <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                  {row.job_level}
-                </MembersTableBodyCell>
-                <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                  {row.project}
-                </MembersTableBodyCell>
+          </TableBody>
+        )}
+        {!isLoading && membersRows && (
+          <>
+            <TableBody>
+              {(rowsPerPage > 0
+                ? membersRows.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : membersRows
+              ).map(row => (
+                <TableRow key={row.people_id}>
+                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                    {row.full_name}
+                  </MembersTableBodyCell>
+                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                    {row.assigned_to}
+                  </MembersTableBodyCell>
+                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                    {row.hired_date_formatted}
+                  </MembersTableBodyCell>
+                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                    {row.state}
+                  </MembersTableBodyCell>
+                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                    {row.job_level}
+                  </MembersTableBodyCell>
+                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                    {row.project}
+                  </MembersTableBodyCell>
+                </TableRow>
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  colSpan={6}
+                  count={membersRows.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  SelectProps={{
+                    sx: {
+                      border:
+                        currentTheme === 'dark'
+                          ? `1px solid ${currentThemePalette.light}`
+                          : null,
+                      '& .MuiList-root': {
+                        borderRadius: currentTheme === 'dark' ? 1 : null,
+                        border:
+                          currentTheme === 'dark'
+                            ? `1px solid ${currentThemePalette.light}`
+                            : null,
+                        backgroundColor: currentThemePalette.bgPrimary,
+                        color: currentThemePalette.text,
+                      },
+                    },
+                  }}
+                  sx={{
+                    ...tableCellStyle,
+                    '& .MuiSvgIcon-root': {
+                      color:
+                        currentTheme === 'dark'
+                          ? currentThemePalette.text
+                          : null,
+                    },
+                    '& .MuiIconButton-root': {
+                      color:
+                        currentTheme === 'dark'
+                          ? currentThemePalette.light
+                          : currentThemePalette.dark,
+                    },
+                    // '& .MuiIconButton-root.Mui-disabled': {
+                    //   color:
+                    //     currentTheme === 'dark'
+                    //       ? '#6565FF'
+                    //       : currentThemePalette.light,
+                    // },
+                  }}
+                />
               </TableRow>
-            ))}
-        </TableBody>
+            </TableFooter>
+          </>
+        )}
       </Table>
     </Box>
   );
