@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import Chip from '@mui/material/Chip';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import React, { useState } from "react";
+import Chip from "@mui/material/Chip";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 
-export default function AutocompleteInputChip(props) {
+const AutocompleteInputChip = (props) => {
   const { options, setOptions } = props;
   const [value, setValue] = useState([]);
 
@@ -26,14 +26,14 @@ export default function AutocompleteInputChip(props) {
           <Chip label={option.label} {...getTagProps({ index })} />
         ))
       }
-      sx={{ width: '100%' }}
+      sx={{ width: "100%" }}
       renderInput={(params) => (
         <TextField
           {...params}
           label="Skills"
           placeholder="Skills"
           onKeyPress={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === "Enter") {
               handlePressEnter(e.target.value);
             }
           }}
@@ -41,4 +41,6 @@ export default function AutocompleteInputChip(props) {
       )}
     />
   );
-}
+};
+
+export default AutocompleteInputChip;

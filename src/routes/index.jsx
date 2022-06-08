@@ -32,7 +32,7 @@ const routes = [
   {
     path: 'communities/:id',
     element: <GetCommunity />,
-    name: 'getcommunity',    
+    name: 'getcommunity',
   }
 ];
 

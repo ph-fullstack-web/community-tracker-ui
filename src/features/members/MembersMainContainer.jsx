@@ -1,7 +1,6 @@
 import { Box, Stack } from '@mui/material';
 
-import SearchInput from 'components/SearchInput';
-import PlusIconButton from 'components/PlusIconButton';
+import { SearchInput, PlusIconButton } from 'components';
 import MembersTable from './MembersTable';
 
 const MembersMainContainer = () => {

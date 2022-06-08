@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { SwitchThemeContext } from 'contexts/Theme/SwitchThemeContext';
+import { SwitchThemeContext } from 'contexts/theme/SwitchThemeContext';
 
 const useSwitchThemeContext = () => {
   const { currentTheme, currentThemePalette, setAndStoreCurrentTheme } =
