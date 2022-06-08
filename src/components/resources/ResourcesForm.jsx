@@ -5,11 +5,8 @@ import {
   MenuItem,
   InputLabel,
   Button,
-  FormControlLabel,
-  Checkbox,
   Grid,
   Box,
-  Container,
 } from "@mui/material";
 import useGetManagers from "hooks/People/useGetManagers";
 import { useState } from "react";
@@ -65,9 +62,9 @@ const ResourcesForm = () => {
       }}
     >
       <Grid container>
-        <Grid id="inputs-grid" item lg={7} md={5} sm={12} xs={12}>
-          <Grid container gap={2} item sm={12} md={12}>
-            <Grid item xs={12} sm={12} md={6}>
+        <Grid id="inputs-grid" item lg={5} md={12} sm={12} xs={12}>
+          <Grid container gap={2} item sm={12} md={12} lg={12}>
+            <Grid item xs={12} sm={12} md={7} lg={6}>
               <TextField
                 required
                 fullWidth
@@ -83,7 +80,7 @@ const ResourcesForm = () => {
                 }}
               />
             </Grid>
-            <Grid item xs={12} sm={12} md={4}>
+            <Grid item xs={12} sm={12} md={3} lg={4}>
               <TextField
                 required
                 fullWidth
@@ -102,8 +99,8 @@ const ResourcesForm = () => {
             </Grid>
           </Grid>
 
-          <Grid container gap={2}>
-            <Grid item xs={12} sm={12} md={5}>
+          <Grid container gap={2} item sm={12} md={12} lg={12}>
+            <Grid item xs={12} sm={12} md={5} lg={5}>
               <FormControl
                 sx={{
                   mt: 5,
@@ -131,7 +128,7 @@ const ResourcesForm = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={12} md={5}>
+            <Grid item xs={12} sm={12} md={5} lg={5}>
               <FormControl
                 sx={{
                   mt: 5,
@@ -159,10 +156,11 @@ const ResourcesForm = () => {
                 </Select>
               </FormControl>
             </Grid>
+            
           </Grid>
 
           <Grid container gap={2}>
-            <Grid item xs={12} sm={12} md={5}>
+            <Grid item xs={12} sm={12} md={5} lg={5}>
               <FormControl
                 sx={{
                   mt: 5,
@@ -196,7 +194,7 @@ const ResourcesForm = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={12} md={5}>
+            <Grid item xs={12} sm={12} md={5} lg={5}>
               <FormControl
                 sx={{
                   mt: 5,
@@ -218,90 +216,43 @@ const ResourcesForm = () => {
             </Grid>
           </Grid>
 
-          <Grid container gap={2}>
-            <Grid item xs={12} sm={12} md={5}>
-              <FormControl
-                sx={{
-                  mt: 5,
-                }}
-                fullWidth
-              >
-                <InputLabel>Project</InputLabel>
-                <Select
-                  name="project"
+          <Grid container>
+            <Grid item xs={12} sm={12} md={10} lg={10}>
+              <TextField
                   required
+                  fullWidth
                   value={resource.project}
+                  name="project"
+                  onChange={(e) => onChangeHandler(e)}
+                  variant="outlined"
+                  id="project"
                   label="Project"
-                  onChange={(e) => onChangeHandler(e)}
                   sx={{
+                    mt: 5,
                     backgroundColor: "#FFFFFF",
                   }}
-                ></Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={12} md={5}>
-              <FormControl
-                sx={{
-                  mt: 5,
-                }}
-                fullWidth
-              >
-                <InputLabel>Tags</InputLabel>
-                <Select
-                  name="tags"
-                  required
-                  value={resource.tags}
-                  label="Tags"
-                  onChange={(e) => onChangeHandler(e)}
-                  sx={{
-                    backgroundColor: "#FFFFFF",
-                  }}
-                ></Select>
-              </FormControl>
+                />
             </Grid>
           </Grid>
         </Grid>
 
         <Grid id="checkbox-grid" item lg={5} md={3} sm={12} xs={12} sx={{
-
+          marginTop: '2rem',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between'
         }}>
-          <Grid item>
-            <FormControlLabel
-              control={<Checkbox checked={true} onChange={() => {}} />}
-              label="Active"
-              align="center"
-            />
-
-            <FormControlLabel
-              control={<Checkbox checked={true} onChange={() => {}} />}
-              label="Active"
-              align="center"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={true} onChange={() => {}} />}
-              label="Active"
-              align="center"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={true} onChange={() => {}} />}
-              label="Active"
-              align="center"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={true} onChange={() => {}} />}
-              label="Active"
-              align="center"
-            />
-            <FormControlLabel
-              control={<Checkbox checked={true} onChange={() => {}} />}
-              label="Active"
-              align="center"
-            />
+          <Grid item sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            flexWrap: 'wrap',
+          }}>
+            {/* Put checkboxes here */}
           </Grid>
-          <Grid item>
+          <Grid item sx={{
+            display: 'flex',
+            flexDirection: 'row',
+          }}>
             <Button
               variant="contained"
               size="large"
