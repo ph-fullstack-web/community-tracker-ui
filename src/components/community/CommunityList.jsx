@@ -11,8 +11,9 @@ import {
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import useGetCommunities from "hooks/Communities/useGetCommunities";
 import CommunityCard from "./CommunityCard";
-
+import { useNavigate } from "react-router-dom";
 const CommunityList = () => {
+  const navigator = useNavigate();
   // hook to fetch communities
   const { isLoading, data: communityData, isError, error } = useGetCommunities();
 
@@ -104,7 +105,7 @@ const CommunityList = () => {
                     height: "5rem",
                     width: "5rem",
                   }}
-                  onClick={() => {}}
+                  onClick={() => navigator('/communities/add')}
                 >
                   <AddCircleOutlineIcon
                     fontSize="large"
