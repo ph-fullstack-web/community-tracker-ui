@@ -1,0 +1,71 @@
+npx create-react-app app-name
+cd app-name
+npm init @eslint/config
+	Ok to proceed (y)
+choose
+	To check syntax, find problems and enforce code style
+	JavaScript modules (import/export)
+	React
+	use TypeScript?: No
+	Browser
+	Use a popular style guide
+	-Airbnb: 
+	JSON
+Would like to install them now? Yes
+Which package manager do you want to use? npm
+
+
+create .prettierrc file and add the following
+{
+	"tabWidth": 2,
+	"useTabs": false,
+	"semi": true,
+	"singleQoute": false,
+	"traillingComma": "all",
+	"printWidth": 80
+}
+
+check files
+package.json
+"scripts": {
+    	"start": "react-scripts start",
+    	"build": "react-scripts build",
+    	"test": "react-scripts test",
+	"eject": "react-scripts eject",
+	"lint": "eslint .",
+	"lint:fix": "eslint --fix .",
+},
+devDependencies: {
+	eslint-config-airbnb
+}
+	
+.eslintrc.json
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "jest": true
+    },
+    "extends": [
+        "react-app",
+        "react-app/jest",
+        "airbnb",
+	"plugin:prettier/recommended"
+    ],
+
+
+manual linting
+run below command
+npm run lint - check linting errors
+npm run lint:fix - fix lint errors
+
+
+to automate linting
+install Prettier - Code formatter extention in vs code
+ctrl+shift+P 
+type forma
+set Default Formatter
+	Prettier - Code formatter
+	check Format on Paste
+	check Format on Save
+
+check .prettierrc rules if working on ctrl+s
