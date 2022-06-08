@@ -1,11 +1,10 @@
 import moment from 'moment';
 import axiosInstance from '../index';
 
-export const getMembers = async () => {
+export const getMembers = async id => {
   try {
-    const response = await axiosInstance.get('/api/people');
-    // In backend, need to update to send status code 200
-    if (response.status !== 200 && response.status !== 201) {
+    const response = await axiosInstance.get(`/api/community-members/${id}`);
+    if (response.status !== 200) {
       throw new Error(response.data);
     }
 
