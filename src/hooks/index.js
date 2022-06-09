@@ -1,6 +1,6 @@
 import useToggle from "./useToggle";
 import useSwitchThemeContext from "./theme/useSwitchThemeContext";
-import useGetManagers from "./People/useGetManagers";
+import useGetManagers from "./people/useGetManagers";
 import useGetCommunities from "./communities/useGetCommunities";
 import useGetCommunityById from "./communities/useGetCommunityById";
 

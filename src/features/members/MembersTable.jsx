@@ -13,7 +13,7 @@ import {
   TablePagination,
 } from "@mui/material";
 import useSwitchThemeContext from "hooks/theme/useSwitchThemeContext";
-import useGetMembers from "hooks/People/useGetMembers";
+import useGetMembers from "hooks/people/useGetMembers";
 import { JobLevels, WorkStates, Projects } from "utils/constants";
 
 const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
