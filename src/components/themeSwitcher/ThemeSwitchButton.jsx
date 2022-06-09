@@ -77,7 +77,7 @@ const ThemeSwitchButton = () => {
                     <MenuItem
                       key={option}
                       selected={option === currentTheme}
-                      onClick={(_) => handleMenuItemClick(option)}>
+                      onClick={() => handleMenuItemClick(option)}>
                       {option}
                     </MenuItem>
                   ))}
