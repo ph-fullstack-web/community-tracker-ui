@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
 import {
@@ -29,6 +29,9 @@ const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
 const MembersTable = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const navigateToUpdate = (communityId, peopleId) => {
+    navigate(`/resources/${communityId}/update/${peopleId}`);
+  };
 
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
   const { isLoading, data: membersData, isError, error } = useGetMembers(id);
@@ -78,12 +81,12 @@ const MembersTable = () => {
     setPage(0);
   };
 
-  const navigateToUpdate = (communityId, peopleId) => {
-    navigate(`/resources/${communityId}/update/${peopleId}`);
-  };
+  useEffect(() => {
+    document.querySelector("body").scrollIntoView();
+  }, [page, rowsPerPage]);
 
   return (
-    <Box sx={{ overflowX: "auto" }}>
+    <Box sx={{ overflowX: "auto" }} id="members-table-container">
       <Table
         sx={{ mt: 3, mb: 0.5, mx: { xs: 1, sm: 0 }, minWidth: 825 }}
         aria-label="members-table">
