@@ -38,7 +38,7 @@ const MembersTable = () => {
   const { isLoading, data: membersData, isError, error } = useGetMembers(id);
   const membersDataModified = membersData
     ? Object.assign(membersData, {
-        members: membersData?.members.map(member => ({
+        members: membersData?.members.map((member) => ({
           ...member,
           hired_date_formatted: moment(member.hired_date).format("MM/DD/YYYY"),
           job_level: jobLevelData[member.joblevel_id - 1].job_level_desc,
@@ -66,7 +66,7 @@ const MembersTable = () => {
     "jobLevel",
     "project",
   ];
-  const titleCasedTableHeaders = tableHeaders.map(string =>
+  const titleCasedTableHeaders = tableHeaders.map((string) =>
     convertCamelCaseToTitleCase(string)
   );
 
@@ -80,7 +80,7 @@ const MembersTable = () => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -96,7 +96,7 @@ const MembersTable = () => {
         aria-label="members-table">
         <TableHead>
           <TableRow>
-            {titleCasedTableHeaders.map(header => (
+            {titleCasedTableHeaders.map((header) => (
               <TableCell
                 key={header}
                 align="center"
@@ -122,9 +122,9 @@ const MembersTable = () => {
         </TableHead>
         {isLoading && (
           <TableBody>
-            {rowPlaceholders.map(slot => (
+            {rowPlaceholders.map((slot) => (
               <TableRow key={slot}>
-                {columnPlaceholders.map(innerSlot => (
+                {columnPlaceholders.map((innerSlot) => (
                   <TableCell
                     key={innerSlot}
                     align="center"
@@ -181,7 +181,7 @@ const MembersTable = () => {
                       page * rowsPerPage + rowsPerPage
                     )
                   : membersDataModified.members
-                ).map(row => (
+                ).map((row) => (
                   <TableRow
                     key={row.cognizantid_id}
                     sx={{ cursor: "pointer" }}

@@ -1,6 +1,6 @@
 import axiosInstance from "../index";
 
-export const getMembers = async id => {
+export const getMembers = async (id) => {
   try {
     const response = await axiosInstance.get(`/api/community-members/${id}`);
     if (response.status !== 200) {

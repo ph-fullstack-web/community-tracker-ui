@@ -6,7 +6,7 @@ import MembersTable from "./MembersTable";
 const MembersMainContainer = () => {
   const { id: communityId } = useParams();
   const navigate = useNavigate();
-  const navigateToCreate = communityId => {
+  const navigateToCreate = (communityId) => {
     navigate(`/resources/${communityId}/create`);
   };
 
