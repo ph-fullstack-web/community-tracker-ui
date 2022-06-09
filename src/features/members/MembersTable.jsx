@@ -85,8 +85,8 @@ const MembersTable = () => {
     setPage(0);
   };
 
-  const navigateToUpdate = (communityId, peopleId) => {
-    navigate(`/resources/${communityId}/update/${peopleId}`);
+  const navigateToUpdate = (communityId, cognizantId) => {
+    navigate(`/resources/${communityId}/update/${cognizantId}`);
   };
 
   return (
@@ -150,12 +150,12 @@ const MembersTable = () => {
                 : membersDataModified.members
               ).map(row => (
                 <TableRow
-                  key={row.people_id}
+                  key={row.cognizantid_id}
                   sx={{ cursor: "pointer" }}
                   onClick={() =>
                     navigateToUpdate(
                       membersDataModified.community_id,
-                      row.people_id
+                      row.cognizantid_id
                     )
                   }>
                   <MembersTableBodyCell sxProp={tableBodyCellStyle}>
