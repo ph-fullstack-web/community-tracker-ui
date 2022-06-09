@@ -15,11 +15,9 @@ import {
 import useSwitchThemeContext from "hooks/Theme/useSwitchThemeContext";
 import { convertCamelCaseToTitleCase } from "utils/Format/Case";
 import useGetMembers from "hooks/People/useGetMembers";
-import {
-  jobLevelData,
-  workStateData,
-  projectData,
-} from "features/members/mockData";
+import { JobLevels } from "utils/constants/JobLevels";
+import { WorkStates } from "utils/constants/WorkStates";
+import { Projects } from "utils/constants/Projects";
 
 const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   return (
@@ -34,16 +32,15 @@ const MembersTable = () => {
   const navigate = useNavigate();
 
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-
   const { isLoading, data: membersData, isError, error } = useGetMembers(id);
   const membersDataModified = membersData
     ? Object.assign(membersData, {
         members: membersData?.members.map((member) => ({
           ...member,
           hired_date_formatted: moment(member.hired_date).format("MM/DD/YYYY"),
-          job_level: jobLevelData[member.joblevel_id - 1].job_level_desc,
-          work_state: workStateData[member.workstate_id - 1].work_state_desc,
-          project: projectData[member.project_id - 1].project_desc,
+          job_level: JobLevels[member.joblevel_id],
+          work_state: WorkStates[member.workstate_id],
+          project: Projects[member.project_id],
         })),
       })
     : null;
