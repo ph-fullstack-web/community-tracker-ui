@@ -4,7 +4,7 @@ import routeList from 'routes';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
 import { SwitchThemeContextProvider } from 'contexts/theme/SwitchThemeContext';
-import { AuthProvider } from 'contexts';
+import { AuthProvider } from 'contexts/auth/AuthContext';
 
 function App() {
   const queryClient = new QueryClient();
