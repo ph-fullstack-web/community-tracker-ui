@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import routeList from 'routes';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
-import { SwitchThemeContextProvider } from 'contexts/theme/SwitchThemeContext';
+import { SwitchThemeContextProvider } from 'contexts/Theme/SwitchThemeContext';
 import { AuthProvider } from 'contexts';
 
 function App() {
