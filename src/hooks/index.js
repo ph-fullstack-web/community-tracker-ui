@@ -1,4 +1,4 @@
-import useToggle from "./useToggle";
+import useToggle from "./common/useToggle";
 import useSwitchThemeContext from "./theme/useSwitchThemeContext";
 import useGetManagers from "./people/useGetManagers";
 import useGetCommunities from "./communities/useGetCommunities";
