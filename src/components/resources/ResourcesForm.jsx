@@ -9,6 +9,7 @@ import {
   Box,
 } from "@mui/material";
 import useGetManagers from "hooks/People/useGetManagers";
+import useGetProjects from "hooks/Projects/useGetProjects";
 import { useState } from "react";
 
 const JOB_LEVELS = {
@@ -42,7 +43,8 @@ const ResourcesForm = ({onSubmitHandler}) => {
     jobLevel: "",
     project: "",
     projectLead: "",
-    tags: "",
+    email: "",
+    cognizantId: ""
   });
 
   const onChangeHandler = (event) => {
@@ -52,6 +54,7 @@ const ResourcesForm = ({onSubmitHandler}) => {
     }));
   };
 
+  const {data: projectsData, isLoading: isLoadingProjects} = useGetProjects();
   const { isLoading, data: communityManagers } = useGetManagers();
 
   const onSubmit = (event) => {
@@ -69,7 +72,7 @@ const ResourcesForm = ({onSubmitHandler}) => {
       <Grid container component={'form'} onSubmit={onSubmit} >
         <Grid id="inputs-grid" item lg={5} md={12} sm={12} xs={12}>
           <Grid container gap={2} item sm={12} md={12} lg={12}>
-            <Grid item xs={12} sm={12} md={7} lg={6}>
+            <Grid item xs={12} sm={12} md={10} lg={10}>
               <TextField
                 required
                 fullWidth
@@ -85,23 +88,39 @@ const ResourcesForm = ({onSubmitHandler}) => {
                 }}
               />
             </Grid>
-            <Grid item xs={12} sm={12} md={3} lg={4}>
+            <Grid item xs={12} sm={12} md={5} lg={5}>
               <TextField
                 required
                 fullWidth
-                value={resource.hiredDate}
-                name="hiredDate"
+                value={resource.email}
+                name="email"
                 onChange={(e) => onChangeHandler(e)}
                 variant="outlined"
-                id="name"
-                placeholder="Hired Date"
-                type="date"
+                id="email"
+                label="CSV Mail"
                 sx={{
                   mt: 5,
                   backgroundColor: "#FFFFFF",
                 }}
               />
             </Grid>
+            <Grid item xs={12} sm={12} md={5} lg={5}>
+              <TextField
+                required
+                fullWidth
+                value={resource.cognizantId}
+                name="cognizantId"
+                onChange={(e) => onChangeHandler(e)}
+                variant="outlined"
+                id="cognizantId"
+                label="Cognizant ID"
+                sx={{
+                  mt: 5,
+                  backgroundColor: "#FFFFFF",
+                }}
+              />
+            </Grid>
+            
           </Grid>
 
           <Grid container gap={2} item sm={12} md={12} lg={12}>
@@ -200,7 +219,61 @@ const ResourcesForm = ({onSubmitHandler}) => {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={5} lg={5}>
-              <FormControl
+            <TextField
+                required
+                fullWidth
+                value={resource.hiredDate}
+                name="hiredDate"
+                onChange={(e) => onChangeHandler(e)}
+                variant="outlined"
+                id="name"
+                label="Hired Date"
+                placeholder="Hired Date"
+                type="date"
+                sx={{
+                  mt: 5,
+                  backgroundColor: "#FFFFFF",
+                }}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container gap={2}>
+            <Grid item xs={12} sm={12} md={5} lg={5}>
+            <FormControl
+                sx={{
+                  mt: 5,
+                }}
+                fullWidth
+              >
+                <InputLabel>Projects</InputLabel>
+                <Select
+                  name="project"
+                  required
+                  value={resource.project}
+                  label="Projects"
+                  onChange={(e) => onChangeHandler(e)}
+                  sx={{
+                    backgroundColor: "#FFFFFF",
+                  }}
+                >
+                  <MenuItem value="">Select Project</MenuItem>
+                  {!isLoadingProjects &&
+                    (projectsData || []).map((project) => {
+                      return (
+                        <MenuItem
+                          key={project.id}
+                          value={project.id}
+                        >
+                          {project.name}
+                        </MenuItem>
+                      );
+                    })}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={12} md={5} lg={5}>
+            <FormControl
                 sx={{
                   mt: 5,
                 }}
@@ -232,25 +305,7 @@ const ResourcesForm = ({onSubmitHandler}) => {
                     })}
                 </Select>
               </FormControl>
-            </Grid>
-          </Grid>
-
-          <Grid container>
-            <Grid item xs={12} sm={12} md={10} lg={10}>
-              <TextField
-                  required
-                  fullWidth
-                  value={resource.project}
-                  name="project"
-                  onChange={(e) => onChangeHandler(e)}
-                  variant="outlined"
-                  id="project"
-                  label="Project"
-                  sx={{
-                    mt: 5,
-                    backgroundColor: "#FFFFFF",
-                  }}
-                />
+              
             </Grid>
           </Grid>
         </Grid>
