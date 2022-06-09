@@ -3,7 +3,7 @@ import PageContainer from "layout/PageContainer";
 import CommunityForm from "components/community/CommunityForm";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTransition } from "react";
-import useGetCommunityById from "hooks/Communities/useGetCommunityById";
+import useGetCommunityById from "hooks/communities/useGetCommunityById";
 //import mockData from 'MOCKS/communityById.json'
 
 

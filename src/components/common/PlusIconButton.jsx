@@ -1,6 +1,6 @@
 import IconButton from '@mui/material/IconButton';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import useSwitchThemeContext from 'hooks/Theme/useSwitchThemeContext';
+import useSwitchThemeContext from 'hooks/theme/useSwitchThemeContext';
 
 const PlusIconButton = ({
   title,

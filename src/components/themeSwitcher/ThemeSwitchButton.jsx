@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import Brightness6Icon from '@mui/icons-material/Brightness6';
 
-import useSwitchThemeContext from 'hooks/Theme/useSwitchThemeContext';
+import useSwitchThemeContext from 'hooks/theme/useSwitchThemeContext';
 
 const options = ['blue', 'plum', 'teal', 'dark'];
 

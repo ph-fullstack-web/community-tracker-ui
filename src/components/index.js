@@ -1,6 +1,13 @@
-import AddCommunity from "./community/AddCommunity";
 import CommunityCard from "./community/CommunityCard";
 import CommunityList from "./community/CommunityList";
-import UpdateCommunity from "./community/UpdateCommunity";
+import AutocompleteInputChip from "./input-chip/";
+import PlusIconButton from "./common/PlusIconButton";
+import SearchInput from "./common/SearchInput";
 
-export { AddCommunity, CommunityCard, CommunityList, UpdateCommunity };
+export {
+  PlusIconButton,
+  SearchInput,
+  AutocompleteInputChip,
+  CommunityCard,
+  CommunityList,
+};
