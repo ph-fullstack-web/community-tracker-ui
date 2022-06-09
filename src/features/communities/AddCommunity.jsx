@@ -1,7 +1,7 @@
 import PageTitle from "layout/PageTitle";
 import PageContainer from "layout/PageContainer";
 import CommunityForm from "components/community/CommunityForm";
-import AddCommunityService from "services/community-service/AddCommunityService";
+import AddCommunityService from "../../services/community-service/AddCommunityService";
 
 
 const AddCommunity = () => {
