@@ -105,7 +105,16 @@ const MembersTable = () => {
                   fontWeight: "bold",
                   backgroundColor: currentThemePalette.bgSecondary,
                 }}>
-                {isLoading && <Skeleton />}
+                {isLoading && (
+                  <Skeleton
+                    sx={{
+                      backgroundColor:
+                        currentTheme === "dark"
+                          ? currentThemePalette.light
+                          : null,
+                    }}
+                  />
+                )}
                 {!isLoading && header}
               </TableCell>
             ))}
@@ -123,7 +132,14 @@ const MembersTable = () => {
                       ...tableCellStyle,
                       backgroundColor: currentThemePalette.bgPrimary,
                     }}>
-                    <Skeleton />
+                    <Skeleton
+                      sx={{
+                        backgroundColor:
+                          currentTheme === "dark"
+                            ? currentThemePalette.light
+                            : null,
+                      }}
+                    />
                   </TableCell>
                 ))}
               </TableRow>
