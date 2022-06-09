@@ -1,4 +1,9 @@
-import { AddCommunity, GetCommunity, UpdateCommunity } from 'features';
+import {
+  AddCommunity,
+  GetCommunity,
+  UpdateCommunity,
+  GetSkills,
+} from 'features';
 
 import { lazy } from 'react';
 
@@ -32,8 +37,13 @@ const routes = [
   {
     path: 'communities/:id',
     element: <GetCommunity />,
-    name: 'getcommunity',    
-  }
+    name: 'getcommunity',
+  },
+  {
+    path: '/skills',
+    element: <GetSkills />,
+    name: 'getskills',
+  },
 ];
 
 export default routes;
