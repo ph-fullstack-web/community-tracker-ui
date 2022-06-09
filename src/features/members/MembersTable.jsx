@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import useSwitchThemeContext from "hooks/theme/useSwitchThemeContext";
 import { convertCamelCaseToTitleCase } from "utils/Format/Case";
-import useGetMembers from "hooks/People/useGetMembers";
+import useGetMembers from "hooks/people/useGetMembers";
 import {
   jobLevelData,
   workStateData,
