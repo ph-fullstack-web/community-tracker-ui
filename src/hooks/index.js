@@ -1,8 +1,8 @@
 import useToggle from "./useToggle";
-import useSwitchThemeContext from "./theme/useSwitchThemeContext";
-import useGetManagers from "./people/useGetManagers";
-import useGetCommunities from "./communities/useGetCommunities";
-import useGetCommunityById from "./communities/useGetCommunityById";
+import useSwitchThemeContext from "./Theme/useSwitchThemeContext";
+import useGetManagers from "./People/useGetManagers";
+import useGetCommunities from "./Communities/useGetCommunities";
+import useGetCommunityById from "./Communities/useGetCommunityById";
 
 export {
   useToggle,
