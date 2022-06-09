@@ -132,105 +132,122 @@ const MembersTable = () => {
         )}
         {isError && (
           <TableBody>
-            <MembersTableBodyCell
-              colSpan={6}
-              sxProp={{ ...tableBodyCellStyle, py: 2.5 }}>
-              Error: {error.message}
-            </MembersTableBodyCell>
+            <TableRow>
+              <MembersTableBodyCell
+                colSpan={6}
+                sxProp={{ ...tableBodyCellStyle, py: 2.5 }}>
+                Error: {error.message}
+              </MembersTableBodyCell>
+            </TableRow>
           </TableBody>
         )}
-        {!isLoading && membersDataModified && (
-          <>
+        {!isLoading &&
+          membersDataModified &&
+          membersDataModified.members.length === 0 && (
             <TableBody>
-              {(rowsPerPage > 0
-                ? membersDataModified.members.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                : membersDataModified.members
-              ).map(row => (
-                <TableRow
-                  key={row.cognizantid_id}
-                  sx={{ cursor: "pointer" }}
-                  onClick={() =>
-                    navigateToUpdate(
-                      membersDataModified.community_id,
-                      row.cognizantid_id
-                    )
-                  }>
-                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                    {row.full_name}
-                  </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                    {membersDataModified.manager?.full_name}
-                  </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                    {row.hired_date_formatted}
-                  </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                    {row.work_state}
-                  </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                    {row.job_level}
-                  </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                    {row.project}
-                  </MembersTableBodyCell>
-                </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
               <TableRow>
-                <TablePagination
+                <MembersTableBodyCell
                   colSpan={6}
-                  count={membersDataModified.members.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  SelectProps={{
-                    sx: {
-                      border:
-                        currentTheme === "dark"
-                          ? `1px solid ${currentThemePalette.light}`
-                          : null,
-                      "& .MuiList-root": {
-                        borderRadius: currentTheme === "dark" ? 1 : null,
+                  sxProp={{ ...tableBodyCellStyle, py: 2.5 }}>
+                  No members found for this community
+                </MembersTableBodyCell>
+              </TableRow>
+            </TableBody>
+          )}
+        {!isLoading &&
+          membersDataModified &&
+          membersDataModified.members.length > 0 && (
+            <>
+              <TableBody>
+                {(rowsPerPage > 0
+                  ? membersDataModified.members.slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage
+                    )
+                  : membersDataModified.members
+                ).map(row => (
+                  <TableRow
+                    key={row.cognizantid_id}
+                    sx={{ cursor: "pointer" }}
+                    onClick={() =>
+                      navigateToUpdate(
+                        membersDataModified.community_id,
+                        row.cognizantid_id
+                      )
+                    }>
+                    <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                      {row.full_name}
+                    </MembersTableBodyCell>
+                    <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                      {membersDataModified.manager?.full_name}
+                    </MembersTableBodyCell>
+                    <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                      {row.hired_date_formatted}
+                    </MembersTableBodyCell>
+                    <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                      {row.work_state}
+                    </MembersTableBodyCell>
+                    <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                      {row.job_level}
+                    </MembersTableBodyCell>
+                    <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                      {row.project}
+                    </MembersTableBodyCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    colSpan={6}
+                    count={membersDataModified.members.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    SelectProps={{
+                      sx: {
                         border:
                           currentTheme === "dark"
                             ? `1px solid ${currentThemePalette.light}`
                             : null,
-                        backgroundColor: currentThemePalette.bgPrimary,
-                        color: currentThemePalette.text,
+                        "& .MuiList-root": {
+                          borderRadius: currentTheme === "dark" ? 1 : null,
+                          border:
+                            currentTheme === "dark"
+                              ? `1px solid ${currentThemePalette.light}`
+                              : null,
+                          backgroundColor: currentThemePalette.bgPrimary,
+                          color: currentThemePalette.text,
+                        },
                       },
-                    },
-                  }}
-                  sx={{
-                    ...tableCellStyle,
-                    "& .MuiSvgIcon-root": {
-                      color:
-                        currentTheme === "dark"
-                          ? currentThemePalette.text
-                          : null,
-                    },
-                    "& .MuiIconButton-root": {
-                      color:
-                        currentTheme === "dark"
-                          ? currentThemePalette.light
-                          : currentThemePalette.dark,
-                    },
-                    // '& .MuiIconButton-root.Mui-disabled': {
-                    //   color:
-                    //     currentTheme === 'dark'
-                    //       ? '#6565FF'
-                    //       : currentThemePalette.light,
-                    // },
-                  }}
-                />
-              </TableRow>
-            </TableFooter>
-          </>
-        )}
+                    }}
+                    sx={{
+                      ...tableCellStyle,
+                      "& .MuiSvgIcon-root": {
+                        color:
+                          currentTheme === "dark"
+                            ? currentThemePalette.text
+                            : null,
+                      },
+                      "& .MuiIconButton-root": {
+                        color:
+                          currentTheme === "dark"
+                            ? currentThemePalette.light
+                            : currentThemePalette.dark,
+                      },
+                      // '& .MuiIconButton-root.Mui-disabled': {
+                      //   color:
+                      //     currentTheme === 'dark'
+                      //       ? '#6565FF'
+                      //       : currentThemePalette.light,
+                      // },
+                    }}
+                  />
+                </TableRow>
+              </TableFooter>
+            </>
+          )}
       </Table>
     </Box>
   );
