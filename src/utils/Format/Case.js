@@ -1,4 +1,4 @@
-export function convertCamelCaseToTitleCase(string) {
+export default function convertCamelCaseToTitleCase(string) {
   // Also retains case of consecutive uppercase letters:
   // e.g., 'userID' to 'User ID'
   return string

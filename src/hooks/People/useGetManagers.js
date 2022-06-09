@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getManagers } from "services/PeopleService/GetManagers";
+import { getManagers } from "services/people-service/GetManagers";
 
 
 const useGetManagers = () => {
