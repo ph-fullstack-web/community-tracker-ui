@@ -12,7 +12,7 @@ import {
   TableFooter,
   TablePagination,
 } from "@mui/material";
-import useSwitchThemeContext from "hooks/Theme/useSwitchThemeContext";
+import useSwitchThemeContext from "hooks/theme/useSwitchThemeContext";
 import { convertCamelCaseToTitleCase } from "utils/Format/Case";
 import useGetMembers from "hooks/People/useGetMembers";
 import {
