@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import moment from "moment";
 import {
   Box,
   Skeleton,
@@ -13,6 +15,11 @@ import {
 import useSwitchThemeContext from "hooks/Theme/useSwitchThemeContext";
 import { convertCamelCaseToTitleCase } from "utils/Format/Case";
 import useGetMembers from "hooks/People/useGetMembers";
+import {
+  jobLevelData,
+  workStateData,
+  projectData,
+} from "features/members/mockData";
 
 const MembersTableBodyCell = ({ children, sxProp }) => {
   return (
@@ -23,7 +30,19 @@ const MembersTableBodyCell = ({ children, sxProp }) => {
 };
 
 const MembersTable = () => {
-  const { isLoading, data: membersData, isError, error } = useGetMembers();
+  const { id } = useParams();
+  const { isLoading, data: membersData /*isError, error*/ } = useGetMembers(id);
+  const membersDataModified = membersData
+    ? Object.assign(membersData, {
+        members: membersData?.members.map(member => ({
+          ...member,
+          hired_date_formatted: moment(member.hired_date).format("MM/DD/YYYY"),
+          job_level: jobLevelData[member.joblevel_id - 1].job_level_desc,
+          work_state: workStateData[member.workstate_id - 1].work_state_desc,
+          project: projectData[member.project_id - 1].project_desc,
+        })),
+      })
+    : null;
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
   const tableCellStyle = {
@@ -82,7 +101,6 @@ const MembersTable = () => {
                   backgroundColor: currentThemePalette.bgSecondary,
                 }}>
                 {isLoading && <Skeleton />}
-                {isError && <div>{error.message}</div>}
                 {!isLoading && header}
               </TableCell>
             ))}
@@ -107,22 +125,29 @@ const MembersTable = () => {
             ))}
           </TableBody>
         )}
-        {!isLoading && membersData && (
+        {/* {
+          isError && (
+            <TableBody>
+              <TableCell></TableCell>
+            </TableBody>
+          )
+        } */}
+        {!isLoading && membersDataModified && (
           <>
             <TableBody>
               {(rowsPerPage > 0
-                ? membersData.members.slice(
+                ? membersDataModified.members.slice(
                     page * rowsPerPage,
                     page * rowsPerPage + rowsPerPage
                   )
-                : membersData.members
+                : membersDataModified.members
               ).map(row => (
                 <TableRow key={row.people_id}>
                   <MembersTableBodyCell sxProp={tableBodyCellStyle}>
                     {row.full_name}
                   </MembersTableBodyCell>
                   <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                    {membersData.manager?.full_name}
+                    {membersDataModified.manager?.full_name}
                   </MembersTableBodyCell>
                   <MembersTableBodyCell sxProp={tableBodyCellStyle}>
                     {row.hired_date_formatted}
@@ -143,7 +168,7 @@ const MembersTable = () => {
               <TableRow>
                 <TablePagination
                   colSpan={6}
-                  count={membersData.members.length}
+                  count={membersDataModified.members.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onPageChange={handleChangePage}
