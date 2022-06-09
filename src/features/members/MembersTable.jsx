@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Box,
   Skeleton,
@@ -9,10 +9,10 @@ import {
   TableRow,
   TableFooter,
   TablePagination,
-} from '@mui/material';
-import useSwitchThemeContext from 'hooks/Theme/useSwitchThemeContext';
-import { convertCamelCaseToTitleCase } from 'utils/Format/Case';
-import useGetMembers from 'hooks/People/useGetMembers';
+} from "@mui/material";
+import useSwitchThemeContext from "hooks/Theme/useSwitchThemeContext";
+import { convertCamelCaseToTitleCase } from "utils/Format/Case";
+import useGetMembers from "hooks/People/useGetMembers";
 
 const MembersTableBodyCell = ({ children, sxProp }) => {
   return (
@@ -23,7 +23,7 @@ const MembersTableBodyCell = ({ children, sxProp }) => {
 };
 
 const MembersTable = () => {
-  const { isLoading, data: membersRows, isError, error } = useGetMembers();
+  const { isLoading, data: membersData, isError, error } = useGetMembers();
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
   const tableCellStyle = {
@@ -38,12 +38,12 @@ const MembersTable = () => {
   };
 
   const tableHeaders = [
-    'name',
-    'assignedTo',
-    'hiredDate',
-    'state',
-    'jobLevel',
-    'project',
+    "name",
+    "assignedTo",
+    "hiredDate",
+    "state",
+    "jobLevel",
+    "project",
   ];
 
   const titleCasedTableHeaders = tableHeaders.map(string =>
@@ -66,7 +66,7 @@ const MembersTable = () => {
   };
 
   return (
-    <Box sx={{ overflowX: 'auto' }}>
+    <Box sx={{ overflowX: "auto" }}>
       <Table
         sx={{ mt: 3, mb: 0.5, mx: { xs: 1, sm: 0 }, minWidth: 825 }}
         aria-label="members-table">
@@ -78,7 +78,7 @@ const MembersTable = () => {
                 align="center"
                 sx={{
                   ...tableCellStyle,
-                  fontWeight: 'bold',
+                  fontWeight: "bold",
                   backgroundColor: currentThemePalette.bgSecondary,
                 }}>
                 {isLoading && <Skeleton />}
@@ -107,15 +107,15 @@ const MembersTable = () => {
             ))}
           </TableBody>
         )}
-        {!isLoading && membersRows && (
+        {!isLoading && membersData && (
           <>
             <TableBody>
               {(rowsPerPage > 0
-                ? membersRows.slice(
+                ? membersData.members.slice(
                     page * rowsPerPage,
                     page * rowsPerPage + rowsPerPage
                   )
-                : membersRows
+                : membersData.members
               ).map(row => (
                 <TableRow key={row.people_id}>
                   <MembersTableBodyCell sxProp={tableBodyCellStyle}>
@@ -143,7 +143,7 @@ const MembersTable = () => {
               <TableRow>
                 <TablePagination
                   colSpan={6}
-                  count={membersRows.length}
+                  count={membersData.members.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onPageChange={handleChangePage}
@@ -151,13 +151,13 @@ const MembersTable = () => {
                   SelectProps={{
                     sx: {
                       border:
-                        currentTheme === 'dark'
+                        currentTheme === "dark"
                           ? `1px solid ${currentThemePalette.light}`
                           : null,
-                      '& .MuiList-root': {
-                        borderRadius: currentTheme === 'dark' ? 1 : null,
+                      "& .MuiList-root": {
+                        borderRadius: currentTheme === "dark" ? 1 : null,
                         border:
-                          currentTheme === 'dark'
+                          currentTheme === "dark"
                             ? `1px solid ${currentThemePalette.light}`
                             : null,
                         backgroundColor: currentThemePalette.bgPrimary,
@@ -167,15 +167,15 @@ const MembersTable = () => {
                   }}
                   sx={{
                     ...tableCellStyle,
-                    '& .MuiSvgIcon-root': {
+                    "& .MuiSvgIcon-root": {
                       color:
-                        currentTheme === 'dark'
+                        currentTheme === "dark"
                           ? currentThemePalette.text
                           : null,
                     },
-                    '& .MuiIconButton-root': {
+                    "& .MuiIconButton-root": {
                       color:
-                        currentTheme === 'dark'
+                        currentTheme === "dark"
                           ? currentThemePalette.light
                           : currentThemePalette.dark,
                     },
