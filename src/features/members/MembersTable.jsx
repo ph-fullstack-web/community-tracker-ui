@@ -21,9 +21,9 @@ import {
   projectData,
 } from "features/members/mockData";
 
-const MembersTableBodyCell = ({ children, sxProp }) => {
+const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   return (
-    <TableCell align="center" sx={sxProp}>
+    <TableCell align="center" sx={sxProp} {...otherProps}>
       {children}
     </TableCell>
   );
@@ -31,7 +31,7 @@ const MembersTableBodyCell = ({ children, sxProp }) => {
 
 const MembersTable = () => {
   const { id } = useParams();
-  const { isLoading, data: membersData /*isError, error*/ } = useGetMembers(id);
+  const { isLoading, data: membersData, isError, error } = useGetMembers(id);
   const membersDataModified = membersData
     ? Object.assign(membersData, {
         members: membersData?.members.map(member => ({
@@ -125,13 +125,15 @@ const MembersTable = () => {
             ))}
           </TableBody>
         )}
-        {/* {
-          isError && (
-            <TableBody>
-              <TableCell></TableCell>
-            </TableBody>
-          )
-        } */}
+        {isError && (
+          <TableBody>
+            <MembersTableBodyCell
+              colSpan={6}
+              sxProp={{ ...tableBodyCellStyle, py: 2.5 }}>
+              Error: {error.message}
+            </MembersTableBodyCell>
+          </TableBody>
+        )}
         {!isLoading && membersDataModified && (
           <>
             <TableBody>
