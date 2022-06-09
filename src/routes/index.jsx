@@ -34,12 +34,12 @@ const routes = [
     name: 'addcommunity',
   },
   {
-    path: '/resources/create',
+    path: '/resources/:community/create',
     element: <CreateResource/>,
     name: 'createresource'
   },
   {
-    path: '/resources/update/:id',
+    path: '/resources/:community/update/:peopleId',
     element: <UpdateResource/>,
     name: 'updateresource'
   }
