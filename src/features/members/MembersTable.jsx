@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
 import {
   Box,
@@ -31,6 +31,10 @@ const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
 
 const MembersTable = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+
   const { isLoading, data: membersData, isError, error } = useGetMembers(id);
   const membersDataModified = membersData
     ? Object.assign(membersData, {
@@ -43,14 +47,12 @@ const MembersTable = () => {
         })),
       })
     : null;
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
   const tableCellStyle = {
     border: `2px solid ${currentThemePalette.light}`,
     p: 1,
     color: currentThemePalette.text,
   };
-
   const tableBodyCellStyle = {
     ...tableCellStyle,
     backgroundColor: currentThemePalette.bgPrimary,
@@ -64,7 +66,6 @@ const MembersTable = () => {
     "jobLevel",
     "project",
   ];
-
   const titleCasedTableHeaders = tableHeaders.map(string =>
     convertCamelCaseToTitleCase(string)
   );
@@ -82,6 +83,10 @@ const MembersTable = () => {
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const navigateToUpdate = (communityId, peopleId) => {
+    navigate(`/resources/${communityId}/update/${peopleId}`);
   };
 
   return (
@@ -144,7 +149,15 @@ const MembersTable = () => {
                   )
                 : membersDataModified.members
               ).map(row => (
-                <TableRow key={row.people_id}>
+                <TableRow
+                  key={row.people_id}
+                  sx={{ cursor: "pointer" }}
+                  onClick={() =>
+                    navigateToUpdate(
+                      membersDataModified.community_id,
+                      row.people_id
+                    )
+                  }>
                   <MembersTableBodyCell sxProp={tableBodyCellStyle}>
                     {row.full_name}
                   </MembersTableBodyCell>
