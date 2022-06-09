@@ -122,13 +122,13 @@ const MembersTable = () => {
                     {row.full_name}
                   </MembersTableBodyCell>
                   <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                    {row.assigned_to}
+                    {membersData.manager?.full_name}
                   </MembersTableBodyCell>
                   <MembersTableBodyCell sxProp={tableBodyCellStyle}>
                     {row.hired_date_formatted}
                   </MembersTableBodyCell>
                   <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                    {row.state}
+                    {row.work_state}
                   </MembersTableBodyCell>
                   <MembersTableBodyCell sxProp={tableBodyCellStyle}>
                     {row.job_level}
