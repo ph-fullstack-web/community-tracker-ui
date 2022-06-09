@@ -13,7 +13,6 @@ import {
   TablePagination,
 } from "@mui/material";
 import useSwitchThemeContext from "hooks/Theme/useSwitchThemeContext";
-import { convertCamelCaseToTitleCase } from "utils/Format/Case";
 import useGetMembers from "hooks/People/useGetMembers";
 import { JobLevels } from "utils/constants/JobLevels";
 import { WorkStates } from "utils/constants/WorkStates";
@@ -56,16 +55,13 @@ const MembersTable = () => {
   };
 
   const tableHeaders = [
-    "name",
-    "assignedTo",
-    "hiredDate",
-    "state",
-    "jobLevel",
-    "project",
+    "Name",
+    "Assigned To",
+    "Hired Date",
+    "State",
+    "Job Level",
+    "Project",
   ];
-  const titleCasedTableHeaders = tableHeaders.map((string) =>
-    convertCamelCaseToTitleCase(string)
-  );
 
   const rowPlaceholders = [...Array(5).keys()];
   const columnPlaceholders = [...Array(6).keys()];
@@ -93,7 +89,7 @@ const MembersTable = () => {
         aria-label="members-table">
         <TableHead>
           <TableRow>
-            {titleCasedTableHeaders.map((header) => (
+            {tableHeaders.map((header) => (
               <TableCell
                 key={header}
                 align="center"
