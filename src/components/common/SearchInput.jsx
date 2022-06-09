@@ -1,6 +1,6 @@
 import { TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import useSwitchThemeContext from 'hooks/theme/useSwitchThemeContext';
+import useSwitchThemeContext from 'hooks/Theme/useSwitchThemeContext';
 
 export default function SearchInput() {
   const { currentThemePalette } = useSwitchThemeContext();

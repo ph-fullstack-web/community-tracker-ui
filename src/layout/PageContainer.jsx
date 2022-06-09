@@ -14,7 +14,7 @@ const PageContainer = ({ children }) => {
           currentTheme === "dark" ? currentThemePalette.dark : "#F3F6F8",
         border:
           currentTheme === "dark"
-            ? "1px solid ${currentThemePalette.light}"
+            ? `1px solid ${currentThemePalette.light}`
             : null,
         padding: "1px",
         marginTop: "2rem",
