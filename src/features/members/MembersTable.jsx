@@ -14,9 +14,7 @@ import {
 } from "@mui/material";
 import useSwitchThemeContext from "hooks/Theme/useSwitchThemeContext";
 import useGetMembers from "hooks/People/useGetMembers";
-import { JobLevels } from "utils/constants/JobLevels";
-import { WorkStates } from "utils/constants/WorkStates";
-import { Projects } from "utils/constants/Projects";
+import { JobLevels, WorkStates, Projects } from "utils/constants";
 
 const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   return (
