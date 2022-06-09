@@ -238,27 +238,7 @@ const MembersTable = () => {
                         },
                       },
                     }}
-                    sx={{
-                      ...tableCellStyle,
-                      "& .MuiSvgIcon-root": {
-                        color:
-                          currentTheme === "dark"
-                            ? currentThemePalette.text
-                            : null,
-                      },
-                      "& .MuiIconButton-root": {
-                        color:
-                          currentTheme === "dark"
-                            ? currentThemePalette.light
-                            : currentThemePalette.dark,
-                      },
-                      // '& .MuiIconButton-root.Mui-disabled': {
-                      //   color:
-                      //     currentTheme === 'dark'
-                      //       ? '#6565FF'
-                      //       : currentThemePalette.light,
-                      // },
-                    }}
+                    sx={tableCellStyle}
                   />
                 </TableRow>
               </TableFooter>
