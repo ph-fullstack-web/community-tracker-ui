@@ -13,28 +13,28 @@ import useGetProjects from "hooks/Projects/useGetProjects";
 import { useState } from "react";
 
 const JOB_LEVELS = {
-  COM_DIRECTOR: "Community Director",
-  COM_MANAGER: "Community Manager",
-  REG_SOL_ARCH: "Regional Solutions Architect",
-  SOL_ARCH: "Solutions Architect",
-  PR_DEVELOPER: "Principal Developer",
-  LEAD_DEVELOPER: "Lead Developer",
-  ASS_LEAD_DEVELOPER: "Associate Lead Developer",
-  SENIOR_DEVELOPER: "Senior Developer",
-  DEVELOPER: "Developer",
+  1: "Community Director",
+  2: "Community Manager",
+  3: "Regional Solutions Architect",
+  4: "Solutions Architect",
+  5: "Principal Developer",
+  6: "Lead Developer",
+  7: "Associate Lead Developer",
+  8: "Senior Developer",
+  9: "Developer",
 };
 
 const WORK_STATE = {
-  FIRST: "First Month",
-  SECOND: "Second Month",
-  THIRD: "Third Month",
-  FOURTH: "Fourth Month",
-  FIFTH: "Fifth Month",
-  ONBOARDING: "Onboarding",
-  REGULAR: "Regular",
+  1: "First Month",
+  2: "Second Month",
+  3: "Third Month",
+  4: "Fourth Month",
+  5: "Fifth Month",
+  6: "Onboarding",
+  7: "Regular",
 };
 
-const ResourcesForm = ({onSubmitHandler}) => {
+const ResourcesForm = ({onSubmitHandler, isProcessing}) => {
   const [resource, setResource] = useState({
     name: "",
     assignedTo: "",
@@ -329,6 +329,7 @@ const ResourcesForm = ({onSubmitHandler}) => {
           }}>
             <Button
               variant="contained"
+              disabled={isProcessing}
               size="large"
               sx={{
                 textTransform: "uppercase",
