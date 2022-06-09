@@ -246,7 +246,7 @@ const ResourcesForm = ({onSubmitHandler}) => {
                 }}
                 fullWidth
               >
-                <InputLabel>Projects</InputLabel>
+                <InputLabel>Project</InputLabel>
                 <Select
                   name="project"
                   required
