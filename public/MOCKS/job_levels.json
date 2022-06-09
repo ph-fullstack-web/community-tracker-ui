@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "job_level_desc": "Community Director"
+  },
+  {
+    "id": 2,
+    "job_level_desc": "Community Manager"
+  },
+  {
+    "id": 3,
+    "job_level_desc": "Regional Solutions Architect"
+  },
+  {
+    "id": 4,
+    "job_level_desc": "Solutions Architect"
+  },
+  {
+    "id": 5,
+    "job_level_desc": "Principal Developer"
+  },
+  {
+    "id": 6,
+    "job_level_desc": "Lead Developer"
+  },
+  {
+    "id": 7,
+    "job_level_desc": "Associate Lead Developer"
+  },
+  {
+    "id": 8,
+    "job_level_desc": "Senior Developer"
+  },
+  {
+    "id": 9,
+    "job_level_desc": "Developer"
+  }
+]
