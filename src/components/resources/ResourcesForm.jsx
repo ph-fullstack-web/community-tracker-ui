@@ -33,7 +33,7 @@ const WORK_STATE = {
   REGULAR: "Regular",
 };
 
-const ResourcesForm = () => {
+const ResourcesForm = ({onSubmitHandler}) => {
   const [resource, setResource] = useState({
     name: "",
     assignedTo: "",
@@ -54,6 +54,11 @@ const ResourcesForm = () => {
 
   const { isLoading, data: communityManagers } = useGetManagers();
 
+  const onSubmit = (event) => {
+    event.preventDefault();
+    onSubmitHandler(resource)
+  }
+
   return (
     <Box
       style={{
@@ -61,7 +66,7 @@ const ResourcesForm = () => {
         marginBottom: "1rem",
       }}
     >
-      <Grid container>
+      <Grid container component={'form'} onSubmit={onSubmit} >
         <Grid id="inputs-grid" item lg={5} md={12} sm={12} xs={12}>
           <Grid container gap={2} item sm={12} md={12} lg={12}>
             <Grid item xs={12} sm={12} md={7} lg={6}>

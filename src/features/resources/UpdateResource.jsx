@@ -3,11 +3,16 @@ import PageContainer from "layout/PageContainer";
 import ResourcesForm from "components/resources/ResourcesForm";
 
 const UpdateResource = () => {
+
+  const onUpdateResource = (data) => {
+    console.log('update resource', data)
+  }
+
   return (
     <PageContainer>
         <PageTitle title="Resource Update Page" />
 
-        <ResourcesForm/>
+        <ResourcesForm onSubmitHandler={onUpdateResource}/>
     </PageContainer>
   );
 };

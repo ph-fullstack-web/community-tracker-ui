@@ -3,11 +3,15 @@ import PageContainer from "layout/PageContainer";
 import ResourcesForm from "components/resources/ResourcesForm";
 
 const CreateResource = () => {
+
+  const onCreateResource = (data) => {
+    console.log('create resource', data)
+  }
   return (
     <PageContainer>
         <PageTitle title="Resource Input Page" />
 
-        <ResourcesForm/>
+        <ResourcesForm onSubmitHandler={onCreateResource}/>
     </PageContainer>
   );
 };
