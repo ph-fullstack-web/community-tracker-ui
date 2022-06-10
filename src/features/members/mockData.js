@@ -99,3 +99,35 @@ export const rowData = [
     id: '0011',
   },
 ];
+
+export const jobLevelData = [
+  { id: 1, job_level_desc: 'Community Director' },
+  { id: 2, job_level_desc: 'Community Manager' },
+  { id: 3, job_level_desc: 'Regional Solutions Architect' },
+  { id: 4, job_level_desc: 'Solutions Architect' },
+  { id: 5, job_level_desc: 'Principal Developer' },
+  { id: 6, job_level_desc: 'Lead Developer' },
+  { id: 7, job_level_desc: 'Associate Lead Developer' },
+  { id: 8, job_level_desc: 'Senior Developer' },
+  { id: 9, job_level_desc: 'Developer' },
+];
+
+export const workStateData = [
+  { id: 1, work_state_desc: '1st Month' },
+  { id: 2, work_state_desc: '2nd Month' },
+  { id: 3, work_state_desc: '3rd Month' },
+  { id: 4, work_state_desc: '4th Month' },
+  { id: 5, work_state_desc: '5th Month' },
+  { id: 6, work_state_desc: 'Onboarding' },
+  { id: 7, work_state_desc: 'Regular' },
+];
+
+export const projectData = [
+  { id: 1, project_desc: 'Magenic PDP Bench' },
+  { id: 2, project_desc: 'ATI' },
+  { id: 3, project_desc: 'Earnst & Young' },
+  { id: 4, project_desc: 'Fiserv' },
+  { id: 5, project_desc: 'Warner Music Group' },
+  { id: 6, project_desc: 'Merchants Fleet' },
+  { id: 7, project_desc: 'Toyota' },
+];

@@ -15,25 +15,25 @@ const routes = [
     name: 'communities',
   },
   {
-    path: '/members',
+    path: '/resources/:id',
     element: <Members />,
-    name: 'members',
+    name: 'resources',
   },
   {
-    path: 'communities/update/:id',
+    path: '/communities/update/:id',
     element: <UpdateCommunity />,
     name: 'updatecommunity',
   },
   {
-    path: 'communities/add',
+    path: '/communities/add',
     element: <AddCommunity />,
     name: 'addcommunity',
   },
   {
-    path: 'communities/:id',
+    path: '/communities/:id',
     element: <GetCommunity />,
-    name: 'getcommunity',    
-  }
+    name: 'getcommunity',
+  },
 ];
 
 export default routes;
