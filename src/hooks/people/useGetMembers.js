@@ -1,7 +1,6 @@
 
 import { useQuery } from "react-query";
-import { getMembers } from "services/people-service/GetMembers";
-
+import {getMembers} from "services"
 
 const useGetMembers = (id) => {
     

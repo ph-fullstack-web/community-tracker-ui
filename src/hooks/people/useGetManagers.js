@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getManagers } from "services/people-service/GetManagers";
+import { getManagers } from "services";
 
 const useGetManagers = () => {
   const { isLoading, isError, data, error, refetch } = useQuery(

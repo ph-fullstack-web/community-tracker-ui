@@ -1,6 +1,15 @@
-import axios from "axios";
+import addCommunityService from "./community-service/addCommunityService";
+import { getCommunities } from "./community-service/getCommunity";
+import { getCommunityById } from "./community-service/getCommunityById";
+import updateCommunityService from "./community-service/updateCommunityService";
+import { getManagers } from "./people-service/getManagers";
+import {getMembers} from "./people-service/getMembers";
 
-export default axios.create({
-    // change when API ready to integrate
-    baseURL: 'http://localhost:8000'
-})
+export {
+    addCommunityService,
+    getCommunities,
+    getCommunityById,
+    updateCommunityService,
+    getManagers,
+    getMembers
+}

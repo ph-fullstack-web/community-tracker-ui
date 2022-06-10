@@ -1,7 +1,7 @@
 
-import axiosInstance from '../index';
+import axiosInstance from '../axios/index';
 
-const UpdateCommunityService = async ({id,data}) => {
+const updateCommunityService = async ({id,data}) => {
     try{
         const response = await axiosInstance({
             headers:{
@@ -19,4 +19,4 @@ const UpdateCommunityService = async ({id,data}) => {
 
 }
 
-export default UpdateCommunityService
+export default updateCommunityService

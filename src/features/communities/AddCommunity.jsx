@@ -1,14 +1,14 @@
 import PageTitle from "layout/PageTitle";
 import PageContainer from "layout/PageContainer";
 import CommunityForm from "components/community/CommunityForm";
-import AddCommunityService from "services/community-service/AddCommunityService";
+import { addCommunityService } from "services";
 
 
 const AddCommunity = () => {
   return (
     <PageContainer>
       <PageTitle title="Community Input Page." />
-      <CommunityForm onClickHandler={AddCommunityService} buttonText={"SAVE"} />
+      <CommunityForm onClickHandler={addCommunityService} buttonText={"SAVE"} />
     </PageContainer>
   );
 };
