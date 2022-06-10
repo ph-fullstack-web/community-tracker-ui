@@ -187,7 +187,7 @@ const MembersTable = () => {
                     onClick={() =>
                       navigateToUpdate(
                         membersDataModified.community_id,
-                        row.cognizantid_id
+                        row.people_id
                       )
                     }>
                     <MembersTableBodyCell sxProp={tableBodyCellStyle}>
