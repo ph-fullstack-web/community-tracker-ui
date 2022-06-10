@@ -2,9 +2,9 @@ import { useParams } from "react-router-dom";
 import PageTitle from "layout/PageTitle";
 import PageContainer from "layout/PageContainer";
 import ResourcesForm from "components/resources/ResourcesForm";
-import useGetPeopleById from "hooks/People/useGetPeopleById";
+import useGetPeopleById from "hooks/people/useGetPeopleById";
 import { useMemo } from "react";
-
+import moment from "moment";
 
 const UpdateResource = () => {
 
@@ -16,10 +16,11 @@ const UpdateResource = () => {
 
   const resourcePerson = useMemo(() => {
     if (resourceData) {
+      const hiredDate = moment(resourceData.hired_date, 'YYYY-MM-DD').format('YYYY-MM-DD');
       return {
         name: resourceData.full_name,
         state: resourceData.workstate_id,
-        hiredDate: resourceData.hired_date,
+        hiredDate: hiredDate,
         jobLevel: resourceData.joblevel_id,
         project: resourceData.project_id,
         email: resourceData.csv_email,

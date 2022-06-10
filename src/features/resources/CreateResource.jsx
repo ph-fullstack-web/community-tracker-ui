@@ -1,7 +1,7 @@
 import PageTitle from "layout/PageTitle";
 import PageContainer from "layout/PageContainer";
 import ResourcesForm from "components/resources/ResourcesForm";
-import useCreatePeople from "hooks/People/useCreatePeople";
+import useCreatePeople from "hooks/people/useCreatePeople";
 import { useParams } from "react-router-dom";
 const CreateResource = () => {
 

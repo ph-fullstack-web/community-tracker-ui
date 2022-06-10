@@ -1,4 +1,5 @@
-import { AddCommunity, UpdateCommunity, CreateResource, UpdateResource } from 'features';
+import { AddCommunity, UpdateCommunity, CreateResource, UpdateResource, GetCommunity } from 'features';
+
 import { lazy } from 'react';
 
 /* TODO:
@@ -19,9 +20,9 @@ const routes = [
     name: 'communities',
   },
   {
-    path: '/members',
+    path: '/resources/:id',
     element: <Members />,
-    name: 'members',
+    name: 'resources',
   },
   {
     path: '/communities/update/:id',
@@ -42,7 +43,12 @@ const routes = [
     path: '/resources/:community/update/:peopleId',
     element: <UpdateResource/>,
     name: 'updateresource'
-  }
+  },
+  {
+    path: '/communities/:id',
+    element: <GetCommunity />,
+    name: 'getcommunity',
+  },
 ];
 
 export default routes;

@@ -8,7 +8,7 @@ import {
   Grid,
   Box,
 } from "@mui/material";
-import useGetManagers from "hooks/People/useGetManagers";
+import useGetManagers from "hooks/people/useGetManagers"
 import useGetProjects from "hooks/Projects/useGetProjects";
 import { useState, useEffect } from "react";
 
@@ -257,6 +257,7 @@ const ResourcesForm = ({onSubmitHandler, isProcessing, resourcePerson}) => {
                   name="project"
                   required
                   value={resource.project}
+                  defaultValue=""
                   label="Projects"
                   onChange={(e) => onChangeHandler(e)}
                   sx={{

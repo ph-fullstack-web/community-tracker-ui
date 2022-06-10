@@ -9,7 +9,7 @@ import {
   Container,
 } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import useGetCommunities from "hooks/Communities/useGetCommunities";
+import useGetCommunities from "hooks/communities/useGetCommunities";
 import CommunityCard from "./CommunityCard";
 import { useNavigate } from "react-router-dom";
 const CommunityList = () => {
