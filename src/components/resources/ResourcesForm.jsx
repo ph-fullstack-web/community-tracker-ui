@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import useGetManagers from "hooks/People/useGetManagers";
 import useGetProjects from "hooks/Projects/useGetProjects";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const JOB_LEVELS = {
   1: "Community Director",
@@ -34,7 +34,7 @@ const WORK_STATE = {
   7: "Regular",
 };
 
-const ResourcesForm = ({onSubmitHandler, isProcessing}) => {
+const ResourcesForm = ({onSubmitHandler, isProcessing, resourcePerson}) => {
   const [resource, setResource] = useState({
     name: "",
     assignedTo: "",
@@ -46,6 +46,12 @@ const ResourcesForm = ({onSubmitHandler, isProcessing}) => {
     email: "",
     cognizantId: ""
   });
+
+  useEffect(() => {
+    if (resourcePerson) {
+      setResource((resourcePerson))
+    }
+  }, [resourcePerson])
 
   const onChangeHandler = (event) => {
     setResource((prevState) => ({
