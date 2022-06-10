@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, } from "react";
 import {
   Box,
   Button,
@@ -9,7 +9,7 @@ import {
   TextField,
 } from "@mui/material";
 
-import { useAuth } from "contexts/auth/AuthContext";
+import { useAuthContext } from "contexts/auth/AuthContext";
 
 const CREDENTIALS = [
   {
@@ -37,7 +37,7 @@ const CREDENTIALS = [
 
 const LoginModal = ({ open, handleClose }) => {
   const [credentials, setCredentials] = useState({ id: "", password: "" });
-  const { dispatch, state } = useAuth();
+  const { dispatch, state } = useAuthContext();
 
   const handleCredentials = (e) => {
     const value = e.target.value;
@@ -75,6 +75,7 @@ const LoginModal = ({ open, handleClose }) => {
             label="Cognizant ID"
             required
             type="number"
+            value={credentials.id}
           />
           <TextField
             name="password"
@@ -82,6 +83,7 @@ const LoginModal = ({ open, handleClose }) => {
             label="Password"
             required
             type="password"
+            value={credentials.password}
           />
         </Box>
       </DialogContent>

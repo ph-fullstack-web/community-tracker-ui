@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { Container } from "@mui/material";
-import { useLocalStorage, useSwitchThemeContext } from "hooks";
+import {  useSwitchThemeContext } from "hooks";
 import Navbar from "./Navbar";
 
 const PageContainer = ({ children }) => {

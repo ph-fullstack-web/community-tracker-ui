@@ -1,4 +1,5 @@
-import { createContext, useReducer, useContext } from "react"
+import { useLocalStorage } from "hooks";
+import { createContext, useReducer, useContext, useEffect } from "react"
 
 const AuthContext = createContext();
 
@@ -18,12 +19,10 @@ const authReducer = (state, action) => {
         }
         case 'LOGIN': {
             const { success, data } = action.payload;
-            console.log(data)
             return {
                 ...state,
                 loading: false,
                 credentials: { ...data },
-
                 success
             }
         }
@@ -31,7 +30,7 @@ const authReducer = (state, action) => {
             return {
                 ...state,
                 loading: false,
-                credentials: null
+                credentials: {}
             }
         }
         default: {
@@ -46,13 +45,19 @@ const AuthProvider = ({ children }) => {
         persistedState = authState
     }
     const [state, dispatch] = useReducer(authReducer, persistedState)
+
+    //persist state to localstorage
+    const {setValue} = useLocalStorage("authKey", {});
+    useEffect(() => {
+        setValue(state)
+    }, [state])
     // NOTE: you *might* need to memoize this value
     // Learn more in http://kcd.im/optimize-context
     const value = { state, dispatch }
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
-const useAuth = () => {
+const useAuthContext = () => {
     const context = useContext(AuthContext)
     if (context === undefined) {
         throw new Error('useAuth must be used within a AuthProvider')
@@ -60,4 +65,4 @@ const useAuth = () => {
     return context
 }
 
-export { AuthProvider, useAuth }
+export { AuthProvider, useAuthContext }

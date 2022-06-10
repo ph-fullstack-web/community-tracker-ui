@@ -5,7 +5,7 @@ import {  useSwitchThemeContext } from "hooks";
 
 const CommunityCard = ({ id, image, name }) => {
 
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+  const { currentThemePalette } = useSwitchThemeContext();
 
 
   return (
