@@ -12,9 +12,8 @@ import {
   TableFooter,
   TablePagination,
 } from "@mui/material";
-import useSwitchThemeContext from "hooks/theme/useSwitchThemeContext";
-import useGetMembers from "hooks/people/useGetMembers";
 import { JobLevels, WorkStates, Projects } from "utils/constants";
+import { useSwitchThemeContext, useGetMembers } from "hooks/";
 
 const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   return (
@@ -171,9 +170,9 @@ const MembersTable = () => {
               <TableBody>
                 {(rowsPerPage > 0
                   ? membersDataModified.members.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
                   : membersDataModified.members
                 ).map((row) => (
                   <TableRow

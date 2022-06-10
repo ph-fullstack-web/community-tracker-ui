@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "@mui/material";
-import { useSwitchThemeContext } from "hooks";
+import { useLocalStorage, useSwitchThemeContext } from "hooks";
 import Navbar from "./Navbar";
 
 const PageContainer = ({ children }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+  const localStoredValues = JSON.parse(window.localStorage.getItem('authKey'))
+
   return (
     <Container
       maxWidth="xl"
@@ -19,7 +21,7 @@ const PageContainer = ({ children }) => {
         padding: "1px",
         marginTop: "2rem",
       }}>
-      <Navbar />
+      <Navbar role={localStoredValues?.role} firstName={localStoredValues?.firstName} lastName={localStoredValues?.lastName} />
       {children}
     </Container>
   );

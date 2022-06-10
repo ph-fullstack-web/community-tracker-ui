@@ -3,7 +3,7 @@ import CommunityList from "./community/CommunityList";
 import AutocompleteInputChip from "./input-chip/AutocompleteInputChip";
 import PlusIconButton from "./common/PlusIconButton";
 import SearchInput from "./common/SearchInput";
-import ThemeSwitchButton from "./themeSwitcher/ThemeSwitchButton";
+import ThemeSwitchButton from "./theme-switcher/ThemeSwitchButton";
 import LoginModal from "./login/LoginModal";
 
 export {
