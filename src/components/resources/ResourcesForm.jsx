@@ -9,7 +9,7 @@ import {
   Box,
 } from "@mui/material";
 import useGetManagers from "hooks/people/useGetManagers"
-import useGetProjects from "hooks/Projects/useGetProjects";
+import useGetProjects from "hooks/projects/useGetProjects";
 import { useState, useEffect } from "react";
 
 const JOB_LEVELS = {

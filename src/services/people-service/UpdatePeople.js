@@ -1,4 +1,4 @@
-import axiosInstance from '../index';
+import axiosInstance from '../axios/index';
 
 export const updatePeople = async ({payload, peopleId}) =>  {
     try {

@@ -1,10 +1,10 @@
-import axiosInstance from '../index';
+import axiosInstance from "../axios/index";
 
 export const createPeople = async (payload) =>  {
     try {
         const response = await axiosInstance.post('/api/people', 
             {
-                "cognizantid_id": payload.cognizantId,
+                "cognizantid_id": parseInt(payload.cognizantId),
                 "full_name": payload.name,
                 "csv_email": payload.email,
                 "hired_date": payload.hiredDate,

@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getProjects } from "services/ProjectService/GetProjects";
+import { getProjects } from "services/project-service/GetProjects";
 
 const useGetProjects = () => {
     
