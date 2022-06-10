@@ -55,6 +55,7 @@ const LoginModal = ({ open, handleClose }) => {
           type: "LOGIN",
           payload: { success: "success", data },
         });
+        handleClose()
       }
     });
   };
