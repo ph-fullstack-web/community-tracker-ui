@@ -96,26 +96,6 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                     </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={7}>
-                    {
-                        /*
-                    <Box sx={{
-                        display: "flex",
-                        mt: 5,
-                        pt: 3,
-                        justifyContent: "center",
-
-                    }}>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    name="isActive"
-                                    checked={communityDetails.isActive}
-                                    onChange={!community ? (e) => setCommunityDetails({ ...communityDetails, [e.target.name]: !communityDetails.isActive }) : () => { }} />} label="Active" align='center' />
-                    </Box>
-
-                         */
-                    }
-
                 </Grid>
                 <Grid item xs={12} sm={7}>
                     <TextField

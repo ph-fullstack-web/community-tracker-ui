@@ -12,14 +12,13 @@ import {
   TableFooter,
   TablePagination,
 } from "@mui/material";
-import useSwitchThemeContext from "hooks/Theme/useSwitchThemeContext";
-import { convertCamelCaseToTitleCase } from "utils/Format/Case";
-import useGetMembers from "hooks/People/useGetMembers";
+import { useSwitchThemeContext, useGetMembers } from "hooks/";
 import {
   jobLevelData,
   workStateData,
   projectData,
 } from "features/members/mockData";
+import { convertCamelCaseToTitleCase } from "utils";
 
 const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   return (
@@ -38,14 +37,14 @@ const MembersTable = () => {
   const { isLoading, data: membersData, isError, error } = useGetMembers(id);
   const membersDataModified = membersData
     ? Object.assign(membersData, {
-        members: membersData?.members.map((member) => ({
-          ...member,
-          hired_date_formatted: moment(member.hired_date).format("MM/DD/YYYY"),
-          job_level: jobLevelData[member.joblevel_id - 1].job_level_desc,
-          work_state: workStateData[member.workstate_id - 1].work_state_desc,
-          project: projectData[member.project_id - 1].project_desc,
-        })),
-      })
+      members: membersData?.members.map((member) => ({
+        ...member,
+        hired_date_formatted: moment(member.hired_date).format("MM/DD/YYYY"),
+        job_level: jobLevelData[member.joblevel_id - 1].job_level_desc,
+        work_state: workStateData[member.workstate_id - 1].work_state_desc,
+        project: projectData[member.project_id - 1].project_desc,
+      })),
+    })
     : null;
 
   const tableCellStyle = {
@@ -177,9 +176,9 @@ const MembersTable = () => {
               <TableBody>
                 {(rowsPerPage > 0
                   ? membersDataModified.members.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
                   : membersDataModified.members
                 ).map((row) => (
                   <TableRow
