@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import {
     TextField, FormControl, Select, MenuItem, InputLabel,
-    Button, FormControlLabel, Checkbox, Grid, Box
+    Button, Grid, Box
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetManagers } from "hooks";
@@ -31,13 +31,13 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
         e.preventDefault()
 
         const data = {
-            Communityname: communityDetails.communityName,
-            Communitymgrpeopleid: communityDetails.communityManagerId,
-            Isactive: communityDetails.isActive,
-            Communitydescription: communityDetails.communityDescription
+            community_name: communityDetails.communityName,
+            community_manager: communityDetails.communityManagerId,
+            community_description: communityDetails.communityDescription
         }
 
         onClickHandler({ id, data })
+
 
     }
 
@@ -96,21 +96,6 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                     </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={7}>
-                    <Box sx={{
-                        display: "flex",
-                        mt: 5,
-                        pt: 3,
-                        justifyContent: "center",
-
-                    }}>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    name="isActive"
-                                    checked={communityDetails.isActive}
-                                    onChange={!community ? (e) => setCommunityDetails({ ...communityDetails, [e.target.name]: !communityDetails.isActive }) : () => { }} />} label="Active" align='center' />
-                    </Box>
-
                 </Grid>
                 <Grid item xs={12} sm={7}>
                     <TextField
