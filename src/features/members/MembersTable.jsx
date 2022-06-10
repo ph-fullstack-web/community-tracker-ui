@@ -79,7 +79,9 @@ const MembersTable = () => {
   };
 
   useEffect(() => {
-    document.querySelector("body").scrollIntoView();
+    if (rowsPerPage !== 10) {
+      document.querySelector("body").scrollIntoView();
+    }
   }, [page, rowsPerPage]);
 
   return (
