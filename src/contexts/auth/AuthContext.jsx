@@ -12,14 +12,15 @@ const authReducer = (state, action) => {
     switch (action.type) {
         case "AUTH_LOADING": {
             return {
-                ...authState,
+                ...state,
                 loading: true
             }
         }
         case 'LOGIN': {
             const { success, data } = action.payload;
+            console.log(data)
             return {
-                ...authState,
+                ...state,
                 loading: false,
                 credentials: { ...data },
 
@@ -28,7 +29,7 @@ const authReducer = (state, action) => {
         }
         case 'LOGOUT': {
             return {
-                ...authState,
+                ...state,
                 loading: false,
                 credentials: null
             }
@@ -40,7 +41,11 @@ const authReducer = (state, action) => {
 }
 
 const AuthProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(authReducer, authState)
+    let persistedState = JSON.parse(localStorage.getItem('authKey'))
+    if (!persistedState) {
+        persistedState = authState
+    }
+    const [state, dispatch] = useReducer(authReducer, persistedState)
     // NOTE: you *might* need to memoize this value
     // Learn more in http://kcd.im/optimize-context
     const value = { state, dispatch }
