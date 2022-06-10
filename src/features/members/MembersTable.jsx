@@ -13,12 +13,12 @@ import {
   TablePagination,
 } from "@mui/material";
 import { useSwitchThemeContext, useGetMembers } from "hooks/";
-import { convertCamelCaseToTitleCase } from "utils";
 import {
   jobLevelData,
   workStateData,
   projectData,
 } from "features/members/mockData";
+import { convertCamelCaseToTitleCase } from "utils";
 
 const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   return (
