@@ -4,12 +4,13 @@ import { getCommunityById } from "./community-service/getCommunityById";
 import updateCommunityService from "./community-service/updateCommunityService";
 import { getManagers } from "./people-service/getManagers";
 import {getMembers} from "./people-service/getMembers";
-
+import { getProjects } from "./ProjectsService/getProjects";
 export {
     addCommunityService,
     getCommunities,
     getCommunityById,
     updateCommunityService,
     getManagers,
-    getMembers
+    getMembers,
+    getProjects
 }
