@@ -1,11 +1,14 @@
-import axiosInstance from '../index';
+import axiosInstance from '../axios/index';
 
-const AddCommunityService = async ({data}) => {
+const addCommunityService = async ({data}) => {
 
     try{
         const response = await axiosInstance({
+            headers:{
+                'Content-Type': 'application/json'
+            },
             method:"POST",
-            url: '/api/community/add',
+            url: '/api/community',
             data: data
         })
         return response.status
@@ -16,4 +19,4 @@ const AddCommunityService = async ({data}) => {
 
 }
 
-export default AddCommunityService
+export default addCommunityService
