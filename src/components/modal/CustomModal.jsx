@@ -1,13 +1,13 @@
-const { Modal } = require("@mui/material");
-const { Box } = require("@mui/system");
+import {Dialog , DialogContent, DialogTitle} from '@mui/material'
 
-const CustomModal = ({open , onClose, children , style}) => {
+const CustomModal = ({className, open , onClose, children, title}) => {
     return ( 
-        <Modal open={open} onClose={onClose}>
-            <Box sx={style}>
-                {children}
-            </Box>
-        </Modal>
+        <Dialog open={open} onClose={onClose} className={className}>
+            <DialogTitle>{title}</DialogTitle>
+                <DialogContent>
+                    {children}
+                </DialogContent>
+        </Dialog>
      );
 }
 
