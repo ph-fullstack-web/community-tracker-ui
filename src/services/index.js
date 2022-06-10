@@ -1,10 +1,10 @@
-import addCommunityService from "./community-service/addCommunityService";
-import { getCommunities } from "./community-service/getCommunity";
-import { getCommunityById } from "./community-service/getCommunityById";
-import updateCommunityService from "./community-service/updateCommunityService";
-import { getManagers } from "./people-service/getManagers";
-import {getMembers} from "./people-service/getMembers";
-import { getProjects } from "./ProjectsService/getProjects";
+import addCommunityService from "./community-service/AddCommunityService";
+import { getCommunities } from "./community-service/GetCommunity";
+import { getCommunityById } from "./community-service/GetCommunityById";
+import updateCommunityService from "./community-service/UpdateCommunityService";
+import { getManagers } from "./people-service/GetManagers";
+import {getMembers} from "./people-service/GetMembers";
+import { getProjects } from "./ProjectsService/GetProjects";
 export {
     addCommunityService,
     getCommunities,
