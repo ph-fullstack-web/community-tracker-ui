@@ -1,36 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import Logo from './Logo';
-import { useLocalStorage, useToggle } from 'hooks';
+import { useToggle } from 'hooks';
 import { ThemeSwitchButton, LoginModal } from 'components';
-import { useAuth } from "contexts/auth/AuthContext";
+import { useAuthContext } from "contexts/auth/AuthContext";
 
-const Navbar = ({ firstName, lastName, role }) => {
+const Navbar = () => {
 
-  const { state } = useAuth();
+  const { state: authState } = useAuthContext();
 
-  const [name, setName] = useLocalStorage("authKey", {});
+  
   const [toggle, setToggle] = useToggle();
 
   const handleToggle = () => {
     setToggle(!toggle);
   };
 
-
-  useEffect(() => {
-    if (state.success === "success") {
-      setName({ ...state.credentials })
-    }
-  }, [state.credentials, state.success,])
-
-
+  const loggedInName = useMemo(() => {
+    const {role, firstName, lastName} = authState.credentials;
+    return `${role} | ${firstName} ${lastName}`
+  }, [authState])
 
   return (
     <>
       <Box display="flex" justifyContent="space-between">
         <Logo />
         <Box display="flex" alignSelf="center" sx={{ ml: 'auto' }}>
-          {role ? <Typography>{role} | {firstName} {lastName}</Typography> : <Button onClick={handleToggle}>Signin as Admin</Button>}
+          {authState.credentials.role ? <Typography>{loggedInName}</Typography> : <Button onClick={handleToggle}>Signin as Admin</Button>}
         </Box>
         <Box display="flex" alignSelf="center">
           <ThemeSwitchButton />
