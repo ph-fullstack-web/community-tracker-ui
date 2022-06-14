@@ -30,7 +30,7 @@ const UpdateResource = () => {
             type: 'success',
             message: 'Member has been updated.'
           }
-        })
+        });
         navigate(`/resources/${community}`)
       },
       onError: (error) => {
@@ -40,7 +40,7 @@ const UpdateResource = () => {
             type: 'error',
             message: error.message
           }
-        })
+        });
       }
     })
   }
