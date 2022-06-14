@@ -5,7 +5,7 @@ const NotificationContext = createContext(null);
 
 const initialState = {
     visible: false,
-    type: undefined,
+    type: 'success',
     message: ''
 }
 
@@ -13,7 +13,7 @@ const notificationReducer = (state, {type, payload}) => {
     switch (type) {
         case 'RESET':
             return initialState;
-        case 'SET': 
+        case 'NOTIFY': 
             return {
                 ...state,
                 visible: true,
