@@ -162,7 +162,7 @@ const MembersTable = ({ search }) => {
   // Automatically scroll to top with some conditions
   useEffect(() => {
     if (rowsPerPage !== 10) {
-      document.querySelector("body").scrollIntoView();
+      document.querySelector("body").scrollIntoView({ behavior: "smooth" });
     }
   }, [page, rowsPerPage]);
 

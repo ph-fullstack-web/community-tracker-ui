@@ -10,7 +10,6 @@ const MembersMainContainer = () => {
   const navigateToCreate = (communityId) => {
     navigate(`/resources/${communityId}/create`);
   };
-
   const [search, setSearch] = useState("");
   const handleSearch = (event) => {
     setSearch(event.target.value);
@@ -24,7 +23,7 @@ const MembersMainContainer = () => {
       }}>
       <Stack direction="row" alignItems="center">
         <Box sx={{ width: { xs: "100%", md: "55ch" }, flex: "0 1 auto" }}>
-          <SearchInput onChangeCallback={handleSearch}/>
+          <SearchInput onChangeCallback={handleSearch} />
         </Box>
         <Box>
           <PlusIconButton
