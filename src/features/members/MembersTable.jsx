@@ -37,29 +37,19 @@ const MembersTable = ({ search }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
   const { isLoading, data: membersData, isError, error } = useGetMembers(id);
 
-  // const tableHeaders = [
-  //   "Name",
-  //   "Assigned To",
-  //   "Hired Date",
-  //   "State",
-  //   "Job Level",
-  //   "Project",
-  // ];
-
-  const TABLE_HEADERS = [
-    { value: "full_name", name: "Name", isIncludedInFilter: false },
-    { value: "assigned_to", name: "Assigned To", isIncludedInFilter: false },
+  const tableHeaders = [
+    { value: "full_name", name: "Name" },
+    { value: "assigned_to", name: "Assigned To" },
     {
       value: "hired_date_formatted",
       name: "Hired Date",
-      isIncludedInFilter: false,
     },
-    { value: "state", name: "State", isIncludedInFilter: false },
-    { value: "job_level", name: "Job Level", isIncludedInFilter: false },
-    { value: "project", name: "Project", isIncludedInFilter: false },
+    { value: "state", name: "State" },
+    { value: "job_level", name: "Job Level" },
+    { value: "project", name: "Project" },
   ];
 
-  const [tableHeaders, setTableHeaders] = useState(TABLE_HEADERS);
+  const [filters, setFilters] = useState([]);
 
   const rowData = useMemo(
     () =>
@@ -91,38 +81,11 @@ const MembersTable = ({ search }) => {
   //   };
   // };
 
-  // const rowDataFiltered = useMemo(() => debounce(() => {
-  //   if (!search) return rowData
-
-  //   return rowData.filter(member => {
-  //     for (const property in member) {
-  //       if (property === "people_id") continue;
-
-  //       const queryFound = member[property].toLowerCase().includes(search.toLowerCase())
-  //       console.log("queryFound", queryFound)
-
-  //       if(!queryFound) continue;
-
-  //       return true
-  //     }
-
-  //     return false
-  //   })
-  // }), [rowData, search])
-
   const rowDataFiltered = useMemo(() => {
     if (!search) return rowData;
 
-    const includedFilters = [];
-
-    tableHeaders.forEach((header) => {
-      if (header.isIncludedInFilter) {
-        includedFilters.push(header.value);
-      }
-    });
-
     return rowData.filter((member) => {
-      if (includedFilters.length === 0) {
+      if (filters.length === 0) {
         // Loop over member object and see if search is matched
         // to at least one property value
         for (const property in member) {
@@ -139,9 +102,9 @@ const MembersTable = ({ search }) => {
       } else {
         // Also loop over like in the if statement above
         // but add another validation that checks if current property
-        // is not included in includedFilter so that it can skip it
+        // is not included in filters state so that it can skip it
         for (const property in member) {
-          if (property === "people_id" || !includedFilters.includes(property)) {
+          if (property === "people_id" || !filters.includes(property)) {
             continue;
           }
 
@@ -157,7 +120,19 @@ const MembersTable = ({ search }) => {
 
       return false;
     });
-  }, [rowData, search, tableHeaders]);
+  }, [rowData, search, filters]);
+
+  const handleCheckboxChange = (event, headerValue) => {
+    let filterArray = [];
+
+    if (event.target.checked) {
+      filterArray = [...filters, headerValue];
+    } else {
+      filterArray = filters.filter((filter) => filter !== headerValue);
+    }
+
+    setFilters(filterArray);
+  };
 
   const tableCellStyle = {
     border: `2px solid ${currentThemePalette.light}`,
@@ -184,16 +159,6 @@ const MembersTable = ({ search }) => {
     setPage(0);
   };
 
-  const handleCheckboxChange = (index) => {
-    setTableHeaders((prevState) => {
-      return prevState.map((header, prevStateIdx) => {
-        return index === prevStateIdx
-          ? { ...header, isIncludedInFilter: !header.isIncludedInFilter }
-          : header;
-      });
-    });
-  };
-
   // Automatically scroll to top with some conditions
   useEffect(() => {
     if (rowsPerPage !== 10) {
@@ -208,51 +173,41 @@ const MembersTable = ({ search }) => {
         aria-label="members-table">
         <TableHead>
           <TableRow>
-            {tableHeaders.map((header, index) => (
+            {tableHeaders.map((header) => (
               <TableCell
-                key={index}
+                key={header.value}
                 align="center"
                 sx={{
                   ...tableCellStyle,
                   fontWeight: "bold",
                   backgroundColor: currentThemePalette.bgSecondary,
                 }}>
-                {isLoading && (
-                  <Skeleton
-                    sx={{
-                      backgroundColor:
-                        currentTheme === "dark"
-                          ? currentThemePalette.light
-                          : null,
-                    }}
-                  />
-                )}
-                {!isLoading && (
-                  <FormControlLabel
-                    value={header.value}
-                    control={
-                      <Checkbox
-                        icon={<FilterAltOutlinedIcon />}
-                        checkedIcon={<FilterAltIcon />}
-                        sx={{
+                <FormControlLabel
+                  value={header.value}
+                  control={
+                    <Checkbox
+                      icon={<FilterAltOutlinedIcon />}
+                      checkedIcon={<FilterAltIcon />}
+                      sx={{
+                        color:
+                          currentTheme === "dark"
+                            ? currentThemePalette.light
+                            : "#293A46",
+                        "&.Mui-checked": {
                           color:
                             currentTheme === "dark"
                               ? currentThemePalette.light
                               : "#293A46",
-                          "&.Mui-checked": {
-                            color:
-                              currentTheme === "dark"
-                                ? currentThemePalette.light
-                                : "#293A46",
-                          },
-                        }}
-                        onChange={() => handleCheckboxChange(index)}
-                      />
-                    }
-                    label={header.name}
-                    labelPlacement="start"
-                  />
-                )}
+                        },
+                      }}
+                      onChange={(event) =>
+                        handleCheckboxChange(event, header.value)
+                      }
+                    />
+                  }
+                  label={header.name}
+                  labelPlacement="start"
+                />
               </TableCell>
             ))}
           </TableRow>
