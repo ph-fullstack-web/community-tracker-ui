@@ -323,18 +323,34 @@ const MembersTable = ({ search }) => {
                         currentTheme === "dark"
                           ? `1px solid ${currentThemePalette.light}`
                           : null,
-                      "& .MuiList-root": {
-                        borderRadius: currentTheme === "dark" ? 1 : null,
-                        border:
+                      borderRadius: currentTheme === "dark" ? 1 : null,
+                      "& .MuiSvgIcon-root": {
+                        color:
                           currentTheme === "dark"
-                            ? `1px solid ${currentThemePalette.light}`
+                            ? currentThemePalette.light
                             : null,
-                        backgroundColor: currentThemePalette.bgPrimary,
-                        color: currentThemePalette.text,
+                      },
+                    },
+                    MenuProps: {
+                      sx: {
+                        "& .MuiList-root": {
+                          borderRadius: currentTheme === "dark" ? 1 : null,
+                          border:
+                            currentTheme === "dark"
+                              ? `1px solid ${currentThemePalette.light} !important`
+                              : null,
+                          backgroundColor: currentThemePalette.bgPrimary,
+                          color: currentThemePalette.text,
+                        },
                       },
                     },
                   }}
-                  sx={tableCellStyle}
+                  sx={{
+                    ...tableCellStyle,
+                    "& .MuiButtonBase-root.MuiIconButton-root.Mui-disabled": {
+                      color: currentTheme === "dark" ? "#293A46" : null,
+                    },
+                  }}
                 />
               </TableRow>
             </TableFooter>
