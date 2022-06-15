@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
 import {
@@ -23,7 +23,7 @@ const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   );
 };
 
-const MembersTable = () => {
+const MembersTable = ({search}) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const navigateToUpdate = (communityId, peopleId) => {
@@ -32,17 +32,68 @@ const MembersTable = () => {
 
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
   const { isLoading, data: membersData, isError, error } = useGetMembers(id);
-  const membersDataModified = membersData
-    ? Object.assign(membersData, {
-        members: membersData?.members.map((member) => ({
-          ...member,
-          hired_date_formatted: moment(member.hired_date).format("MM/DD/YYYY"),
-          job_level: JobLevels[member.joblevel_id],
-          work_state: WorkStates[member.workstate_id],
-          project: Projects[member.project_id],
-        })),
-      })
-    : null;
+
+  const rowData = useMemo(() => membersData
+  ? membersData.members.map((member) => ({
+    people_id: member.people_id,
+    full_name: member.full_name,
+    assigned_to: membersData.manager?.full_name,
+    hired_date_formatted: moment(member.hired_date).format("MM/DD/YYYY"),
+    job_level: JobLevels[member.joblevel_id],
+    work_state: WorkStates[member.workstate_id],
+    project: Projects[member.project_id],
+  }))
+  : null, [membersData]);
+
+  // const debounce = (func) => {
+  //   let timer;
+  //   return function (...args) {
+  //     const context = this;
+  //     if (timer) clearTimeout(timer);
+  //     timer = setTimeout(() => {
+  //       timer = null;
+  //       func.apply(context, args);
+  //     }, 500);
+  //   };
+  // };
+
+  // const rowDataFiltered = useMemo(() => debounce(() => {
+  //   if (!search) return rowData
+
+  //   return rowData.filter(member => {
+  //     for (const property in member) {
+  //       if (property === "people_id") continue;
+
+  //       const queryFound = member[property].toLowerCase().includes(search.toLowerCase())
+  //       console.log("queryFound", queryFound)
+      
+
+  //       if(!queryFound) continue;
+
+  //       return true
+  //     }
+
+  //     return false
+  //   })
+  // }), [rowData, search])
+
+  const rowDataFiltered = useMemo(() => {
+    if (!search) return rowData
+
+    return rowData.filter(member => {
+      for (const property in member) {
+        if (property === "people_id") continue;
+
+        const queryFound = member[property].toLowerCase().includes(search.toLowerCase())
+
+        if(!queryFound) continue;
+
+        return true
+      }
+
+      return false
+    })
+  }, [rowData, search])
 
   const tableCellStyle = {
     border: `2px solid ${currentThemePalette.light}`,
@@ -78,6 +129,7 @@ const MembersTable = () => {
     setPage(0);
   };
 
+  // Automatically scroll to top with some conditions
   useEffect(() => {
     if (rowsPerPage !== 10) {
       document.querySelector("body").scrollIntoView();
@@ -153,8 +205,8 @@ const MembersTable = () => {
           </TableBody>
         )}
         {!isLoading &&
-          membersDataModified &&
-          membersDataModified.members.length === 0 && (
+          rowDataFiltered &&
+          rowDataFiltered.length === 0 && (
             <TableBody>
               <TableRow>
                 <MembersTableBodyCell
@@ -166,23 +218,23 @@ const MembersTable = () => {
             </TableBody>
           )}
         {!isLoading &&
-          membersDataModified &&
-          membersDataModified.members.length > 0 && (
+          rowDataFiltered &&
+          rowDataFiltered.length > 0 && (
             <>
               <TableBody>
                 {(rowsPerPage > 0
-                  ? membersDataModified.members.slice(
+                  ? rowDataFiltered.slice(
                     page * rowsPerPage,
                     page * rowsPerPage + rowsPerPage
                   )
-                  : membersDataModified.members
+                  : rowDataFiltered
                 ).map((row) => (
                   <TableRow
                     key={row.people_id}
                     sx={{ cursor: "pointer" }}
                     onClick={() =>
                       navigateToUpdate(
-                        membersDataModified.community_id,
+                        membersData.community_id,
                         row.people_id
                       )
                     }>
@@ -190,7 +242,7 @@ const MembersTable = () => {
                       {row.full_name}
                     </MembersTableBodyCell>
                     <MembersTableBodyCell sxProp={tableBodyCellStyle}>
-                      {membersDataModified.manager?.full_name}
+                      {row.assigned_to}
                     </MembersTableBodyCell>
                     <MembersTableBodyCell sxProp={tableBodyCellStyle}>
                       {row.hired_date_formatted}
@@ -211,7 +263,7 @@ const MembersTable = () => {
                 <TableRow>
                   <TablePagination
                     colSpan={6}
-                    count={membersDataModified.members.length}
+                    count={rowDataFiltered.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
