@@ -139,10 +139,13 @@ const MembersTable = ({ search }) => {
     p: 1,
     color: currentThemePalette.text,
   };
-  const tableBodyCellStyle = {
-    ...tableCellStyle,
-    backgroundColor: currentThemePalette.bgPrimary,
-  };
+  // const tableBodyCellStyle = {
+  //   ...tableCellStyle,
+  //   backgroundColor: currentThemePalette.bgPrimary,
+  //   ":hover": {
+  //     backgroundColor: currentThemePalette.light,
+  //   },
+  // };
 
   const rowPlaceholders = [...Array(5).keys()];
   const columnPlaceholders = [...Array(6).keys()];
@@ -243,7 +246,7 @@ const MembersTable = ({ search }) => {
             <TableRow>
               <MembersTableBodyCell
                 colSpan={6}
-                sxProp={{ ...tableBodyCellStyle, py: 2.5 }}>
+                sxProp={{ ...tableCellStyle, py: 2.5 }}>
                 Error: {error.message}
               </MembersTableBodyCell>
             </TableRow>
@@ -254,7 +257,7 @@ const MembersTable = ({ search }) => {
             <TableRow>
               <MembersTableBodyCell
                 colSpan={6}
-                sxProp={{ ...tableBodyCellStyle, py: 2.5 }}>
+                sxProp={{ ...tableCellStyle, py: 2.5 }}>
                 No members found for this community
               </MembersTableBodyCell>
             </TableRow>
@@ -272,26 +275,34 @@ const MembersTable = ({ search }) => {
               ).map((row) => (
                 <TableRow
                   key={row.people_id}
-                  sx={{ cursor: "pointer" }}
+                  hover
+                  sx={{
+                    cursor: "pointer",
+                    backgroundColor: currentThemePalette.bgPrimary,
+                    "&:hover": {
+                      backgroundColor:
+                        currentTheme === "dark" ? "#293A46 !important" : null,
+                    },
+                  }}
                   onClick={() =>
                     navigateToUpdate(membersData.community_id, row.people_id)
                   }>
-                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                  <MembersTableBodyCell sxProp={tableCellStyle}>
                     {row.full_name}
                   </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                  <MembersTableBodyCell sxProp={tableCellStyle}>
                     {row.assigned_to}
                   </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                  <MembersTableBodyCell sxProp={tableCellStyle}>
                     {row.hired_date_formatted}
                   </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                  <MembersTableBodyCell sxProp={tableCellStyle}>
                     {row.work_state}
                   </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                  <MembersTableBodyCell sxProp={tableCellStyle}>
                     {row.job_level}
                   </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableBodyCellStyle}>
+                  <MembersTableBodyCell sxProp={tableCellStyle}>
                     {row.project}
                   </MembersTableBodyCell>
                 </TableRow>
