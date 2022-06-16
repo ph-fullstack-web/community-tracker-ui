@@ -1,11 +1,10 @@
 import { Container } from "@mui/material";
 import SnackBar from "components/notification/SnackBar";
-import {  useSwitchThemeContext } from "hooks";
+import { useSwitchThemeContext } from "hooks";
 import Navbar from "./Navbar";
 
 const PageContainer = ({ children }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const localStoredValues = JSON.parse(window.localStorage.getItem('authKey'))
 
   return (
     <Container
@@ -21,9 +20,9 @@ const PageContainer = ({ children }) => {
         padding: "1px",
         marginTop: "2rem",
       }}>
-      <Navbar role={localStoredValues?.role} firstName={localStoredValues?.firstName} lastName={localStoredValues?.lastName} />
+      <Navbar />
       {children}
-      <SnackBar/>
+      <SnackBar />
     </Container>
   );
 };
