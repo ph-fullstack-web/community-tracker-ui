@@ -1,4 +1,5 @@
 import { Container } from "@mui/material";
+import SnackBar from "components/notification/SnackBar";
 import {  useSwitchThemeContext } from "hooks";
 import Navbar from "./Navbar";
 
@@ -22,6 +23,7 @@ const PageContainer = ({ children }) => {
       }}>
       <Navbar role={localStoredValues?.role} firstName={localStoredValues?.firstName} lastName={localStoredValues?.lastName} />
       {children}
+      <SnackBar/>
     </Container>
   );
 };
