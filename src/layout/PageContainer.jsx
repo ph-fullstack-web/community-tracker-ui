@@ -2,6 +2,7 @@ import { Container } from "@mui/material";
 import { useSwitchThemeContext } from "hooks";
 import PersistentDrawerLeft from "./Drawer";
 import SnackBar from "components/notification/SnackBar";
+import Navbar from "./Navbar";
 
 const PageContainer = ({ children }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
@@ -20,6 +21,7 @@ const PageContainer = ({ children }) => {
         padding: "1px",
         marginTop: "2rem",
       }}>
+      <Navbar />
       <PersistentDrawerLeft>
         {children}
       </PersistentDrawerLeft>
