@@ -69,18 +69,6 @@ const MembersTable = ({ search }) => {
     [membersData]
   );
 
-  // const debounce = (func) => {
-  //   let timer;
-  //   return function (...args) {
-  //     const context = this;
-  //     if (timer) clearTimeout(timer);
-  //     timer = setTimeout(() => {
-  //       timer = null;
-  //       func.apply(context, args);
-  //     }, 500);
-  //   };
-  // };
-
   const rowDataFiltered = useMemo(() => {
     if (!search) return rowData;
 
@@ -139,13 +127,6 @@ const MembersTable = ({ search }) => {
     p: 1,
     color: currentThemePalette.text,
   };
-  // const tableBodyCellStyle = {
-  //   ...tableCellStyle,
-  //   backgroundColor: currentThemePalette.bgPrimary,
-  //   ":hover": {
-  //     backgroundColor: currentThemePalette.light,
-  //   },
-  // };
 
   const rowPlaceholders = [...Array(5).keys()];
   const columnPlaceholders = [...Array(6).keys()];
@@ -168,6 +149,11 @@ const MembersTable = ({ search }) => {
       document.querySelector("body").scrollIntoView({ behavior: "smooth" });
     }
   }, [page, rowsPerPage]);
+
+  // Reset page count when search always changes
+  useEffect(() => {
+    setPage(0);
+  }, [search]);
 
   return (
     <Box sx={{ overflowX: "auto" }} id="members-table-container">
@@ -258,7 +244,9 @@ const MembersTable = ({ search }) => {
               <MembersTableBodyCell
                 colSpan={6}
                 sxProp={{ ...tableCellStyle, py: 2.5 }}>
-                No members found for this community
+                {search || filters.length > 0
+                  ? "No results found"
+                  : "No members found for this community"}
               </MembersTableBodyCell>
             </TableRow>
           </TableBody>
