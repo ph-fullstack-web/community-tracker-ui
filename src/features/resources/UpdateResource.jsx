@@ -4,6 +4,7 @@ import PageContainer from "layout/PageContainer";
 import ResourcesForm from "components/resources/ResourcesForm";
 import useGetPeopleById from "hooks/people/useGetPeopleById";
 import useUpdatePeople from "hooks/people/useUpdatePeople";
+import { useNotificationContext } from "contexts/notification/NotificationContext";
 import { useMemo } from "react";
 import moment from "moment";
 
@@ -12,6 +13,7 @@ const UpdateResource = () => {
   const {community, peopleId} = useParams();
   const {isLoading, data: resourceData} = useGetPeopleById(peopleId)
   const {mutate: updatePeople, isLoading: isUpdating} = useUpdatePeople()
+  const {dispatch: notificationDispatch} = useNotificationContext();
   const navigate = useNavigate();
 
 
@@ -21,12 +23,24 @@ const UpdateResource = () => {
       payload: data
     }
     updatePeople(args, {
-      onSuccess: (response) => {
-        alert(response.message)
+      onSuccess: () => {
+        notificationDispatch({
+          type: 'NOTIFY',
+          payload: {
+            type: 'success',
+            message: 'Member has been updated.'
+          }
+        });
         navigate(`/resources/${community}`)
       },
       onError: (error) => {
-        console.log(error)
+        notificationDispatch({
+          type: 'NOTIFY',
+          payload: {
+            type: 'error',
+            message: error.message
+          }
+        });
       }
     })
   }

@@ -4,12 +4,15 @@ import routeList from 'routes';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { SwitchThemeContextProvider } from 'contexts/theme/SwitchThemeContext';
 import { AuthProvider } from 'contexts/auth/AuthContext';
+import { NotificationProvider } from 'contexts/notification/NotificationContext';
+
 
 function App() {
   const queryClient = new QueryClient();
   return (
     <SwitchThemeContextProvider>
       <AuthProvider>
+        <NotificationProvider>
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>
             <Routes>
@@ -20,6 +23,7 @@ function App() {
           </BrowserRouter>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
+        </NotificationProvider>
       </AuthProvider>
     </SwitchThemeContextProvider>
   );

@@ -1,6 +1,7 @@
 import { Container } from "@mui/material";
 import { useSwitchThemeContext } from "hooks";
 import PersistentDrawerLeft from "./Drawer";
+import SnackBar from "components/notification/SnackBar";
 
 const PageContainer = ({ children }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
@@ -22,6 +23,8 @@ const PageContainer = ({ children }) => {
       <PersistentDrawerLeft>
         {children}
       </PersistentDrawerLeft>
+
+      <SnackBar />
     </Container>
   );
 };
