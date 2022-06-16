@@ -1,6 +1,13 @@
 import { Typography, Card, Divider, CardContent, Grid } from "@mui/material";
+import { Link } from "react-router-dom";
+import SettingsIcon from '@mui/icons-material/Settings';
+import {  useSwitchThemeContext } from "hooks";
 
 const CommunityCard = ({ id, image, name }) => {
+
+  const { currentThemePalette } = useSwitchThemeContext();
+
+
   return (
     <Grid
       key={id}
@@ -27,7 +34,7 @@ const CommunityCard = ({ id, image, name }) => {
           textAlign: "center",
           marginTop: "1rem",
           color: "#FFFFFF",
-          backgroundColor: `primary.main`,
+          backgroundColor: currentThemePalette.bgSecondary,
         }}
       >
         <CardContent
@@ -37,9 +44,12 @@ const CommunityCard = ({ id, image, name }) => {
             alignItems: "center",
             paddingTop: "1em",
             cursor: "pointer",
+            textDecoration: "none"
           }}
+          component={Link}
+          to={`/communities/update/${id}`}
         >
-          <img src={image} height="60px" width="60px" alt="community icon" />
+          <SettingsIcon/>
           <Typography
             component="label"
             align="center"
@@ -50,6 +60,7 @@ const CommunityCard = ({ id, image, name }) => {
               fontWeight: "600",
               fontStyle: "italic",
               display: "block",
+              cursor: "pointer",
             }}
           >
             {name}

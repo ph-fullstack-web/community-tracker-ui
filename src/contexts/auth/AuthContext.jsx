@@ -1,4 +1,5 @@
-import { createContext, useReducer, useContext } from "react"
+import { useLocalStorage } from "hooks";
+import { createContext, useReducer, useContext, useEffect } from "react"
 
 const AuthContext = createContext();
 
@@ -12,25 +13,24 @@ const authReducer = (state, action) => {
     switch (action.type) {
         case "AUTH_LOADING": {
             return {
-                ...authState,
+                ...state,
                 loading: true
             }
         }
         case 'LOGIN': {
             const { success, data } = action.payload;
             return {
-                ...authState,
+                ...state,
                 loading: false,
                 credentials: { ...data },
-
                 success
             }
         }
         case 'LOGOUT': {
             return {
-                ...authState,
+                ...state,
                 loading: false,
-                credentials: null
+                credentials: {}
             }
         }
         default: {
@@ -40,14 +40,24 @@ const authReducer = (state, action) => {
 }
 
 const AuthProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(authReducer, authState)
+    let persistedState = JSON.parse(localStorage.getItem('authKey'))
+    if (!persistedState) {
+        persistedState = authState
+    }
+    const [state, dispatch] = useReducer(authReducer, persistedState)
+
+    //persist state to localstorage
+    const {setValue} = useLocalStorage("authKey", {});
+    useEffect(() => {
+        setValue(state)
+    }, [state])
     // NOTE: you *might* need to memoize this value
     // Learn more in http://kcd.im/optimize-context
     const value = { state, dispatch }
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
-const useAuth = () => {
+const useAuthContext = () => {
     const context = useContext(AuthContext)
     if (context === undefined) {
         throw new Error('useAuth must be used within a AuthProvider')
@@ -55,4 +65,4 @@ const useAuth = () => {
     return context
 }
 
-export { AuthProvider, useAuth }
+export { AuthProvider, useAuthContext }

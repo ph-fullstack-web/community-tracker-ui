@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
 import {
@@ -12,13 +12,8 @@ import {
   TableFooter,
   TablePagination,
 } from "@mui/material";
+import { JobLevels, WorkStates, Projects } from "utils/constants";
 import { useSwitchThemeContext, useGetMembers } from "hooks/";
-import { convertCamelCaseToTitleCase } from "utils";
-import {
-  jobLevelData,
-  workStateData,
-  projectData,
-} from "features/members/mockData";
 
 const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   return (
@@ -31,20 +26,22 @@ const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
 const MembersTable = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const navigateToUpdate = (communityId, peopleId) => {
+    navigate(`/resources/${communityId}/update/${peopleId}`);
+  };
 
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-
   const { isLoading, data: membersData, isError, error } = useGetMembers(id);
   const membersDataModified = membersData
     ? Object.assign(membersData, {
-      members: membersData?.members.map((member) => ({
-        ...member,
-        hired_date_formatted: moment(member.hired_date).format("MM/DD/YYYY"),
-        job_level: jobLevelData[member.joblevel_id - 1].job_level_desc,
-        work_state: workStateData[member.workstate_id - 1].work_state_desc,
-        project: projectData[member.project_id - 1].project_desc,
-      })),
-    })
+        members: membersData?.members.map((member) => ({
+          ...member,
+          hired_date_formatted: moment(member.hired_date).format("MM/DD/YYYY"),
+          job_level: JobLevels[member.joblevel_id],
+          work_state: WorkStates[member.workstate_id],
+          project: Projects[member.project_id],
+        })),
+      })
     : null;
 
   const tableCellStyle = {
@@ -58,16 +55,13 @@ const MembersTable = () => {
   };
 
   const tableHeaders = [
-    "name",
-    "assignedTo",
-    "hiredDate",
-    "state",
-    "jobLevel",
-    "project",
+    "Name",
+    "Assigned To",
+    "Hired Date",
+    "State",
+    "Job Level",
+    "Project",
   ];
-  const titleCasedTableHeaders = tableHeaders.map((string) =>
-    convertCamelCaseToTitleCase(string)
-  );
 
   const rowPlaceholders = [...Array(5).keys()];
   const columnPlaceholders = [...Array(6).keys()];
@@ -75,7 +69,7 @@ const MembersTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleChangePage = (_, newPage) => {
+  const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
@@ -84,18 +78,20 @@ const MembersTable = () => {
     setPage(0);
   };
 
-  const navigateToUpdate = (communityId, cognizantId) => {
-    navigate(`/resources/${communityId}/update/${cognizantId}`);
-  };
+  useEffect(() => {
+    if (rowsPerPage !== 10) {
+      document.querySelector("body").scrollIntoView();
+    }
+  }, [page, rowsPerPage]);
 
   return (
-    <Box sx={{ overflowX: "auto" }}>
+    <Box sx={{ overflowX: "auto" }} id="members-table-container">
       <Table
         sx={{ mt: 3, mb: 0.5, mx: { xs: 1, sm: 0 }, minWidth: 825 }}
         aria-label="members-table">
         <TableHead>
           <TableRow>
-            {titleCasedTableHeaders.map((header) => (
+            {tableHeaders.map((header) => (
               <TableCell
                 key={header}
                 align="center"
@@ -182,12 +178,12 @@ const MembersTable = () => {
                   : membersDataModified.members
                 ).map((row) => (
                   <TableRow
-                    key={row.cognizantid_id}
+                    key={row.people_id}
                     sx={{ cursor: "pointer" }}
                     onClick={() =>
                       navigateToUpdate(
                         membersDataModified.community_id,
-                        row.cognizantid_id
+                        row.people_id
                       )
                     }>
                     <MembersTableBodyCell sxProp={tableBodyCellStyle}>
@@ -237,27 +233,7 @@ const MembersTable = () => {
                         },
                       },
                     }}
-                    sx={{
-                      ...tableCellStyle,
-                      "& .MuiSvgIcon-root": {
-                        color:
-                          currentTheme === "dark"
-                            ? currentThemePalette.text
-                            : null,
-                      },
-                      "& .MuiIconButton-root": {
-                        color:
-                          currentTheme === "dark"
-                            ? currentThemePalette.light
-                            : currentThemePalette.dark,
-                      },
-                      // '& .MuiIconButton-root.Mui-disabled': {
-                      //   color:
-                      //     currentTheme === 'dark'
-                      //       ? '#6565FF'
-                      //       : currentThemePalette.light,
-                      // },
-                    }}
+                    sx={tableCellStyle}
                   />
                 </TableRow>
               </TableFooter>

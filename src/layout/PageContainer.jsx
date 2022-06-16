@@ -1,10 +1,11 @@
-import React from "react";
 import { Container } from "@mui/material";
+import SnackBar from "components/notification/SnackBar";
 import { useSwitchThemeContext } from "hooks";
 import Navbar from "./Navbar";
 
 const PageContainer = ({ children }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+
   return (
     <Container
       maxWidth="xl"
@@ -21,6 +22,7 @@ const PageContainer = ({ children }) => {
       }}>
       <Navbar />
       {children}
+      <SnackBar />
     </Container>
   );
 };

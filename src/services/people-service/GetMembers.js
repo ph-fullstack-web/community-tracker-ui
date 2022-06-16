@@ -1,4 +1,4 @@
-import axiosInstance from "../index";
+import axiosInstance from "../axios/index";
 
 export const getMembers = async (id) => {
   try {
@@ -15,3 +15,5 @@ export const getMembers = async (id) => {
     throw new Error(error.message);
   }
 };
+
+

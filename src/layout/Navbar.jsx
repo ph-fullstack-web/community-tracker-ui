@@ -1,27 +1,32 @@
-import React, { useEffect } from 'react';
+import { useMemo } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import Logo from './Logo';
 import { useToggle } from 'hooks';
 import { ThemeSwitchButton, LoginModal } from 'components';
-import { useAuth } from "contexts/auth/AuthContext";
+import { useAuthContext } from "contexts/auth/AuthContext";
 
 const Navbar = () => {
-  const { state } = useAuth()
+
+  const { state: authState } = useAuthContext();
+
+
   const [toggle, setToggle] = useToggle();
 
   const handleToggle = () => {
     setToggle(!toggle);
   };
 
+  const loggedInName = useMemo(() => {
+    const { role, firstName, lastName } = authState;
+    return `${role} | ${firstName} ${lastName}`
+  }, [authState])
 
   return (
     <>
       <Box display="flex" justifyContent="space-between">
         <Logo />
         <Box display="flex" alignSelf="center" sx={{ ml: 'auto' }}>
-          {state.success === 'success' ? <Typography>{state.credentials?.role} | {state.credentials?.firstName} {state.credentials?.lastName}</Typography> : <Button onClick={handleToggle}>Signin as Admin</Button>}
-
-
+          {authState.role ? <Typography>{loggedInName}</Typography> : <Button onClick={handleToggle}>Signin as Admin</Button>}
         </Box>
         <Box display="flex" alignSelf="center">
           <ThemeSwitchButton />

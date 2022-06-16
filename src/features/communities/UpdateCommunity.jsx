@@ -1,14 +1,14 @@
 import PageTitle from "layout/PageTitle";
 import PageContainer from "layout/PageContainer";
 import CommunityForm from "components/community/CommunityForm";
-import UpdateCommunityService from "services/community-service/UpdateCommunityService";
+import { updateCommunityService } from "services";
 
 
 const UpdateCommunity = () => {
     return (
       <PageContainer>
         <PageTitle title="Community Update Page." />
-        <CommunityForm onClickHandler={UpdateCommunityService} buttonText={"UPDATE"}/>
+        <CommunityForm onClickHandler={updateCommunityService} buttonText={"UPDATE"}/>
       </PageContainer>
     );
   };

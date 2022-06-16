@@ -1,7 +1,9 @@
 import {
   AddCommunity,
-  GetCommunity,
   UpdateCommunity,
+  CreateResource,
+  UpdateResource,
+  GetCommunity,
   GetSkills,
 } from 'features';
 
@@ -14,6 +16,11 @@ const Communities = lazy(() => import('../features/communities'));
 const Members = lazy(() => import('../features/members'));
 
 const routes = [
+  {
+    path: '/',
+    element: <Communities />,
+    name: 'root',
+  },
   {
     path: '/communities',
     element: <Communities />,
@@ -33,6 +40,16 @@ const routes = [
     path: '/communities/add',
     element: <AddCommunity />,
     name: 'addcommunity',
+  },
+  {
+    path: '/resources/:community/create',
+    element: <CreateResource />,
+    name: 'createresource',
+  },
+  {
+    path: '/resources/:community/update/:peopleId',
+    element: <UpdateResource />,
+    name: 'updateresource',
   },
   {
     path: '/communities/:id',
