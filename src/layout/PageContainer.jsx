@@ -25,7 +25,6 @@ const PageContainer = ({ children }) => {
       <PersistentDrawerLeft>
         {children}
       </PersistentDrawerLeft>
-
       <SnackBar />
     </Container>
   );
