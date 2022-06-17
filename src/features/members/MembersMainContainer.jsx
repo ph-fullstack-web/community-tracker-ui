@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Box, Stack } from "@mui/material";
 import { SearchInput, PlusIconButton } from "components";
@@ -9,6 +10,10 @@ const MembersMainContainer = () => {
   const navigateToCreate = (communityId) => {
     navigate(`/resources/${communityId}/create`);
   };
+  const [search, setSearch] = useState("");
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+  };
 
   return (
     <Box
@@ -18,7 +23,7 @@ const MembersMainContainer = () => {
       }}>
       <Stack direction="row" alignItems="center">
         <Box sx={{ width: { xs: "100%", md: "55ch" }, flex: "0 1 auto" }}>
-          <SearchInput />
+          <SearchInput onChangeCallback={handleSearch} />
         </Box>
         <Box>
           <PlusIconButton
@@ -31,7 +36,7 @@ const MembersMainContainer = () => {
           />
         </Box>
       </Stack>
-      <MembersTable />
+      <MembersTable search={search} />
     </Box>
   );
 };

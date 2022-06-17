@@ -1,8 +1,8 @@
-import { TextField, InputAdornment } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import useSwitchThemeContext from 'hooks/theme/useSwitchThemeContext';
+import { TextField, InputAdornment } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import useSwitchThemeContext from "hooks/theme/useSwitchThemeContext";
 
-export default function SearchInput() {
+export default function SearchInput({ onChangeCallback }) {
   const { currentThemePalette } = useSwitchThemeContext();
   const inputStyle = {
     border: `2px solid ${currentThemePalette.main}`,
@@ -13,7 +13,7 @@ export default function SearchInput() {
     <TextField
       fullWidth
       InputProps={{
-        placeholder: 'Search',
+        placeholder: "Search",
         startAdornment: (
           <InputAdornment position="start">
             <SearchIcon sx={{ color: currentThemePalette.main }} />
@@ -22,14 +22,14 @@ export default function SearchInput() {
       }}
       sx={{
         ml: { xs: 1, sm: 0 },
-        '& .MuiOutlinedInput-root': {
-          '& > fieldset': inputStyle,
+        "& .MuiOutlinedInput-root": {
+          "& > fieldset": inputStyle,
         },
-        '& .MuiOutlinedInput-root.Mui-focused': {
-          '& > fieldset': { ...inputStyle, borderWidth: 3 },
+        "& .MuiOutlinedInput-root.Mui-focused": {
+          "& > fieldset": { ...inputStyle, borderWidth: 3 },
         },
-        '& .MuiOutlinedInput-root:hover': {
-          '& > fieldset': inputStyle,
+        "& .MuiOutlinedInput-root:hover": {
+          "& > fieldset": inputStyle,
         },
         input: {
           py: 0.75,
@@ -37,6 +37,7 @@ export default function SearchInput() {
           color: currentThemePalette.text,
         },
       }}
+      onChange={onChangeCallback}
     />
   );
 }
