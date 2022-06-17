@@ -5,8 +5,9 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail'; import SummarizeIcon from '@mui/icons-material/Summarize';
-
+import MailIcon from '@mui/icons-material/Mail';
+import SummarizeIcon from '@mui/icons-material/Summarize';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -52,9 +53,16 @@ export default function PersistentDrawerLeft({ children }) {
 
     return (
         <>
-            <Box onClick={handleDrawerOpen} component={Button} variant="contained" position="absolute" left={0}>
-                <Typography
-                    sx={{ writingMode: 'vertical-lr', transform: `rotate(180deg)` }}>Drawer</Typography>
+            <Box onClick={handleDrawerOpen} variant="contained" position="absolute" left={0}
+            >
+
+                <IconButton sx={{
+                    ':hover': {
+                        background: '#b8cad6'
+                    }
+                }}>
+                    <ArrowForwardIosIcon />
+                </IconButton>
             </Box>
             <Box display="flex">
                 <Drawer
