@@ -1,4 +1,11 @@
-import { AddCommunity, UpdateCommunity, CreateResource, UpdateResource, GetCommunity } from 'features';
+import {
+  AddCommunity,
+  UpdateCommunity,
+  CreateResource,
+  UpdateResource,
+  GetCommunity,
+  GetSkills,
+} from 'features';
 
 import { lazy } from 'react';
 
@@ -36,18 +43,23 @@ const routes = [
   },
   {
     path: '/resources/:community/create',
-    element: <CreateResource/>,
-    name: 'createresource'
+    element: <CreateResource />,
+    name: 'createresource',
   },
   {
     path: '/resources/:community/update/:peopleId',
-    element: <UpdateResource/>,
-    name: 'updateresource'
+    element: <UpdateResource />,
+    name: 'updateresource',
   },
   {
     path: '/communities/:id',
     element: <GetCommunity />,
     name: 'getcommunity',
+  },
+  {
+    path: '/skills',
+    element: <GetSkills />,
+    name: 'getskills',
   },
 ];
 
