@@ -230,7 +230,7 @@ const MembersTable = ({
                 colSpan={6}
                 sxProp={{ ...tableCellStyle, py: 2.5 }}>
                 {search || filters.length > 0
-                  ? "No results found"
+                  ? "No search results found"
                   : "No members found for this community"}
               </MembersTableBodyCell>
             </TableRow>
