@@ -16,6 +16,7 @@ import {
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { useSwitchThemeContext } from "hooks";
+import { TABLE_HEADERS } from "utils/constants";
 
 const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   return (
@@ -39,18 +40,6 @@ const MembersTable = ({
   const navigateToUpdate = (communityId, peopleId) => {
     navigate(`/resources/${communityId}/update/${peopleId}`);
   };
-
-  const tableHeaders = [
-    { value: "full_name", name: "Name" },
-    { value: "assigned_to", name: "Assigned To" },
-    {
-      value: "hired_date_formatted",
-      name: "Hired Date",
-    },
-    { value: "state", name: "State" },
-    { value: "job_level", name: "Job Level" },
-    { value: "project", name: "Project" },
-  ];
 
   const [filters, setFilters] = useState([]);
 
@@ -147,7 +136,7 @@ const MembersTable = ({
         aria-label="members-table">
         <TableHead>
           <TableRow>
-            {tableHeaders.map((header) => (
+            {TABLE_HEADERS.map((header) => (
               <TableCell
                 key={header.value}
                 align="center"
