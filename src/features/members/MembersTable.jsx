@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import moment from "moment";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Skeleton,
@@ -16,8 +15,8 @@ import {
 } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import { JobLevels, WorkStates, Projects } from "utils/constants";
-import { useSwitchThemeContext, useGetMembers } from "hooks/";
+import { useSwitchThemeContext } from "hooks";
+import { TABLE_HEADERS } from "utils/constants";
 
 const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   return (
@@ -27,47 +26,22 @@ const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   );
 };
 
-const MembersTable = ({ search }) => {
-  const { id } = useParams();
+const MembersTable = ({
+  search,
+  isLoading,
+  membersData,
+  rowData,
+  isError,
+  error,
+}) => {
+  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+
   const navigate = useNavigate();
   const navigateToUpdate = (communityId, peopleId) => {
     navigate(`/resources/${communityId}/update/${peopleId}`);
   };
 
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const { isLoading, data: membersData, isError, error } = useGetMembers(id);
-
-  const tableHeaders = [
-    { value: "full_name", name: "Name" },
-    { value: "assigned_to", name: "Assigned To" },
-    {
-      value: "hired_date_formatted",
-      name: "Hired Date",
-    },
-    { value: "state", name: "State" },
-    { value: "job_level", name: "Job Level" },
-    { value: "project", name: "Project" },
-  ];
-
   const [filters, setFilters] = useState([]);
-
-  const rowData = useMemo(
-    () =>
-      membersData
-        ? membersData.members.map((member) => ({
-            people_id: member.people_id,
-            full_name: member.full_name,
-            assigned_to: membersData.manager?.full_name,
-            hired_date_formatted: moment(member.hired_date).format(
-              "MM/DD/YYYY"
-            ),
-            job_level: JobLevels[member.joblevel_id],
-            work_state: WorkStates[member.workstate_id],
-            project: Projects[member.project_id],
-          }))
-        : null,
-    [membersData]
-  );
 
   const rowDataFiltered = useMemo(() => {
     if (!search) return rowData;
@@ -162,7 +136,7 @@ const MembersTable = ({ search }) => {
         aria-label="members-table">
         <TableHead>
           <TableRow>
-            {tableHeaders.map((header) => (
+            {TABLE_HEADERS.map((header) => (
               <TableCell
                 key={header.value}
                 align="center"
@@ -245,7 +219,7 @@ const MembersTable = ({ search }) => {
                 colSpan={6}
                 sxProp={{ ...tableCellStyle, py: 2.5 }}>
                 {search || filters.length > 0
-                  ? "No results found"
+                  ? "No search results found"
                   : "No members found for this community"}
               </MembersTableBodyCell>
             </TableRow>

@@ -15,5 +15,3 @@ export const getMembers = async (id) => {
     throw new Error(error.message);
   }
 };
-
-

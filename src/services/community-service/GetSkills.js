@@ -1,4 +1,4 @@
-import axiosInstance from '../index';
+import axiosInstance from '../axios/index';
 
 export const getSkills = async () => {
   try {
