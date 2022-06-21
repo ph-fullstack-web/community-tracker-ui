@@ -1,19 +1,6 @@
-import { AddCommunity, UpdateCommunity, CreateResource, UpdateResource, GetCommunity } from 'features';
-
-import { lazy } from 'react';
-
-/* TODO:
-    1. Please follow lazy import instead of the traditional way of importing the components.
-*/
-const Communities = lazy(() => import('../features/communities'));
-const Members = lazy(() => import('../features/members'));
+import { AddCommunity, UpdateCommunity, CreateResource, UpdateResource, GetCommunity, Communities, Members } from 'features';
 
 const routes = [
-  {
-    path: '/',
-    element: <Communities />,
-    name: 'root',
-  },
   {
     path: '/communities',
     element: <Communities />,
@@ -36,12 +23,12 @@ const routes = [
   },
   {
     path: '/resources/:community/create',
-    element: <CreateResource/>,
+    element: <CreateResource />,
     name: 'createresource'
   },
   {
     path: '/resources/:community/update/:peopleId',
-    element: <UpdateResource/>,
+    element: <UpdateResource />,
     name: 'updateresource'
   },
   {

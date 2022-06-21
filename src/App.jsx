@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { SwitchThemeContextProvider } from 'contexts/theme/SwitchThemeContext';
 import { AuthProvider } from 'contexts/auth/AuthContext';
 import { NotificationProvider } from 'contexts/notification/NotificationContext';
+import { Communities } from 'features';
 
 
 function App() {
@@ -13,16 +14,17 @@ function App() {
     <SwitchThemeContextProvider>
       <AuthProvider>
         <NotificationProvider>
-        <QueryClientProvider client={queryClient}>
-          <BrowserRouter>
-            <Routes>
-              {routeList.map(({ element: Element, name, path }) => (
-                <Route key={name} path={path} element={Element} />
-              ))}
-            </Routes>
-          </BrowserRouter>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+          <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
+              <Routes>
+                <Route index path="/" element={<Communities />} />
+                {routeList.map(({ element: Element, name, path }) => (
+                  <Route key={name} path={path} element={Element} />
+                ))}
+              </Routes>
+            </BrowserRouter>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
         </NotificationProvider>
       </AuthProvider>
     </SwitchThemeContextProvider>

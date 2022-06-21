@@ -1,25 +1,27 @@
 import * as React from 'react';
+import { useToggle } from 'hooks';
 import { styled, useTheme } from '@mui/material/styles';
-import { Box, Drawer, List, Typography, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Box, Drawer, List, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText, Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-const drawerWidth = 240;
+import PeopleIcon from '@mui/icons-material/People';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+const DRAWER_WIDTH = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
+    ({ theme, toggle }) => ({
         flexGrow: 1,
         padding: theme.spacing(3),
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        marginLeft: `-${drawerWidth}px`,
-        ...(open && {
+        marginLeft: `-${DRAWER_WIDTH}px`,
+        ...(toggle && {
             transition: theme.transitions.create('margin', {
                 easing: theme.transitions.easing.easeOut,
                 duration: theme.transitions.duration.enteringScreen,
@@ -40,22 +42,54 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function PersistentDrawerLeft({ children }) {
+    const router = useNavigate();
+
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const [toggle, setToggle] = useToggle()
+    const handleToggle = () => {
+        setToggle(!toggle)
+    }
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
+    const handleNavigation = (route) => {
+        router(route)
+    }
+    const COMMUNITY_ROUTES = [
+        {
+            name: 'Community List',
+            path: '/communities',
+            icon: <PeopleIcon />
+        },
+        {
+            name: 'Add Community',
+            path: '/communities/add',
+            icon: <AccountCircleIcon />
+        },
+        {
+            name: 'Member List',
+            path: '/communities',
+            icon: <PeopleIcon />
+        },
+        {
+            name: 'Add Member',
+            path: '/communities/add',
+            icon: <AccountCircleIcon />
+        },
+        {
+            name: 'Report',
+            path: '/communities/add',
+            icon: <SummarizeIcon />
+        },
+        {
+            name: 'Themes',
+            path: '/communities/add',
+            icon: <SummarizeIcon />
+        }
+    ];
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
 
     return (
         <>
-            <Box onClick={handleDrawerOpen} variant="contained" position="absolute" left={0}
-            >
-
+            <Box onClick={handleToggle} variant="contained" position="absolute" left={0}>
                 <IconButton sx={{
                     ':hover': {
                         background: '#b8cad6'
@@ -67,71 +101,37 @@ export default function PersistentDrawerLeft({ children }) {
             <Box display="flex">
                 <Drawer
                     sx={{
-                        width: drawerWidth,
+                        width: DRAWER_WIDTH,
                         flexShrink: 0,
                         '& .MuiDrawer-paper': {
-                            width: drawerWidth,
+                            width: DRAWER_WIDTH,
                             boxSizing: 'border-box',
                         },
                     }}
                     variant="persistent"
                     anchor="left"
-                    open={open}
+                    open={toggle}
                 >
                     <DrawerHeader>
-                        <IconButton onClick={handleDrawerClose}>
+                        <IconButton onClick={handleToggle}>
                             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                         </IconButton>
                     </DrawerHeader>
                     <Divider />
                     <List>
-                        {['Community List', 'Add Community',].map((text, index) => (
-                            <ListItem key={text} disablePadding>
+                        {COMMUNITY_ROUTES.map(({ name, icon, path }) => (
+                            <ListItem key={name} disablePadding onClick={() => handleNavigation(path)}>
                                 <ListItemButton>
                                     <ListItemIcon>
-                                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                        {icon}
                                     </ListItemIcon>
-                                    <ListItemText primary={text} />
+                                    <ListItemText primary={name} />
                                 </ListItemButton>
                             </ListItem>
                         ))}
-                    </List>
-                    <Divider />
-                    <List>
-                        {['Member List', 'Add Member'].map((text, index) => (
-                            <ListItem key={text} disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Divider />
-                    <List>
-                        <ListItem disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    <SummarizeIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Report" />
-                            </ListItemButton>
-                        </ListItem>
-                    </List>
-                    <List>
-                        <ListItem disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    <SummarizeIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Themes" />
-                            </ListItemButton>
-                        </ListItem>
                     </List>
                 </Drawer>
-                <Main open={open}>
+                <Main open={toggle}>
                     <DrawerHeader />
                     {children}
                 </Main>
