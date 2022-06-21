@@ -78,6 +78,7 @@ const MembersMainContainer = () => {
       <MembersTable
         search={search}
         isLoading={isLoading}
+        membersData={membersData}
         rowData={rowData}
         isError={isError}
         error={error}
