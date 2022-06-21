@@ -1,4 +1,4 @@
-import PageTitle from "layout/PageTitle";
+
 import PageContainer from "layout/PageContainer";
 import ResourcesForm from "components/resources/ResourcesForm";
 import useCreatePeople from "hooks/people/useCreatePeople";
@@ -8,10 +8,10 @@ import { useNotificationContext } from "contexts/notification/NotificationContex
 
 const CreateResource = () => {
 
-  const {community} = useParams();
+  const { community } = useParams();
   const navigate = useNavigate();
-  const {mutate, isLoading} = useCreatePeople();
-  const {dispatch: notificationDispatch} = useNotificationContext();
+  const { mutate, isLoading } = useCreatePeople();
+  const { dispatch: notificationDispatch } = useNotificationContext();
 
   const onCreateResource = (resourcePayload) => {
     resourcePayload.community = parseInt(community);
@@ -40,9 +40,8 @@ const CreateResource = () => {
   }
   return (
     <PageContainer>
-        <PageTitle title="Resource Input Page" />
 
-        <ResourcesForm isProcessing={isLoading} onSubmitHandler={onCreateResource}/>
+      <ResourcesForm isProcessing={isLoading} onSubmitHandler={onCreateResource} />
     </PageContainer>
   );
 };
