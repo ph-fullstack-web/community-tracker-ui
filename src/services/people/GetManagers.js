@@ -1,6 +1,6 @@
 import axiosInstance from "../axios/index";
 
-export const getManagers = async () => {
+const getManagers = async () => {
   try {
     const response = await axiosInstance.get("/api/managers");
     if (response.status !== 200 && response.status !== 201) {
@@ -14,3 +14,5 @@ export const getManagers = async () => {
     throw new Error(error.message);
   }
 };
+
+export default getManagers;

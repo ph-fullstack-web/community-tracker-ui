@@ -1,6 +1,6 @@
 //import axiosInstance from '../index';
 
-export const getProjects = async () => {
+const getProjects = async () => {
   try {
     const response = await fetch("/MOCKS/projects.json"); // axiosInstance.get('/api/community');
 
@@ -12,3 +12,5 @@ export const getProjects = async () => {
     throw new Error(error.message);
   }
 };
+
+export default getProjects;

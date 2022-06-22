@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getPeopleById } from "services/people/GetPeopleById";
+import { getPeopleById } from "services";
 
 const useGetPeopleById = (peopleId) => {
   const { isLoading, isError, data, error, refetch } = useQuery(

@@ -1,10 +1,9 @@
-import { useQuery } from 'react-query';
-import { getSkills } from '../../services/community/GetSkills';
-import { postSkills } from '../../services/community/PostSkills';
+import { useQuery } from "react-query";
+import { getSkills, postSkills } from "services";
 
 const useGetSkills = () => {
   const { isLoading, isError, data, error, refetch } = useQuery(
-    'peopleskills',
+    "peopleskills",
     () => getSkills()
   );
 
@@ -19,7 +18,7 @@ const useGetSkills = () => {
 
 const usePostSkills = (inputData) => {
   const { isLoading, isError, data, error, refetch } = useQuery(
-    'peopleskills',
+    "peopleskills",
     () => postSkills(inputData)
   );
 

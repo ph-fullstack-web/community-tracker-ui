@@ -1,10 +1,10 @@
-import axiosInstance from '../axios/index';
+import axiosInstance from "../axios/index";
 
-export const postSkills = async (data) => {
+const postSkills = async (data) => {
   try {
     const response = await axiosInstance({
-      method: 'POST',
-      url: '/api/peopleskills',
+      method: "POST",
+      url: "/api/peopleskills",
       data: data,
     });
     if (response.status >= 200 && response.status <= 299) {
@@ -19,3 +19,5 @@ export const postSkills = async (data) => {
     throw new Error(error.message);
   }
 };
+
+export default postSkills;

@@ -4,7 +4,7 @@ import { Button, Box } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import { AutocompleteInputChip } from '../../components/index.js';
 import { useGetSkills } from '../../hooks/skills';
-import { postSkills } from '../../services/community/PostSkills';
+import { postSkills } from 'services';
 
 const GetSkills = () => {
   const { data, isLoading } = useGetSkills();

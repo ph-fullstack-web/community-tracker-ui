@@ -1,8 +1,8 @@
-import axiosInstance from '../axios/index';
+import axiosInstance from "../axios/index";
 
-export const getSkills = async () => {
+const getSkills = async () => {
   try {
-    const response = await axiosInstance.get('/api/peopleskills');
+    const response = await axiosInstance.get("/api/peopleskills");
     if (response.status >= 200 && response.status <= 299) {
       //check valid http response
       return response?.data?.data;
@@ -16,3 +16,5 @@ export const getSkills = async () => {
     throw new Error(error.message);
   }
 };
+
+export default getSkills;
