@@ -1,7 +1,7 @@
 
 import PageContainer from "layout/PageContainer";
 import ResourcesForm from "components/resources/ResourcesForm";
-import useCreatePeople from "hooks/people/useCreatePeople";
+import {useCreatePeople} from "hooks";
 import { useParams, useNavigate } from "react-router-dom";
 import { useNotificationContext } from "contexts/notification/NotificationContext";
 

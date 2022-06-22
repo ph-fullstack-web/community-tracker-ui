@@ -1,8 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import PageContainer from "layout/PageContainer";
 import ResourcesForm from "components/resources/ResourcesForm";
-import useGetPeopleById from "hooks/people/useGetPeopleById";
-import useUpdatePeople from "hooks/people/useUpdatePeople";
+import { useGetPeopleById, useUpdatePeople } from "hooks";
 import { useNotificationContext } from "contexts/notification/NotificationContext";
 import { useMemo } from "react";
 import moment from "moment";
