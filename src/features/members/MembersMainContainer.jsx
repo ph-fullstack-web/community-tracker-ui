@@ -9,7 +9,7 @@ import ExportButton from "components/members/ExportButton";
 import MembersTable from "./MembersTable";
 
 const MembersMainContainer = () => {
-  const { id: communityId } = useParams();
+  const { communityId } = useParams();
   const navigate = useNavigate();
   const navigateToCreate = (communityId) => {
     navigate(`/resources/${communityId}/create`);

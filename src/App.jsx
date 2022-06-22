@@ -18,9 +18,21 @@ function App() {
             <BrowserRouter>
               <Routes>
                 <Route index path="/" element={<Communities />} />
-                {routes.map(({ element: Element, name, path }) => (
-                  <Route key={name} path={path} element={Element} />
-                ))}
+                {routes.map(({ element: Element, name, path, children }) =>
+                  children ? (
+                    <Route key={name} path={path}>
+                        <Route key={name + "-index"} index element={Element} />
+                        {children.map(
+                            ({ element: ChElement, name: chName, path: chPath }) => (
+                                <Route key={chName} path={chPath} element={ChElement} />
+                            )
+                          )
+                        }
+                    </Route>
+                  ) : (
+                    <Route key={name} path={path} element={Element} />
+                  )
+                )}
               </Routes>
             </BrowserRouter>
             <ReactQueryDevtools initialIsOpen={false} />

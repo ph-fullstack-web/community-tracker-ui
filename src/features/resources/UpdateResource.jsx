@@ -9,7 +9,7 @@ import moment from "moment";
 
 const UpdateResource = () => {
 
-  const { community, peopleId } = useParams();
+  const { communityId, peopleId } = useParams();
   const { isLoading, data: resourceData } = useGetPeopleById(peopleId)
   const { mutate: updatePeople, isLoading: isUpdating } = useUpdatePeople()
   const { dispatch: notificationDispatch } = useNotificationContext();
@@ -30,7 +30,7 @@ const UpdateResource = () => {
             message: 'Member has been updated.'
           }
         });
-        navigate(`/resources/${community}`)
+        navigate(`/resources/${communityId}`)
       },
       onError: (error) => {
         notificationDispatch({
