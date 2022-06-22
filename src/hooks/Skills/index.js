@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
-import { getSkills } from '../../services/community-service/GetSkills';
-import { postSkills } from '../../services/community-service/PostSkills';
+import { getSkills } from '../../services/community/GetSkills';
+import { postSkills } from '../../services/community/PostSkills';
 
 const useGetSkills = () => {
   const { isLoading, isError, data, error, refetch } = useQuery(
