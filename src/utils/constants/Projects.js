@@ -1,4 +1,4 @@
-export const Projects = {
+export const PROJECTS = {
   1: "Magenic PDP Bench",
   2: "ATI",
   3: "Earnst & Young",

@@ -10,29 +10,8 @@ import {
 } from "@mui/material";
 import useGetManagers from "hooks/people/useGetManagers"
 import useGetProjects from "hooks/projects/useGetProjects";
+import { JOB_LEVELS, WORK_STATES } from "utils/constants";
 import { useState, useEffect } from "react";
-
-const JOB_LEVELS = {
-  1: "Community Director",
-  2: "Community Manager",
-  3: "Regional Solutions Architect",
-  4: "Solutions Architect",
-  5: "Principal Developer",
-  6: "Lead Developer",
-  7: "Associate Lead Developer",
-  8: "Senior Developer",
-  9: "Developer",
-};
-
-const WORK_STATE = {
-  1: "First Month",
-  2: "Second Month",
-  3: "Third Month",
-  4: "Fourth Month",
-  5: "Fifth Month",
-  6: "Onboarding",
-  7: "Regular",
-};
 
 const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   const [resource, setResource] = useState({
@@ -148,10 +127,10 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                     backgroundColor: "#FFFFFF",
                   }}
                 >
-                  {Object.keys(WORK_STATE).map((key) => {
+                  {Object.keys(WORK_STATES).map((key) => {
                     return (
                       <MenuItem key={key} value={key}>
-                        {WORK_STATE[key]}
+                        {WORK_STATES[key]}
                       </MenuItem>
                     );
                   })}
