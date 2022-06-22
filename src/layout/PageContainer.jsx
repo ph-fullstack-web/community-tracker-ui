@@ -1,6 +1,7 @@
 import { Container } from "@mui/material";
-import SnackBar from "components/notification/SnackBar";
 import { useSwitchThemeContext } from "hooks";
+import PersistentDrawerLeft from "./Drawer";
+import SnackBar from "components/notification/SnackBar";
 import Navbar from "./Navbar";
 
 const PageContainer = ({ children }) => {
@@ -21,7 +22,9 @@ const PageContainer = ({ children }) => {
         marginTop: "2rem",
       }}>
       <Navbar />
-      {children}
+      <PersistentDrawerLeft>
+        {children}
+      </PersistentDrawerLeft>
       <SnackBar />
     </Container>
   );

@@ -22,19 +22,18 @@ const Navbar = () => {
   }, [authState])
 
   return (
-    <>
-      <Box display="flex" justifyContent="space-between">
-        <Logo />
-        <Box display="flex" alignSelf="center" sx={{ ml: 'auto' }}>
-          {authState.role ? <Typography>{loggedInName}</Typography> : <Button onClick={handleToggle}>Signin as Admin</Button>}
-        </Box>
-        <Box display="flex" alignSelf="center">
-          <ThemeSwitchButton />
-        </Box>
+    <Box display="flex" justifyContent="space-between" flex={1}>
+      <Logo />
+      <Box display="flex" alignSelf="center" marginLeft="auto">
+        {authState.role ? <Typography>{loggedInName}</Typography> : <Box component={Button} onClick={handleToggle} color="white">Signin as Admin</Box>}
+      </Box>
+
+      <Box display="flex" alignSelf="center">
+        <ThemeSwitchButton />
       </Box>
 
       <LoginModal open={toggle} handleClose={handleToggle} />
-    </>
+    </Box>
   );
 };
 
