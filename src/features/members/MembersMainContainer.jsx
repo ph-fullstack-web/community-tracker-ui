@@ -1,6 +1,11 @@
+import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import moment from "moment";
 import { Box, Stack } from "@mui/material";
 import { SearchInput, PlusIconButton } from "components";
+import { JobLevels, WorkStates, Projects } from "utils/constants";
+import { useGetMembers } from "hooks";
+import ExportButton from "components/members/ExportButton";
 import MembersTable from "./MembersTable";
 
 const MembersMainContainer = () => {
@@ -8,6 +13,36 @@ const MembersMainContainer = () => {
   const navigate = useNavigate();
   const navigateToCreate = (communityId) => {
     navigate(`/resources/${communityId}/create`);
+  };
+
+  const {
+    isLoading,
+    data: membersData,
+    isError,
+    error,
+  } = useGetMembers(communityId);
+
+  const rowData = useMemo(
+    () =>
+      membersData
+        ? membersData.members.map((member) => ({
+            people_id: member.people_id,
+            full_name: member.full_name,
+            assigned_to: membersData.manager?.full_name,
+            hired_date_formatted: moment(member.hired_date).format(
+              "MM/DD/YYYY"
+            ),
+            job_level: JobLevels[member.joblevel_id],
+            work_state: WorkStates[member.workstate_id],
+            project: Projects[member.project_id],
+          }))
+        : null,
+    [membersData]
+  );
+
+  const [search, setSearch] = useState("");
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
   };
 
   return (
@@ -18,7 +53,7 @@ const MembersMainContainer = () => {
       }}>
       <Stack direction="row" alignItems="center">
         <Box sx={{ width: { xs: "100%", md: "55ch" }, flex: "0 1 auto" }}>
-          <SearchInput />
+          <SearchInput onChangeCallback={handleSearch} />
         </Box>
         <Box>
           <PlusIconButton
@@ -30,8 +65,24 @@ const MembersMainContainer = () => {
             }}
           />
         </Box>
+        <Box sx={{ ml: "auto" }}>
+          <ExportButton
+            isLoading={isLoading}
+            membersData={membersData}
+            rowData={rowData}
+            isError={isError}
+            error={error}
+          />
+        </Box>
       </Stack>
-      <MembersTable />
+      <MembersTable
+        search={search}
+        isLoading={isLoading}
+        membersData={membersData}
+        rowData={rowData}
+        isError={isError}
+        error={error}
+      />
     </Box>
   );
 };

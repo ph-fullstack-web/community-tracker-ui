@@ -34,7 +34,7 @@ const WORK_STATE = {
   7: "Regular",
 };
 
-const ResourcesForm = ({onSubmitHandler, isProcessing, resourcePerson}) => {
+const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   const [resource, setResource] = useState({
     name: "",
     assignedTo: "",
@@ -60,7 +60,7 @@ const ResourcesForm = ({onSubmitHandler, isProcessing, resourcePerson}) => {
     }));
   };
 
-  const {data: projectsData, isLoading: isLoadingProjects} = useGetProjects();
+  const { data: projectsData, isLoading: isLoadingProjects } = useGetProjects();
   const { isLoading, data: communityManagers } = useGetManagers();
 
   const onSubmit = (event) => {
@@ -126,7 +126,7 @@ const ResourcesForm = ({onSubmitHandler, isProcessing, resourcePerson}) => {
                 }}
               />
             </Grid>
-            
+
           </Grid>
 
           <Grid container gap={2} item sm={12} md={12} lg={12}>
@@ -186,7 +186,7 @@ const ResourcesForm = ({onSubmitHandler, isProcessing, resourcePerson}) => {
                 </Select>
               </FormControl>
             </Grid>
-            
+
           </Grid>
 
           <Grid container gap={2}>
@@ -225,7 +225,7 @@ const ResourcesForm = ({onSubmitHandler, isProcessing, resourcePerson}) => {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={5} lg={5}>
-            <TextField
+              <TextField
                 required
                 fullWidth
                 value={resource.hiredDate}
@@ -246,7 +246,7 @@ const ResourcesForm = ({onSubmitHandler, isProcessing, resourcePerson}) => {
 
           <Grid container gap={2}>
             <Grid item xs={12} sm={12} md={5} lg={5}>
-            <FormControl
+              <FormControl
                 sx={{
                   mt: 5,
                 }}
@@ -280,7 +280,7 @@ const ResourcesForm = ({onSubmitHandler, isProcessing, resourcePerson}) => {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={5} lg={5}>
-            <FormControl
+              <FormControl
                 sx={{
                   mt: 5,
                 }}
@@ -312,7 +312,7 @@ const ResourcesForm = ({onSubmitHandler, isProcessing, resourcePerson}) => {
                     })}
                 </Select>
               </FormControl>
-              
+
             </Grid>
           </Grid>
         </Grid>

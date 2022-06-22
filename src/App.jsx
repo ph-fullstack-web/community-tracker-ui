@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import routeList from 'routes';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { SwitchThemeContextProvider } from 'contexts/theme/SwitchThemeContext';
 import { AuthProvider } from 'contexts/auth/AuthContext';
 import { NotificationProvider } from 'contexts/notification/NotificationContext';
 import { Communities } from 'features';
+import routes from 'routes';
 
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
             <BrowserRouter>
               <Routes>
                 <Route index path="/" element={<Communities />} />
-                {routeList.map(({ element: Element, name, path }) => (
+                {routes.map(({ element: Element, name, path }) => (
                   <Route key={name} path={path} element={Element} />
                 ))}
               </Routes>

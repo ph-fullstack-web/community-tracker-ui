@@ -1,4 +1,4 @@
-import { AddCommunity, UpdateCommunity, CreateResource, UpdateResource, GetCommunity, Communities, Members } from 'features';
+import { AddCommunity, UpdateCommunity, CreateResource, UpdateResource, GetCommunity, Communities, Members, GetSkills } from 'features';
 
 const routes = [
   {
@@ -24,17 +24,22 @@ const routes = [
   {
     path: '/resources/:community/create',
     element: <CreateResource />,
-    name: 'createresource'
+    name: 'createresource',
   },
   {
     path: '/resources/:community/update/:peopleId',
     element: <UpdateResource />,
-    name: 'updateresource'
+    name: 'updateresource',
   },
   {
     path: '/communities/:id',
     element: <GetCommunity />,
     name: 'getcommunity',
+  },
+  {
+    path: '/skills',
+    element: <GetSkills />,
+    name: 'getskills',
   },
 ];
 
