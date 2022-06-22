@@ -4,42 +4,42 @@ const routes = [
   {
     path: '/communities',
     element: <Communities />,
-    name: 'communities',
+    name: 'Communities',
   },
   {
     path: '/resources/:id',
     element: <Members />,
-    name: 'resources',
+    name: 'Resources',
   },
   {
     path: '/communities/update/:id',
     element: <UpdateCommunity />,
-    name: 'updatecommunity',
+    name: 'Update Community',
   },
   {
     path: '/communities/add',
     element: <AddCommunity />,
-    name: 'addcommunity',
+    name: 'Add Community',
   },
   {
     path: '/resources/:community/create',
     element: <CreateResource />,
-    name: 'createresource',
+    name: 'Create Resource',
   },
   {
     path: '/resources/:community/update/:peopleId',
     element: <UpdateResource />,
-    name: 'updateresource',
+    name: 'Update Resource',
   },
   {
     path: '/communities/:id',
     element: <GetCommunity />,
-    name: 'getcommunity',
+    name: 'Get Community',
   },
   {
     path: '/skills',
     element: <GetSkills />,
-    name: 'getskills',
+    name: 'Get Skills',
   },
 ];
 
