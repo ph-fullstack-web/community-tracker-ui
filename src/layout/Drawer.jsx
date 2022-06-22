@@ -41,7 +41,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-end',
 }));
 
-export default function PersistentDrawerLeft({ children }) {
+const PersistentDrawerLeft = ({ children }) => {
     const router = useNavigate();
 
     const theme = useTheme();
@@ -139,3 +139,5 @@ export default function PersistentDrawerLeft({ children }) {
 
     );
 }
+
+export default PersistentDrawerLeft
