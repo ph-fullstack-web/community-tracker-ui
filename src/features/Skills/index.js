@@ -1,10 +1,10 @@
-import PageTitle from 'layout/PageTitle';
-import PageContainer from 'layout/PageContainer';
+import PageContainer from "layout/PageContainer";
+import { Typography } from "@mui/material";
 
 const PeopleSkills = () => {
   return (
     <PageContainer>
-      <PageTitle title="Add your skills" />
+      <Typography>PeopleSkills</Typography>
     </PageContainer>
   );
 };

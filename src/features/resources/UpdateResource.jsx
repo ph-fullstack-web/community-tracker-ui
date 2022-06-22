@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import PageTitle from "layout/PageTitle";
 import PageContainer from "layout/PageContainer";
 import ResourcesForm from "components/resources/ResourcesForm";
 import useGetPeopleById from "hooks/people/useGetPeopleById";
@@ -10,10 +9,10 @@ import moment from "moment";
 
 const UpdateResource = () => {
 
-  const {community, peopleId} = useParams();
-  const {isLoading, data: resourceData} = useGetPeopleById(peopleId)
-  const {mutate: updatePeople, isLoading: isUpdating} = useUpdatePeople()
-  const {dispatch: notificationDispatch} = useNotificationContext();
+  const { community, peopleId } = useParams();
+  const { isLoading, data: resourceData } = useGetPeopleById(peopleId)
+  const { mutate: updatePeople, isLoading: isUpdating } = useUpdatePeople()
+  const { dispatch: notificationDispatch } = useNotificationContext();
   const navigate = useNavigate();
 
 
@@ -58,7 +57,7 @@ const UpdateResource = () => {
         email: resourceData.csv_email,
         cognizantId: resourceData.cognizantid_id,
 
-        
+
         assignedTo: "",
         projectLead: "",
       }
@@ -67,10 +66,9 @@ const UpdateResource = () => {
 
   return (
     <PageContainer>
-        <PageTitle title="Resource Update Page" />
 
-        {!isLoading && <ResourcesForm isProcessing={isUpdating} resourcePerson={resourcePerson} onSubmitHandler={onUpdateResource}/>}
-        
+      {!isLoading && <ResourcesForm isProcessing={isUpdating} resourcePerson={resourcePerson} onSubmitHandler={onUpdateResource} />}
+
     </PageContainer>
   );
 };

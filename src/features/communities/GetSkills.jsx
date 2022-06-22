@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import PageTitle from 'layout/PageTitle';
 import PageContainer from 'layout/PageContainer';
 import { Button, Box } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
-import {AutocompleteInputChip} from '../../components/index.js';
+import { AutocompleteInputChip } from '../../components/index.js';
 import { useGetSkills } from '../../hooks/Skills';
 import { postSkills } from '../../services/community-service/PostSkills';
 
@@ -35,7 +34,7 @@ const GetSkills = () => {
   return (
     <PageContainer>
       <Box height="100vh" display="flex" flexDirection="column">
-        <PageTitle title="Community Skills" />
+
         {options.length >= 0 && (
           <AutocompleteInputChip
             options={options}
