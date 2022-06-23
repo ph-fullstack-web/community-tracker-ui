@@ -8,17 +8,17 @@ import { useNotificationContext } from "contexts/notification/NotificationContex
 
 const CreateResource = () => {
 
-  const { community } = useParams();
+  const { communityId } = useParams();
   const navigate = useNavigate();
   const { mutate, isLoading } = useCreatePeople();
   const { dispatch: notificationDispatch } = useNotificationContext();
 
   const onCreateResource = (resourcePayload) => {
-    resourcePayload.community = parseInt(community);
+    resourcePayload.community = parseInt(communityId);
     mutate(resourcePayload, {
       onSuccess: (response) => {
         alert(response.message)
-        navigate(`/resources/${community}`);
+        navigate(`/resources/${communityId}`);
         notificationDispatch({
           type: 'NOTIFY',
           payload: {

@@ -1,4 +1,4 @@
-export const JobLevels = {
+export const JOB_LEVELS = {
   1: "Community Director",
   2: "Community Manager",
   3: "Regional Solutions Architect",

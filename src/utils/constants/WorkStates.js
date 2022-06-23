@@ -1,4 +1,4 @@
-export const WorkStates = {
+export const WORK_STATES = {
   1: "1st Month",
   2: "2nd Month",
   3: "3rd Month",

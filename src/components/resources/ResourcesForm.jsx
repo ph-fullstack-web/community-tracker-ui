@@ -8,31 +8,10 @@ import {
   Grid,
   Box,
 } from "@mui/material";
-import useGetManagers from "hooks/people/useGetManagers"
+import useGetManagers from "hooks/people/useGetManagers";
 import useGetProjects from "hooks/projects/useGetProjects";
+import { JOB_LEVELS, WORK_STATES } from "utils/constants";
 import { useState, useEffect } from "react";
-
-const JOB_LEVELS = {
-  1: "Community Director",
-  2: "Community Manager",
-  3: "Regional Solutions Architect",
-  4: "Solutions Architect",
-  5: "Principal Developer",
-  6: "Lead Developer",
-  7: "Associate Lead Developer",
-  8: "Senior Developer",
-  9: "Developer",
-};
-
-const WORK_STATE = {
-  1: "First Month",
-  2: "Second Month",
-  3: "Third Month",
-  4: "Fourth Month",
-  5: "Fifth Month",
-  6: "Onboarding",
-  7: "Regular",
-};
 
 const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   const [resource, setResource] = useState({
@@ -44,14 +23,14 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
     project: "",
     projectLead: "",
     email: "",
-    cognizantId: ""
+    cognizantId: "",
   });
 
   useEffect(() => {
     if (resourcePerson) {
-      setResource((resourcePerson))
+      setResource(resourcePerson);
     }
-  }, [resourcePerson])
+  }, [resourcePerson]);
 
   const onChangeHandler = (event) => {
     setResource((prevState) => ({
@@ -65,17 +44,16 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    onSubmitHandler(resource)
-  }
+    onSubmitHandler(resource);
+  };
 
   return (
     <Box
       style={{
         marginTop: "3rem",
         marginBottom: "1rem",
-      }}
-    >
-      <Grid container component={'form'} onSubmit={onSubmit} >
+      }}>
+      <Grid container component={"form"} onSubmit={onSubmit}>
         <Grid id="inputs-grid" item lg={5} md={12} sm={12} xs={12}>
           <Grid container gap={2} item sm={12} md={12} lg={12}>
             <Grid item xs={12} sm={12} md={10} lg={10}>
@@ -126,7 +104,6 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                 }}
               />
             </Grid>
-
           </Grid>
 
           <Grid container gap={2} item sm={12} md={12} lg={12}>
@@ -135,8 +112,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                 sx={{
                   mt: 5,
                 }}
-                fullWidth
-              >
+                fullWidth>
                 <InputLabel>Work State</InputLabel>
                 <Select
                   name="state"
@@ -146,12 +122,11 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   onChange={(e) => onChangeHandler(e)}
                   sx={{
                     backgroundColor: "#FFFFFF",
-                  }}
-                >
-                  {Object.keys(WORK_STATE).map((key) => {
+                  }}>
+                  {Object.keys(WORK_STATES).map((key) => {
                     return (
                       <MenuItem key={key} value={key}>
-                        {WORK_STATE[key]}
+                        {WORK_STATES[key]}
                       </MenuItem>
                     );
                   })}
@@ -163,8 +138,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                 sx={{
                   mt: 5,
                 }}
-                fullWidth
-              >
+                fullWidth>
                 <InputLabel>Job Level</InputLabel>
                 <Select
                   name="jobLevel"
@@ -174,8 +148,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   onChange={(e) => onChangeHandler(e)}
                   sx={{
                     backgroundColor: "#FFFFFF",
-                  }}
-                >
+                  }}>
                   {Object.keys(JOB_LEVELS).map((key) => {
                     return (
                       <MenuItem key={key} value={key}>
@@ -186,7 +159,6 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                 </Select>
               </FormControl>
             </Grid>
-
           </Grid>
 
           <Grid container gap={2}>
@@ -195,8 +167,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                 sx={{
                   mt: 5,
                 }}
-                fullWidth
-              >
+                fullWidth>
                 <InputLabel>Assigned To</InputLabel>
                 <Select
                   name="assignedTo"
@@ -206,16 +177,14 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   onChange={(e) => onChangeHandler(e)}
                   sx={{
                     backgroundColor: "#FFFFFF",
-                  }}
-                >
+                  }}>
                   <MenuItem value="">Select Community Manager</MenuItem>
                   {!isLoading &&
                     (communityManagers || []).map((manager) => {
                       return (
                         <MenuItem
                           key={manager.people_id}
-                          value={manager.people_id}
-                        >
+                          value={manager.people_id}>
                           {" "}
                           {manager.full_name}{" "}
                         </MenuItem>
@@ -250,8 +219,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                 sx={{
                   mt: 5,
                 }}
-                fullWidth
-              >
+                fullWidth>
                 <InputLabel>Project</InputLabel>
                 <Select
                   name="project"
@@ -262,16 +230,12 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   onChange={(e) => onChangeHandler(e)}
                   sx={{
                     backgroundColor: "#FFFFFF",
-                  }}
-                >
+                  }}>
                   <MenuItem value="">Select Project</MenuItem>
                   {!isLoadingProjects &&
                     (projectsData || []).map((project) => {
                       return (
-                        <MenuItem
-                          key={project.id}
-                          value={project.id}
-                        >
+                        <MenuItem key={project.id} value={project.id}>
                           {project.name}
                         </MenuItem>
                       );
@@ -284,8 +248,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                 sx={{
                   mt: 5,
                 }}
-                fullWidth
-              >
+                fullWidth>
                 <InputLabel>Project Lead</InputLabel>
                 <Select
                   name="projectLead"
@@ -295,16 +258,14 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   onChange={(e) => onChangeHandler(e)}
                   sx={{
                     backgroundColor: "#FFFFFF",
-                  }}
-                >
+                  }}>
                   <MenuItem value="">Select Project Lead</MenuItem>
                   {!isLoading &&
                     (communityManagers || []).map((manager) => {
                       return (
                         <MenuItem
                           key={manager.people_id}
-                          value={manager.people_id}
-                        >
+                          value={manager.people_id}>
                           {" "}
                           {manager.full_name}{" "}
                         </MenuItem>
@@ -312,28 +273,38 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                     })}
                 </Select>
               </FormControl>
-
             </Grid>
           </Grid>
         </Grid>
 
-        <Grid id="checkbox-grid" item lg={5} md={3} sm={12} xs={12} sx={{
-          marginTop: '2rem',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between'
-        }}>
-          <Grid item sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            flexWrap: 'wrap',
+        <Grid
+          id="checkbox-grid"
+          item
+          lg={5}
+          md={3}
+          sm={12}
+          xs={12}
+          sx={{
+            marginTop: "2rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
           }}>
+          <Grid
+            item
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              flexWrap: "wrap",
+            }}>
             {/* Put checkboxes here */}
           </Grid>
-          <Grid item sx={{
-            display: 'flex',
-            flexDirection: 'row',
-          }}>
+          <Grid
+            item
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+            }}>
             <Button
               variant="contained"
               disabled={isProcessing}
@@ -343,8 +314,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                 width: "10rem",
                 height: "4rem",
               }}
-              type="submit"
-            >
+              type="submit">
               save
             </Button>
           </Grid>

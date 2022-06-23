@@ -1,6 +1,6 @@
-import { JobLevels } from "./JobLevels";
-import { WorkStates } from "./WorkStates";
-import { Projects } from "./Projects";
+import { JOB_LEVELS } from "./JobLevels";
+import { WORK_STATES } from "./WorkStates";
+import { PROJECTS } from "./Projects";
 import TABLE_HEADERS from "./TableHeaders";
 
-export { JobLevels, WorkStates, Projects, TABLE_HEADERS };
+export { JOB_LEVELS, WORK_STATES, PROJECTS, TABLE_HEADERS };
