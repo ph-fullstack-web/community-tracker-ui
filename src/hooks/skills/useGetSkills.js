@@ -1,13 +1,10 @@
 import { useQuery } from "react-query";
-import { getMembers } from "services";
+import { getSkills } from "services";
 
-const useGetMembers = (id) => {
+const useGetSkills = () => {
   const { isLoading, isError, data, error, refetch } = useQuery(
-    "members",
-    () => getMembers(id),
-    {
-      staleTime: 10000,
-    }
+    "peopleskills",
+    () => getSkills()
   );
 
   return {
@@ -19,4 +16,4 @@ const useGetMembers = (id) => {
   };
 };
 
-export default useGetMembers;
+export default useGetSkills;

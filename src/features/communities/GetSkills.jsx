@@ -3,8 +3,8 @@ import PageContainer from 'layout/PageContainer';
 import { Button, Box } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import { AutocompleteInputChip } from '../../components/index.js';
-import { useGetSkills } from '../../hooks/Skills';
-import { postSkills } from '../../services/community-service/PostSkills';
+import { useGetSkills } from 'hooks';
+import { postSkills } from 'services';
 
 const GetSkills = () => {
   const { data, isLoading } = useGetSkills();
