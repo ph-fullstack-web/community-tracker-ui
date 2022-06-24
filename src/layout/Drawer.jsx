@@ -2,14 +2,13 @@ import * as React from 'react';
 import { useToggle } from 'hooks';
 import { styled, useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { Box, Drawer, List, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText, Button } from '@mui/material';
+import { Box, Drawer, List, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText, } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import SummarizeIcon from '@mui/icons-material/Summarize';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import PeopleIcon from '@mui/icons-material/People';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import DRAWER_ROUTES from './constants/drawerRoutes';
+
 const DRAWER_WIDTH = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -45,48 +44,14 @@ const PersistentDrawerLeft = ({ children }) => {
     const router = useNavigate();
 
     const theme = useTheme();
-    const [toggle, setToggle] = useToggle()
+    const [toggle, setToggle] = useToggle();
     const handleToggle = () => {
         setToggle(!toggle)
     }
 
     const handleNavigation = (route) => {
-        router(route)
+        router(route);
     }
-    const COMMUNITY_ROUTES = [
-        {
-            name: 'Community List',
-            path: '/communities',
-            icon: <PeopleIcon />
-        },
-        {
-            name: 'Add Community',
-            path: '/communities/add',
-            icon: <AccountCircleIcon />
-        },
-        {
-            name: 'Member List',
-            path: '/communities',
-            icon: <PeopleIcon />
-        },
-        {
-            name: 'Add Member',
-            path: '/communities/add',
-            icon: <AccountCircleIcon />
-        },
-        {
-            name: 'Report',
-            path: '/communities/add',
-            icon: <SummarizeIcon />
-        },
-        {
-            name: 'Themes',
-            path: '/communities/add',
-            icon: <SummarizeIcon />
-        }
-    ];
-
-
     return (
         <>
             <Box onClick={handleToggle} variant="contained" position="absolute" left={0}>
@@ -108,8 +73,11 @@ const PersistentDrawerLeft = ({ children }) => {
                             boxSizing: 'border-box',
                         },
                     }}
-                    variant="persistent"
+                    variant={"persistent"}
                     anchor="left"
+                    ModalProps={{
+                        keepMounted: true,
+                    }}
                     open={toggle}
                 >
                     <DrawerHeader>
@@ -119,7 +87,7 @@ const PersistentDrawerLeft = ({ children }) => {
                     </DrawerHeader>
                     <Divider />
                     <List>
-                        {COMMUNITY_ROUTES.map(({ name, icon, path }) => (
+                        {DRAWER_ROUTES.map(({ name, icon, path }) => (
                             <ListItem key={name} disablePadding onClick={() => handleNavigation(path)}>
                                 <ListItemButton>
                                     <ListItemIcon>
