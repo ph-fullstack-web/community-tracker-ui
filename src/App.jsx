@@ -4,7 +4,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { SwitchThemeContextProvider } from 'contexts/theme/SwitchThemeContext';
 import { AuthProvider } from 'contexts/auth/AuthContext';
 import { NotificationProvider } from 'contexts/notification/NotificationContext';
-import { Communities } from 'features';
+import { Communities } from 'pages';
 import routes from 'routes';
 
 
