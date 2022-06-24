@@ -16,6 +16,9 @@ const UpdateResource = () => {
 
 
   const onUpdateResource = (data) => {
+
+    const payload = data;
+    payload.community = parseInt(communityId);
     const args = {
       peopleId: parseInt(peopleId),
       payload: data
