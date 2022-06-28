@@ -36,7 +36,7 @@ const CommunityList = () => {
           backgroundColor: "#e6e6e6",
         }}
       >
-        List of Communities
+        Communities
       </Typography>
       <Divider style={{ border: "2px solid #9fafc1" }} />
       {isLoading && (
@@ -52,18 +52,18 @@ const CommunityList = () => {
         </Container>
       )}
       {
-          isError && (
-            <Container
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                justifyItems: "center",
-                marginTop: "3rem",
-              }}
-            >
-              <label>{`Error: ${error.message}`}</label>
-            </Container>)
-          
+        isError && (
+          <Container
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              justifyItems: "center",
+              marginTop: "3rem",
+            }}
+          >
+            <label>{`Error: ${error.message}`}</label>
+          </Container>)
+
       }
       <CardContent className="community-container">
         {!isLoading && communityData && (

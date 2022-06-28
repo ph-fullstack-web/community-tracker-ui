@@ -12,7 +12,7 @@ const MembersMainContainer = () => {
   const { communityId } = useParams();
   const navigate = useNavigate();
   const navigateToCreate = (communityId) => {
-    navigate(`/resources/${communityId}/create`);
+    navigate(`/members/${communityId}/create`);
   };
 
   const {

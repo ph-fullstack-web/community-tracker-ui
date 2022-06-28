@@ -24,21 +24,19 @@ const routes = [
     ]
   },
   {
-    path: 'resources/:communityId',
+    path: 'members/:communityId',
     element: <Members />,
-    name: 'Resources',
-    children: [
-      {
-        path: 'create',
-        element: <CreateResource />,
-        name: 'Create Resource',
-      },
-      {
-        path: 'update/:peopleId',
-        element: <UpdateResource />,
-        name: 'Update Resource',
-      },
-    ]
+    name: 'Members',
+  },
+  {
+    path: 'members/create',
+    element: <CreateResource />,
+    name: 'Create Resource',
+  },
+  {
+    path: 'members/update/:peopleId',
+    element: <UpdateResource />,
+    name: 'Update Resource',
   },
   {
     path: 'skills',

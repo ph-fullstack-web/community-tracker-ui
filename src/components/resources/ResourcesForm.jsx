@@ -168,17 +168,17 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   mt: 5,
                 }}
                 fullWidth>
-                <InputLabel>Assigned To</InputLabel>
+                <InputLabel>Project Lead</InputLabel>
                 <Select
-                  name="assignedTo"
+                  name="projectLead"
                   required
-                  value={resource.assignedTo}
-                  label="Assigned To"
+                  value={resource.projectLead}
+                  label="Project Lead"
                   onChange={(e) => onChangeHandler(e)}
                   sx={{
                     backgroundColor: "#FFFFFF",
                   }}>
-                  <MenuItem value="">Select Community Manager</MenuItem>
+                  <MenuItem value="">Select Project Lead</MenuItem>
                   {!isLoading &&
                     (communityManagers || []).map((manager) => {
                       return (
@@ -210,69 +210,6 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   backgroundColor: "#FFFFFF",
                 }}
               />
-            </Grid>
-          </Grid>
-
-          <Grid container gap={2}>
-            <Grid item xs={12} sm={12} md={5} lg={5}>
-              <FormControl
-                sx={{
-                  mt: 5,
-                }}
-                fullWidth>
-                <InputLabel>Project</InputLabel>
-                <Select
-                  name="project"
-                  required
-                  value={resource.project}
-                  defaultValue=""
-                  label="Projects"
-                  onChange={(e) => onChangeHandler(e)}
-                  sx={{
-                    backgroundColor: "#FFFFFF",
-                  }}>
-                  <MenuItem value="">Select Project</MenuItem>
-                  {!isLoadingProjects &&
-                    (projectsData || []).map((project) => {
-                      return (
-                        <MenuItem key={project.id} value={project.id}>
-                          {project.name}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={12} md={5} lg={5}>
-              <FormControl
-                sx={{
-                  mt: 5,
-                }}
-                fullWidth>
-                <InputLabel>Project Lead</InputLabel>
-                <Select
-                  name="projectLead"
-                  required
-                  value={resource.projectLead}
-                  label="Project Lead"
-                  onChange={(e) => onChangeHandler(e)}
-                  sx={{
-                    backgroundColor: "#FFFFFF",
-                  }}>
-                  <MenuItem value="">Select Project Lead</MenuItem>
-                  {!isLoading &&
-                    (communityManagers || []).map((manager) => {
-                      return (
-                        <MenuItem
-                          key={manager.people_id}
-                          value={manager.people_id}>
-                          {" "}
-                          {manager.full_name}{" "}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
-              </FormControl>
             </Grid>
           </Grid>
         </Grid>
