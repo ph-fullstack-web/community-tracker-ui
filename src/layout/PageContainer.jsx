@@ -12,19 +12,17 @@ const PageContainer = ({ children }) => {
       maxWidth="xl"
       sx={{
         borderRadius: "15px",
-        backgroundColor:
-          currentTheme === "dark" ? currentThemePalette.dark : "#F3F6F8",
+        backgroundColor: currentTheme === "dark" ? "#283233" : "#F3F6F8",
         border:
           currentTheme === "dark"
             ? `1px solid ${currentThemePalette.light}`
             : null,
         padding: "1px",
         marginTop: "2rem",
-      }}>
+      }}
+    >
       <Navbar />
-      <PersistentDrawerLeft>
-        {children}
-      </PersistentDrawerLeft>
+      <PersistentDrawerLeft>{children}</PersistentDrawerLeft>
       <SnackBar />
     </Container>
   );
