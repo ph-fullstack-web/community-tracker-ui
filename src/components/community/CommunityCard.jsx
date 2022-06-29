@@ -50,7 +50,7 @@ const CommunityCard = ({ id, image, name }) => {
           component={Link}
           to={`/communities/update/${id}`}
         >
-          <SettingsIcon/>
+          <SettingsIcon sx={{color: currentTheme === "dark" ? currentThemePalette.light : null}}/>
           <Typography
             component="label"
             align="center"
