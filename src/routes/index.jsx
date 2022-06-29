@@ -23,20 +23,23 @@ const routes = [
       },
     ]
   },
+
   {
     path: 'members/:communityId',
     element: <Members />,
     name: 'Members',
-  },
-  {
-    path: 'members/create',
-    element: <CreateResource />,
-    name: 'Create Resource',
-  },
-  {
-    path: 'members/update/:peopleId',
-    element: <UpdateResource />,
-    name: 'Update Resource',
+    children: [
+      {
+        path: 'create',
+        element: <CreateResource />,
+        name: 'Create Resource',
+      },
+      {
+        path: 'update/:peopleId',
+        element: <UpdateResource />,
+        name: 'Update Resource',
+      },
+    ]
   },
   {
     path: 'skills',

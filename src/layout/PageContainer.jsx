@@ -3,6 +3,7 @@ import { useSwitchThemeContext } from "hooks";
 import PersistentDrawerLeft from "./Drawer";
 import SnackBar from "components/notification/SnackBar";
 import Navbar from "./Navbar";
+import CustomContainer from "components/common/CustomContainer";
 
 const PageContainer = ({ children }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
@@ -23,7 +24,9 @@ const PageContainer = ({ children }) => {
       }}>
       <Navbar />
       <PersistentDrawerLeft>
-        {children}
+        <CustomContainer >
+          {children}
+        </CustomContainer>
       </PersistentDrawerLeft>
       <SnackBar />
     </Container>

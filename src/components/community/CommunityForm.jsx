@@ -5,6 +5,7 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetManagers } from "hooks";
+import { CustomButton } from "components";
 
 const CommunityForm = ({ onClickHandler, buttonText, community }) => {
 
@@ -117,17 +118,10 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                         onChange={handleFieldChange}
                     />
                 </Grid>
-                <Grid item sm={5} />
-                <Grid item sm={8} />
-                <Grid item xs={12} sm={4}>
-                    <Button variant="contained" sx={{
-                        mt: 5,
-                        mb: 5,
-                        width: "100%"
-                    }} type='submit'>{buttonText}</Button>
 
-                </Grid>
+
             </Grid>
+            <CustomButton variant="contained" type='submit' marginY={2} width="10rem" name={buttonText} />
         </Box>
 
 

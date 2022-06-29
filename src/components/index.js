@@ -5,6 +5,7 @@ import PlusIconButton from "./common/PlusIconButton";
 import SearchInput from "./common/SearchInput";
 import ThemeSwitchButton from "./theme-switcher/ThemeSwitchButton";
 import LoginModal from "./login/LoginModal";
+import CustomButton from "./common/CustomButton";
 
 export {
   LoginModal,
@@ -14,4 +15,5 @@ export {
   CommunityCard,
   CommunityList,
   ThemeSwitchButton,
+  CustomButton,
 };
