@@ -3,12 +3,11 @@ import {
   Card,
   Divider,
   CardContent,
-  IconButton,
   Grid,
   CircularProgress,
   Container,
 } from "@mui/material";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { PlusIconButton } from "components";
 import useGetCommunities from "hooks/communities/useGetCommunities";
 import CommunityCard from "./CommunityCard";
 import { useNavigate } from "react-router-dom";
@@ -102,25 +101,15 @@ const CommunityList = () => {
                   alignItems: "center",
                 }}
               >
-                <IconButton
+                <PlusIconButton
                   title="Go to input community"
-                  color="primary"
-                  size="medium"
-                  aria-label="Add community"
+                  ariaLabel="Add community"
+                  onClickCallback={() => navigator("/communities/add")}
                   style={{
                     height: "5rem",
                     width: "5rem",
                   }}
-                  onClick={() => navigator("/communities/add")}
-                >
-                  <AddCircleOutlineIcon
-                    fontSize="large"
-                    style={{
-                      color: "#74808d",
-                      fontWeight: "700",
-                    }}
-                  />
-                </IconButton>
+                />
               </Grid>
             </Grid>
           </>
