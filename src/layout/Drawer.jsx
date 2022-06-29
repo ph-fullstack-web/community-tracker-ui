@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useToggle } from 'hooks';
+import { useSwitchThemeContext, useToggle } from 'hooks';
 import { styled, useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { Box, Drawer, List, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText, } from '@mui/material';
@@ -49,6 +49,9 @@ const PersistentDrawerLeft = ({ children }) => {
         setToggle(!toggle)
     }
 
+    const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+    const themeForDarkOnly = (color) => currentTheme === "dark" ? color : null
+
     const handleNavigation = (route) => {
         router(route);
     }
@@ -60,7 +63,7 @@ const PersistentDrawerLeft = ({ children }) => {
                         background: '#b8cad6'
                     }
                 }}>
-                    <ArrowForwardIosIcon />
+                    <ArrowForwardIosIcon style={{color: currentThemePalette.main}}/>
                 </IconButton>
             </Box>
             <Box display="flex">
@@ -73,6 +76,9 @@ const PersistentDrawerLeft = ({ children }) => {
                             boxSizing: 'border-box',
                         },
                     }}
+                    PaperProps={{
+                        sx: {backgroundColor: currentThemePalette.bgPrimary}
+                    }}
                     variant={"persistent"}
                     anchor="left"
                     ModalProps={{
@@ -81,16 +87,30 @@ const PersistentDrawerLeft = ({ children }) => {
                     open={toggle}
                 >
                     <DrawerHeader>
-                        <IconButton onClick={handleToggle}>
+                        <IconButton 
+                            onClick={handleToggle}
+                            sx={{
+                                color: currentThemePalette.main,
+                                '&:hover': {
+                                    backgroundColor: themeForDarkOnly("#293A46")
+                                }
+                            }}
+                        >
                             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                         </IconButton>
                     </DrawerHeader>
-                    <Divider />
+                    <Divider sx={{ border: `1px solid ${themeForDarkOnly(currentThemePalette.light)}` }}/>
                     <List>
                         {DRAWER_ROUTES.map(({ name, icon, path }) => (
                             <ListItem key={name} disablePadding onClick={() => handleNavigation(path)}>
-                                <ListItemButton>
-                                    <ListItemIcon>
+                                <ListItemButton sx={{
+                                        color: themeForDarkOnly(currentThemePalette.light),
+                                        '&:hover': {
+                                            backgroundColor: themeForDarkOnly("#293A46")
+                                        }
+                                    }}
+                                >
+                                    <ListItemIcon sx={{color: themeForDarkOnly(currentThemePalette.light)}}>
                                         {icon}
                                     </ListItemIcon>
                                     <ListItemText primary={name} />
