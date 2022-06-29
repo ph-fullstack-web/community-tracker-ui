@@ -12,33 +12,38 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import useGetCommunities from "hooks/communities/useGetCommunities";
 import CommunityCard from "./CommunityCard";
 import { useNavigate } from "react-router-dom";
+import { useSwitchThemeContext } from "hooks";
+
 const CommunityList = () => {
   const navigator = useNavigate();
   // hook to fetch communities
   const { isLoading, data: communityData, isError, error } = useGetCommunities();
+
+  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
   return (
     <Card
       style={{
         marginTop: "3rem",
         marginBottom: "1rem",
-        border: "3px solid #9fafc1",
+        border: `3px solid ${currentThemePalette.light}`,
       }}
     >
       <Typography
         component="label"
         align="center"
         sx={{
-          color: "#798da3",
           padding: "0.25em",
           fontWeight: "700",
           display: "block",
-          backgroundColor: "#e6e6e6",
+          color:
+            currentTheme === "dark" ? currentThemePalette.light : "#FFFFFF",
+          backgroundColor: currentThemePalette.bgSecondary,
         }}
       >
         List of Communities
       </Typography>
-      <Divider style={{ border: "2px solid #9fafc1" }} />
+      <Divider style={{ border: `2px solid ${currentThemePalette.light}` }} />
       {isLoading && (
         <Container
           style={{
@@ -51,21 +56,22 @@ const CommunityList = () => {
           <CircularProgress />
         </Container>
       )}
-      {
-          isError && (
-            <Container
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                justifyItems: "center",
-                marginTop: "3rem",
-              }}
-            >
-              <label>{`Error: ${error.message}`}</label>
-            </Container>)
-          
-      }
-      <CardContent className="community-container">
+      {isError && (
+        <Container
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            justifyItems: "center",
+            marginTop: "3rem",
+          }}
+        >
+          <label>{`Error: ${error.message}`}</label>
+        </Container>
+      )}
+      <CardContent
+        className="community-container"
+        sx={{ backgroundColor: currentThemePalette.bgPrimary }}
+      >
         {!isLoading && communityData && (
           <>
             <Grid
@@ -105,7 +111,7 @@ const CommunityList = () => {
                     height: "5rem",
                     width: "5rem",
                   }}
-                  onClick={() => navigator('/communities/add')}
+                  onClick={() => navigator("/communities/add")}
                 >
                   <AddCircleOutlineIcon
                     fontSize="large"
