@@ -46,9 +46,49 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" alignSelf="center" >
-      <Grid justifyContent="center" display="flex" alignItems="center" container component={"form"} onSubmit={onSubmit}>
-        <Grid item lg={5} md={12} sm={12} xs={12}>
+    <Box display="flex" flexDirection="column" alignSelf="center">
+      <Grid justifyContent="center" display="flex" direction="column" lg={12} md={12} sm={12} xs={12} alignItems="center" container component={"form"} onSubmit={onSubmit} paddingX={10}>
+        <Box display="flex" gap={10} flex={1} width="100%" marginY={2}>
+
+          <FormControl
+            fullWidth>
+            <InputLabel>Work State</InputLabel>
+            <Select
+              name="state"
+              required
+              value={resource.state}
+              label="Work State"
+              onChange={(e) => onChangeHandler(e)}
+              sx={{
+                backgroundColor: "#FFFFFF",
+              }}>
+              {Object.keys(WORK_STATES).map((key) => {
+                return (
+                  <MenuItem key={key} value={key}>
+                    {WORK_STATES[key]}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+          <TextField
+            required
+            fullWidth
+            value={resource.email}
+            name="email"
+            onChange={(e) => onChangeHandler(e)}
+            variant="outlined"
+            id="email"
+            label="CSV Mail"
+            sx={{
+
+              backgroundColor: "#FFFFFF",
+            }}
+          />
+
+
+        </Box>
+        <Box display="flex" gap={10} flex={1} width="100%" marginY={2}>
           <TextField
             required
             fullWidth
@@ -59,132 +99,95 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
             id="name"
             label="Name"
             sx={{
-              mt: 5,
+
               backgroundColor: "#FFFFFF",
             }}
           />
-          <Box display="flex" gap={2} justifyContent="space-between" marginY={2}>
-            <TextField
-              required
-              fullWidth
-              value={resource.email}
-              name="email"
-              onChange={(e) => onChangeHandler(e)}
-              variant="outlined"
-              id="email"
-              label="CSV Mail"
-              sx={{
+          <TextField
+            required
+            fullWidth
+            value={resource.cognizantId}
+            name="cognizantId"
+            onChange={(e) => onChangeHandler(e)}
+            variant="outlined"
+            id="cognizantId"
+            label="Cognizant ID"
+            sx={{
+              backgroundColor: "#FFFFFF",
+            }}
+          />
 
-                backgroundColor: "#FFFFFF",
-              }}
-            />
-            <TextField
+        </Box>
+        <Box display="flex" gap={10} flex={1} width="100%" justifyContent="space-between" marginY={2}>
+          <TextField
+            required
+            fullWidth
+            value={resource.hiredDate}
+            name="hiredDate"
+            onChange={(e) => onChangeHandler(e)}
+            variant="outlined"
+            id="name"
+            label="Hired Date"
+            placeholder="Hired Date"
+            type="date"
+            sx={{
+
+              backgroundColor: "#FFFFFF",
+            }}
+          />
+          <FormControl
+            fullWidth>
+            <InputLabel>Job Level</InputLabel>
+            <Select
+              name="jobLevel"
               required
-              fullWidth
-              value={resource.cognizantId}
-              name="cognizantId"
+              value={resource.jobLevel}
+              label="Job Level"
               onChange={(e) => onChangeHandler(e)}
-              variant="outlined"
-              id="cognizantId"
-              label="Cognizant ID"
               sx={{
                 backgroundColor: "#FFFFFF",
-              }}
-            />
+              }}>
+              {Object.keys(JOB_LEVELS).map((key) => {
+                return (
+                  <MenuItem key={key} value={key}>
+                    {JOB_LEVELS[key]}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </Box>
 
-          </Box>
-          <Box display="flex" gap={2} justifyContent="space-between" marginY={2}>
-            <FormControl
-              fullWidth>
-              <InputLabel>Work State</InputLabel>
-              <Select
-                name="state"
-                required
-                value={resource.state}
-                label="Work State"
-                onChange={(e) => onChangeHandler(e)}
-                sx={{
-                  backgroundColor: "#FFFFFF",
-                }}>
-                {Object.keys(WORK_STATES).map((key) => {
+        <Box display="flex" gap={10} flex={1} width="100%" justifyContent="space-between" marginY={2}>
+          <FormControl sx={{ width: "46%" }}>
+            <InputLabel>Project Lead</InputLabel>
+            <Select
+              name="projectLead"
+              required
+              value={resource.projectLead}
+              label="Project Lead"
+              onChange={(e) => onChangeHandler(e)}
+              sx={{
+                backgroundColor: "#FFFFFF",
+              }}>
+              <MenuItem value="">Select Project Lead</MenuItem>
+              {!isLoading &&
+                (communityManagers || []).map((manager) => {
                   return (
-                    <MenuItem key={key} value={key}>
-                      {WORK_STATES[key]}
+                    <MenuItem
+                      key={manager.people_id}
+                      value={manager.people_id}>
+                      {" "}
+                      {manager.full_name}{" "}
                     </MenuItem>
                   );
                 })}
-              </Select>
-            </FormControl>
-            <FormControl
-              fullWidth>
-              <InputLabel>Job Level</InputLabel>
-              <Select
-                name="jobLevel"
-                required
-                value={resource.jobLevel}
-                label="Job Level"
-                onChange={(e) => onChangeHandler(e)}
-                sx={{
-                  backgroundColor: "#FFFFFF",
-                }}>
-                {Object.keys(JOB_LEVELS).map((key) => {
-                  return (
-                    <MenuItem key={key} value={key}>
-                      {JOB_LEVELS[key]}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-          </Box>
+            </Select>
+          </FormControl>
+          <CustomButton display="flex" alignSelf="center" disabled={isProcessing} variant="contained" size="large" type="submit" width="10rem" height="3.5rem" name="save" />
 
-          <Box display="flex" gap={2} justifyContent="space-between" marginY={2}>
-            <FormControl
-              fullWidth>
-              <InputLabel>Project Lead</InputLabel>
-              <Select
-                name="projectLead"
-                required
-                value={resource.projectLead}
-                label="Project Lead"
-                onChange={(e) => onChangeHandler(e)}
-                sx={{
-                  backgroundColor: "#FFFFFF",
-                }}>
-                <MenuItem value="">Select Project Lead</MenuItem>
-                {!isLoading &&
-                  (communityManagers || []).map((manager) => {
-                    return (
-                      <MenuItem
-                        key={manager.people_id}
-                        value={manager.people_id}>
-                        {" "}
-                        {manager.full_name}{" "}
-                      </MenuItem>
-                    );
-                  })}
-              </Select>
-            </FormControl>
-            <TextField
-              required
-              fullWidth
-              value={resource.hiredDate}
-              name="hiredDate"
-              onChange={(e) => onChangeHandler(e)}
-              variant="outlined"
-              id="name"
-              label="Hired Date"
-              placeholder="Hired Date"
-              type="date"
-              sx={{
-
-                backgroundColor: "#FFFFFF",
-              }}
-            />
-          </Box>
-        </Grid>
+        </Box>
       </Grid>
-      <CustomButton display="flex" alignSelf="center" disabled={isProcessing} variant="contained" size="large" type="submit" width="10rem" name="save" />
 
     </Box>
   );
