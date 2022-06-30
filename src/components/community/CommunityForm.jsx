@@ -46,8 +46,8 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
 
     return (
         <Box component='form' onSubmit={handleOnButtonClick}>
-            <Grid container >
-                <Grid item xs={12} sm={5}>
+            <Grid container>
+                <Grid item xs={12} md={5}>
                     <FormTextField 
                         inputProps={{
                             readOnly: community ? true : false,
@@ -68,7 +68,7 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                 <Grid item xs={0} sm={7}>
                 </Grid>
 
-                <Grid item xs={12} sm={5}>
+                <Grid item xs={12} md={5}>
                     <FormControl sx={{
                         mt: 5
                     }} fullWidth>
@@ -100,7 +100,7 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                 </Grid>
                 <Grid item xs={12} sm={7}>
                 </Grid>
-                <Grid item xs={12} sm={7}>
+                <Grid item xs={12} md={7}>
                     <FormTextField
                         InputProps={{
                             readOnly: community ? true : false,
@@ -119,15 +119,29 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                         onChange={handleFieldChange}
                     />
                 </Grid>
-                <Grid item sm={5} />
-                <Grid item sm={8} />
-                <Grid item xs={12} sm={4}>
-                    <AppButton 
+                {/* <Grid item sm={5} />
+                <Grid item sm={8} /> */}
+                <Grid 
+                    item
+                    xs={4}
+                    sx={{
+                        display: "flex",
+                        alignContent: "center",
+                        ml: {
+                            md: "3rem"
+                        },
+                        mt: {
+                            xs: "2rem"
+                        }
+                }}>
+                    <AppButton
+                        type='submit'
+                        size="large"
                         sx={{
-                            mt: 5,
-                            mb: 5,
-                            width: "100%"
-                        }} type='submit'
+                            mt: "auto",
+                            width: "10rem",
+                            height: "4rem",
+                        }}
                     >
                         {buttonText}
                     </AppButton>
