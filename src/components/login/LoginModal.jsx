@@ -8,8 +8,8 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { FormTextField } from "components";
-
 import { useAuthContext } from "contexts/auth/AuthContext";
+import { useSwitchThemeContext } from "hooks";
 
 const CREDENTIALS = [
   {
@@ -36,6 +36,8 @@ const CREDENTIALS = [
 ];
 
 const LoginModal = ({ open, handleClose }) => {
+  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+
   const [credentials, setCredentials] = useState({ id: "", password: "" });
   const { dispatch, state } = useAuthContext();
 
@@ -60,8 +62,18 @@ const LoginModal = ({ open, handleClose }) => {
     });
   };
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth>
-      <DialogTitle onClick={() => console.log(state)}>Login Modal</DialogTitle>
+    <Dialog 
+      open={open}
+      onClose={handleClose}
+      fullWidth
+      PaperProps={{
+        sx:{
+          backgroundColor: currentThemePalette.bgPrimary,
+          border: currentTheme === "dark" ? `2px solid ${currentThemePalette.light}` : null
+        }
+      }}
+    >
+      <DialogTitle onClick={() => console.log(state)} sx={{color: currentThemePalette.text}}>Login Modal</DialogTitle>
       <DialogContent>
         <Box
           display="flex"
