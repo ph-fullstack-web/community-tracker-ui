@@ -37,6 +37,9 @@ const CREDENTIALS = [
 
 const LoginModal = ({ open, handleClose }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+  const footerButtonStyle = {
+    color: currentTheme === "dark" ? currentThemePalette.light : currentThemePalette.dark
+  }
 
   const [credentials, setCredentials] = useState({ id: "", password: "" });
   const { dispatch, state } = useAuthContext();
@@ -100,8 +103,8 @@ const LoginModal = ({ open, handleClose }) => {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Login</Button>
+        <Button onClick={handleClose} sx={footerButtonStyle}>Cancel</Button>
+        <Button onClick={handleSubmit} sx={footerButtonStyle}>Login</Button>
       </DialogActions>
     </Dialog>
   );
