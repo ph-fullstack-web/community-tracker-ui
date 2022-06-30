@@ -3,7 +3,6 @@ import {
   Select,
   MenuItem,
   InputLabel,
-  Button,
   Grid,
   Box,
 } from "@mui/material";
@@ -12,6 +11,7 @@ import useGetManagers from "hooks/people/useGetManagers";
 import useGetProjects from "hooks/projects/useGetProjects";
 import { JOB_LEVELS, WORK_STATES } from "utils/constants";
 import { useState, useEffect } from "react";
+import AppButton from "components/common/AppButton";
 
 const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   const [resource, setResource] = useState({
@@ -301,7 +301,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
               display: "flex",
               flexDirection: "row",
             }}>
-            <Button
+            <AppButton
               variant="contained"
               disabled={isProcessing}
               size="large"
@@ -312,7 +312,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
               }}
               type="submit">
               save
-            </Button>
+            </AppButton>
           </Grid>
         </Grid>
       </Grid>

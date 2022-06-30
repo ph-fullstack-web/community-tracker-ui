@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PageContainer from 'layout/PageContainer';
-import { Button, Box } from '@mui/material';
+import { Box } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import { AutocompleteInputChip } from '../../components/index.js';
 import { useGetSkills } from 'hooks';
 import { postSkills } from 'services';
+import AppButton from 'components/common/AppButton.jsx';
 
 const GetSkills = () => {
   const { data, isLoading } = useGetSkills();
@@ -44,14 +45,14 @@ const GetSkills = () => {
             setNewValues={setNewValues}
           />
         )}
-        <Button
+        <AppButton
           sx={{ width: 150, mt: 3, ml: 'auto' }}
           variant="contained"
           startIcon={<SaveIcon />}
           onClick={onSave}
         >
           Save
-        </Button>
+        </AppButton>
       </Box>
     </PageContainer>
   );

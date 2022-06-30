@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import {
     FormControl, Select, MenuItem, InputLabel,
-    Button, Grid, Box
+    Grid, Box
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetManagers } from "hooks";
 import { FormTextField } from "components";
+import AppButton from "components/common/AppButton";
 
 const CommunityForm = ({ onClickHandler, buttonText, community }) => {
 
@@ -121,11 +122,11 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                 <Grid item sm={5} />
                 <Grid item sm={8} />
                 <Grid item xs={12} sm={4}>
-                    <Button variant="contained" sx={{
+                    <AppButton variant="contained" sx={{
                         mt: 5,
                         mb: 5,
                         width: "100%"
-                    }} type='submit'>{buttonText}</Button>
+                    }} type='submit'>{buttonText}</AppButton>
 
                 </Grid>
             </Grid>
