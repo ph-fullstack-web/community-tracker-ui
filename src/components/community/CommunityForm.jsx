@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import {
-    TextField, FormControl, Select, MenuItem, InputLabel,
+    FormControl, Select, MenuItem, InputLabel,
     Button, Grid, Box
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetManagers } from "hooks";
+import { FormTextField } from "components";
 
 const CommunityForm = ({ onClickHandler, buttonText, community }) => {
 
@@ -46,12 +47,13 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
         <Box component='form' onSubmit={handleOnButtonClick}>
             <Grid container >
                 <Grid item xs={12} sm={5}>
-                    <TextField
+                    <FormTextField 
                         inputProps={{
                             readOnly: community ? true : false,
                         }}
                         required={community ? false : true}
-                        fullWidth value={communityDetails.communityName}
+                        fullWidth
+                        value={communityDetails.communityName}
                         onChange={handleFieldChange}
                         id="communityName"
                         name='communityName'
@@ -59,8 +61,8 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                         variant="outlined"
                         sx={{
                             mt: 5,
-                            backgroundColor: '#FFFFFF'
-                        }} />
+                        }}
+                    />
                 </Grid>
                 <Grid item xs={0} sm={7}>
                 </Grid>
@@ -98,7 +100,7 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                 <Grid item xs={12} sm={7}>
                 </Grid>
                 <Grid item xs={12} sm={7}>
-                    <TextField
+                    <FormTextField
                         InputProps={{
                             readOnly: community ? true : false,
                         }}
@@ -110,7 +112,6 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                         multiline
                         rows={6}
                         sx={{
-                            backgroundColor: "white",
                             mt: 5
                         }}
                         value={communityDetails.communityDescription}

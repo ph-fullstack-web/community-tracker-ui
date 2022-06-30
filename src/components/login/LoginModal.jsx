@@ -6,8 +6,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField,
 } from "@mui/material";
+import { FormTextField } from "components";
 
 import { useAuthContext } from "contexts/auth/AuthContext";
 
@@ -69,7 +69,7 @@ const LoginModal = ({ open, handleClose }) => {
           flexDirection="column"
           justifyContent="space-evenly"
         >
-          <TextField
+          <FormTextField
             onChange={handleCredentials}
             name="id"
             label="Cognizant ID"
@@ -77,7 +77,7 @@ const LoginModal = ({ open, handleClose }) => {
             type="number"
             value={credentials.id}
           />
-          <TextField
+          <FormTextField
             name="password"
             onChange={handleCredentials}
             label="Password"

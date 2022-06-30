@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { Box, Stack } from "@mui/material";
-import { SearchInput, PlusIconButton } from "components";
+import { FormSearchInput, PlusIconButton } from "components";
 import { JOB_LEVELS, WORK_STATES, PROJECTS } from "utils/constants";
 import { useGetMembers } from "hooks";
 import ExportButton from "components/members/ExportButton";
@@ -53,7 +53,7 @@ const MembersMainContainer = () => {
       }}>
       <Stack direction="row" alignItems="center">
         <Box sx={{ width: { xs: "100%", md: "55ch" }, flex: "0 1 auto" }}>
-          <SearchInput onChangeCallback={handleSearch} />
+          <FormSearchInput onChangeCallback={handleSearch} />
         </Box>
         <Box>
           <PlusIconButton

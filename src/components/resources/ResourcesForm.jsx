@@ -1,5 +1,4 @@
 import {
-  TextField,
   FormControl,
   Select,
   MenuItem,
@@ -8,6 +7,7 @@ import {
   Grid,
   Box,
 } from "@mui/material";
+import { FormTextField } from "components";
 import useGetManagers from "hooks/people/useGetManagers";
 import useGetProjects from "hooks/projects/useGetProjects";
 import { JOB_LEVELS, WORK_STATES } from "utils/constants";
@@ -57,7 +57,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
         <Grid id="inputs-grid" item lg={5} md={12} sm={12} xs={12}>
           <Grid container gap={2} item sm={12} md={12} lg={12}>
             <Grid item xs={12} sm={12} md={10} lg={10}>
-              <TextField
+              <FormTextField
                 required
                 fullWidth
                 value={resource.name}
@@ -68,12 +68,11 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                 label="Name"
                 sx={{
                   mt: 5,
-                  backgroundColor: "#FFFFFF",
                 }}
               />
             </Grid>
             <Grid item xs={12} sm={12} md={5} lg={5}>
-              <TextField
+              <FormTextField
                 required
                 fullWidth
                 value={resource.email}
@@ -84,12 +83,11 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                 label="CSV Mail"
                 sx={{
                   mt: 5,
-                  backgroundColor: "#FFFFFF",
                 }}
               />
             </Grid>
             <Grid item xs={12} sm={12} md={5} lg={5}>
-              <TextField
+              <FormTextField
                 required
                 fullWidth
                 value={resource.cognizantId}
@@ -100,7 +98,6 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                 label="Cognizant ID"
                 sx={{
                   mt: 5,
-                  backgroundColor: "#FFFFFF",
                 }}
               />
             </Grid>
@@ -194,7 +191,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={5} lg={5}>
-              <TextField
+              <FormTextField
                 required
                 fullWidth
                 value={resource.hiredDate}
@@ -207,7 +204,6 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                 type="date"
                 sx={{
                   mt: 5,
-                  backgroundColor: "#FFFFFF",
                 }}
               />
             </Grid>
