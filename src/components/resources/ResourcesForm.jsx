@@ -302,7 +302,6 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
               flexDirection: "row",
             }}>
             <AppButton
-              variant="contained"
               disabled={isProcessing}
               size="large"
               sx={{

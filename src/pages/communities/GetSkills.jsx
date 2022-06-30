@@ -47,7 +47,6 @@ const GetSkills = () => {
         )}
         <AppButton
           sx={{ width: 150, mt: 3, ml: 'auto' }}
-          variant="contained"
           startIcon={<SaveIcon />}
           onClick={onSave}
         >

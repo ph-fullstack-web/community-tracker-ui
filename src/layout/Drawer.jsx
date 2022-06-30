@@ -77,7 +77,7 @@ const PersistentDrawerLeft = ({ children }) => {
                         },
                     }}
                     PaperProps={{
-                        sx: {backgroundColor: currentThemePalette.bgPrimary}
+                        sx: {backgroundColor: themeForDarkOnly("#202124")}
                     }}
                     variant={"persistent"}
                     anchor="left"

@@ -10,6 +10,7 @@ import {
 import { FormTextField } from "components";
 import { useAuthContext } from "contexts/auth/AuthContext";
 import { useSwitchThemeContext } from "hooks";
+import AppButton from "components/common/AppButton";
 
 const CREDENTIALS = [
   {
@@ -37,9 +38,6 @@ const CREDENTIALS = [
 
 const LoginModal = ({ open, handleClose }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const footerButtonStyle = {
-    color: currentTheme === "dark" ? currentThemePalette.light : currentThemePalette.dark
-  }
 
   const [credentials, setCredentials] = useState({ id: "", password: "" });
   const { dispatch, state } = useAuthContext();
@@ -71,7 +69,7 @@ const LoginModal = ({ open, handleClose }) => {
       fullWidth
       PaperProps={{
         sx:{
-          backgroundColor: currentThemePalette.bgPrimary,
+          backgroundColor: currentTheme === "dark" ? "#202124" : null,
           border: currentTheme === "dark" ? `2px solid ${currentThemePalette.light}` : null
         }
       }}
@@ -103,8 +101,8 @@ const LoginModal = ({ open, handleClose }) => {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} sx={footerButtonStyle}>Cancel</Button>
-        <Button onClick={handleSubmit} sx={footerButtonStyle}>Login</Button>
+        <AppButton onClick={handleClose}>Cancel</AppButton>
+        <AppButton onClick={handleSubmit}>Login</AppButton>
       </DialogActions>
     </Dialog>
   );

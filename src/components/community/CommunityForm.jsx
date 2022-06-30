@@ -122,11 +122,15 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                 <Grid item sm={5} />
                 <Grid item sm={8} />
                 <Grid item xs={12} sm={4}>
-                    <AppButton variant="contained" sx={{
-                        mt: 5,
-                        mb: 5,
-                        width: "100%"
-                    }} type='submit'>{buttonText}</AppButton>
+                    <AppButton 
+                        sx={{
+                            mt: 5,
+                            mb: 5,
+                            width: "100%"
+                        }} type='submit'
+                    >
+                        {buttonText}
+                    </AppButton>
 
                 </Grid>
             </Grid>
