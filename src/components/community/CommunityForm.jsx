@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react"
 import {
-    FormControl, Select, MenuItem, InputLabel,
-    Grid, Box
+    MenuItem, Grid, Box
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetManagers } from "hooks";
-import { FormTextField } from "components";
+import { FormSelect, FormTextField } from "components";
 import AppButton from "components/common/AppButton";
 
 const CommunityForm = ({ onClickHandler, buttonText, community }) => {
@@ -69,34 +68,35 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                 </Grid>
 
                 <Grid item xs={12} md={5}>
-                    <FormControl sx={{
-                        mt: 5
-                    }} fullWidth>
-                        <InputLabel id="communityAssigned">Community Assigned To</InputLabel>
-                        <Select
-                            inputProps={{ readOnly: community ? true : false }}
-                            required
-                            id="communityManager"
-                            name="communityManagerId"
-                            value={communityDetails.communityManagerId}
-                            label="Community Assigned To"
-                            onChange={handleFieldChange}
-                            sx={{
-                                backgroundColor: "#FFFFFF"
-                            }}
-                        >
-
-                            {!isLoading && communityManagers && (
-                                communityManagers.map((manager) => {
-                                    return (
-                                        <MenuItem key={manager.people_id} value={manager.people_id}> {manager.first_name + " " + manager.last_name} </MenuItem>
-                                    )
-                                })
-                            )
-                            }
-
-                        </Select>
-                    </FormControl>
+                    <FormSelect
+                        FormControlProps={{
+                            sx: {
+                                mt: 5
+                            },
+                            fullWidth: true
+                        }}
+                        InputLabelProps={{
+                            id: "communityAssigned"
+                        }}
+                        InputLabelChildren="Community Assigned To"
+                        SelectProps={{
+                            inputProps: { readOnly: community ? true : false },
+                            required: true,
+                            id: "communityManager",
+                            name: "communityManagerId",
+                            value: communityDetails.communityManagerId,
+                            label: "Community Assigned To",
+                            onChange: handleFieldChange,
+                        }}
+                    >
+                        {!isLoading && communityManagers && (
+                            communityManagers.map((manager) => {
+                                return (
+                                    <MenuItem key={manager.people_id} value={manager.people_id}> {manager.first_name + " " + manager.last_name} </MenuItem>
+                                )
+                            })
+                        )}
+                    </FormSelect>
                 </Grid>
                 <Grid item xs={12} sm={7}>
                 </Grid>
