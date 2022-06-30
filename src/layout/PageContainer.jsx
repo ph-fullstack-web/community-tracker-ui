@@ -12,7 +12,7 @@ const PageContainer = ({ children }) => {
       maxWidth="xl"
       sx={{
         borderRadius: "15px",
-        backgroundColor: currentTheme === "dark" ? "#283233" : "#F3F6F8",
+        backgroundColor: currentTheme === "dark" ? "#3C4043" : "#F3F6F8",
         border:
           currentTheme === "dark"
             ? `1px solid ${currentThemePalette.light}`
