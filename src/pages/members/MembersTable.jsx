@@ -143,7 +143,7 @@ const MembersTable = ({
                 sx={{
                   ...tableCellStyle,
                   fontWeight: "bold",
-                  backgroundColor: currentThemePalette.bgSecondary,
+                  backgroundColor: currentTheme === "dark" ? currentThemePalette.dark : currentThemePalette.medium
                 }}>
                 <FormControlLabel
                   value={header.value}
@@ -185,7 +185,7 @@ const MembersTable = ({
                     align="center"
                     sx={{
                       ...tableCellStyle,
-                      backgroundColor: currentThemePalette.bgPrimary,
+                      backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF"
                     }}>
                     <Skeleton
                       sx={{
@@ -203,7 +203,10 @@ const MembersTable = ({
         )}
         {isError && (
           <TableBody>
-            <TableRow>
+            <TableRow 
+              sx={{
+                backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
+            }}>
               <MembersTableBodyCell
                 colSpan={6}
                 sxProp={{ ...tableCellStyle, py: 2.5 }}>
@@ -240,7 +243,7 @@ const MembersTable = ({
                   hover
                   sx={{
                     cursor: "pointer",
-                    backgroundColor: currentThemePalette.bgPrimary,
+                    backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
                     "&:hover": {
                       backgroundColor:
                         currentTheme === "dark" ? "#293A46 !important" : null,
@@ -271,7 +274,9 @@ const MembersTable = ({
               ))}
             </TableBody>
             <TableFooter>
-              <TableRow>
+              <TableRow sx={{
+                backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
+              }}>
                 <TablePagination
                   colSpan={6}
                   count={rowDataFiltered.length}
