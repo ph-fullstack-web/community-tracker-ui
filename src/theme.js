@@ -1,14 +1,14 @@
 import createTheme from '@mui/material/styles/createTheme';
 
-const DARK_LIGHT = '#CACAFF';
-const DARK_MEDIUM = '#000048';
+const DARK_LIGHT = '#BDBDBD';
+const DARK_MEDIUM = "#212121";
 const PLUM_MEDIUM = '#7373D8';
 const BLUE_MEDIUM = '#6AA2DC';
 //const TEAL_MEDIUM = '#26EFE9';
 const TEAL_DARK = '#06C7CC';
 const BLACK = '#000000';
 
-export const DARK_DARK = '#00002F';
+export const DARK_DARK = "#141414";
 export const WHITE = '#FFFFFF';
 
 const theme = createTheme({
@@ -44,7 +44,7 @@ const theme = createTheme({
       main: TEAL_DARK,
       light: '#97F5F7',
       medium: TEAL_DARK,
-      dark: '#06C7CC',
+      dark: TEAL_DARK,
       bgPrimary: WHITE,
       bgSecondary: TEAL_DARK,
       text: BLACK,

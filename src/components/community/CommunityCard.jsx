@@ -5,7 +5,7 @@ import {  useSwitchThemeContext } from "hooks";
 
 const CommunityCard = ({ id, image, name }) => {
 
-  const { currentThemePalette } = useSwitchThemeContext();
+  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
 
   return (
@@ -35,6 +35,7 @@ const CommunityCard = ({ id, image, name }) => {
           marginTop: "1rem",
           color: "#FFFFFF",
           backgroundColor: currentThemePalette.bgSecondary,
+          border: currentTheme === "dark" ? `2px solid ${currentThemePalette.light}` : null
         }}
       >
         <CardContent
@@ -49,7 +50,7 @@ const CommunityCard = ({ id, image, name }) => {
           component={Link}
           to={`/communities/update/${id}`}
         >
-          <SettingsIcon/>
+          <SettingsIcon sx={{color: currentTheme === "dark" ? currentThemePalette.light : null}}/>
           <Typography
             component="label"
             align="center"
