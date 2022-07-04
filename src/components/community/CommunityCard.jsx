@@ -151,7 +151,6 @@ const CommunityCard = ({ id, image, name, description }) => {
                 padding: "0.75rem",
                 paddingTop: "0",
                 fontWeight: "600",
-                fontStyle: "italic",
                 display: "block",
                 cursor: "pointer",
               }}
