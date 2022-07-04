@@ -9,7 +9,7 @@ const PLUM_MEDIUM = '#7373D8';
 const BLUE_LIGHT = '#92BBE6';
 const BLUE_MEDIUM = '#6AA2DC';
 
-const TEAL_LIGHT = '#97F5F7';
+const TEAL_LIGHT = '#6be4e8';
 //const TEAL_MEDIUM = '#26EFE9';
 const TEAL_DARK = '#06C7CC';
 const BLACK = '#000000';
