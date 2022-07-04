@@ -1,4 +1,4 @@
-import { AddCommunity, UpdateCommunity, CreateResource, UpdateResource, GetCommunity, Communities, Members, GetSkills } from 'pages';
+import { AddCommunity, UpdateCommunity, CreateResource, UpdateResource, GetCommunity, Communities, Members, GetSkills, NotFound } from 'pages';
 
 const routes = [
   {
@@ -44,6 +44,11 @@ const routes = [
     path: 'skills',
     element: <GetSkills />,
     name: 'Get Skills',
+  },
+  {
+    path: '*',
+    element: <NotFound />,
+    name: 'Not Found'
   },
 ];
 
