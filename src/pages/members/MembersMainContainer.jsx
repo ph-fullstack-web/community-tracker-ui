@@ -1,12 +1,13 @@
 import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Card } from "@mui/material";
 import { FormSearchInput, PlusIconButton } from "components";
 import { JOB_LEVELS, WORK_STATES, PROJECTS } from "utils/constants";
 import { useGetMembers } from "hooks";
 import ExportButton from "components/members/ExportButton";
 import MembersTable from "./MembersTable";
+import {  useSwitchThemeContext } from "hooks";
 
 const MembersMainContainer = () => {
   const { communityId } = useParams();
@@ -45,44 +46,50 @@ const MembersMainContainer = () => {
     setSearch(event.target.value);
   };
 
+  const { currentThemePalette } = useSwitchThemeContext();
+
   return (
     <Box
       style={{
         marginTop: "3rem",
         marginBottom: "1rem",
       }}>
-      <Stack direction="row" alignItems="center">
-        <Box sx={{ width: { xs: "100%", md: "55ch" }, flex: "0 1 auto" }}>
-          <FormSearchInput onChangeCallback={handleSearch} />
-        </Box>
-        <Box>
-          <PlusIconButton
-            title="Go to Input Page"
-            ariaLabel="Go to Input Page"
-            onClickCallback={() => navigateToCreate(communityId)}
-            sxProp={{
-              ml: { xs: 1, sm: 3 },
-            }}
-          />
-        </Box>
-        <Box sx={{ ml: "auto" }}>
-          <ExportButton
+        <Card
+          sx={{padding: "2rem", backgroundColor: currentThemePalette.card}}>
+          <Stack direction="row" alignItems="center">
+            <Box sx={{ width: { xs: "100%", md: "55ch" }, flex: "0 1 auto" }}>
+              <FormSearchInput onChangeCallback={handleSearch} />
+            </Box>
+            <Box>
+              <PlusIconButton
+                title="Go to Input Page"
+                ariaLabel="Go to Input Page"
+                onClickCallback={() => navigateToCreate(communityId)}
+                sxProp={{
+                  ml: { xs: 1, sm: 3 },
+                }}
+              />
+            </Box>
+            <Box sx={{ ml: "auto" }}>
+              <ExportButton
+                isLoading={isLoading}
+                membersData={membersData}
+                rowData={rowData}
+                isError={isError}
+                error={error}
+              />
+            </Box>
+          </Stack>
+       
+          <MembersTable
+            search={search}
             isLoading={isLoading}
             membersData={membersData}
             rowData={rowData}
             isError={isError}
             error={error}
           />
-        </Box>
-      </Stack>
-      <MembersTable
-        search={search}
-        isLoading={isLoading}
-        membersData={membersData}
-        rowData={rowData}
-        isError={isError}
-        error={error}
-      />
+       </Card>
     </Box>
   );
 };
