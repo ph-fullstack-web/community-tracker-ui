@@ -6,6 +6,7 @@ import Members from './members/';
 import GetSkills from './communities/GetSkills';
 import CreateResource from './resources/CreateResource';
 import UpdateResource from './resources/UpdateResource';
+import NotFound from './not-found'
 
 export {
   Communities,
@@ -16,4 +17,5 @@ export {
   GetSkills,
   CreateResource,
   UpdateResource,
+  NotFound
 };
