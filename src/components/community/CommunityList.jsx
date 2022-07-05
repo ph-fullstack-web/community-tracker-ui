@@ -86,6 +86,7 @@ const CommunityList = () => {
                   key={community.community_id}
                   id={community.community_id}
                   image={""}
+                  description={community.community_description}
                   name={community.community_name}
                 />
               ))}
