@@ -2,12 +2,17 @@ import * as React from 'react';
 import { useSwitchThemeContext, useToggle } from 'hooks';
 import { styled, useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { Box, Drawer, List, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText, } from '@mui/material';
+import { Box, Drawer, List, Divider, ListItemButton, ListItemIcon, ListItemText, Collapse, Container, Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import DRAWER_ROUTES from './constants/drawerRoutes';
+import { useState } from 'react';
+import useGetCommunities from "hooks/communities/useGetCommunities";
 
 const DRAWER_WIDTH = 240;
 
@@ -41,6 +46,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 const PersistentDrawerLeft = ({ children }) => {
+    const { isLoading, data: communityData, isError, error } = useGetCommunities();
     const router = useNavigate();
 
     const theme = useTheme();
@@ -55,6 +61,12 @@ const PersistentDrawerLeft = ({ children }) => {
     const handleNavigation = (route) => {
         router(route);
     }
+
+    const [open, setOpen] = useState(false);
+    const handleClick = () => {
+        setOpen(!open);
+      };
+
     return (
         <>
             <Box onClick={handleToggle} variant="contained" position="absolute" left={0}>
@@ -67,6 +79,18 @@ const PersistentDrawerLeft = ({ children }) => {
                 </IconButton>
             </Box>
             <Box display="flex">
+            {isError && (
+                <Container
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    justifyItems: "center",
+                    marginTop: "3rem",
+                }}
+                >
+                <label>{`Error: ${error.message}`}</label>
+                </Container>
+            )}
                 <Drawer
                     sx={{
                         width: DRAWER_WIDTH,
@@ -87,6 +111,26 @@ const PersistentDrawerLeft = ({ children }) => {
                     open={toggle}
                 >
                     <DrawerHeader>
+                        <Box 
+                            sx={{color: themeForDarkOnly(currentThemePalette.light),
+                                display: 'flex',
+                                margin: 'auto'}}
+                        >
+                            <Box sx={{
+                                paddingRight: '1rem',
+                                alignSelf: 'center',
+                                borderRight: `5px solid  ${currentThemePalette.main}`}}
+                            >
+                                922557
+                            </Box>
+                            <Box 
+                                component={Button}
+                                onClick={handleToggle}
+                                sx={{color: currentTheme === "dark" ? currentThemePalette.light : currentThemePalette.dark}}
+                            >
+                                Sign out
+                            </Box>
+                        </Box>
                         <IconButton 
                             onClick={handleToggle}
                             sx={{
@@ -102,20 +146,53 @@ const PersistentDrawerLeft = ({ children }) => {
                     <Divider sx={{ border: `1px solid ${themeForDarkOnly(currentThemePalette.light)}` }}/>
                     <List>
                         {DRAWER_ROUTES.map(({ name, icon, path }) => (
-                            <ListItem key={name} disablePadding onClick={() => handleNavigation(path)}>
-                                <ListItemButton sx={{
-                                        color: themeForDarkOnly(currentThemePalette.light),
-                                        '&:hover': {
-                                            backgroundColor: themeForDarkOnly("#293A46")
-                                        }
-                                    }}
-                                >
-                                    <ListItemIcon sx={{color: themeForDarkOnly(currentThemePalette.light)}}>
-                                        {icon}
-                                    </ListItemIcon>
-                                    <ListItemText primary={name} />
-                                </ListItemButton>
-                            </ListItem>
+                            name !== 'Members' ? (
+                                <div>
+                                    <ListItemButton key={name} disablePadding onClick={() => handleNavigation(path)} sx={{
+                                            color: themeForDarkOnly(currentThemePalette.light),
+                                            '&:hover': {
+                                                backgroundColor: themeForDarkOnly("#293A46")
+                                            }
+                                        }}
+                                    >
+                                        <ListItemIcon sx={{color: themeForDarkOnly(currentThemePalette.light)}}>
+                                            {icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={name} />
+                                    </ListItemButton>
+                                </div>
+                            ) : (
+                                <div>
+                                    <ListItemButton key={'name'} sx={{
+                                            color: themeForDarkOnly(currentThemePalette.light),
+                                            '&:hover': {
+                                                backgroundColor: themeForDarkOnly("#293A46")
+                                            }
+                                        }}
+                                        onClick={handleClick}
+                                    >
+                                        <ListItemIcon sx={{color: themeForDarkOnly(currentThemePalette.light)}}>
+                                            {icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={name} />
+                                        {open ? <ExpandLess /> : <ExpandMore />}
+                                    </ListItemButton>
+                                    {!isLoading && communityData && (
+                                        <Collapse in={open} timeout="auto" unmountOnExit sx={{color: themeForDarkOnly(currentThemePalette.light)}}>
+                                            {(communityData || []).map((community) => (
+                                                <List key={community.community_id} component="div" disablePadding onClick={() => handleNavigation(`/resources/${community.community_id}`)}>
+                                                    <ListItemButton sx={{ pl: 4 }}>
+                                                        <ListItemIcon>
+                                                            <SubdirectoryArrowRightIcon  sx={{color: themeForDarkOnly(currentThemePalette.light)}}/>
+                                                        </ListItemIcon>
+                                                        <ListItemText primary={community.community_name} />
+                                                    </ListItemButton>
+                                                </List>
+                                            ))}
+                                        </Collapse>
+                                    )}
+                                </div>
+                            ) 
                         ))}
                     </List>
                 </Drawer>

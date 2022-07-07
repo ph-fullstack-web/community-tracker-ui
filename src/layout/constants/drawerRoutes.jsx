@@ -3,7 +3,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 const DRAWER_ROUTES = [
   {
-    name: "Community List",
+    name: "Communities",
     path: "/communities",
     icon: <PeopleIcon />,
   },
@@ -13,7 +13,7 @@ const DRAWER_ROUTES = [
     icon: <AccountCircleIcon />,
   },
   {
-    name: "Member List",
+    name: "Members",
     path: "/communities",
     icon: <PeopleIcon />,
   },
