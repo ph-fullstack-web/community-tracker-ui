@@ -8,6 +8,7 @@ import { useGetMembers } from "hooks";
 import ExportButton from "components/members/ExportButton";
 import MembersTable from "./MembersTable";
 import {  useSwitchThemeContext } from "hooks";
+import { useEffect } from "react";
 
 const MembersMainContainer = () => {
   const { communityId } = useParams();
@@ -15,13 +16,18 @@ const MembersMainContainer = () => {
   const navigateToCreate = (communityId) => {
     navigate(`/resources/${communityId}/create`);
   };
-
+  
   const {
     isLoading,
     data: membersData,
     isError,
     error,
+    refetch
   } = useGetMembers(communityId);
+
+  useEffect(() => {
+    refetch();
+  }, [communityId, refetch]);
 
   const rowData = useMemo(
     () =>
