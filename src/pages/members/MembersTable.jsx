@@ -38,7 +38,7 @@ const MembersTable = ({
 
   const navigate = useNavigate();
   const navigateToUpdate = (communityId, peopleId) => {
-    navigate(`/resources/${communityId}/update/${peopleId}`);
+    navigate(`/members/${communityId}/update/${peopleId}`);
   };
 
   const [filters, setFilters] = useState([]);
