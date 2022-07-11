@@ -35,6 +35,7 @@ const theme = createTheme({
       circle: DARK_DARK,
       textSecondary: DARK_TEAL,
       cardSecondary: DARK_MEDIUM,
+      bgIcon: DARK_LIGHT
     },
     plum: {
       main: PLUM_MEDIUM,
@@ -48,6 +49,7 @@ const theme = createTheme({
       circle: LIGHT_GRAY,
       textSecondary: DARK_PLUM,
       cardSecondary: WHITE,
+      bgIcon: WHITE
     },
     blue: {
       main: BLUE_MEDIUM,
@@ -61,6 +63,7 @@ const theme = createTheme({
       circle: LIGHT_GRAY,
       textSecondary: DARK_BLUE,
       cardSecondary: WHITE,
+      bgIcon: WHITE
     },
     teal: {
       main: TEAL_DARK,
@@ -74,6 +77,7 @@ const theme = createTheme({
       circle: LIGHT_GRAY,
       textSecondary: TEAL_DARK,
       cardSecondary: WHITE,
+      bgIcon: WHITE
     },
   },
 });

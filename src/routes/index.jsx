@@ -24,7 +24,7 @@ const routes = [
     ]
   },
   {
-    path: 'resources/:communityId',
+    path: 'members/:communityId',
     element: <Members />,
     name: 'Resources',
     children: [
