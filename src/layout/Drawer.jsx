@@ -14,6 +14,7 @@ import DRAWER_ROUTES from './constants/drawerRoutes';
 import { useState } from 'react';
 import useGetCommunities from "hooks/communities/useGetCommunities";
 import Scrollbars from 'react-custom-scrollbars-2';
+import ThemeSubMenu from 'components/theme-switcher/ThemeSubMenu';
 
 const DRAWER_WIDTH = 240;
 
@@ -146,57 +147,66 @@ const PersistentDrawerLeft = ({ children }) => {
                     </DrawerHeader>
                     <Divider sx={{ border: `1px solid ${themeForDarkOnly(currentThemePalette.light)}` }}/>
                     <Scrollbars>
-                    	<List>
-                    	    {DRAWER_ROUTES.map(({ name, icon, path }) => (
-                    	        name !== 'Members' ? (
-                    	            <div>
-                    	                <ListItemButton key={name} disablePadding onClick={() => handleNavigation(path)} sx={{
-                    	                        color: themeForDarkOnly(currentThemePalette.light),
-                    	                        '&:hover': {
-                    	                            backgroundColor: themeForDarkOnly("#293A46")
-                    	                        }
-                    	                    }}
-                    	                >
-                    	                    <ListItemIcon sx={{color: themeForDarkOnly(currentThemePalette.light)}}>
-                    	                        {icon}
-                    	                    </ListItemIcon>
-                    	                    <ListItemText primary={name} />
-                    	                </ListItemButton>
-                    	            </div>
-                    	        ) : (
-                    	            <div>
-                    	                <ListItemButton key={'name'} sx={{
-                    	                        color: themeForDarkOnly(currentThemePalette.light),
-                    	                        '&:hover': {
-                    	                            backgroundColor: themeForDarkOnly("#293A46")
-                    	                        }
-                    	                    }}
-                    	                    onClick={handleClick}
-                    	                >
-                    	                    <ListItemIcon sx={{color: themeForDarkOnly(currentThemePalette.light)}}>
-                    	                        {icon}
-                    	                    </ListItemIcon>
-                    	                    <ListItemText primary={name} />
-                    	                    {open ? <ExpandLess /> : <ExpandMore />}
-                    	                </ListItemButton>
-                    	                {!isLoading && communityData && (
-                    	                    <Collapse in={open} timeout="auto" unmountOnExit sx={{color: themeForDarkOnly(currentThemePalette.light)}}>
-                    	                        {(communityData || []).map((community) => (
-                    	                            <List key={community.community_id} component="div" disablePadding onClick={() => handleNavigation(`/resources/${community.community_id}`)}>
-                    	                                <ListItemButton sx={{ pl: 4 }}>
-                    	                                    <ListItemIcon>
-                    	                                        <SubdirectoryArrowRightIcon  sx={{color: themeForDarkOnly(currentThemePalette.light)}}/>
-                    	                                    </ListItemIcon>
-                    	                                    <ListItemText primary={community.community_name} />
-                    	                                </ListItemButton>
-                    	                            </List>
-                    	                        ))}
-                    	                    </Collapse>
-                    	                )}
-                    	            </div>
-                    	        ) 
-                    	    ))}
-                    	</List>
+                    <List>
+                        {DRAWER_ROUTES.map(({ name, icon, path }) => (
+                            name !== 'Members' ? (
+                                name === 'Themes' ?
+                                ( 
+                                    <div key={name}>
+                                        <ThemeSubMenu  />
+                                    </div>
+                                )
+                                :
+                                (
+                                    <div key={name}>
+                                        <ListItemButton onClick={() => handleNavigation(path)} sx={{
+                                                color: themeForDarkOnly(currentThemePalette.light),
+                                                '&:hover': {
+                                                    backgroundColor: themeForDarkOnly("#293A46")
+                                                }
+                                            }}
+                                        >
+                                            <ListItemIcon sx={{color: themeForDarkOnly(currentThemePalette.light)}}>
+                                                {icon}
+                                            </ListItemIcon>
+                                            <ListItemText primary={name} />
+                                        </ListItemButton>
+                                    </div>
+                                )
+                            ) : (
+                                <div key={name}>
+                                    <ListItemButton  sx={{
+                                            color: themeForDarkOnly(currentThemePalette.light),
+                                            '&:hover': {
+                                                backgroundColor: themeForDarkOnly("#293A46")
+                                            }
+                                        }}
+                                        onClick={handleClick}
+                                    >
+                                        <ListItemIcon sx={{color: themeForDarkOnly(currentThemePalette.light)}}>
+                                            {icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={name} />
+                                        {open ? <ExpandLess /> : <ExpandMore />}
+                                    </ListItemButton>
+                                    {!isLoading && communityData && (
+                                        <Collapse in={open} timeout="auto" unmountOnExit sx={{color: themeForDarkOnly(currentThemePalette.light)}}>
+                                            {(communityData || []).map((community) => (
+                                                <List key={community.community_id} component="div" disablePadding onClick={() => handleNavigation(`/members/${community.community_id}`)}>
+                                                    <ListItemButton sx={{ pl: 4 }}>
+                                                        <ListItemIcon>
+                                                            <SubdirectoryArrowRightIcon  sx={{color: themeForDarkOnly(currentThemePalette.light)}}/>
+                                                        </ListItemIcon>
+                                                        <ListItemText primary={community.community_name} />
+                                                    </ListItemButton>
+                                                </List>
+                                            ))}
+                                        </Collapse>
+                                    )}
+                                </div>
+                            ) 
+                        ))}
+                    </List>
                     </Scrollbars>
                 </Drawer>
                 <Main open={toggle}>
