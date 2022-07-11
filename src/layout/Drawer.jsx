@@ -13,6 +13,7 @@ import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRig
 import DRAWER_ROUTES from './constants/drawerRoutes';
 import { useState } from 'react';
 import useGetCommunities from "hooks/communities/useGetCommunities";
+import Scrollbars from 'react-custom-scrollbars-2';
 import ThemeSubMenu from 'components/theme-switcher/ThemeSubMenu';
 
 const DRAWER_WIDTH = 240;
@@ -145,6 +146,7 @@ const PersistentDrawerLeft = ({ children }) => {
                         </IconButton>
                     </DrawerHeader>
                     <Divider sx={{ border: `1px solid ${themeForDarkOnly(currentThemePalette.light)}` }}/>
+                    <Scrollbars>
                     <List>
                         {DRAWER_ROUTES.map(({ name, icon, path }) => (
                             name !== 'Members' ? (
@@ -205,6 +207,7 @@ const PersistentDrawerLeft = ({ children }) => {
                             ) 
                         ))}
                     </List>
+                    </Scrollbars>
                 </Drawer>
                 <Main open={toggle}>
                     <DrawerHeader />
