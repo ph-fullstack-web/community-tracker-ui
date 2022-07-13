@@ -2,7 +2,9 @@ import createTheme from '@mui/material/styles/createTheme';
 
 const DARK_LIGHT = '#BDBDBD';
 const DARK_MEDIUM = "#212121";
-
+const DARK_DARK_PLUM = '#6363e0';
+const DARK_DARK_TEAL = '#04dbe0';
+const DARK_DARK_BLUE = '#5995d4';
 const PLUM_LIGHT = '#85A0F9';
 const PLUM_MEDIUM = '#7373D8';
 
@@ -50,7 +52,7 @@ const theme = createTheme({
       circle: LIGHT_GRAY,
       textSecondary: DARK_PLUM,
       cardSecondary: WHITE,
-      border: '#6363e0',
+      border: DARK_DARK_PLUM,
       bgIcon: WHITE
     },
     blue: {
@@ -65,7 +67,7 @@ const theme = createTheme({
       circle: LIGHT_GRAY,
       textSecondary: DARK_BLUE,
       cardSecondary: WHITE,
-      border: '#5995d4',
+      border: DARK_DARK_BLUE,
       bgIcon: WHITE
     },
     teal: {
@@ -80,7 +82,7 @@ const theme = createTheme({
       circle: LIGHT_GRAY,
       textSecondary: TEAL_DARK,
       cardSecondary: WHITE,
-      border: '#04dbe0',
+      border: DARK_DARK_TEAL,
       bgIcon: WHITE
     },
   },
