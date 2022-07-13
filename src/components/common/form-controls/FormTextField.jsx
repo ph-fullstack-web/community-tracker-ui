@@ -30,10 +30,10 @@ const FormTextField = ({ sx: restOfSxProp, ...otherProps }) => {
         },
         "& .MuiOutlinedInput-root": {
           "& fieldset": {
-            borderColor: themeForDarkOnly(currentThemePalette.light),
+            borderColor: currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.medium,
           },
           "&:hover fieldset": {
-            borderColor: themeForDarkOnly("#FFFFFF"),
+            borderColor: currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.dark,
           },
           "&.Mui-focused fieldset": {
             borderColor:

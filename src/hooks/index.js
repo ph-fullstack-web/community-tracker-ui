@@ -11,6 +11,7 @@ import useUpdatePeople from "./people/useUpdatePeople";
 import useGetProjects from "./projects/useGetProjects";
 import useGetSkills from "./skills/useGetSkills";
 import usePostSkills from "./skills/usePostSkills";
+import useMemberWithSkill from "./skills/useMemberWithSkills";
 
 export {
   useCreatePeople,
@@ -26,4 +27,5 @@ export {
   useGetSkills,
   useGetProjects,
   usePostSkills,
+  useMemberWithSkill
 };

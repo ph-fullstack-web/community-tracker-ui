@@ -4,6 +4,7 @@ import getCommunityById from "./community/GetCommunityById";
 import getSkills from "./community/GetSkills";
 import postSkills from "./community/PostSkills";
 import updateCommunityService from "./community/UpdateCommunityService";
+import getMemberWithSkills from "./community/GetMemberWithSkills"
 import createPeople from "./people/CreatePeople";
 import getManagers from "./people/GetManagers";
 import getMembers from "./people/GetMembers";
@@ -23,4 +24,5 @@ export {
   updatePeople,
   getPeopleById,
   createPeople,
+  getMemberWithSkills
 };
