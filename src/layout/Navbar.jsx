@@ -1,15 +1,13 @@
-import { useMemo } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import Logo from './Logo';
-import { useSwitchThemeContext, useToggle } from 'hooks';
-import { ThemeSwitchButton, LoginModal } from 'components';
-import { useAuthContext } from "contexts/auth/AuthContext";
+import { useToggle } from 'hooks';
+import { LoginModal } from 'components';
 
 const Navbar = () => {
 
-  const { state: authState } = useAuthContext();
+  // const { state: authState } = useAuthContext();
 
-  const {currentTheme, currentThemePalette} = useSwitchThemeContext();
+  // const {currentTheme, currentThemePalette} = useSwitchThemeContext();
 
   const [toggle, setToggle] = useToggle();
 
@@ -17,15 +15,15 @@ const Navbar = () => {
     setToggle(!toggle);
   };
 
-  const loggedInName = useMemo(() => {
-    const { role, firstName, lastName } = authState;
-    return `${role} | ${firstName} ${lastName}`
-  }, [authState])
+  // const loggedInName = useMemo(() => {
+  //   const { role, firstName, lastName } = authState;
+  //   return `${role} | ${firstName} ${lastName}`
+  // }, [authState])
 
   return (
     <Box display="flex" justifyContent="space-between" flex={1}>
       <Logo />
-      <Box display="flex" alignSelf="center" marginLeft="auto">
+      {/* <Box display="flex" alignSelf="center" marginLeft="auto">
         {authState.role 
           ? <Typography>{loggedInName}</Typography> 
           : (
@@ -41,7 +39,7 @@ const Navbar = () => {
 
       <Box display="flex" alignSelf="center">
         <ThemeSwitchButton />
-      </Box>
+      </Box> */}
 
       <LoginModal open={toggle} handleClose={handleToggle} />
     </Box>

@@ -8,20 +8,27 @@ import { useGetMembers } from "hooks";
 import ExportButton from "components/members/ExportButton";
 import MembersTable from "./MembersTable";
 import {  useSwitchThemeContext } from "hooks";
+import { useEffect } from "react";
+import { WHITE } from "theme";
 
 const MembersMainContainer = () => {
   const { communityId } = useParams();
   const navigate = useNavigate();
   const navigateToCreate = (communityId) => {
-    navigate(`/resources/${communityId}/create`);
+    navigate(`/members/${communityId}/create`);
   };
-
+  
   const {
     isLoading,
     data: membersData,
     isError,
     error,
+    refetch
   } = useGetMembers(communityId);
+
+  useEffect(() => {
+    refetch();
+  }, [communityId, refetch]);
 
   const rowData = useMemo(
     () =>
@@ -67,6 +74,16 @@ const MembersMainContainer = () => {
                 onClickCallback={() => navigateToCreate(communityId)}
                 sxProp={{
                   ml: { xs: 1, sm: 3 },
+                  "& .MuiSvgIcon-root": {
+                    color: `${currentThemePalette.bgIcon} !important`,
+                  },
+                  "&:hover .MuiSvgIcon-root": {
+                    color: `${currentThemePalette.dark} !important`,
+                  },
+                  "&:hover": {
+                    backgroundColor: WHITE
+                  },
+                  padding: 0
                 }}
               />
             </Box>

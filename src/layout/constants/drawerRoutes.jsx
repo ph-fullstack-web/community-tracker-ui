@@ -1,9 +1,10 @@
 import PeopleIcon from "@mui/icons-material/People";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SummarizeIcon from "@mui/icons-material/Summarize";
+import { ThemeSwitchButton } from "components";
 const DRAWER_ROUTES = [
   {
-    name: "Community List",
+    name: "Communities",
     path: "/communities",
     icon: <PeopleIcon />,
   },
@@ -13,7 +14,7 @@ const DRAWER_ROUTES = [
     icon: <AccountCircleIcon />,
   },
   {
-    name: "Member List",
+    name: "Members",
     path: "/communities",
     icon: <PeopleIcon />,
   },
@@ -29,8 +30,8 @@ const DRAWER_ROUTES = [
   },
   {
     name: "Themes",
-    path: "/communities/add",
-    icon: <SummarizeIcon />,
+    path: "",
+    icon: <ThemeSwitchButton />,
   },
 ];
 export default DRAWER_ROUTES;
