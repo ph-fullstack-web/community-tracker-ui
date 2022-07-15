@@ -53,7 +53,7 @@ const MembersMainContainer = () => {
     setSearch(event.target.value);
   };
 
-  const { currentThemePalette } = useSwitchThemeContext();
+  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
   return (
     <Box
@@ -62,7 +62,7 @@ const MembersMainContainer = () => {
         marginBottom: "1rem",
       }}>
         <Card
-          sx={{padding: "2rem", backgroundColor: currentThemePalette.card}}>
+          sx={{padding: "2rem", backgroundColor: currentThemePalette.cardSecondary}}>
           <Stack direction="row" alignItems="center">
             <Box sx={{ width: { xs: "100%", md: "55ch" }, flex: "0 1 auto" }}>
               <FormSearchInput onChangeCallback={handleSearch} />
@@ -75,13 +75,13 @@ const MembersMainContainer = () => {
                 sxProp={{
                   ml: { xs: 1, sm: 3 },
                   "& .MuiSvgIcon-root": {
-                    color: `${currentThemePalette.bgIcon} !important`,
+                    color: `${currentTheme === "dark" ? WHITE : currentThemePalette.dark}!important`,
                   },
                   "&:hover .MuiSvgIcon-root": {
-                    color: `${currentThemePalette.dark} !important`,
+                    color: `${currentTheme === "dark" ? "#141414" : WHITE} !important`,
                   },
                   "&:hover": {
-                    backgroundColor: WHITE
+                    backgroundColor: currentTheme === "dark" ? WHITE : currentThemePalette.border
                   },
                   padding: 0
                 }}

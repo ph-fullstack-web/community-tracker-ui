@@ -16,7 +16,12 @@ import { useSwitchThemeContext } from "hooks";
 const CommunityList = () => {
   const navigator = useNavigate();
   // hook to fetch communities
-  const { isLoading, data: communityData, isError, error } = useGetCommunities();
+  const {
+    isLoading,
+    data: communityData,
+    isError,
+    error,
+  } = useGetCommunities();
 
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
@@ -35,12 +40,13 @@ const CommunityList = () => {
           padding: "0.25em",
           fontWeight: "700",
           display: "block",
+          fontSize: "22px",
           color:
             currentTheme === "dark" ? currentThemePalette.light : "#FFFFFF",
           backgroundColor: currentThemePalette.bgSecondary,
         }}
       >
-        List of Communities
+        Communities
       </Typography>
       <Divider style={{ border: `2px solid ${currentThemePalette.light}` }} />
       {isLoading && (

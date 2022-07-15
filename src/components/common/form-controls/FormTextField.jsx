@@ -4,14 +4,14 @@ import { useSwitchThemeContext } from "hooks";
 const FormTextField = ({ sx: restOfSxProp, ...otherProps }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
   const themeForDarkOnly = (color) => (currentTheme === "dark" ? color : null);
-
+  
   return (
     <TextField
       sx={{
         input: {
           color: themeForDarkOnly("#FFFFFF"),
           // For input[type=date]'s calendar icon and calendar UI
-          colorScheme: themeForDarkOnly("dark")
+          colorScheme: themeForDarkOnly("dark"),
         },
         textarea: {
           color: themeForDarkOnly("#FFFFFF"),
@@ -30,10 +30,12 @@ const FormTextField = ({ sx: restOfSxProp, ...otherProps }) => {
         },
         "& .MuiOutlinedInput-root": {
           "& fieldset": {
-            borderColor: currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.medium,
+            borderColor:
+              currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.medium,
           },
           "&:hover fieldset": {
-            borderColor: currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.dark,
+            borderColor:
+              currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.dark,
           },
           "&.Mui-focused fieldset": {
             borderColor:

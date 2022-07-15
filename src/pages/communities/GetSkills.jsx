@@ -61,7 +61,7 @@ const GetSkills = () => {
         }}
       >
         <Card
-          sx={{ padding: "2rem", backgroundColor: currentThemePalette.card }}
+          sx={{ padding: "2rem", backgroundColor: currentThemePalette.cardSecondary }}
         >
           <Stack direction="row" alignItems="center">
             <Box sx={{ width: { xs: "100%", lg: "135ch" }, flex: "0 1 auto" }}>
