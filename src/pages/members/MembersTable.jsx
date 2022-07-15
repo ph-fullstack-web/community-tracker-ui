@@ -270,6 +270,9 @@ const MembersTable = ({
                   <MembersTableBodyCell sxProp={tableCellStyle}>
                     {row.project}
                   </MembersTableBodyCell>
+                  <MembersTableBodyCell sxProp={tableCellStyle}>
+                    {row.is_probationary ? 'Probationary' : 'Regular'}
+                  </MembersTableBodyCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -278,7 +281,7 @@ const MembersTable = ({
                 backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
               }}>
                 <TablePagination
-                  colSpan={6}
+                  colSpan={7}
                   count={rowDataFiltered.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
