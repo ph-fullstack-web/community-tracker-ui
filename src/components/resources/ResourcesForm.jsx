@@ -1,5 +1,5 @@
-import { MenuItem, Grid, Box, Card } from "@mui/material";
-import { FormSelect, FormTextField } from "components";
+import { MenuItem, Grid, Box, Card, FormControlLabel } from "@mui/material";
+import { FormSelect, FormTextField, FormSwitch } from "components";
 import useGetManagers from "hooks/people/useGetManagers";
 import useGetProjects from "hooks/projects/useGetProjects";
 import { JOB_LEVELS, WORK_STATES } from "utils/constants";
@@ -19,6 +19,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
     project: "",
     email: "",
     cognizantId: "",
+    isProbationary: true
   });
 
   useEffect(() => {
@@ -32,6 +33,13 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
       ...prevState,
       [event.target.name]: event.target.value,
     }));
+  };
+
+  const onChangeBoolean = () => {
+    setResource((prevState) => ({
+      ...prevState,
+      isProbationary: !resource.isProbationary
+    }))
   };
 
   const { data: projectsData, isLoading: isLoadingProjects } = useGetProjects();
@@ -231,7 +239,25 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                     })}
                 </FormSelect>
               </Grid>
-              <Grid item xs={12} sm={12} md={5} lg={5}></Grid>
+              <Grid item xs={12} sm={12} md={5} lg={5} alignSelf="flex-start">
+                <FormControlLabel
+                  sx={{
+                    color: currentThemePalette.text,
+                  }}
+                  value={resource.isProbationary}
+                  control={
+                    <FormSwitch
+                      onChange={onChangeBoolean}
+                      sx={{
+                        '& .MuiSvgIcon-root': { fontSize: 28 }
+                      }}
+                      checked={resource.isProbationary}
+                      disabled={resourcePerson?.isProbationary === false}
+                    />
+                  }
+                  label="Probitionary"
+                /> 
+              </Grid>
               <Grid
                 item
                 xs={12}
