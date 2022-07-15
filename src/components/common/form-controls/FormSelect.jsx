@@ -45,13 +45,18 @@ const FormSelect = ({
           color: themeForDarkOnly("#FFFFFF"),
           backgroundColor: themeForDarkOnly(currentThemePalette.medium),
           "& .MuiSvgIcon-root": {
-            color: themeForDarkOnly(currentThemePalette.light),
+            color:
+              currentTheme === "dark" || currentTheme === "teal"
+                ? "#0a7578 !important"
+                : currentThemePalette.dark,
           },
           "& .MuiOutlinedInput-notchedOutline": {
-            border: `1px solid ${themeForDarkOnly(currentThemePalette.light)}`,
+            borderColor:
+              currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.medium,
           },
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            border: `1px solid ${themeForDarkOnly("#FFFFFF")}`,
+            borderColor:
+              currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.dark,
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
             border: `2px solid ${

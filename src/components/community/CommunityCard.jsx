@@ -120,7 +120,7 @@ const CommunityCard = ({ id, image, name, description }) => {
                       },
                     }}
                     component={Link}
-                    to={`/resources/${id}`}
+                    to={`/members/${id}`}
                   >
                     View Members
                   </Button>
@@ -153,6 +153,7 @@ const CommunityCard = ({ id, image, name, description }) => {
                 fontWeight: "600",
                 display: "block",
                 cursor: "pointer",
+                fontSize: "18px",
               }}
             >
               {name}
