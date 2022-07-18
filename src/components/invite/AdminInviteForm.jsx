@@ -13,7 +13,7 @@ const initialValue = {
     defaultPassword:''
 }
 
-const AdminInviteForm = ({  buttonText = "save" }) => {
+const AdminInviteForm = ({  buttonText = "invite" }) => {
 
     const { dispatch: notificationDispatch } = useNotificationContext();
 
