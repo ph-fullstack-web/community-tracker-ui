@@ -6,6 +6,7 @@ import Members from './members/';
 import GetSkills from './communities/GetSkills';
 import CreateResource from './resources/CreateResource';
 import UpdateResource from './resources/UpdateResource';
+import InviteAdmin from './invite';
 import NotFound from './not-found'
 
 export {
@@ -17,5 +18,6 @@ export {
   GetSkills,
   CreateResource,
   UpdateResource,
-  NotFound
+  InviteAdmin,
+  NotFound,
 };
