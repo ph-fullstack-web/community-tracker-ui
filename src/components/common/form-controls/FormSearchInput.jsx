@@ -16,7 +16,7 @@ export default function FormSearchInput({ onChangeCallback }) {
         placeholder: "Search",
         startAdornment: (
           <InputAdornment position="start">
-            <SearchIcon sx={{ color: currentThemePalette.main }} fontSize="large" />
+            <SearchIcon sx={{ color: currentThemePalette.main }} fontSize="medium" />
           </InputAdornment>
         ),
       }}
