@@ -9,6 +9,8 @@ import FormTextField from "./common/form-controls/FormTextField";
 import FormSelect from "./common/form-controls/FormSelect";
 import FormSwitch from "./common/form-controls/FormSwitch";
 import NoDataTable from "./common/NoDataTable";
+import * as Maintenance from "./maintenance";
+import ConfirmModal from "./common/ConfirmModal";
 
 export {
   LoginModal,
@@ -21,5 +23,7 @@ export {
   FormTextField,
   FormSelect,
   FormSwitch,
-  NoDataTable
+  NoDataTable,
+  Maintenance,
+  ConfirmModal
 };

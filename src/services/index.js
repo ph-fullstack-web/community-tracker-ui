@@ -11,6 +11,9 @@ import getMembers from "./people/GetMembers";
 import getPeopleById from "./people/GetPeopleById";
 import updatePeople from "./people/UpdatePeople";
 import getProjects from "./project/GetProjects";
+import deleteSkill from "./people-skills/DeletePeopleSkill";
+import updateSkill from "./people-skills/UpdatePeopleSkill";
+
 export {
   addCommunityService,
   getCommunities,
@@ -24,5 +27,7 @@ export {
   updatePeople,
   getPeopleById,
   createPeople,
-  getMemberWithSkills
+  getMemberWithSkills,
+  deleteSkill,
+  updateSkill,
 };

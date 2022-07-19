@@ -1,6 +1,7 @@
 import PeopleIcon from "@mui/icons-material/People";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SummarizeIcon from "@mui/icons-material/Summarize";
+import Construction from "@mui/icons-material/Construction";
 import { ThemeSwitchButton } from "components";
 const DRAWER_ROUTES = [
   {
@@ -38,5 +39,10 @@ const DRAWER_ROUTES = [
     path: "/invite",
     icon: <PeopleIcon />,
   },
+  {
+    name: "Maintenance",
+    path: "/maintenance",
+    icon: <Construction />,
+  }
 ];
 export default DRAWER_ROUTES;
