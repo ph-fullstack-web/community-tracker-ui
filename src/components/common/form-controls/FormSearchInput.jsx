@@ -2,7 +2,7 @@ import { TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import useSwitchThemeContext from "hooks/theme/useSwitchThemeContext";
 
-export default function FormSearchInput({ onChangeCallback }) {
+export default function FormSearchInput({ onChangeCallback, value }) {
   const { currentThemePalette } = useSwitchThemeContext();
   const inputStyle = {
     border: `2px solid ${currentThemePalette.main}`,
@@ -38,6 +38,7 @@ export default function FormSearchInput({ onChangeCallback }) {
         },
       }}
       onChange={onChangeCallback}
+      value={value}
     />
   );
 }

@@ -8,6 +8,7 @@ import CreateResource from './resources/CreateResource';
 import UpdateResource from './resources/UpdateResource';
 import InviteAdmin from './invite';
 import NotFound from './not-found'
+import Maintenance from './maintenance';
 
 export {
   Communities,
@@ -20,4 +21,5 @@ export {
   UpdateResource,
   InviteAdmin,
   NotFound,
+  Maintenance,
 };
