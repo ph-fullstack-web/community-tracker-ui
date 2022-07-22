@@ -379,12 +379,30 @@ export const SkillsTable = ({
                   <SkillsTableBodyCell sxProp={tableCellStyle}>
                     {row.is_active ? "Active" : "Inactive"}
                   </SkillsTableBodyCell>
-                  <SkillsTableBodyCell sxProp={tableCellStyle}>
+                  <SkillsTableBodyCell sxProp={{...tableCellStyle, p:0}}>
                     <Box>
-                      <IconButton onClick={() => handleUpdateButtonClick(row)}>
+                      <IconButton 
+                        sx={{
+                          color:
+                            currentTheme === "dark"
+                              ? currentThemePalette.light
+                              : currentThemePalette.dark,
+                        }}
+                        size="small" 
+                        onClick={() => handleUpdateButtonClick(row)}
+                      >
                         <EditIcon />
                       </IconButton>
-                      <IconButton onClick={() => handleDeleteButtonClick(row)}>
+                      <IconButton 
+                        sx={{
+                          color:
+                            currentTheme === "dark"
+                              ? currentThemePalette.light
+                              : currentThemePalette.dark,
+                        }}
+                        size="small" 
+                        onClick={() => handleDeleteButtonClick(row)}
+                      >
                         <DeleteIcon />
                       </IconButton>
                     </Box>
