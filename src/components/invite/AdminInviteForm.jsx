@@ -1,21 +1,19 @@
 import { useState } from "react"
-import { Grid, Box
+import {
+    Grid, Box
 } from "@mui/material";
-import {FormTextField } from "components";
+import { FormTextField } from "components";
 import AppButton from "components/common/AppButton";
-import { useNotificationContext } from "contexts/notification/NotificationContext";
 
 const initialValue = {
     cognizantId: '',
     firstName: '',
     lastName: '',
     email: '',
-    defaultPassword:''
+    defaultPassword: ''
 }
 
-const AdminInviteForm = ({  buttonText = "invite" }) => {
-
-    const { dispatch: notificationDispatch } = useNotificationContext();
+const AdminInviteForm = ({ onClickHandler, buttonText = "invite" }) => {
 
     const [adminDetails, setAdminDetails] = useState(initialValue)
 
@@ -26,16 +24,10 @@ const AdminInviteForm = ({  buttonText = "invite" }) => {
         e.preventDefault()
         const details = JSON.stringify(adminDetails)
 
-        //notify
-        notificationDispatch({
-            type: 'NOTIFY',
-            payload: {
-              type: 'success',
-              message: `${details}`
-            }
-          });
-          //clear
-          setAdminDetails(initialValue)
+        onClickHandler(details)
+
+        //clear
+        setAdminDetails(initialValue)
     }
 
 
