@@ -19,8 +19,11 @@ const FormSwitch = ({ sx: restOfSxProp, ...otherProps }) => {
           color: themeForDarkOnly(currentThemePalette.light),
           borderBottomColor: themeForDarkOnly(currentThemePalette.light),
         },
-        '&.Mui-checked': {
+        '& .MuiSwitch-switchBase.Mui-checked': {
           color: currentThemePalette.main
+        },
+        '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+          backgroundColor: currentThemePalette.main,
         },
         '&.Mui-disabled': {
             pointerEvents: 'auto',

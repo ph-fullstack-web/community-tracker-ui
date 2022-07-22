@@ -219,7 +219,7 @@ const MembersTable = ({
           <TableBody>
             <TableRow>
               <MembersTableBodyCell
-                colSpan={6}
+                colSpan={7}
                 sxProp={{ ...tableCellStyle, py: 2.5 }}>
                 {search || filters.length > 0
                   ? "No search results found"
