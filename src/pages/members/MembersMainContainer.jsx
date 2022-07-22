@@ -43,6 +43,7 @@ const MembersMainContainer = () => {
             job_level: JOB_LEVELS[member.joblevel_id],
             work_state: WORK_STATES[member.workstate_id],
             project: PROJECTS[member.project_id],
+            is_probationary: member.is_probationary
           }))
         : null,
     [membersData]

@@ -32,7 +32,7 @@ const UpdateResource = () => {
             message: 'Member has been updated.'
           }
         });
-        navigate(`/resources/${communityId}`)
+        navigate(`/members/${communityId}`)
       },
       onError: (error) => {
         notificationDispatch({
