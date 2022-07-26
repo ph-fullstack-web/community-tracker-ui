@@ -1,2 +1,3 @@
 export {MaintenanceTabPanel} from './MaintenanceTabPanel';
-export * from './Skills';
+export * from './projects';
+export * from './skills';
