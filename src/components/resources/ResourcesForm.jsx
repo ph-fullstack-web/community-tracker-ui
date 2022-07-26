@@ -1,29 +1,25 @@
-import {
-  TextField,
-  FormControl,
-  Select,
-  MenuItem,
-  InputLabel,
-  Button,
-  Grid,
-  Box,
-} from "@mui/material";
+import { MenuItem, Grid, Box, Card, FormControlLabel } from "@mui/material";
+import { FormSelect, FormTextField, FormSwitch } from "components";
 import useGetManagers from "hooks/people/useGetManagers";
 import useGetProjects from "hooks/projects/useGetProjects";
 import { JOB_LEVELS, WORK_STATES } from "utils/constants";
 import { useState, useEffect } from "react";
+import AppButton from "components/common/AppButton";
+import { useSwitchThemeContext } from "hooks";
+import SaveIcon from "@mui/icons-material/Save";
 
 const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
+  const { currentThemePalette } = useSwitchThemeContext();
   const [resource, setResource] = useState({
     name: "",
-    assignedTo: "",
     state: "",
     hiredDate: "",
     jobLevel: "",
-    project: "",
     projectLead: "",
+    project: "",
     email: "",
     cognizantId: "",
+    isProbationary: true
   });
 
   useEffect(() => {
@@ -39,6 +35,13 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
     }));
   };
 
+  const onChangeBoolean = () => {
+    setResource((prevState) => ({
+      ...prevState,
+      isProbationary: !resource.isProbationary
+    }))
+  };
+
   const { data: projectsData, isLoading: isLoadingProjects } = useGetProjects();
   const { isLoading, data: communityManagers } = useGetManagers();
 
@@ -48,81 +51,92 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   };
 
   return (
-    <Box
-      style={{
-        marginTop: "3rem",
-        marginBottom: "1rem",
-      }}>
-      <Grid container component={"form"} onSubmit={onSubmit}>
-        <Grid id="inputs-grid" item lg={5} md={12} sm={12} xs={12}>
-          <Grid container gap={2} item sm={12} md={12} lg={12}>
-            <Grid item xs={12} sm={12} md={10} lg={10}>
-              <TextField
-                required
-                fullWidth
-                value={resource.name}
-                name="name"
-                onChange={(e) => onChangeHandler(e)}
-                variant="outlined"
-                id="name"
-                label="Name"
-                sx={{
-                  mt: 5,
-                  backgroundColor: "#FFFFFF",
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={5} lg={5}>
-              <TextField
-                required
-                fullWidth
-                value={resource.email}
-                name="email"
-                onChange={(e) => onChangeHandler(e)}
-                variant="outlined"
-                id="email"
-                label="CSV Mail"
-                sx={{
-                  mt: 5,
-                  backgroundColor: "#FFFFFF",
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={5} lg={5}>
-              <TextField
-                required
-                fullWidth
-                value={resource.cognizantId}
-                name="cognizantId"
-                onChange={(e) => onChangeHandler(e)}
-                variant="outlined"
-                id="cognizantId"
-                label="Cognizant ID"
-                sx={{
-                  mt: 5,
-                  backgroundColor: "#FFFFFF",
-                }}
-              />
-            </Grid>
-          </Grid>
-
-          <Grid container gap={2} item sm={12} md={12} lg={12}>
-            <Grid item xs={12} sm={12} md={5} lg={5}>
-              <FormControl
-                sx={{
-                  mt: 5,
-                }}
-                fullWidth>
-                <InputLabel>Work State</InputLabel>
-                <Select
-                  name="state"
+    <Card
+      sx={{
+        padding: "4rem",
+        marginBottom: "20px",
+        backgroundColor: currentThemePalette.cardSecondary,
+      }}
+    >
+      <Box>
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          component={"form"}
+          onSubmit={onSubmit}
+        >
+          <Grid
+            sx={{ width: "100%" }}
+            id="inputs-grid"
+            item
+            lg={12}
+            md={12}
+            sm={12}
+            xs={12}
+          >
+            <Grid
+              container
+              alignItems="center"
+              justifyContent="center"
+              gap={5}
+              item
+              sm={12}
+              md={12}
+              lg={12}
+              xs={12}
+            >
+              <Grid item xs={12} sm={12} md={5} lg={5}>
+                <FormTextField
                   required
-                  value={resource.state}
-                  label="Work State"
+                  fullWidth
+                  value={resource.name}
+                  name="name"
                   onChange={(e) => onChangeHandler(e)}
-                  sx={{
-                    backgroundColor: "#FFFFFF",
-                  }}>
+                  variant="outlined"
+                  id="name"
+                  label="Name"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={5} lg={5}>
+                <FormTextField
+                  required
+                  fullWidth
+                  value={resource.email}
+                  name="email"
+                  onChange={(e) => onChangeHandler(e)}
+                  variant="outlined"
+                  id="email"
+                  label="CSV Mail"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={5} lg={5}>
+                <FormTextField
+                  required
+                  fullWidth
+                  value={resource.cognizantId}
+                  name="cognizantId"
+                  onChange={(e) => onChangeHandler(e)}
+                  variant="outlined"
+                  id="cognizantId"
+                  label="Cognizant ID"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={5} lg={5}>
+                <FormSelect
+                  FormControlProps={{
+                    fullWidth: true,
+                  }}
+                  InputLabelChildren="Work State"
+                  SelectProps={{
+                    name: "state",
+                    required: true,
+                    value: resource.state,
+                    label: "Work State",
+                    onChange: onChangeHandler,
+                  }}
+                >
                   {Object.keys(WORK_STATES).map((key) => {
                     return (
                       <MenuItem key={key} value={key}>
@@ -130,25 +144,22 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                       </MenuItem>
                     );
                   })}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={12} md={5} lg={5}>
-              <FormControl
-                sx={{
-                  mt: 5,
-                }}
-                fullWidth>
-                <InputLabel>Job Level</InputLabel>
-                <Select
-                  name="jobLevel"
-                  required
-                  value={resource.jobLevel}
-                  label="Job Level"
-                  onChange={(e) => onChangeHandler(e)}
-                  sx={{
-                    backgroundColor: "#FFFFFF",
-                  }}>
+                </FormSelect>
+              </Grid>
+              <Grid item xs={12} sm={12} md={5} lg={5}>
+                <FormSelect
+                  FormControlProps={{
+                    fullWidth: true,
+                  }}
+                  InputLabelChildren="Job Level"
+                  SelectProps={{
+                    name: "jobLevel",
+                    required: true,
+                    value: resource.jobLevel,
+                    label: "Job Level",
+                    onChange: onChangeHandler,
+                  }}
+                >
                   {Object.keys(JOB_LEVELS).map((key) => {
                     return (
                       <MenuItem key={key} value={key}>
@@ -156,81 +167,67 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                       </MenuItem>
                     );
                   })}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-
-          <Grid container gap={2}>
-            <Grid item xs={12} sm={12} md={5} lg={5}>
-              <FormControl
-                sx={{
-                  mt: 5,
-                }}
-                fullWidth>
-                <InputLabel>Assigned To</InputLabel>
-                <Select
-                  name="assignedTo"
+                </FormSelect>
+              </Grid>
+              <Grid item xs={12} sm={12} md={5} lg={5}>
+                <FormTextField
                   required
-                  value={resource.assignedTo}
-                  label="Assigned To"
+                  fullWidth
+                  value={resource.hiredDate}
+                  name="hiredDate"
                   onChange={(e) => onChangeHandler(e)}
-                  sx={{
-                    backgroundColor: "#FFFFFF",
-                  }}>
-                  <MenuItem value="">Select Community Manager</MenuItem>
+                  variant="outlined"
+                  id="name"
+                  label="Hired Date"
+                  InputLabelProps={{ shrink: true }}
+                  placeholder="Hired Date"
+                  type="date"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={5} lg={5}>
+                <FormSelect
+                  FormControlProps={{
+                    fullWidth: true,
+                  }}
+                  InputLabelChildren="Project Lead"
+                  SelectProps={{
+                    name: "projectLead",
+                    required: true,
+                    value: resource.projectLead,
+                    label: "Project Lead",
+                    onChange: onChangeHandler,
+                  }}
+                >
+                  <MenuItem value="">Select Project Lead</MenuItem>
                   {!isLoading &&
                     (communityManagers || []).map((manager) => {
                       return (
                         <MenuItem
                           key={manager.people_id}
-                          value={manager.people_id}>
+                          value={manager.people_id}
+                        >
                           {" "}
                           {manager.full_name}{" "}
                         </MenuItem>
                       );
                     })}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={12} md={5} lg={5}>
-              <TextField
-                required
-                fullWidth
-                value={resource.hiredDate}
-                name="hiredDate"
-                onChange={(e) => onChangeHandler(e)}
-                variant="outlined"
-                id="name"
-                label="Hired Date"
-                placeholder="Hired Date"
-                type="date"
-                sx={{
-                  mt: 5,
-                  backgroundColor: "#FFFFFF",
-                }}
-              />
-            </Grid>
-          </Grid>
-
-          <Grid container gap={2}>
-            <Grid item xs={12} sm={12} md={5} lg={5}>
-              <FormControl
-                sx={{
-                  mt: 5,
-                }}
-                fullWidth>
-                <InputLabel>Project</InputLabel>
-                <Select
-                  name="project"
-                  required
-                  value={resource.project}
-                  defaultValue=""
-                  label="Projects"
-                  onChange={(e) => onChangeHandler(e)}
-                  sx={{
-                    backgroundColor: "#FFFFFF",
-                  }}>
+                </FormSelect>
+              </Grid>
+              <Grid item xs={12} sm={12} md={5} lg={5}>
+                <FormSelect
+                  FormControlProps={{
+                    fullWidth: true,
+                  }}
+                  InputLabelChildren="Project"
+                  SelectProps={{
+                    name: "project",
+                    required: true,
+                    value: resource.project,
+                    defaultValue: "",
+                    label: "Projects",
+                    onChange: onChangeHandler,
+                  }}
+                >
                   <MenuItem value="">Select Project</MenuItem>
                   {!isLoadingProjects &&
                     (projectsData || []).map((project) => {
@@ -240,87 +237,56 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                         </MenuItem>
                       );
                     })}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={12} md={5} lg={5}>
-              <FormControl
-                sx={{
-                  mt: 5,
-                }}
-                fullWidth>
-                <InputLabel>Project Lead</InputLabel>
-                <Select
-                  name="projectLead"
-                  required
-                  value={resource.projectLead}
-                  label="Project Lead"
-                  onChange={(e) => onChangeHandler(e)}
+                </FormSelect>
+              </Grid>
+              <Grid item xs={12} sm={12} md={5} lg={5} alignSelf="flex-start">
+                <FormControlLabel
                   sx={{
-                    backgroundColor: "#FFFFFF",
-                  }}>
-                  <MenuItem value="">Select Project Lead</MenuItem>
-                  {!isLoading &&
-                    (communityManagers || []).map((manager) => {
-                      return (
-                        <MenuItem
-                          key={manager.people_id}
-                          value={manager.people_id}>
-                          {" "}
-                          {manager.full_name}{" "}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
-              </FormControl>
+                    color: currentThemePalette.text,
+                  }}
+                  value={resource.isProbationary}
+                  control={
+                    <FormSwitch
+                      onChange={onChangeBoolean}
+                      sx={{
+                        '& .MuiSvgIcon-root': { fontSize: 28 }
+                      }}
+                      checked={resource.isProbationary}
+                      disabled={resourcePerson?.isProbationary === false}
+                    />
+                  }
+                  label="Probitionary"
+                /> 
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={5}
+                lg={5}
+                container
+                justifyContent="flex-end"
+              >
+                <AppButton
+                  disabled={isProcessing}
+                  size="large"
+                  sx={{
+                    textTransform: "uppercase",
+                    width: "10rem",
+                    height: "4rem",
+                    ml: { xs: 1, sm: 3 },
+                  }}
+                  startIcon={<SaveIcon />}
+                  type="submit"
+                >
+                  save
+                </AppButton>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-
-        <Grid
-          id="checkbox-grid"
-          item
-          lg={5}
-          md={3}
-          sm={12}
-          xs={12}
-          sx={{
-            marginTop: "2rem",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}>
-          <Grid
-            item
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              flexWrap: "wrap",
-            }}>
-            {/* Put checkboxes here */}
-          </Grid>
-          <Grid
-            item
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-            }}>
-            <Button
-              variant="contained"
-              disabled={isProcessing}
-              size="large"
-              sx={{
-                textTransform: "uppercase",
-                width: "10rem",
-                height: "4rem",
-              }}
-              type="submit">
-              save
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </Card>
   );
 };
 

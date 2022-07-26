@@ -6,10 +6,11 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField,
 } from "@mui/material";
-
+import { FormTextField } from "components";
 import { useAuthContext } from "contexts/auth/AuthContext";
+import { useSwitchThemeContext } from "hooks";
+import AppButton from "components/common/AppButton";
 
 const CREDENTIALS = [
   {
@@ -36,6 +37,8 @@ const CREDENTIALS = [
 ];
 
 const LoginModal = ({ open, handleClose }) => {
+  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+
   const [credentials, setCredentials] = useState({ id: "", password: "" });
   const { dispatch, state } = useAuthContext();
 
@@ -60,8 +63,18 @@ const LoginModal = ({ open, handleClose }) => {
     });
   };
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth>
-      <DialogTitle onClick={() => console.log(state)}>Login Modal</DialogTitle>
+    <Dialog 
+      open={open}
+      onClose={handleClose}
+      fullWidth
+      PaperProps={{
+        sx:{
+          backgroundColor: currentTheme === "dark" ? "#202124" : null,
+          border: currentTheme === "dark" ? `2px solid ${currentThemePalette.light}` : null
+        }
+      }}
+    >
+      <DialogTitle onClick={() => console.log(state)} sx={{color: currentThemePalette.text}}>Login Modal</DialogTitle>
       <DialogContent>
         <Box
           display="flex"
@@ -69,7 +82,7 @@ const LoginModal = ({ open, handleClose }) => {
           flexDirection="column"
           justifyContent="space-evenly"
         >
-          <TextField
+          <FormTextField
             onChange={handleCredentials}
             name="id"
             label="Cognizant ID"
@@ -77,7 +90,7 @@ const LoginModal = ({ open, handleClose }) => {
             type="number"
             value={credentials.id}
           />
-          <TextField
+          <FormTextField
             name="password"
             onChange={handleCredentials}
             label="Password"
@@ -88,8 +101,8 @@ const LoginModal = ({ open, handleClose }) => {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Login</Button>
+        <AppButton onClick={handleClose}>Cancel</AppButton>
+        <AppButton onClick={handleSubmit}>Login</AppButton>
       </DialogActions>
     </Dialog>
   );

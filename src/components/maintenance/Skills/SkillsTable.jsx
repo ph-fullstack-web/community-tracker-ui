@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   Box,
-  Skeleton,
   Checkbox,
   FormControlLabel,
+  IconButton,
+  Skeleton,
   Table,
   TableBody,
   TableCell,
@@ -15,10 +15,18 @@ import {
 } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import { useSwitchThemeContext } from "hooks";
-import { TABLE_HEADERS } from "utils/constants";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
-const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
+import { ConfirmModal } from "components";
+import { useNotificationContext } from "contexts/notification/NotificationContext";
+import { useSwitchThemeContext } from "hooks";
+import useDeleteSkill from "hooks/skills/useDeleteSkill";
+import useGetSkills from "hooks/skills/useGetSkills";
+import useUpdateSkill from "hooks/skills/useUpdateSkill";
+import { SkillFormModal } from ".";
+
+const SkillsTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   return (
     <TableCell align="center" sx={sxProp} {...otherProps}>
       {children}
@@ -26,36 +34,64 @@ const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   );
 };
 
-const MembersTable = ({
+export const SkillsTable = ({
   search,
-  isLoading,
-  membersData,
-  rowData,
-  isError,
-  error,
 }) => {
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+  const TABLE_HEADERS = [
+    { value: "peopleskills_desc", name: "Description", filter: true },
+    { value: "is_active", name: "Status", filter: true },
+    { value: "actions", name: "Actions", filter: false },
+  ];
 
-  const navigate = useNavigate();
-  const navigateToUpdate = (communityId, peopleId) => {
-    navigate(`/members/${communityId}/update/${peopleId}`);
-  };
+  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+  const { dispatch: notificationDispatch } = useNotificationContext();
+
+  const {
+    isLoading,
+    data: skillsData,
+    isError,
+    error,
+    refetch,
+  } = useGetSkills();
+  const { mutate } = useDeleteSkill();
+  const { mutate: updateSkillMutate } = useUpdateSkill()
+
+  const rowData = useMemo(
+    () =>
+      skillsData
+        ? skillsData.map((skill) => ({
+            peopleskills_id: skill.peopleskills_id,
+            peopleskills_desc: skill.peopleskills_desc,
+            is_active: skill.is_active,
+          }))
+        : null,
+    [skillsData]
+  );  
 
   const [filters, setFilters] = useState([]);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
+  const [selectedSkill, setSelectedSkill] = useState(undefined);
 
   const rowDataFiltered = useMemo(() => {
     if (!search) return rowData;
 
-    return rowData.filter((member) => {
+    return rowData.filter((skill) => {
       if (filters.length === 0) {
         // Loop over member object and see if search is matched
         // to at least one property value
-        for (const property in member) {
-          if (property === "people_id") continue;
+        for (const property in skill) {
+          if (property === "peopleskills_id") continue;
 
-          const queryFound = member[property]
-            .toLowerCase()
-            .includes(search.toLowerCase());
+          let queryFound = false;
+          if (property === "peopleskills_desc") {
+            queryFound = skill[property]
+              .toLowerCase()
+              .includes(search.toLowerCase());
+          } else if (property === "is_active") {
+            queryFound = (skill[property] === true && "active".includes(search.toLowerCase())) ||
+              (skill[property] === false && "inactive".includes(search.toLowerCase()));
+          }
 
           if (!queryFound) continue;
 
@@ -65,14 +101,20 @@ const MembersTable = ({
         // Also loop over like in the if statement above
         // but add another validation that checks if current property
         // is not included in filters state so that it can skip it
-        for (const property in member) {
-          if (property === "people_id" || !filters.includes(property)) {
+        for (const property in skill) {
+          if (property === "peopleskills_id" || !filters.includes(property)) {
             continue;
           }
 
-          const queryFound = member[property]
-            .toLowerCase()
-            .includes(search.toLowerCase());
+          let queryFound = false;
+          if (property === "peopleskills_desc") {
+            queryFound = skill[property]
+              .toLowerCase()
+              .includes(search.toLowerCase());
+          } else if (property === "is_active") {
+            queryFound = (skill[property] === true && "active".includes(search.toLowerCase())) ||
+              (skill[property] === false && "inactive".includes(search.toLowerCase()));
+          }
 
           if (!queryFound) continue;
 
@@ -117,6 +159,82 @@ const MembersTable = ({
     setPage(0);
   };
 
+  const handleDeleteButtonClick = (skill) => {
+    setSelectedSkill(skill);
+    setOpenDeleteModal(true);
+  };
+
+  const handleCancelDelete = () => {
+    setOpenDeleteModal(false);
+    setSelectedSkill(undefined);
+  }
+
+  const handleConfirmDelete = () => {
+    setOpenDeleteModal(false);
+    mutate(selectedSkill.peopleskills_id, {
+      onSuccess: (response) => {
+        notificationDispatch({
+          type: 'NOTIFY',
+          payload: {
+            type: 'success',
+            message: `${selectedSkill.peopleskills_desc} has been deleted.`
+          }
+        });
+        refetch();
+      },
+      onError: (error) => {
+        notificationDispatch({
+          type: 'NOTIFY',
+          payload: {
+            type: 'error',
+            message: error.message
+          }
+        });
+      },
+    })
+    setSelectedSkill(undefined);
+  }
+
+  const handleUpdateButtonClick = (skill) => {
+    setSelectedSkill(skill);
+    setOpenUpdateModal(true);
+  };
+
+  const handleCancelUpdate = () => {
+    setOpenUpdateModal(false);
+    setSelectedSkill(undefined);
+  }
+
+  const handleConfirmUpdate = (skill) => {
+    setOpenUpdateModal(false);
+    const args = {
+      peopleSkillId: skill.peopleskills_id,
+      payload: skill
+    }
+    updateSkillMutate(args, {
+      onSuccess: () => {
+        notificationDispatch({
+          type: 'NOTIFY',
+          payload: {
+            type: 'success',
+            message: 'Skill has been updated.'
+          }
+        });
+        refetch();
+      },
+      onError: (error) => {
+        notificationDispatch({
+          type: 'NOTIFY',
+          payload: {
+            type: 'error',
+            message: error.message
+          }
+        });
+      }
+    });
+    setSelectedSkill(undefined);
+  }
+
   // Automatically scroll to top with some conditions
   useEffect(() => {
     if (rowsPerPage !== 10) {
@@ -130,10 +248,10 @@ const MembersTable = ({
   }, [search]);
 
   return (
-    <Box sx={{ overflowX: "auto" }} id="members-table-container">
+    <Box sx={{ overflowX: "auto" }} id="skills-table-container">
       <Table
-        sx={{ mt: 3, mb: 0.5, mx: { xs: 1, sm: 0 }, minWidth: 825 }}
-        aria-label="members-table">
+        sx={{ mb: 0.5, mx: { xs: 1, sm: 0 }, minWidth: 825 }}
+        aria-label="skills-table">
         <TableHead>
           <TableRow>
             {TABLE_HEADERS.map((header) => (
@@ -143,11 +261,16 @@ const MembersTable = ({
                 sx={{
                   ...tableCellStyle,
                   fontWeight: "bold",
-                  backgroundColor: currentTheme === "dark" ? currentThemePalette.dark : currentThemePalette.medium
-                }}>
-                <FormControlLabel
-                  value={header.value}
-                  control={
+                  backgroundColor:
+                    currentTheme === "dark"
+                      ? currentThemePalette.dark
+                      : currentThemePalette.medium,
+                }}
+              >
+              <FormControlLabel
+                value={header.value}
+                control={
+                  header.filter ? (
                     <Checkbox
                       icon={<FilterAltOutlinedIcon />}
                       checkedIcon={<FilterAltIcon />}
@@ -167,11 +290,12 @@ const MembersTable = ({
                         handleCheckboxChange(event, header.value)
                       }
                     />
-                  }
-                  label={header.name}
-                  labelPlacement="start"
-                />
-              </TableCell>
+                 ) : <></>
+                }
+                label={header.name}
+                labelPlacement="start"
+              />
+            </TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -207,24 +331,24 @@ const MembersTable = ({
               sx={{
                 backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
             }}>
-              <MembersTableBodyCell
+              <SkillsTableBodyCell
                 colSpan={6}
                 sxProp={{ ...tableCellStyle, py: 2.5 }}>
                 Error: {error.message}
-              </MembersTableBodyCell>
+              </SkillsTableBodyCell>
             </TableRow>
           </TableBody>
         )}
         {!isLoading && rowDataFiltered && rowDataFiltered.length === 0 && (
           <TableBody>
             <TableRow>
-              <MembersTableBodyCell
-                colSpan={7}
+              <SkillsTableBodyCell
+                colSpan={6}
                 sxProp={{ ...tableCellStyle, py: 2.5 }}>
                 {search || filters.length > 0
                   ? "No search results found"
-                  : "No members found for this community"}
-              </MembersTableBodyCell>
+                  : "No skills found"}
+              </SkillsTableBodyCell>
             </TableRow>
           </TableBody>
         )}
@@ -248,31 +372,41 @@ const MembersTable = ({
                       backgroundColor:
                         currentTheme === "dark" ? "#293A46 !important" : null,
                     },
-                  }}
-                  onClick={() =>
-                    navigateToUpdate(membersData.community_id, row.people_id)
-                  }>
-                  <MembersTableBodyCell sxProp={tableCellStyle}>
-                    {row.full_name}
-                  </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableCellStyle}>
-                    {row.assigned_to}
-                  </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableCellStyle}>
-                    {row.hired_date_formatted}
-                  </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableCellStyle}>
-                    {row.work_state}
-                  </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableCellStyle}>
-                    {row.job_level}
-                  </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableCellStyle}>
-                    {row.project}
-                  </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableCellStyle}>
-                    {row.is_probationary ? 'Probationary' : 'Regular'}
-                  </MembersTableBodyCell>
+                  }}>
+                  <SkillsTableBodyCell sxProp={tableCellStyle}>
+                    {row.peopleskills_desc}
+                  </SkillsTableBodyCell>
+                  <SkillsTableBodyCell sxProp={tableCellStyle}>
+                    {row.is_active ? "Active" : "Inactive"}
+                  </SkillsTableBodyCell>
+                  <SkillsTableBodyCell sxProp={{...tableCellStyle, p:0}}>
+                    <Box>
+                      <IconButton 
+                        sx={{
+                          color:
+                            currentTheme === "dark"
+                              ? currentThemePalette.light
+                              : currentThemePalette.dark,
+                        }}
+                        size="small" 
+                        onClick={() => handleUpdateButtonClick(row)}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton 
+                        sx={{
+                          color:
+                            currentTheme === "dark"
+                              ? currentThemePalette.light
+                              : currentThemePalette.dark,
+                        }}
+                        size="small" 
+                        onClick={() => handleDeleteButtonClick(row)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Box>
+                  </SkillsTableBodyCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -327,8 +461,23 @@ const MembersTable = ({
           </>
         )}
       </Table>
+      {selectedSkill && openDeleteModal && (
+        <ConfirmModal
+          open={openDeleteModal}
+          title={'Delete skill?'}
+          message={`Are you sure you want to delete ${selectedSkill.peopleskills_desc}?`}
+          onCancel={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
+      {selectedSkill && openUpdateModal && (
+        <SkillFormModal
+          open={openUpdateModal}
+          skillProp={selectedSkill}
+          onCancel={handleCancelUpdate}
+          onConfirm={handleConfirmUpdate}
+        />
+      )}
     </Box>
   );
 };
-
-export default MembersTable;

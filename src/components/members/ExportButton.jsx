@@ -1,7 +1,7 @@
 import moment from "moment";
 import { utils as xlsxUtils, writeFile as xlsxWriteFile } from "xlsx";
 import Button from "@mui/material/Button";
-import SaveAltIcon from "@mui/icons-material/SaveAlt";
+import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
 import CircularProgress from "@mui/material/CircularProgress";
 import { useSwitchThemeContext } from "hooks";
 import { TABLE_HEADERS } from "utils/constants";
@@ -94,10 +94,13 @@ const ExportButton = ({ isLoading, membersData, rowData }) => {
         isLoading ? (
           <CircularProgress size="1rem" sx={{ color: "#0000001f" }} />
         ) : (
-          <SaveAltIcon />
+          <FileDownloadRoundedIcon />
         )
       }
       sx={{
+        minWidth: "35px",
+        width: "35px",
+        height: "35px",
         borderWidth: 2,
         borderColor: contrastingColors,
         backgroundColor: currentThemePalette.bgPrimary,
@@ -118,9 +121,11 @@ const ExportButton = ({ isLoading, membersData, rowData }) => {
           backgroundColor:
             currentTheme === "dark" ? "#293A46 !important" : null,
         },
+        "& .MuiButton-startIcon": {
+          margin: 0
+        },
       }}
       onClick={downloadExcel}>
-      Export
     </Button>
   );
 };

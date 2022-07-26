@@ -32,7 +32,7 @@ const UpdateResource = () => {
             message: 'Member has been updated.'
           }
         });
-        navigate(`/resources/${communityId}`)
+        navigate(`/members/${communityId}`)
       },
       onError: (error) => {
         notificationDispatch({
@@ -58,6 +58,7 @@ const UpdateResource = () => {
         project: resourceData.project_id,
         email: resourceData.csv_email,
         cognizantId: resourceData.cognizantid_id,
+        isProbationary: resourceData.is_probationary,
 
 
         assignedTo: "",

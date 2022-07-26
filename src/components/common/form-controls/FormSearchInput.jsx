@@ -2,7 +2,7 @@ import { TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import useSwitchThemeContext from "hooks/theme/useSwitchThemeContext";
 
-export default function SearchInput({ onChangeCallback }) {
+export default function FormSearchInput({ onChangeCallback, value }) {
   const { currentThemePalette } = useSwitchThemeContext();
   const inputStyle = {
     border: `2px solid ${currentThemePalette.main}`,
@@ -16,7 +16,7 @@ export default function SearchInput({ onChangeCallback }) {
         placeholder: "Search",
         startAdornment: (
           <InputAdornment position="start">
-            <SearchIcon sx={{ color: currentThemePalette.main }} />
+            <SearchIcon sx={{ color: currentThemePalette.main }} fontSize="medium" />
           </InputAdornment>
         ),
       }}
@@ -38,6 +38,7 @@ export default function SearchInput({ onChangeCallback }) {
         },
       }}
       onChange={onChangeCallback}
+      value={value}
     />
   );
 }
