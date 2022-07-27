@@ -20,6 +20,11 @@ const DARK_PLUM = '#2c348c';
 const DARK_BLUE = '#182c6e';
 const DARK_TEAL = '#0eb3b8';
 
+const OPACITY_BLUE = 'rgba(146, 187, 230, .2)';
+const OPACITY_PLUM = 'rgba(133, 160, 249, .2)';
+const OPACITY_TEAL = 'rgba(107, 228, 232, .2)';
+const OPACITY_DARK = '#141414';
+
 export const DARK_DARK = "#141414";
 export const WHITE = '#FFFFFF';
 
@@ -38,7 +43,8 @@ const theme = createTheme({
       textSecondary: DARK_TEAL,
       cardSecondary: DARK_MEDIUM,
       border: DARK_LIGHT,
-      bgIcon: DARK_LIGHT
+      bgIcon: DARK_LIGHT,
+      opacityBackground: OPACITY_DARK,
     },
     plum: {
       main: PLUM_MEDIUM,
@@ -53,7 +59,8 @@ const theme = createTheme({
       textSecondary: DARK_PLUM,
       cardSecondary: WHITE,
       border: DARK_DARK_PLUM,
-      bgIcon: WHITE
+      bgIcon: WHITE,
+      opacityBackground: OPACITY_PLUM,
     },
     blue: {
       main: BLUE_MEDIUM,
@@ -64,6 +71,7 @@ const theme = createTheme({
       bgSecondary: BLUE_MEDIUM,
       text: BLACK,
       card: BLUE_LIGHT,
+      opacityBackground: OPACITY_BLUE,
       circle: LIGHT_GRAY,
       textSecondary: DARK_BLUE,
       cardSecondary: WHITE,
@@ -83,7 +91,8 @@ const theme = createTheme({
       textSecondary: TEAL_DARK,
       cardSecondary: WHITE,
       border: DARK_DARK_TEAL,
-      bgIcon: WHITE
+      bgIcon: WHITE,
+      opacityBackground: OPACITY_TEAL
     },
   },
 });

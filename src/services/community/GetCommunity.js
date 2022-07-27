@@ -2,7 +2,7 @@ import axiosInstance from "../axios/index";
 
 const getCommunities = async () => {
   try {
-    const response = await axiosInstance.get("/api/community");
+    const response = await axiosInstance.get("/api/community/percentage");
     if (response.status !== 200) {
       throw new Error(response.data);
     }
