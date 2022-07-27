@@ -1,4 +1,4 @@
-import { PieChart, Pie, Sector, Cell,Label } from "recharts";
+import { PieChart, Pie } from "recharts";
 import { useSwitchThemeContext } from "hooks";
 const PieChartDashBoard = ({chartData, percentage}) => {
   const { currentTheme } = useSwitchThemeContext();

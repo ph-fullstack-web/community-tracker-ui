@@ -7,7 +7,7 @@ import {
 import { useSwitchThemeContext } from "hooks";
 
 const Communities = () => {
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+  const { currentTheme } = useSwitchThemeContext();
   return (
     <PageContainer>
       <Typography
