@@ -91,7 +91,7 @@ const CommunityList = () => {
                 <CommunityCard
                   key={community.community_id}
                   id={community.community_id}
-                  image={""}
+                  image={community.icon}
                   description={community.community_description}
                   name={community.community_name}
                 />
