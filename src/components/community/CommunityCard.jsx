@@ -143,6 +143,7 @@ const CommunityCard = ({ id, image, name, description }) => {
             to={`/communities/update/${id}`}
           >
             <SettingsIcon />
+            <img width='25' height='25' src={image} alt='icon' />
             <Typography
               component="label"
               align="center"
