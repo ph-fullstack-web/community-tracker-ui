@@ -8,6 +8,8 @@ import AppButton from "components/common/AppButton.jsx";
 import MemberSkillsTable from "./GetMemberSkillsTable";
 import { useSwitchThemeContext } from "hooks";
 import { MEMBERS_TABLE_SKILLS } from "utils/constants";
+import ExportButton from "components/members/ExportButton";
+import { MEMBERS_BY_SKILL_TABLE_HEADERS } from "utils/constants";
 
 const GetSkills = () => {
   const { data: skillsData, isLoading: getSkillsLoading } = useGetSkills();
@@ -16,7 +18,8 @@ const GetSkills = () => {
   const [selectedPayload, setSelectedPayload] = useState();
   const [newValues, setNewValues] = useState([]); //new values
   const [showData, setShowData] = useState(false);
-
+  const [memberSkillsData, setMemberSkillsData] = useState([]);
+  const fileName = "MembersBySkills"
   useEffect(() => {
     if (!getSkillsLoading) {
       setOptions(
@@ -47,6 +50,7 @@ const GetSkills = () => {
     if (skills.length > 0) {
       setShowData(true);
     } else {
+      setMemberSkillsData([])
       setShowData(false);
     }
   };
@@ -64,7 +68,7 @@ const GetSkills = () => {
           sx={{ padding: "2rem", backgroundColor: currentThemePalette.cardSecondary }}
         >
           <Stack direction="row" alignItems="center">
-            <Box sx={{ width: { xs: "100%", lg: "135ch" }, flex: "0 1 auto" }}>
+            <Box sx={{ width: { xs: "100%", lg: "120ch" }, flex: "0 1 auto" }}>
               {options.length >= 0 && (
                 <AutocompleteInputChip
                   options={options}
@@ -84,9 +88,17 @@ const GetSkills = () => {
                 Search
               </AppButton>
             </Box>
+            <Box sx={{ ml: "auto" }}>
+              <ExportButton
+                rowData={memberSkillsData}
+                isLoading={memberSkillsData.length > 0 ? false : true}
+                tableHeaders={MEMBERS_BY_SKILL_TABLE_HEADERS}
+                fileNameData={fileName}
+              />
+            </Box>
           </Stack>
           {!showData && <NoDataTable columns={MEMBERS_TABLE_SKILLS} />}
-          {showData && <MemberSkillsTable isSelectedValue={selectedPayload} />}
+          {showData && <MemberSkillsTable isSelectedValue={selectedPayload} getMemberSkillsData={setMemberSkillsData}/>}
         </Card>
       </Box>
     </PageContainer>

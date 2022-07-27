@@ -10,6 +10,7 @@ import MembersTable from "./MembersTable";
 import {  useSwitchThemeContext } from "hooks";
 import { useEffect } from "react";
 import { WHITE } from "theme";
+import { TABLE_HEADERS } from "utils/constants";
 
 const MembersMainContainer = () => {
   const { communityId } = useParams();
@@ -48,12 +49,10 @@ const MembersMainContainer = () => {
         : null,
     [membersData]
   );
-
   const [search, setSearch] = useState("");
   const handleSearch = (event) => {
     setSearch(event.target.value);
   };
-
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
   return (
@@ -95,6 +94,7 @@ const MembersMainContainer = () => {
                 rowData={rowData}
                 isError={isError}
                 error={error}
+                tableHeaders={TABLE_HEADERS}
               />
             </Box>
           </Stack>
