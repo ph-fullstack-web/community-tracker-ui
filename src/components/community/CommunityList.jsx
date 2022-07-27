@@ -1,7 +1,5 @@
 import {
-  Typography,
   Card,
-  Divider,
   CardContent,
   Grid,
   CircularProgress,
@@ -12,43 +10,37 @@ import useGetCommunities from "hooks/communities/useGetCommunities";
 import CommunityCard from "./CommunityCard";
 import { useNavigate } from "react-router-dom";
 import { useSwitchThemeContext } from "hooks";
+import React, { useState, useEffect } from "react";
 
 const CommunityList = () => {
   const navigator = useNavigate();
+  const [communityListData, setCommunityListData] = useState([]);
+  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
   // hook to fetch communities
   const {
     isLoading,
     data: communityData,
     isError,
     error,
+    refetch,
   } = useGetCommunities();
 
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+  useEffect(() => {
+    if (!isLoading) {
+      setCommunityListData(communityData ? communityData : []);
+    }
+  }, [communityData, isLoading]);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   return (
     <Card
       style={{
-        marginTop: "3rem",
         marginBottom: "1rem",
-        border: `3px solid ${currentThemePalette.light}`,
       }}
     >
-      <Typography
-        component="label"
-        align="center"
-        sx={{
-          padding: "0.25em",
-          fontWeight: "700",
-          display: "block",
-          fontSize: "22px",
-          color:
-            currentTheme === "dark" ? currentThemePalette.light : "#FFFFFF",
-          backgroundColor: currentThemePalette.bgSecondary,
-        }}
-      >
-        Communities
-      </Typography>
-      <Divider style={{ border: `2px solid ${currentThemePalette.light}` }} />
       {isLoading && (
         <Container
           style={{
@@ -75,9 +67,9 @@ const CommunityList = () => {
       )}
       <CardContent
         className="community-container"
-        sx={{ backgroundColor: currentThemePalette.bgPrimary }}
+        sx={{ backgroundColor: currentThemePalette.cardSecondary }}
       >
-        {!isLoading && communityData && (
+        {!isLoading && communityListData && (
           <>
             <Grid
               container
@@ -87,13 +79,35 @@ const CommunityList = () => {
                 color: "#FFFFFF",
               }}
             >
-              {(communityData || []).map((community) => (
+              {(communityListData || []).map((community) => (
                 <CommunityCard
                   key={community.community_id}
                   id={community.community_id}
-                  image={""}
+                  image={community.icon}
                   description={community.community_description}
                   name={community.community_name}
+                  manager={community.manager_full_name}
+                  chartData={[
+                    {
+                      name: "percentage",
+                      value: community.percentage,
+                      fill: `${
+                        currentTheme === "dark"
+                          ? "#0a7578"
+                          : currentThemePalette.dark
+                      }`,
+                    },
+                    {
+                      name: "max",
+                      value: 100 - community.percentage,
+                      fill: `${
+                        currentTheme === "dark"
+                          ? "rgba(250, 250, 250, .07)"
+                          : "#b6bbc2"
+                      }`,
+                    },
+                  ]}
+                  percentage={community.percentage}
                 />
               ))}
               <Grid
