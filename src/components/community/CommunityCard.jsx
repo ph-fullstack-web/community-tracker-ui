@@ -28,7 +28,7 @@ const CommunityCard = ({
   chartData,
 }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-
+  const label = "Members"
   const managerValue = `Manager: ${manager}`;
   const contrastingColors =
     currentTheme === "dark"
@@ -133,6 +133,7 @@ const CommunityCard = ({
           <PieChartDashBoard
             chartData={chartData}
             percentage={percentage}
+            label={label}
           ></PieChartDashBoard>
         </CardContent>
         <CardActions disableSpacing>

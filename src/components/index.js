@@ -11,7 +11,7 @@ import FormSwitch from "./common/form-controls/FormSwitch";
 import NoDataTable from "./common/NoDataTable";
 import * as Maintenance from "./maintenance";
 import ConfirmModal from "./common/ConfirmModal";
-import PieChartDashBoard from "./Dashboards/PieChart"
+import PieChartDashBoard from "./Dashboards/SinglePieChart"
 
 export {
   LoginModal,
