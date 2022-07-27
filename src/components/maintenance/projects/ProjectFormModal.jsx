@@ -11,71 +11,71 @@ import {
 import { FormTextField, FormSwitch } from "components";
 import { useSwitchThemeContext } from "hooks";
 
-export const SkillFormModal = ({
+export const ProjectFormModal = ({
   open,
-  skillProp,
+  projectProp,
   onConfirm,
   onCancel,
 }) => {
-  const [skill, setSkill] = useState({
-    peopleskills_desc: "",
+  const [project, setProject] = useState({
+    name: "",
     is_active: true
   });
   const { currentThemePalette } = useSwitchThemeContext();
 
-  const handleUpdate = () => onConfirm(skill);
+  const handleUpdate = () => onConfirm(project);
   const handleCancel = () => onCancel();
 
   const onChangeHandler = (event) => {
-    setSkill((prevState) => ({
+    setProject((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
     }));
   };
 
   const onChangeBoolean = () => {
-    setSkill((prevState) => ({
+    setProject((prevState) => ({
       ...prevState,
-      is_active: !skill.is_active
+      is_active: !project.is_active
     }))
   };
 
   
   useEffect(() => {
-    if (skillProp) {
-      setSkill(skillProp);
+    if (projectProp) {
+      setProject(projectProp);
     }
-  }, [skillProp]);
+  }, [projectProp]);
   
 
-  if (!skill) return <></>;
+  if (!project) return <></>;
 
   return (
     <Dialog open={open} onClose={handleCancel}>
-        <DialogTitle>Update skill</DialogTitle>
+        <DialogTitle>Update project</DialogTitle>
         <DialogContent>
           <FormTextField
             fullWidth
-            value={skill.peopleskills_desc}
-            name="peopleskills_desc"
+            value={project.name}
+            name="name"
             onChange={(e) => onChangeHandler(e)}
             variant="outlined"
-            id="peopleskills_desc"
-            label="Description"
+            id="name"
+            label="Name"
             sx={{marginTop: "1rem"}}
           />
           <FormControlLabel
             sx={{
               color: currentThemePalette.text,
             }}
-            value={skill.is_active}
+            value={project.is_active}
             control={
               <FormSwitch
                 onChange={onChangeBoolean}
                 sx={{
                   '& .MuiSvgIcon-root': { fontSize: 28 }
                 }}
-                checked={skill.is_active}
+                checked={project.is_active}
               />
             }
             label="Active"

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Box, Card, Stack, Tab, Tabs} from '@mui/material';
 
-import { MaintenanceTabPanel, SkillsTable } from 'components/maintenance';
+import { MaintenanceTabPanel, ProjectsTable, SkillsTable } from 'components/maintenance';
 import { FormSearchInput } from "components";
 import {  useSwitchThemeContext } from "hooks";
 import PageContainer from 'layout/PageContainer';
@@ -57,7 +57,7 @@ const Maintenance = () => {
             <SkillsTable search={search} />
           </MaintenanceTabPanel>
           <MaintenanceTabPanel value={tabValue} index={1}>
-            Projects
+            <ProjectsTable search={search} />
           </MaintenanceTabPanel>
         </Card>
       </Box>
