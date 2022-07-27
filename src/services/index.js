@@ -11,6 +11,8 @@ import getMembers from "./people/GetMembers";
 import getPeopleById from "./people/GetPeopleById";
 import updatePeople from "./people/UpdatePeople";
 import getProjects from "./project/GetProjects";
+import deleteProject from "./project/DeleteProject";
+import updateProject from "./project/UpdateProject";
 import deleteSkill from "./people-skills/DeletePeopleSkill";
 import updateSkill from "./people-skills/UpdatePeopleSkill";
 
@@ -30,4 +32,6 @@ export {
   getMemberWithSkills,
   deleteSkill,
   updateSkill,
+  deleteProject,
+  updateProject,
 };

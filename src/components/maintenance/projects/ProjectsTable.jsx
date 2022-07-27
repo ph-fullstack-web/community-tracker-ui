@@ -20,10 +20,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { ConfirmModal } from "components";
 import { useNotificationContext } from "contexts/notification/NotificationContext";
-import { useSwitchThemeContext } from "hooks";
-import useDeleteSkill from "hooks/skills/useDeleteSkill";
-import useGetSkills from "hooks/skills/useGetSkills";
-import useUpdateSkill from "hooks/skills/useUpdateSkill";
+import { useGetProjects, useSwitchThemeContext, useDeleteProject, useUpdateProject } from "hooks";
 import { ProjectFormModal } from ".";
 
 const ProjectsTableBodyCell = ({ children, sxProp, ...otherProps }) => {
@@ -38,7 +35,7 @@ export const ProjectsTable = ({
   search,
 }) => {
   const TABLE_HEADERS = [
-    { value: "peopleskills_desc", name: "Description", filter: true },
+    { value: "name", name: "Project", filter: true },
     { value: "is_active", name: "Status", filter: true },
     { value: "actions", name: "Actions", filter: false },
   ];
@@ -48,49 +45,58 @@ export const ProjectsTable = ({
 
   const {
     isLoading,
-    data: skillsData,
+    data: projectsData,
     isError,
     error,
     refetch,
-  } = useGetSkills();
-  const { mutate } = useDeleteSkill();
-  const { mutate: updateSkillMutate } = useUpdateSkill()
+  } = useGetProjects();
+  const { mutate } = useDeleteProject();
+  const { mutate: updateProjectMutate } = useUpdateProject();
+
+  const sortProjects = ((a, b) => {
+    const projectA = a.name.toLowerCase();
+    const projectB = b.name.toLowerCase();
+
+    if (projectA < projectB) return -1;
+    if (projectA > projectB) return 1;
+    return 0;
+  });
 
   const rowData = useMemo(
     () =>
-      skillsData
-        ? skillsData.map((skill) => ({
-            peopleskills_id: skill.peopleskills_id,
-            peopleskills_desc: skill.peopleskills_desc,
-            is_active: skill.is_active,
-          }))
+      projectsData
+        ? projectsData.map((project) => ({
+            id: project.id,
+            name: project.project,
+            is_active: project.is_active,
+          })).sort(sortProjects)
         : null,
-    [skillsData]
+    [projectsData]
   );  
 
   const [filters, setFilters] = useState([]);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
-  const [selectedSkill, setSelectedSkill] = useState(undefined);
+  const [selectedProject, setSelectedProject] = useState(undefined);
 
   const rowDataFiltered = useMemo(() => {
     if (!search) return rowData;
 
-    return rowData.filter((skill) => {
+    return rowData.filter((project) => {
       if (filters.length === 0) {
         // Loop over member object and see if search is matched
         // to at least one property value
-        for (const property in skill) {
-          if (property === "peopleskills_id") continue;
+        for (const property in project) {
+          if (property === "id") continue;
 
           let queryFound = false;
-          if (property === "peopleskills_desc") {
-            queryFound = skill[property]
+          if (property === "name") {
+            queryFound = project[property]
               .toLowerCase()
               .includes(search.toLowerCase());
           } else if (property === "is_active") {
-            queryFound = (skill[property] === true && "active".includes(search.toLowerCase())) ||
-              (skill[property] === false && "inactive".includes(search.toLowerCase()));
+            queryFound = (project[property] === true && "active".includes(search.toLowerCase())) ||
+              (project[property] === false && "inactive".includes(search.toLowerCase()));
           }
 
           if (!queryFound) continue;
@@ -101,19 +107,19 @@ export const ProjectsTable = ({
         // Also loop over like in the if statement above
         // but add another validation that checks if current property
         // is not included in filters state so that it can skip it
-        for (const property in skill) {
-          if (property === "peopleskills_id" || !filters.includes(property)) {
+        for (const property in project) {
+          if (property === "id" || !filters.includes(property)) {
             continue;
           }
 
           let queryFound = false;
-          if (property === "peopleskills_desc") {
-            queryFound = skill[property]
+          if (property === "name") {
+            queryFound = project[property]
               .toLowerCase()
               .includes(search.toLowerCase());
           } else if (property === "is_active") {
-            queryFound = (skill[property] === true && "active".includes(search.toLowerCase())) ||
-              (skill[property] === false && "inactive".includes(search.toLowerCase()));
+            queryFound = (project[property] === true && "active".includes(search.toLowerCase())) ||
+              (project[property] === false && "inactive".includes(search.toLowerCase()));
           }
 
           if (!queryFound) continue;
@@ -159,25 +165,25 @@ export const ProjectsTable = ({
     setPage(0);
   };
 
-  const handleDeleteButtonClick = (skill) => {
-    setSelectedSkill(skill);
+  const handleDeleteButtonClick = (project) => {
+    setSelectedProject(project);
     setOpenDeleteModal(true);
   };
 
   const handleCancelDelete = () => {
     setOpenDeleteModal(false);
-    setSelectedSkill(undefined);
+    setSelectedProject(undefined);
   }
 
   const handleConfirmDelete = () => {
     setOpenDeleteModal(false);
-    mutate(selectedSkill.peopleskills_id, {
+    mutate(selectedProject.id, {
       onSuccess: (response) => {
         notificationDispatch({
           type: 'NOTIFY',
           payload: {
             type: 'success',
-            message: `${selectedSkill.peopleskills_desc} has been deleted.`
+            message: `${selectedProject.name} has been deleted.`
           }
         });
         refetch();
@@ -192,32 +198,32 @@ export const ProjectsTable = ({
         });
       },
     })
-    setSelectedSkill(undefined);
+    setSelectedProject(undefined);
   }
 
-  const handleUpdateButtonClick = (skill) => {
-    setSelectedSkill(skill);
+  const handleUpdateButtonClick = (project) => {
+    setSelectedProject(project);
     setOpenUpdateModal(true);
   };
 
   const handleCancelUpdate = () => {
     setOpenUpdateModal(false);
-    setSelectedSkill(undefined);
+    setSelectedProject(undefined);
   }
 
-  const handleConfirmUpdate = (skill) => {
+  const handleConfirmUpdate = (project) => {
     setOpenUpdateModal(false);
     const args = {
-      peopleSkillId: skill.peopleskills_id,
-      payload: skill
+      projectId: project.id,
+      payload: project
     }
-    updateSkillMutate(args, {
+    updateProjectMutate(args, {
       onSuccess: () => {
         notificationDispatch({
           type: 'NOTIFY',
           payload: {
             type: 'success',
-            message: 'Skill has been updated.'
+            message: 'Project has been updated.'
           }
         });
         refetch();
@@ -232,7 +238,7 @@ export const ProjectsTable = ({
         });
       }
     });
-    setSelectedSkill(undefined);
+    setSelectedProject(undefined);
   }
 
   // Automatically scroll to top with some conditions
@@ -248,10 +254,10 @@ export const ProjectsTable = ({
   }, [search]);
 
   return (
-    <Box sx={{ overflowX: "auto" }} id="skills-table-container">
+    <Box sx={{ overflowX: "auto" }} id="projects-table-container">
       <Table
         sx={{ mb: 0.5, mx: { xs: 1, sm: 0 }, minWidth: 825 }}
-        aria-label="skills-table">
+        aria-label="projects-table">
         <TableHead>
           <TableRow>
             {TABLE_HEADERS.map((header) => (
@@ -347,7 +353,7 @@ export const ProjectsTable = ({
                 sxProp={{ ...tableCellStyle, py: 2.5 }}>
                 {search || filters.length > 0
                   ? "No search results found"
-                  : "No skills found"}
+                  : "No projects found"}
               </ProjectsTableBodyCell>
             </TableRow>
           </TableBody>
@@ -374,7 +380,7 @@ export const ProjectsTable = ({
                     },
                   }}>
                   <ProjectsTableBodyCell sxProp={tableCellStyle}>
-                    {row.peopleskills_desc}
+                    {row.name}
                   </ProjectsTableBodyCell>
                   <ProjectsTableBodyCell sxProp={tableCellStyle}>
                     {row.is_active ? "Active" : "Inactive"}
@@ -461,19 +467,19 @@ export const ProjectsTable = ({
           </>
         )}
       </Table>
-      {selectedSkill && openDeleteModal && (
+      {selectedProject && openDeleteModal && (
         <ConfirmModal
           open={openDeleteModal}
-          title={'Delete skill?'}
-          message={`Are you sure you want to delete ${selectedSkill.peopleskills_desc}?`}
+          title={'Delete project?'}
+          message={`Are you sure you want to delete ${selectedProject.name}?`}
           onCancel={handleCancelDelete}
           onConfirm={handleConfirmDelete}
         />
       )}
-      {selectedSkill && openUpdateModal && (
+      {selectedProject && openUpdateModal && (
         <ProjectFormModal
           open={openUpdateModal}
-          skillProp={selectedSkill}
+          projectProp={selectedProject}
           onCancel={handleCancelUpdate}
           onConfirm={handleConfirmUpdate}
         />

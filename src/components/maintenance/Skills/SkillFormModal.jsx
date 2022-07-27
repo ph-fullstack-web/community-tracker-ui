@@ -52,7 +52,7 @@ export const SkillFormModal = ({
 
   return (
     <Dialog open={open} onClose={handleCancel}>
-        <DialogTitle>Update Skill</DialogTitle>
+        <DialogTitle>Update skill</DialogTitle>
         <DialogContent>
           <FormTextField
             fullWidth

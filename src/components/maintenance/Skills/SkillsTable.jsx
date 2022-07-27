@@ -20,10 +20,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { ConfirmModal } from "components";
 import { useNotificationContext } from "contexts/notification/NotificationContext";
-import { useSwitchThemeContext } from "hooks";
-import useDeleteSkill from "hooks/skills/useDeleteSkill";
-import useGetSkills from "hooks/skills/useGetSkills";
-import useUpdateSkill from "hooks/skills/useUpdateSkill";
+import { useSwitchThemeContext, useDeleteSkill, useGetSkills, useUpdateSkill} from "hooks";
 import { SkillFormModal } from ".";
 
 const SkillsTableBodyCell = ({ children, sxProp, ...otherProps }) => {
@@ -56,6 +53,15 @@ export const SkillsTable = ({
   const { mutate } = useDeleteSkill();
   const { mutate: updateSkillMutate } = useUpdateSkill()
 
+  const sortSkills = ((a, b) => {
+    const skillA = a.peopleskills_desc.toLowerCase();
+    const skillB = b.peopleskills_desc.toLowerCase();
+
+    if (skillA < skillB) return -1;
+    if (skillA > skillB) return 1;
+    return 0;
+  });
+
   const rowData = useMemo(
     () =>
       skillsData
@@ -63,7 +69,7 @@ export const SkillsTable = ({
             peopleskills_id: skill.peopleskills_id,
             peopleskills_desc: skill.peopleskills_desc,
             is_active: skill.is_active,
-          }))
+          })).sort(sortSkills)
         : null,
     [skillsData]
   );  
