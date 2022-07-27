@@ -34,7 +34,6 @@ const CommunityCard = ({
     currentTheme === "dark"
       ? currentThemePalette.light
       : currentThemePalette.medium;
-
   const HtmlTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
@@ -160,7 +159,7 @@ const CommunityCard = ({
               }`,
               backgroundColor: currentThemePalette.bgPrimary,
               color: `${
-                currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.dark
+                currentTheme === "dark" ? "#FFFFFF" : "#141414"
               }`,
               "&:hover": {
                 borderWidth: 2,
