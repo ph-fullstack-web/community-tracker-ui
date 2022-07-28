@@ -17,7 +17,7 @@ const UploadButton = ({ children, variant, onChangeEvent, sx: restOfSxProp, ...o
             {...otherProps}
         >
             {children}
-            <input hidden accept="image/*" type="file" onChange={onChangeEvent} />
+            <input hidden accept=".svg" type="file" onChange={onChangeEvent} />
         </Button>
     );
 };
