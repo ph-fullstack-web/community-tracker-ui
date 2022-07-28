@@ -22,7 +22,7 @@ const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   );
 };
 
-export default function MemberSkillsTable({ isSelectedValue }) {
+export default function MemberSkillsTable({ isSelectedValue, getMemberSkillsData }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
@@ -41,20 +41,20 @@ export default function MemberSkillsTable({ isSelectedValue }) {
 
   useEffect(() => {
     if (!getMemberSkillsLoading) {
-      setmembersSkillsData(
-        rawData
-          ? rawData.map((skl, idx) => {
-              return {
-                full_name: skl.full_name,
-                skills: skl.skills.join(", "),
-                project_status:
-                  skl.project_id === 21 ? "Bench" : "In a Project",
-              };
-            })
-          : []
-      );
+      const skillsData = rawData
+      ? rawData.map((skl, idx) => {
+          return {
+            full_name: skl.full_name,
+            skills: skl.skills.join(", "),
+            project_status:
+              skl.project_id === 21 ? "Bench" : "In a Project",
+          };
+        })
+      : [];
+      getMemberSkillsData(skillsData)
+      setmembersSkillsData(skillsData);
     }
-  }, [rawData, getMemberSkillsLoading]);
+  }, [getMemberSkillsData, rawData, getMemberSkillsLoading]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -73,6 +73,7 @@ export default function MemberSkillsTable({ isSelectedValue }) {
     p: 1,
     color: currentThemePalette.text,
   };
+  
   return (
     <Box sx={{ overflowX: "auto" }} id="get-member-skills-container">
       <Table
