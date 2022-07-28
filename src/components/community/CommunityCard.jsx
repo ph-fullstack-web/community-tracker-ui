@@ -38,9 +38,8 @@ const CommunityCard = ({
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "#ffffff",
+      backgroundColor: currentTheme === "dark" ? "rgba(20, 20, 20, .8)" : "#ffffff",
       maxWidth: 300,
-      border: "1px solid #dadde9",
     },
   }));
   return (
@@ -190,6 +189,7 @@ const CommunityCard = ({
                     backgroundColor: `${
                       currentTheme === "dark" ? "#141414" : "#ffffff"
                     }`,
+                    marginBottom: "5px",
                   }}
                 >
                   <CardContent>
