@@ -23,6 +23,12 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
         communityDescription: '',
         selectedFile: null
     })
+
+    const [fileValidation, setFileValidation] = useState({
+        errorMessage: '',
+        error: false 
+    });
+
     const { isLoading, data: communityManagers } = useGetManagers();
     const { id } = useParams()
 
@@ -49,16 +55,30 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
         onClickHandler({ id, data })
     }
 
-    const image = '';
-
     const fileSelectedHandler = async (e) => {
         const file = e.target.files[0];
-        const base64 = await convertBase64(file);
+        if (file?.size > 5000) {
+            setFileValidation({
+                errorMessage: 'File size exceeds 5mb',
+                error: true
+            });
+            return;
+        } else {
+            setFileValidation({
+                errorMessage: '',
+                error: false
+            });
+            const base64 = await convertBase64(file);
 
         setCommunityDetails({
             ...communityDetails,
             selectedFile: base64
         })
+            setCommunityDetails({
+                ...communityDetails,
+                selectedFile: base64
+            })
+        }
     };
 
     const convertBase64 = file => {
@@ -197,7 +217,13 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                         border: `1px solid ${currentThemePalette.main}`,
                         backgroundColor: currentTheme === "dark" ? currentThemePalette.light : WHITE
                     }}>
-                        {communityDetails.selectedFile ? <img width='100' height='100' src={communityDetails.selectedFile} alt='icon preview' /> : <ImageIcon sx={{width: 100, height: 100}}/>}
+                        {
+                            communityDetails.selectedFile
+                            ? 
+                            <img width='100' height='100' src={communityDetails.selectedFile} alt='icon preview' />
+                            : 
+                            <ImageIcon sx={{width: 100, height: 100, color: currentTheme === "dark" ? currentThemePalette.dark : currentThemePalette.light }}/>
+                        }
                     </Card>
                     <UploadButton
                         onChangeEvent={fileSelectedHandler}
@@ -211,11 +237,24 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                         }}/>
                         Upload Icon
                     </UploadButton>
+                    {
+                        fileValidation.error
+                        ? 
+                        <div style={{
+                            color: 'red',
+                            alignSelf: 'center',
+                            marginLeft: '1rem',
+                            fontSize: '14px',
+                            fontWeight: 'bold'
+                        }}>
+                            {fileValidation.errorMessage}
+                        </div>
+                        : 
+                        ''
+                    }
                 </Grid>
             </Grid>
         </Box>
-
-
     )
 }
 
