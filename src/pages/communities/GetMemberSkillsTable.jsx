@@ -16,13 +16,18 @@ import { useMemberWithSkill } from "hooks";
 
 const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   return (
-    <TableCell align="center" sx={sxProp} {...otherProps}>
+    <TableCell sx={sxProp} {...otherProps}>
       {children}
     </TableCell>
   );
 };
 
-export default function MemberSkillsTable({ isSelectedValue }) {
+export default function MemberSkillsTable({
+  isSelectedValue,
+  getMemberSkillsData,
+  getSkillsLabel,
+  getChartData,
+}) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
@@ -34,27 +39,49 @@ export default function MemberSkillsTable({ isSelectedValue }) {
     error,
     refetch,
   } = useMemberWithSkill(isSelectedValue);
-
   useEffect(() => {
     refetch();
   }, [isSelectedValue, refetch]);
 
   useEffect(() => {
     if (!getMemberSkillsLoading) {
-      setmembersSkillsData(
-        rawData
-          ? rawData.map((skl, idx) => {
-              return {
-                full_name: skl.full_name,
-                skills: skl.skills.join(", "),
-                project_status:
-                  skl.project_id === 21 ? "Bench" : "In a Project",
-              };
-            })
-          : []
-      );
+      const skillsData = rawData
+        ? rawData.map((skl, idx) => {
+            return {
+              full_name: skl.full_name,
+              skills: skl.skills.join(", "),
+              project_status: skl.project_id === 21 ? "Bench" : "In a Project",
+            };
+          })
+        : [];
+      if (rawData && rawData.length > 0) {
+        const chartData = [];
+        for (let i = 0; i < getSkillsLabel.length; i++) {
+          const count = [];
+          for (let j = 0; j < rawData.length; j++) {
+            let value = rawData[j].skills;
+            if (value.includes(getSkillsLabel[i])) {
+              count.push(j);
+            }
+          }
+          const roundDemical = (count.length * 100) / rawData[0].people_count;
+          chartData.push({
+            community_name: getSkillsLabel[i],
+            percentage: roundDemical.toFixed(2),
+          });
+        }
+        getChartData(chartData);
+      }
+      getMemberSkillsData(skillsData);
+      setmembersSkillsData(skillsData);
     }
-  }, [rawData, getMemberSkillsLoading]);
+  }, [
+    getChartData,
+    getSkillsLabel,
+    getMemberSkillsData,
+    rawData,
+    getMemberSkillsLoading,
+  ]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -65,18 +92,22 @@ export default function MemberSkillsTable({ isSelectedValue }) {
     setPage(0);
   };
   const tableCellStyle = {
-    border: `2px solid ${
-      currentTheme === "dark"
-        ? currentThemePalette.light
-        : currentThemePalette.border
-    }`,
-    p: 1,
+    borderBottom: "none",
+    p: 1.7,
     color: currentThemePalette.text,
   };
+
   return (
     <Box sx={{ overflowX: "auto" }} id="get-member-skills-container">
       <Table
-        sx={{ mt: 3, mb: 0.5, mx: { xs: 1, sm: 0 }, minWidth: 825 }}
+        sx={{
+          mt: 0,
+          mb: 0.5,
+          mx: { xs: 1, sm: 0 },
+          minWidth: 825,
+          borderCollapse: "separate",
+          borderSpacing: "0px 8px",
+        }}
         aria-label="member-skills-table"
       >
         <TableHead>
@@ -84,14 +115,12 @@ export default function MemberSkillsTable({ isSelectedValue }) {
             {MEMBERS_TABLE_SKILLS.map((column) => (
               <TableCell
                 key={column.value}
-                align="center"
                 sx={{
                   ...tableCellStyle,
-                  fontWeight: "bold",
-                  backgroundColor:
-                    currentTheme === "dark"
-                      ? currentThemePalette.dark
-                      : currentThemePalette.medium,
+                  fontWeight: "550",
+                  borderBottom: "none",
+                  backgroundColor: currentThemePalette.opacityBackground,
+                  fontSize: "13px",
                 }}
               >
                 {column.name}
@@ -142,7 +171,14 @@ export default function MemberSkillsTable({ isSelectedValue }) {
           membersSkillsData &&
           membersSkillsData.length === 0 && (
             <TableBody>
-              <TableRow>
+              <TableRow
+                sx={{
+                  backgroundColor:
+                    currentTheme === "dark"
+                      ? currentThemePalette.medium
+                      : "#FFFFFF",
+                }}
+              >
                 <MembersTableBodyCell
                   colSpan={6}
                   sxProp={{ ...tableCellStyle, py: 2.5 }}

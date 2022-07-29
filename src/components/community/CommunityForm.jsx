@@ -1,20 +1,34 @@
 import { useEffect, useState } from "react"
 import {
-    MenuItem, Grid, Box
+    MenuItem, Grid, Box, Card
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetManagers } from "hooks";
 import { FormSelect, FormTextField } from "components";
 import AppButton from "components/common/AppButton";
+import UploadButton from "components/common/UploadButton";
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import ImageIcon from '@mui/icons-material/Image';
+import { useSwitchThemeContext } from "hooks";
+import { WHITE } from "theme";
 
 const CommunityForm = ({ onClickHandler, buttonText, community }) => {
+
+    const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
     const [communityDetails, setCommunityDetails] = useState({
         communityName: '',
         communityManagerId: '',
         isActive: true,
-        communityDescription: ''
+        communityDescription: '',
+        selectedFile: null
     })
+
+    const [fileValidation, setFileValidation] = useState({
+        errorMessage: '',
+        error: false 
+    });
+
     const { isLoading, data: communityManagers } = useGetManagers();
     const { id } = useParams()
 
@@ -34,14 +48,53 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
         const data = {
             community_name: communityDetails.communityName,
             community_manager: communityDetails.communityManagerId,
-            community_description: communityDetails.communityDescription
+            community_description: communityDetails.communityDescription,
+            icon: communityDetails.selectedFile
         }
 
         onClickHandler({ id, data })
-
-
     }
 
+    const fileSelectedHandler = async (e) => {
+        const file = e.target.files[0];
+        if (file?.size > 5000) {
+            setFileValidation({
+                errorMessage: 'File size exceeds 5mb',
+                error: true
+            });
+            return;
+        } else {
+            setFileValidation({
+                errorMessage: '',
+                error: false
+            });
+            const base64 = await convertBase64(file);
+
+        setCommunityDetails({
+            ...communityDetails,
+            selectedFile: base64
+        })
+            setCommunityDetails({
+                ...communityDetails,
+                selectedFile: base64
+            })
+        }
+    };
+
+    const convertBase64 = file => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        })
+    };
 
     return (
         <Box component='form' onSubmit={handleOnButtonClick}>
@@ -147,10 +200,61 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                     </AppButton>
 
                 </Grid>
+                <Grid item xs={12} md={7}
+                    sx={{
+                        mt: {
+                            xs: "2rem"
+                        },
+                        display: 'flex'
+                }}>
+                    <Card sx={{
+                        display: 'flex',
+                        width: '120px',
+                        height: '120px',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: '1rem',
+                        border: `1px solid ${currentThemePalette.main}`,
+                        backgroundColor: currentTheme === "dark" ? currentThemePalette.light : WHITE
+                    }}>
+                        {
+                            communityDetails.selectedFile
+                            ? 
+                            <img width='100' height='100' src={communityDetails.selectedFile} alt='icon preview' />
+                            : 
+                            <ImageIcon sx={{width: 100, height: 100, color: currentTheme === "dark" ? currentThemePalette.dark : currentThemePalette.light }}/>
+                        }
+                    </Card>
+                    <UploadButton
+                        onChangeEvent={fileSelectedHandler}
+                        sx={{
+                            height: '3rem',
+                            alignSelf: 'center'
+                        }}
+                    >
+                        <PhotoCamera sx={{
+                            marginRight: "1rem"
+                        }}/>
+                        Upload Icon
+                    </UploadButton>
+                    {
+                        fileValidation.error
+                        ? 
+                        <div style={{
+                            color: 'red',
+                            alignSelf: 'center',
+                            marginLeft: '1rem',
+                            fontSize: '14px',
+                            fontWeight: 'bold'
+                        }}>
+                            {fileValidation.errorMessage}
+                        </div>
+                        : 
+                        ''
+                    }
+                </Grid>
             </Grid>
         </Box>
-
-
     )
 }
 

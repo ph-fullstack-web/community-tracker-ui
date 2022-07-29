@@ -50,6 +50,15 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
     onSubmitHandler(resource);
   };
 
+  const sortProjects = ((a, b) => {
+    const projectA = a.project.toLowerCase();
+    const projectB = b.project.toLowerCase();
+
+    if (projectA < projectB) return -1;
+    if (projectA > projectB) return 1;
+    return 0;
+  })
+
   return (
     <Card
       sx={{
@@ -230,13 +239,16 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                 >
                   <MenuItem value="">Select Project</MenuItem>
                   {!isLoadingProjects &&
-                    (projectsData || []).map((project) => {
-                      return (
-                        <MenuItem key={project.id} value={project.id}>
-                          {project.name}
-                        </MenuItem>
-                      );
-                    })}
+                    (projectsData || [])
+                      .sort(sortProjects)
+                      .map((project) => {
+                        return (
+                          <MenuItem key={project.id} value={project.id}>
+                            {project.project}
+                          </MenuItem>
+                        );
+                      }
+                    )}
                 </FormSelect>
               </Grid>
               <Grid item xs={12} sm={12} md={5} lg={5} alignSelf="flex-start">

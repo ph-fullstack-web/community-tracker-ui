@@ -9,10 +9,13 @@ import useCreatePeople from "./people/useCreatePeople";
 import useGetPeopleById from "./people/useGetPeopleById";
 import useUpdatePeople from "./people/useUpdatePeople";
 import useGetProjects from "./projects/useGetProjects";
+import useUpdateProject from "./projects/useUpdateProject";
+import useDeleteProject from "./projects/useDeleteProject";
 import useGetSkills from "./skills/useGetSkills";
 import usePostSkills from "./skills/usePostSkills";
 import useMemberWithSkill from "./skills/useMemberWithSkills";
 import useUpdateSkill from './skills/useUpdateSkill';
+import useDeleteSkill from "./skills/useDeleteSkill";
 
 export {
   useCreatePeople,
@@ -30,4 +33,7 @@ export {
   usePostSkills,
   useMemberWithSkill,
   useUpdateSkill,
+  useDeleteSkill,
+  useUpdateProject,
+  useDeleteProject,
 };

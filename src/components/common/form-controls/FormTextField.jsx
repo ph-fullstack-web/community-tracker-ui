@@ -16,7 +16,7 @@ const FormTextField = ({ sx: restOfSxProp, ...otherProps }) => {
         textarea: {
           color: themeForDarkOnly("#FFFFFF"),
         },
-        backgroundColor: themeForDarkOnly(currentThemePalette.medium),
+        backgroundColor: themeForDarkOnly("rgba(20, 20, 20)"),
         label: {
           color: themeForDarkOnly(currentThemePalette.light),
           borderBottomColor: themeForDarkOnly(currentThemePalette.light),
@@ -26,21 +26,21 @@ const FormTextField = ({ sx: restOfSxProp, ...otherProps }) => {
         },
         "& .MuiInput-underline:after": {
           borderBottomColor:
-            currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.dark,
+            currentTheme === "dark" ? "#141414" : currentThemePalette.dark,
         },
         "& .MuiOutlinedInput-root": {
           "& fieldset": {
             borderColor:
-              currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.medium,
+              currentTheme === "dark" ? "#141414" : currentThemePalette.medium,
           },
           "&:hover fieldset": {
             borderColor:
-              currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.dark,
+              currentTheme === "dark" ? "#141414" : currentThemePalette.dark,
           },
           "&.Mui-focused fieldset": {
             borderColor:
               currentTheme === "dark"
-                ? currentThemePalette.light
+                ? "#141414"
                 : currentThemePalette.dark,
           },
         },
