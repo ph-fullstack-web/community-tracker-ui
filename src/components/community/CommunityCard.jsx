@@ -84,7 +84,6 @@ const CommunityCard = ({
                   currentTheme === "dark" ? "#ffffff" : "#141414"
                 }!important`,
               }}
-              aria-label="recipe"
             >
               {
                 (image !== 'D:\\default_image.jpg' && image !== null)

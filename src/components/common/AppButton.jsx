@@ -8,8 +8,7 @@ const AppButton = ({ children, variant, sx: restOfSxProp, ...otherProps }) => {
     <Button
       variant={variant ? variant : "contained"}
       sx={{
-        backgroundColor: currentThemePalette.medium,
-        border: currentTheme === "dark" ? `1px solid ${currentThemePalette.light}` : null,
+        backgroundColor: currentTheme === "dark" ? "rgba(20, 20, 20, .6)" : currentThemePalette.medium,
         "&:hover": {
           backgroundColor: currentThemePalette.dark
         },

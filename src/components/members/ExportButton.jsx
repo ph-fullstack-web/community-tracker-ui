@@ -8,7 +8,7 @@ const ExportButton = ({ isLoading, membersData, rowData, tableHeaders, fileNameD
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
   const contrastingColors =
     currentTheme === "dark"
-      ? currentThemePalette.light
+      ? currentThemePalette.bgPrimary
       : currentThemePalette.medium;
 
   const downloadExcel = () => {

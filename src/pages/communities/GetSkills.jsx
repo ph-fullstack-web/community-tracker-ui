@@ -10,6 +10,8 @@ import { useSwitchThemeContext } from "hooks";
 import { MEMBERS_TABLE_SKILLS } from "utils/constants";
 import ExportButton from "components/members/ExportButton";
 import { MEMBERS_BY_SKILL_TABLE_HEADERS } from "utils/constants";
+import { Typography, Grid, CardContent } from "@mui/material";
+import SkillsCard from "components/skills/SkillsCard";
 
 const GetSkills = () => {
   const { data: skillsData, isLoading: getSkillsLoading } = useGetSkills();
@@ -19,7 +21,9 @@ const GetSkills = () => {
   const [newValues, setNewValues] = useState([]); //new values
   const [showData, setShowData] = useState(false);
   const [memberSkillsData, setMemberSkillsData] = useState([]);
-  const fileName = "MembersBySkills"
+  const [skillsLabel, setSkillsLabel] = useState([]);
+  const [chartData, setChartData] = useState([]);
+  const fileName = "MembersBySkills";
   useEffect(() => {
     if (!getSkillsLoading) {
       setOptions(
@@ -33,42 +37,63 @@ const GetSkills = () => {
   // function prepareInput(skl, idx, arr) {
   //   postSkills({ peopleskills_desc: skl.label, is_active: true });
   // }
-
   const onSave = async () => {
     // //save new skills to peopleskills db
     // if (newValues.length > 0) newValues.forEach(prepareInput);
-
+    const skillsId = [];
     const skills = [];
     selectedSkills.forEach((arrayItem) => {
       let x = arrayItem.id;
-      skills.push(x);
+      let sk = arrayItem.label;
+      skills.push(sk);
+      skillsId.push(x);
     });
     const skillsPayload = {
-      skills: skills.toString(),
+      skills: skillsId.toString(),
     };
+    setSkillsLabel(skills);
     setSelectedPayload(skillsPayload);
-    if (skills.length > 0) {
+    if (skillsId.length > 0) {
       setShowData(true);
     } else {
-      setMemberSkillsData([])
+      setMemberSkillsData([]);
       setShowData(false);
     }
   };
-  const { currentThemePalette } = useSwitchThemeContext();
+  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
   return (
     <PageContainer>
+      <Typography
+        component="label"
+        sx={{
+          padding: "0.25em",
+          fontWeight: "700",
+          display: "block",
+          fontSize: "35px",
+          paddingBottom: "25px !important",
+          color: currentTheme === "dark" ? "#FFFFFF" : "#242323",
+        }}
+      >
+        People By Skills
+      </Typography>
       <Box
         style={{
-          marginTop: "3rem",
           marginBottom: "1rem",
         }}
       >
         <Card
-          sx={{ padding: "2rem", backgroundColor: currentThemePalette.cardSecondary }}
+          sx={{
+            backgroundColor: currentThemePalette.cardSecondary,
+            maxWidth: "1430px !important",
+          }}
         >
-          <Stack direction="row" alignItems="center">
-            <Box sx={{ width: { xs: "100%", lg: "120ch" }, flex: "0 1 auto" }}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            sx={{ padding: "2rem 2rem 0px 2rem" }}
+          >
+            <Box sx={{ width: { xs: "100%", lg: "135ch" }, flex: "0 1 auto" }}>
               {options.length >= 0 && (
                 <AutocompleteInputChip
                   options={options}
@@ -81,24 +106,93 @@ const GetSkills = () => {
             </Box>
             <Box>
               <AppButton
-                sx={{ width: 150, ml: { xs: 1, sm: 3 } }}
+                variant={"contained"}
+                sx={{ width: 150, height: 50, ml: { xs: 1, sm: 3 } }}
                 startIcon={<SearchIcon />}
                 onClick={onSave}
               >
                 Search
               </AppButton>
             </Box>
-            <Box sx={{ ml: "auto" }}>
-              <ExportButton
-                rowData={memberSkillsData}
-                isLoading={memberSkillsData.length > 0 ? false : true}
-                tableHeaders={MEMBERS_BY_SKILL_TABLE_HEADERS}
-                fileNameData={fileName}
-              />
-            </Box>
           </Stack>
-          {!showData && <NoDataTable columns={MEMBERS_TABLE_SKILLS} />}
-          {showData && <MemberSkillsTable isSelectedValue={selectedPayload} getMemberSkillsData={setMemberSkillsData}/>}
+          {showData && (
+            <>
+              <Grid
+                container
+                spacing={2}
+                className="skills-list"
+                wrap="nowrap"
+                style={{
+                  width: "1385px",
+                  overflow: "auto",
+                  color: "#FFFFFF",
+                  // padding: "0px 2rem 0px 2rem",
+                  margin: "0px 1rem 20px 1rem",
+                }}
+              >
+                {(chartData || []).map((data) => (
+                  <SkillsCard
+                    key={data.community_name}
+                    id={data.community_name}
+                    name={data.community_name}
+                    chartData={[
+                      {
+                        name: "percentage",
+                        value: parseInt(data.percentage),
+                        fill: `${
+                          currentTheme === "dark"
+                            ? "#0a7578"
+                            : currentThemePalette.dark
+                        }`,
+                      },
+                      {
+                        name: "max",
+                        value: 100 - data.percentage,
+                        fill: `${
+                          currentTheme === "dark"
+                            ? "rgba(250, 250, 250, .07)"
+                            : "#b6bbc2"
+                        }`,
+                      },
+                    ]}
+                    percentage={data.percentage}
+                  />
+                ))}
+              </Grid>
+            </>
+          )}
+          <CardContent
+            sx={{
+              marginTop: "24px",
+              padding: "14px 2rem 0px 2rem",
+              backgroundColor:
+                currentTheme === "dark"
+                  ? "rgba(20, 20, 20, .4)"
+                  : "rgba(191, 191, 191, 0.1)",
+            }}
+          >
+            {!showData && <NoDataTable columns={MEMBERS_TABLE_SKILLS} />}
+            {showData && (
+              <>
+                <Stack direction="row" sx={{}}>
+                  <Box sx={{ ml: "auto" }}>
+                    <ExportButton
+                      rowData={memberSkillsData}
+                      isLoading={memberSkillsData.length > 0 ? false : true}
+                      tableHeaders={MEMBERS_BY_SKILL_TABLE_HEADERS}
+                      fileNameData={fileName}
+                    />
+                  </Box>
+                </Stack>
+                <MemberSkillsTable
+                  isSelectedValue={selectedPayload}
+                  getMemberSkillsData={setMemberSkillsData}
+                  getSkillsLabel={skillsLabel}
+                  getChartData={setChartData}
+                />
+              </>
+            )}
+          </CardContent>
         </Card>
       </Box>
     </PageContainer>
