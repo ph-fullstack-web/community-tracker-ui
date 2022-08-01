@@ -15,6 +15,7 @@ import { useState } from 'react';
 import useGetCommunities from "hooks/communities/useGetCommunities";
 import Scrollbars from 'react-custom-scrollbars-2';
 import ThemeSubMenu from 'components/theme-switcher/ThemeSubMenu';
+import ChangePasswordModal from 'components/change-password/ChangePasswordModal';
 
 const DRAWER_WIDTH = 240;
 
@@ -53,6 +54,12 @@ const PersistentDrawerLeft = ({ children }) => {
 
     const theme = useTheme();
     const [toggle, setToggle] = useToggle();
+    const [openChangePasswordModal, setOpenChangePasswordModal] = useState(false);
+
+    const handleChangePasswordClick = () => setOpenChangePasswordModal(true);
+    const handleCancelUpdate = () => setOpenChangePasswordModal(false);
+    const handleConfirmUpdate = () => setOpenChangePasswordModal(false);
+
     const handleToggle = () => {
         setToggle(!toggle)
     }
@@ -157,6 +164,22 @@ const PersistentDrawerLeft = ({ children }) => {
                                     </div>
                                 )
                                 :
+                                name === 'Change Password' ? (
+                                    <div key={name}>
+                                    <ListItemButton onClick={handleChangePasswordClick} sx={{
+                                            color: themeForDarkOnly(currentThemePalette.light),
+                                            '&:hover': {
+                                                backgroundColor: themeForDarkOnly("#293A46")
+                                            }
+                                        }}
+                                    >
+                                        <ListItemIcon sx={{color: themeForDarkOnly(currentThemePalette.light)}}>
+                                            {icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={name} />
+                                    </ListItemButton>
+                                </div>
+                                ) :
                                 (
                                     <div key={name}>
                                         <ListItemButton onClick={() => handleNavigation(path)} sx={{
@@ -213,7 +236,13 @@ const PersistentDrawerLeft = ({ children }) => {
                     <DrawerHeader />
                     {children}
                 </Main>
-            </Box></>
+            </Box>
+            <ChangePasswordModal
+                open={openChangePasswordModal}
+                onCancel={handleCancelUpdate}
+                onConfirm={handleConfirmUpdate}
+            />
+        </>
 
     );
 }

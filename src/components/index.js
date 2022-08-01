@@ -12,6 +12,7 @@ import NoDataTable from "./common/NoDataTable";
 import * as Maintenance from "./maintenance";
 import ConfirmModal from "./common/ConfirmModal";
 import PieChartDashBoard from "./Dashboards/SinglePieChart"
+import ChangePasswordModal from "./change-password/ChangePasswordModal";
 
 export {
   LoginModal,
@@ -27,5 +28,6 @@ export {
   NoDataTable,
   Maintenance,
   ConfirmModal,
-  PieChartDashBoard
+  PieChartDashBoard,
+  ChangePasswordModal
 };
