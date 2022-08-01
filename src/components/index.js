@@ -13,6 +13,7 @@ import * as Maintenance from "./maintenance";
 import ConfirmModal from "./common/ConfirmModal";
 import PieChartDashBoard from "./Dashboards/SinglePieChart"
 import ChangePasswordModal from "./change-password/ChangePasswordModal";
+import SkillsCard from "./skills/SkillsCard"
 
 export {
   LoginModal,
@@ -29,5 +30,6 @@ export {
   Maintenance,
   ConfirmModal,
   PieChartDashBoard,
-  ChangePasswordModal
+  ChangePasswordModal,
+  SkillsCard
 };

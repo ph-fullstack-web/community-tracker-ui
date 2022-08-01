@@ -38,9 +38,8 @@ const CommunityCard = ({
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "#ffffff",
+      backgroundColor: currentTheme === "dark" ? "rgba(20, 20, 20, .8)" : "#ffffff",
       maxWidth: 300,
-      border: "1px solid #dadde9",
     },
   }));
   return (
@@ -85,9 +84,14 @@ const CommunityCard = ({
                   currentTheme === "dark" ? "#ffffff" : "#141414"
                 }!important`,
               }}
-              aria-label="recipe"
             >
-              {name.charAt(0)}
+              {
+                (image !== 'D:\\default_image.jpg' && image !== null)
+                ?
+                <img width='30' height='30' src={image} alt='icon' />
+                :
+                name.charAt(0)
+              }
             </Avatar>
           }
           action={
@@ -190,6 +194,7 @@ const CommunityCard = ({
                     backgroundColor: `${
                       currentTheme === "dark" ? "#141414" : "#ffffff"
                     }`,
+                    marginBottom: "5px",
                   }}
                 >
                   <CardContent>

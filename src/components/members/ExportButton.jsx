@@ -2,29 +2,31 @@ import moment from "moment";
 import { utils as xlsxUtils, writeFile as xlsxWriteFile } from "xlsx";
 import Button from "@mui/material/Button";
 import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
-import CircularProgress from "@mui/material/CircularProgress";
 import { useSwitchThemeContext } from "hooks";
-import { TABLE_HEADERS } from "utils/constants";
 
-const ExportButton = ({ isLoading, membersData, rowData }) => {
+const ExportButton = ({ isLoading, membersData, rowData, tableHeaders, fileNameData }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
   const contrastingColors =
     currentTheme === "dark"
-      ? currentThemePalette.light
+      ? currentThemePalette.bgPrimary
       : currentThemePalette.medium;
 
   const downloadExcel = () => {
-    const headers = TABLE_HEADERS.map((header) => header.name);
+    const headers = tableHeaders.map((header) => header.name);
     const headersArr = [headers];
 
-    const exportData = rowData.map((row) => ({
-      Name: row.full_name,
-      "Assigned To": row.assigned_to,
-      "Hired Date": row.hired_date_formatted,
-      State: row.work_state,
-      "Job Level": row.job_level,
-      Project: row.project,
-    }));
+    let exportData = [];
+    for(let i = 0; i < rowData.length; i++) {
+       let value = rowData[i];
+       let objectValue = {}
+      for(let j = 0; j < tableHeaders.length; j++){
+          let key = tableHeaders[j].name;
+          let valueKey = tableHeaders[j].value;
+          objectValue[key] = value[valueKey]
+      }
+      exportData.push(objectValue)
+
+    }
 
     const workbook = xlsxUtils.book_new();
     const worksheet = xlsxUtils.json_to_sheet(headersArr);
@@ -40,17 +42,17 @@ const ExportButton = ({ isLoading, membersData, rowData }) => {
     const columnWidths = getAutoFittedColumnWidths(exportData, headers);
     worksheet["!cols"] = columnWidths;
 
-    const communityNameFilename = membersData.community_name
+    const communityNameFilename = membersData ? membersData.community_name : fileNameData
       .split(" ")
       .join("_");
 
     //prettier-ignore
     const fileName = `${communityNameFilename}_${moment().format("MM-DD-YYYY")}.xlsx`;
-
+    const exportFileName = membersData ? membersData.community_name : fileNameData;
     xlsxUtils.book_append_sheet(
       workbook,
       worksheet,
-      membersData.community_name
+      exportFileName
     );
 
     xlsxWriteFile(workbook, fileName);
@@ -91,11 +93,7 @@ const ExportButton = ({ isLoading, membersData, rowData }) => {
       variant="outlined"
       disabled={!(!isLoading && rowData && rowData.length > 0)}
       startIcon={
-        isLoading ? (
-          <CircularProgress size="1rem" sx={{ color: "#0000001f" }} />
-        ) : (
           <FileDownloadRoundedIcon />
-        )
       }
       sx={{
         minWidth: "35px",

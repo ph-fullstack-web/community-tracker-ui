@@ -59,7 +59,7 @@ export default function AutocompleteInputChip(props) {
           border: `2px solid ${currentThemePalette.medium}`,
           backgroundColor:
             currentTheme === "dark"
-              ? "#3C4043"
+              ? "rgba(250, 250, 250, .07)"
               : currentThemePalette.bgSecondary,
           color: "#FFFFFF",
           fontWeight: 550,
