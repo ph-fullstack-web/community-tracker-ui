@@ -43,6 +43,10 @@ const DRAWER_ROUTES = [
     name: "Maintenance",
     path: "/maintenance",
     icon: <Construction />,
+  },
+  {
+    name: "Change Password",
+    icon: <Construction />,
   }
 ];
 export default DRAWER_ROUTES;
