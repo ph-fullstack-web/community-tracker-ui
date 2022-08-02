@@ -1,7 +1,8 @@
 import React, { useState, } from "react";
 import {
+  Alert,
+  AlertTitle,
   Box,
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -9,37 +10,15 @@ import {
 } from "@mui/material";
 import { FormTextField } from "components";
 import { useAuthContext } from "contexts/auth/AuthContext";
-import { useSwitchThemeContext } from "hooks";
+import { useLogin, useSwitchThemeContext } from "hooks";
 import AppButton from "components/common/AppButton";
-
-const CREDENTIALS = [
-  {
-    id: 2140402,
-    password: "password",
-    firstName: "Vincent",
-    lastName: "Dizon",
-    role: "admin",
-  },
-  {
-    id: 2181978,
-    password: "password",
-    firstName: "Arvin Kenn",
-    lastName: "De Los Santos",
-    role: "admin",
-  },
-  {
-    id: 123456,
-    password: "password",
-    firstName: "John",
-    lastName: "Doe",
-    role: "employee",
-  },
-];
+import { useEffect } from "react";
 
 const LoginModal = ({ open, handleClose }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-
+  const { mutate: loginMutate } = useLogin();
   const [credentials, setCredentials] = useState({ id: "", password: "" });
+  const [error, setError] = useState("");
   const { dispatch, state } = useAuthContext();
 
   const handleCredentials = (e) => {
@@ -48,20 +27,31 @@ const LoginModal = ({ open, handleClose }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const ID = parseInt(credentials.id);
-    const PASSWORD = credentials.password;
     dispatch({ type: "AUTH_LOADING" });
 
-    Object.values(CREDENTIALS).forEach((data) => {
-      if (data.id === ID && data.password === PASSWORD) {
+    const args = {
+      cognizant_id: credentials.id,
+      password: credentials.password,
+    }
+    
+    loginMutate(args, {
+      onSuccess: (data) => {
         dispatch({
           type: "LOGIN",
-          payload: { success: "success", data },
+          payload: { success: "success", data},
         });
-        handleClose()
+        handleClose();
+      },
+      onError: (error) => {
+       setError(error.message);
       }
     });
   };
+
+  useEffect(() => {
+    setCredentials({ id: "", password: "" });
+    setError("");
+  }, [open])
   return (
     <Dialog 
       open={open}
@@ -89,6 +79,7 @@ const LoginModal = ({ open, handleClose }) => {
             required
             type="number"
             value={credentials.id}
+            sx={{marginTop: "1.5rem"}}
           />
           <FormTextField
             name="password"
@@ -97,8 +88,21 @@ const LoginModal = ({ open, handleClose }) => {
             required
             type="password"
             value={credentials.password}
+            sx={{marginTop: "1rem"}}
           />
         </Box>
+        {error && (
+          <Alert severity="error" sx={{
+              marginTop: "1rem", 
+              backgroundColor: currentTheme === "dark" ? "#202124" : null,
+              border: currentTheme === "dark" ? `2px solid ${currentThemePalette.light}` : null,
+              color: currentTheme === "dark" ? currentThemePalette.light : currentThemePalette.dark
+            }}
+          >
+            <AlertTitle>Error</AlertTitle>
+            {error}
+          </Alert>
+        )}
       </DialogContent>
       <DialogActions>
         <AppButton onClick={handleClose}>Cancel</AppButton>

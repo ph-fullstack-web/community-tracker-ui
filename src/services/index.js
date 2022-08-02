@@ -16,6 +16,7 @@ import updateProject from "./project/UpdateProject";
 import deleteSkill from "./people-skills/DeletePeopleSkill";
 import updateSkill from "./people-skills/UpdatePeopleSkill";
 import updatePassword from "./communityadminandmanager/UpdatePassword";
+import login from "./login/Login";
 
 export {
   addCommunityService,
@@ -36,4 +37,5 @@ export {
   deleteProject,
   updateProject,
   updatePassword,
+  login,
 };

@@ -16,6 +16,9 @@ import useGetCommunities from "hooks/communities/useGetCommunities";
 import Scrollbars from 'react-custom-scrollbars-2';
 import ThemeSubMenu from 'components/theme-switcher/ThemeSubMenu';
 import ChangePasswordModal from 'components/change-password/ChangePasswordModal';
+import LoginIcon from '@mui/icons-material/Login';
+import {LoginModal} from 'components';
+import { useAuthContext } from 'contexts/auth/AuthContext';
 
 const DRAWER_WIDTH = 240;
 
@@ -51,10 +54,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const PersistentDrawerLeft = ({ children }) => {
     const { isLoading, data: communityData, isError, error } = useGetCommunities();
     const router = useNavigate();
+    const {state, dispatch: authDispatch} = useAuthContext();
 
     const theme = useTheme();
     const [toggle, setToggle] = useToggle();
     const [openChangePasswordModal, setOpenChangePasswordModal] = useState(false);
+    const [openLoginModal, setOpenLoginModal] = useState(false);
 
     const handleChangePasswordClick = () => setOpenChangePasswordModal(true);
     const handleCancelUpdate = () => setOpenChangePasswordModal(false);
@@ -62,6 +67,16 @@ const PersistentDrawerLeft = ({ children }) => {
 
     const handleToggle = () => {
         setToggle(!toggle)
+    }
+
+    const handleLogin = () => {
+      setOpenLoginModal(true);
+    };
+
+    const handleLogout = () => {
+      authDispatch({
+        type: "LOGOUT",
+      });
     }
 
     const { currentTheme, currentThemePalette } = useSwitchThemeContext();
@@ -120,7 +135,7 @@ const PersistentDrawerLeft = ({ children }) => {
                     open={toggle}
                 >
                     <DrawerHeader>
-                        <Box 
+                        {Object.keys(state.credentials).length !== 0 && (<Box 
                             sx={{color: themeForDarkOnly(currentThemePalette.light),
                                 display: 'flex',
                                 margin: 'auto'}}
@@ -130,16 +145,40 @@ const PersistentDrawerLeft = ({ children }) => {
                                 alignSelf: 'center',
                                 borderRight: `5px solid  ${currentThemePalette.main}`}}
                             >
-                                922557
+                                {state?.credentials?.data?.cognizant_id}
                             </Box>
                             <Box 
                                 component={Button}
-                                onClick={handleToggle}
+                                onClick={handleLogout}
                                 sx={{color: currentTheme === "dark" ? currentThemePalette.light : currentThemePalette.dark}}
                             >
                                 Sign out
                             </Box>
-                        </Box>
+                        </Box>)}
+                            {Object.keys(state.credentials).length === 0 && (
+                                <Box 
+                                sx={{color: themeForDarkOnly(currentThemePalette.light),
+                                    display: 'flex',
+                                    margin: 'auto'}}
+                            >
+                                <Box 
+                                    component={Button}
+                                    onClick={handleLogin}
+                                    sx={{color: currentTheme === "dark" ? currentThemePalette.light : currentThemePalette.dark}}
+                                    endIcon={
+                                      <LoginIcon
+                                        fontSize="large"
+                                        style={{
+                                        color: currentThemePalette.main,
+                                        fontWeight: '700',
+                                        }}
+                                      />
+                                    }
+                                >
+                                    Sign in
+                                </Box>
+                            </Box>
+                        )}
                         <IconButton 
                             onClick={handleToggle}
                             sx={{
@@ -165,20 +204,24 @@ const PersistentDrawerLeft = ({ children }) => {
                                 )
                                 :
                                 name === 'Change Password' ? (
-                                    <div key={name}>
-                                    <ListItemButton onClick={handleChangePasswordClick} sx={{
-                                            color: themeForDarkOnly(currentThemePalette.light),
-                                            '&:hover': {
-                                                backgroundColor: themeForDarkOnly("#293A46")
-                                            }
+                                  <div key={name}>
+                                    {Object.keys(state.credentials).length !== 0 && (
+                                      <ListItemButton 
+                                        onClick={handleChangePasswordClick} 
+                                        sx={{
+                                          color: themeForDarkOnly(currentThemePalette.light),
+                                          '&:hover': {
+                                              backgroundColor: themeForDarkOnly("#293A46")
+                                          }
                                         }}
-                                    >
+                                      >
                                         <ListItemIcon sx={{color: themeForDarkOnly(currentThemePalette.light)}}>
-                                            {icon}
+                                          {icon}
                                         </ListItemIcon>
                                         <ListItemText primary={name} />
-                                    </ListItemButton>
-                                </div>
+                                      </ListItemButton>
+                                    )}
+                                  </div>
                                 ) :
                                 (
                                     <div key={name}>
@@ -242,6 +285,7 @@ const PersistentDrawerLeft = ({ children }) => {
                 onCancel={handleCancelUpdate}
                 onConfirm={handleConfirmUpdate}
             />
+            <LoginModal open={openLoginModal} handleClose={() => setOpenLoginModal(false)} />
         </>
 
     );
