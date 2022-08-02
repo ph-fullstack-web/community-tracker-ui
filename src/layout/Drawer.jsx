@@ -135,7 +135,7 @@ const PersistentDrawerLeft = ({ children }) => {
                     open={toggle}
                 >
                     <DrawerHeader>
-                        {Object.keys(state.credentials).length !== 0 && (<Box 
+                        {state.isAuthenticated && (<Box 
                             sx={{color: themeForDarkOnly(currentThemePalette.light),
                                 display: 'flex',
                                 margin: 'auto'}}
@@ -155,7 +155,7 @@ const PersistentDrawerLeft = ({ children }) => {
                                 Sign out
                             </Box>
                         </Box>)}
-                            {Object.keys(state.credentials).length === 0 && (
+                            {!state.isAuthenticated && (
                                 <Box 
                                 sx={{color: themeForDarkOnly(currentThemePalette.light),
                                     display: 'flex',
@@ -205,7 +205,7 @@ const PersistentDrawerLeft = ({ children }) => {
                                 :
                                 name === 'Change Password' ? (
                                   <div key={name}>
-                                    {Object.keys(state.credentials).length !== 0 && (
+                                    {state.isAuthenticated && (
                                       <ListItemButton 
                                         onClick={handleChangePasswordClick} 
                                         sx={{
