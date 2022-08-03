@@ -12,6 +12,7 @@ import NoDataTable from "./common/NoDataTable";
 import * as Maintenance from "./maintenance";
 import ConfirmModal from "./common/ConfirmModal";
 import PieChartDashBoard from "./dashboards/SinglePieChart"
+import ChangePasswordModal from "./change-password/ChangePasswordModal";
 import SkillsCard from "./skills/SkillsCard"
 
 export {
@@ -29,5 +30,6 @@ export {
   Maintenance,
   ConfirmModal,
   PieChartDashBoard,
+  ChangePasswordModal,
   SkillsCard
 };
