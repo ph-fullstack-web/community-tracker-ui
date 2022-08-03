@@ -3,12 +3,7 @@ import {
   Card,
   CardContent,
   Grid,
-  styled,
   CardActions,
-  Button,
-  CardHeader,
-  Avatar,
-  IconButton,
 } from "@mui/material";
 import { useSwitchThemeContext } from "hooks";
 import { PieChartDashBoard } from "components";
