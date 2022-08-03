@@ -9,6 +9,7 @@ import {
   TableBody,
   Table,
   CircularProgress,
+  Chip,
 } from "@mui/material";
 import { MEMBERS_TABLE_SKILLS } from "utils/constants";
 import { useSwitchThemeContext } from "hooks";
@@ -49,7 +50,7 @@ export default function MemberSkillsTable({
         ? rawData.map((skl, idx) => {
             return {
               full_name: skl.full_name,
-              skills: skl.skills.join(", "),
+              skills: skl.skills,
               project_status: skl.project_id === 21 ? "Bench" : "In a Project",
             };
           })
@@ -219,7 +220,21 @@ export default function MemberSkillsTable({
                       {membersSkillsData.full_name}
                     </MembersTableBodyCell>
                     <MembersTableBodyCell sxProp={tableCellStyle}>
-                      {membersSkillsData.skills}
+                      {membersSkillsData.skills.map((skills) => (
+                        <Chip
+                          label={skills}
+                          sx={{
+                            marginLeft: "10px",
+                            border: `2px solid ${currentThemePalette.medium}`,
+                            backgroundColor:
+                              currentTheme === "dark"
+                                ? "rgba(250, 250, 250, .07)"
+                                : currentThemePalette.bgSecondary,
+                            color: "#FFFFFF",
+                            fontWeight: 550,
+                          }}
+                        />
+                      ))}
                     </MembersTableBodyCell>
                     <MembersTableBodyCell sxProp={tableCellStyle}>
                       {membersSkillsData.project_status}
