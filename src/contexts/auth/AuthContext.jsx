@@ -7,7 +7,8 @@ const authState = {
     success: 'fail',
     error: '',
     loading: false,
-    credentials: {}
+    credentials: {},
+    isAuthenticated: false,
 }
 const authReducer = (state, action) => {
     switch (action.type) {
@@ -23,14 +24,16 @@ const authReducer = (state, action) => {
                 ...state,
                 loading: false,
                 credentials: { ...data },
-                success
+                success,
+                isAuthenticated: true,
             }
         }
         case 'LOGOUT': {
             return {
                 ...state,
                 loading: false,
-                credentials: {}
+                credentials: {},
+                isAuthenticated: false,
             }
         }
         default: {
@@ -50,7 +53,8 @@ const AuthProvider = ({ children }) => {
     const {setValue} = useLocalStorage("authKey", {});
     useEffect(() => {
         setValue(state)
-    }, [state])
+    }, [state, setValue])
+
     // NOTE: you *might* need to memoize this value
     // Learn more in http://kcd.im/optimize-context
     const value = { state, dispatch }

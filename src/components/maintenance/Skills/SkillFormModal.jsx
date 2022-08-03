@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Button, 
   Dialog, 
   DialogActions, 
   DialogContent, 
@@ -10,6 +9,7 @@ import {
 
 import { FormTextField, FormSwitch } from "components";
 import { useSwitchThemeContext } from "hooks";
+import AppButton from 'components/common/AppButton';
 
 export const SkillFormModal = ({
   open,
@@ -21,7 +21,7 @@ export const SkillFormModal = ({
     peopleskills_desc: "",
     is_active: true
   });
-  const { currentThemePalette } = useSwitchThemeContext();
+  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
   const handleUpdate = () => onConfirm(skill);
   const handleCancel = () => onCancel();
@@ -51,8 +51,24 @@ export const SkillFormModal = ({
   if (!skill) return <></>;
 
   return (
-    <Dialog open={open} onClose={handleCancel}>
-        <DialogTitle>Update skill</DialogTitle>
+    <Dialog 
+      open={open} 
+      onClose={handleCancel}
+      PaperProps={{
+        sx:{
+          backgroundColor: currentTheme === "dark" ? "#202124" : null,
+          border: currentTheme === "dark" ? `2px solid ${currentThemePalette.light}` : null
+        }
+      }}
+    >
+        <DialogTitle
+          sx={{
+            color: currentThemePalette.text,
+            backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
+          }}
+        >
+          Update skill
+        </DialogTitle>
         <DialogContent>
           <FormTextField
             fullWidth
@@ -82,8 +98,8 @@ export const SkillFormModal = ({
           /> 
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel}>Cancel</Button>
-          <Button onClick={handleUpdate}>Update</Button>
+          <AppButton onClick={handleCancel}>Cancel</AppButton>
+          <AppButton onClick={handleUpdate}>Update</AppButton>
         </DialogActions>
       </Dialog>
   )

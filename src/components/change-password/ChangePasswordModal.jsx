@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {
-  Button, 
+  Alert,
+  AlertTitle,
   Dialog, 
   DialogActions, 
   DialogContent, 
@@ -16,6 +17,7 @@ import { useAuthContext } from "contexts/auth/AuthContext";
 import { useUpdatePassword } from 'hooks';
 import { useNotificationContext } from "contexts/notification/NotificationContext";
 import { useSwitchThemeContext } from "hooks";
+import AppButton from 'components/common/AppButton';
 
 export const ChangePasswordModal = ({
   open,
@@ -31,6 +33,7 @@ export const ChangePasswordModal = ({
     confirmNewPassword: "",
   });
   const [errors, setErrors] = useState([]);
+  const [apiError, setApiError] = useState("");
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
   let schema = Yup.object().shape({
@@ -68,8 +71,7 @@ export const ChangePasswordModal = ({
 
   const updatePassword = () => {
     const args = {
-      communityAdminAndManagerId: Object.keys(state.credentials).length !== 0 ? 
-                  state.credentials.communityadminandmanagerid : 2, // Hardcoded for now. Login not implemented
+      communityAdminAndManagerId: state.credentials.data.id,
       payload: {
         password: password.currentPassword,
         newPassword: password.newPassword,
@@ -87,13 +89,7 @@ export const ChangePasswordModal = ({
         onConfirm(password);
       },
       onError: (error) => {
-        notificationDispatch({
-          type: 'NOTIFY',
-          payload: {
-            type: 'error',
-            message: error.message
-          }
-        });
+        setApiError(error.message);
       }
     });
   };
@@ -107,6 +103,7 @@ export const ChangePasswordModal = ({
 
   useEffect(() => {
     if(open) {
+      setApiError("");
       setErrors([]);
       setPassword({
         currentPassword: "",
@@ -120,7 +117,16 @@ export const ChangePasswordModal = ({
   }, [open]);
 
   return (
-    <Dialog open={open} onClose={handleCancel}>
+    <Dialog 
+      open={open} 
+      onClose={handleCancel}
+      PaperProps={{
+        sx:{
+          backgroundColor: currentTheme === "dark" ? "#202124" : null,
+          border: currentTheme === "dark" ? `2px solid ${currentThemePalette.light}` : null
+        }
+      }}
+    >
         <DialogTitle sx={{
           color: currentThemePalette.text,
           backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
@@ -146,6 +152,7 @@ export const ChangePasswordModal = ({
                     onClick={handleShowCurrentPasswordClick}
                     onMouseDown={handleMouseDownPassword}
                     edge="end"
+                    sx={{color: currentTheme === "dark" ? currentThemePalette.light : currentThemePalette.dark}} 
                   >
                     {showCurrentPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
@@ -176,6 +183,7 @@ export const ChangePasswordModal = ({
                     onClick={handleShowNewPasswordClick}
                     onMouseDown={handleMouseDownPassword}
                     edge="end"
+                    sx={{color: currentTheme === "dark" ? currentThemePalette.light : currentThemePalette.dark}} 
                   >
                     {showNewPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
@@ -206,6 +214,7 @@ export const ChangePasswordModal = ({
                     onClick={handleShowConfirmNewPasswordClick}
                     onMouseDown={handleMouseDownPassword}
                     edge="end"
+                    sx={{color: currentTheme === "dark" ? currentThemePalette.light : currentThemePalette.dark}} 
                   >
                     {showConfirmNewPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
@@ -218,22 +227,24 @@ export const ChangePasswordModal = ({
               errors.find(error => error.path === "confirmNewPassword").errorMessage : ""
             }
           />
+          {apiError && (
+          <Alert severity="error" sx={{
+            marginTop: "1rem", 
+            backgroundColor: currentTheme === "dark" ? "#202124" : null,
+            border: currentTheme === "dark" ? `2px solid ${currentThemePalette.light}` : null,
+            color: currentTheme === "dark" ? currentThemePalette.light : currentThemePalette.dark
+          }}
+          >
+            <AlertTitle>Error</AlertTitle>
+            {apiError}
+          </Alert>
+        )}
         </DialogContent>
         <DialogActions sx={{
           backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
         }}>
-          <Button 
-            sx={{color: currentTheme === "dark" ? currentThemePalette.light : currentThemePalette.dark}} 
-            onClick={handleCancel}
-          >
-              Cancel
-          </Button>
-          <Button 
-            sx={{color: currentTheme === "dark" ? currentThemePalette.light : currentThemePalette.dark}} 
-            onClick={handleUpdate}
-          >
-            Update
-          </Button>
+          <AppButton onClick={handleCancel}>Cancel</AppButton>
+          <AppButton onClick={handleUpdate}>Update</AppButton>
         </DialogActions>
       </Dialog>
   )
