@@ -177,7 +177,13 @@ const GetSkills = () => {
                 <Stack direction="row" sx={{}}>
                   <Box sx={{ ml: "auto" }}>
                     <ExportButton
-                      rowData={memberSkillsData}
+                      rowData={memberSkillsData.map((skl, idx) => {
+                        return {
+                          full_name: skl.full_name,
+                          skills: skl.skills.join(" ,"),
+                          project_status: skl.project_id === 21 ? "Bench" : "In a Project",
+                        }
+                      })}
                       isLoading={memberSkillsData.length > 0 ? false : true}
                       tableHeaders={MEMBERS_BY_SKILL_TABLE_HEADERS}
                       fileNameData={fileName}

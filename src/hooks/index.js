@@ -18,6 +18,8 @@ import useUpdateSkill from './skills/useUpdateSkill';
 import useDeleteSkill from "./skills/useDeleteSkill";
 import useUpdatePassword from "./communityadminandmanager/useUpdatePassword";
 import useLogin from "./login/useLogin";
+import useGetWorkState from "./workstate/useGetWorkState";
+import useGetJobLevel from "./joblevel/useGetJobLevel";
 
 export {
   useCreatePeople,
@@ -40,4 +42,6 @@ export {
   useDeleteProject,
   useUpdatePassword,
   useLogin,
+  useGetWorkState,
+  useGetJobLevel
 };
