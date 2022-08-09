@@ -2,6 +2,8 @@ import { MenuItem, Grid, Box, Card, FormControlLabel } from "@mui/material";
 import { FormSelect, FormTextField, FormSwitch } from "components";
 import useGetManagers from "hooks/people/useGetManagers";
 import useGetProjects from "hooks/projects/useGetProjects";
+import useGetWorkState from "hooks/workstate/useGetWorkState";
+import useGetJobLevel from "hooks/joblevel/useGetJobLevel";
 import { JOB_LEVELS, WORK_STATES } from "utils/constants";
 import { useState, useEffect } from "react";
 import AppButton from "components/common/AppButton";
@@ -44,6 +46,8 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
 
   const { data: projectsData, isLoading: isLoadingProjects } = useGetProjects();
   const { isLoading, data: communityManagers } = useGetManagers();
+  const { data: workStateData, isLoading: isLoadingWorkState } = useGetWorkState();
+  const { data: jobLevelData, isLoading: isLoadingJobLevel } = useGetJobLevel();
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -146,13 +150,19 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                     onChange: onChangeHandler,
                   }}
                 >
-                  {Object.keys(WORK_STATES).map((key) => {
-                    return (
-                      <MenuItem key={key} value={key}>
-                        {WORK_STATES[key]}
-                      </MenuItem>
-                    );
-                  })}
+                  <MenuItem value="">Select Work State</MenuItem>
+                  {!isLoadingWorkState &&
+                    (workStateData || []).map((workstate) => {
+                      return (
+                        <MenuItem
+                          key={workstate.work_state_id}
+                          value={workstate.work_state_id}
+                        >
+                          {" "}
+                          {workstate.work_state_desc}{" "}
+                        </MenuItem>
+                      );
+                    })}
                 </FormSelect>
               </Grid>
               <Grid item xs={12} sm={12} md={5} lg={5}>
@@ -169,13 +179,19 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                     onChange: onChangeHandler,
                   }}
                 >
-                  {Object.keys(JOB_LEVELS).map((key) => {
-                    return (
-                      <MenuItem key={key} value={key}>
-                        {JOB_LEVELS[key]}
-                      </MenuItem>
-                    );
-                  })}
+                  <MenuItem value="">Select Job Level</MenuItem>
+                  {!isLoadingJobLevel &&
+                    (jobLevelData || []).map((joblevel) => {
+                      return (
+                        <MenuItem
+                          key={joblevel.job_level_id}
+                          value={joblevel.job_level_id}
+                        >
+                          {" "}
+                          {joblevel.job_level_desc}{" "}
+                        </MenuItem>
+                      );
+                    })}
                 </FormSelect>
               </Grid>
               <Grid item xs={12} sm={12} md={5} lg={5}>
