@@ -28,7 +28,7 @@ export const DRAWER_ROUTES = [
   },
   {
     name: "Report",
-    path: "/communities/add",
+    path: "/skills",
     icon: <SummarizeIcon />,
   },
   {
@@ -65,7 +65,7 @@ export const GUEST_DRAWER_ROUTES = [
   },
   {
     name: "Report",
-    path: "/communities/add",
+    path: "/skills",
     icon: <SummarizeIcon />,
   },
   {
