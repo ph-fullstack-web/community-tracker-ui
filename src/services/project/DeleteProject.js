@@ -1,13 +1,16 @@
 import axiosInstance from "../axios/index";
+import { GetAccessToken } from 'utils';
 
 const deleteProject = async (projectId) => {
   try {
+    const token = GetAccessToken();
     const response = await axiosInstance.delete(
       `/api/projects/${projectId}`,
       {
         headers: {
           "Content-Type": "application/json",
           Accepts: "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );

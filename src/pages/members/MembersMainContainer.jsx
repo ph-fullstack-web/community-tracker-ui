@@ -11,8 +11,10 @@ import {  useSwitchThemeContext } from "hooks";
 import { useEffect } from "react";
 import { WHITE } from "theme";
 import { TABLE_HEADERS } from "utils/constants";
+import { useAuthContext } from 'contexts/auth/AuthContext';
 
 const MembersMainContainer = () => {
+  const {state: {isAuthenticated}} = useAuthContext();
   const { communityId } = useParams();
   const navigate = useNavigate();
   const navigateToCreate = (communityId) => {
@@ -67,7 +69,7 @@ const MembersMainContainer = () => {
             <Box sx={{ width: { xs: "100%", md: "55ch" }, flex: "0 1 auto" }}>
               <FormSearchInput onChangeCallback={handleSearch} />
             </Box>
-            <Box>
+            {isAuthenticated && (<Box>
               <PlusIconButton
                 title="Go to Input Page"
                 ariaLabel="Go to Input Page"
@@ -86,7 +88,7 @@ const MembersMainContainer = () => {
                   padding: 0
                 }}
               />
-            </Box>
+            </Box>)}
             <Box sx={{ ml: "auto" }}>
               <ExportButton
                 isLoading={isLoading}
