@@ -1,7 +1,9 @@
 import axiosInstance from "../axios/index";
+import { GetAccessToken } from 'utils';
 
 const updateProject = async ({ payload, projectId }) => {
   try {
+    const token = GetAccessToken();
     const response = await axiosInstance.put(
       `/api/projects/${projectId}`,
       {
@@ -12,6 +14,7 @@ const updateProject = async ({ payload, projectId }) => {
         headers: {
           "Content-Type": "application/json",
           Accepts: "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );

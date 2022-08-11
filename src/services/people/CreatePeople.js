@@ -1,7 +1,9 @@
 import axiosInstance from "../axios/index";
+import { GetAccessToken } from 'utils';
 
 const createPeople = async (payload) => {
   try {
+    const token = GetAccessToken();
     const response = await axiosInstance.post(
       "/api/people",
       {
@@ -24,6 +26,7 @@ const createPeople = async (payload) => {
         headers: {
           "Content-Type": "application/json",
           Accepts: "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
