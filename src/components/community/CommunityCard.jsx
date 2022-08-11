@@ -17,6 +17,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useSwitchThemeContext } from "hooks";
 import { PieChartDashBoard } from "components";
 import InfoIcon from "@mui/icons-material/Info";
+import { useAuthContext } from 'contexts/auth/AuthContext';
 
 const CommunityCard = ({
   id,
@@ -28,6 +29,7 @@ const CommunityCard = ({
   chartData,
 }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+  const {state: {isAuthenticated}} = useAuthContext();
   const label = "Members"
   const managerValue = `Manager: ${manager}`;
   const contrastingColors =
@@ -95,7 +97,7 @@ const CommunityCard = ({
             </Avatar>
           }
           action={
-            <IconButton
+            isAuthenticated && <IconButton
               sx={{
                 color: `${
                   currentTheme === "dark" ? "#0a7578" : currentThemePalette.dark

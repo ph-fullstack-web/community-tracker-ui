@@ -17,6 +17,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { useSwitchThemeContext } from "hooks";
 import { TABLE_HEADERS } from "utils/constants";
+import { useAuthContext } from 'contexts/auth/AuthContext';
 
 const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   return (
@@ -35,6 +36,7 @@ const MembersTable = ({
   error,
 }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+  const { state: {isAuthenticated}} = useAuthContext();
 
   const navigate = useNavigate();
   const navigateToUpdate = (communityId, peopleId) => {
@@ -249,8 +251,9 @@ const MembersTable = ({
                         currentTheme === "dark" ? "#293A46 !important" : null,
                     },
                   }}
-                  onClick={() =>
-                    navigateToUpdate(membersData.community_id, row.people_id)
+                  onClick={() => {
+                      if (isAuthenticated) navigateToUpdate(membersData.community_id, row.people_id)
+                    }
                   }>
                   <MembersTableBodyCell sxProp={tableCellStyle}>
                     {row.full_name}

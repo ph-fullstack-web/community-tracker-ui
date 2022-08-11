@@ -10,7 +10,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
-import DRAWER_ROUTES from './constants/drawerRoutes';
+import {DRAWER_ROUTES, GUEST_DRAWER_ROUTES} from './constants/drawerRoutes';
 import { useState } from 'react';
 import useGetCommunities from "hooks/communities/useGetCommunities";
 import Scrollbars from 'react-custom-scrollbars-2';
@@ -90,6 +90,8 @@ const PersistentDrawerLeft = ({ children }) => {
     const handleClick = () => {
         setOpen(!open);
       };
+
+    const ROUTES = state.isAuthenticated ? DRAWER_ROUTES : GUEST_DRAWER_ROUTES
 
     return (
         <>
@@ -194,7 +196,7 @@ const PersistentDrawerLeft = ({ children }) => {
                     <Divider sx={{ border: `1px solid ${themeForDarkOnly(currentThemePalette.light)}` }}/>
                     <Scrollbars>
                     <List>
-                        {DRAWER_ROUTES.map(({ name, icon, path }) => (
+                        {ROUTES.map(({ name, icon, path }) => (
                             name !== 'Members' ? (
                                 name === 'Themes' ?
                                 ( 
