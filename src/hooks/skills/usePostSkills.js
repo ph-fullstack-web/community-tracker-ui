@@ -1,10 +1,9 @@
-import { useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { postSkills } from "services";
 
-const usePostSkills = (inputData) => {
-  const { isLoading, isError, data, error, refetch } = useQuery(
-    "peopleskills",
-    () => postSkills(inputData)
+const usePostSkills = () => {
+  const { isLoading, isError, data, error, mutate } = useMutation(
+    (payload) => postSkills(payload)
   );
 
   return {
@@ -12,7 +11,7 @@ const usePostSkills = (inputData) => {
     isError,
     error,
     data,
-    refetch,
+    mutate,
   };
 };
 

@@ -4,11 +4,12 @@ import useGetManagers from "hooks/people/useGetManagers";
 import useGetProjects from "hooks/projects/useGetProjects";
 import useGetWorkState from "hooks/workstate/useGetWorkState";
 import useGetJobLevel from "hooks/joblevel/useGetJobLevel";
-import { JOB_LEVELS, WORK_STATES } from "utils/constants";
 import { useState, useEffect } from "react";
 import AppButton from "components/common/AppButton";
-import { useSwitchThemeContext } from "hooks";
+import { useSwitchThemeContext, useGetSkills, usePostSkills } from "hooks";
 import SaveIcon from "@mui/icons-material/Save";
+import { AutocompleteInputChip } from "../../components/index.js";
+import { useNotificationContext } from "contexts/notification/NotificationContext";
 
 const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   const { currentThemePalette } = useSwitchThemeContext();
@@ -21,12 +22,19 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
     project: "",
     email: "",
     cognizantId: "",
-    isProbationary: true
+    isProbationary: true,
+    skills: "",
   });
+  const [options, setOptions] = useState([]);
+  const [selectedSkills, setSelectedSkills] = useState([]);
+  const [newValues, setNewValues] = useState([]);
+  const { mutate: postSkillMutate } = usePostSkills();
+  const { dispatch: notificationDispatch } = useNotificationContext();
 
   useEffect(() => {
     if (resourcePerson) {
       setResource(resourcePerson);
+      setSelectedSkills(resourcePerson.skills.map((skill) => ({id: skill.id, label: skill.description})));
     }
   }, [resourcePerson]);
 
@@ -48,6 +56,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   const { isLoading, data: communityManagers } = useGetManagers();
   const { data: workStateData, isLoading: isLoadingWorkState } = useGetWorkState();
   const { data: jobLevelData, isLoading: isLoadingJobLevel } = useGetJobLevel();
+  const { data: skillsData, isLoading: getSkillsLoading } = useGetSkills();
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -62,6 +71,54 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
     if (projectA > projectB) return 1;
     return 0;
   })
+
+  useEffect(() => {
+    if (!getSkillsLoading) {
+      setOptions(
+        skillsData?.map((skl, idx) => {
+          return { id: skl.peopleskills_id, label: skl.peopleskills_desc };
+        })
+      );
+    }
+  }, [skillsData, getSkillsLoading]);
+
+  useEffect(() => {
+    if (newValues && newValues.length > 0) {
+      const payload = {
+        peopleskills_desc: newValues[0].label,
+        is_active: true,
+      };
+      
+      postSkillMutate(payload, {
+        onSuccess: (response) => {
+          notificationDispatch({
+            type: 'NOTIFY',
+            payload: {
+              type: 'success',
+              message: 'Skill has been added.'
+            }
+          });
+        },
+        onError: (error) => {
+          notificationDispatch({
+            type: 'NOTIFY',
+            payload: {
+              type: 'error',
+              message: error.message
+            }
+          });
+        }
+      })
+      setNewValues([])
+    }
+  }, [newValues, postSkillMutate, notificationDispatch]);
+
+  useEffect(() => {
+    setResource((prevState) => ({
+      ...prevState,
+      skills: selectedSkills.map(skill => skill.id).toString()
+    }))
+  }, [selectedSkills]);
 
   return (
     <Card
@@ -266,6 +323,21 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                       }
                     )}
                 </FormSelect>
+              </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={11} 
+                  sx={{ padding: {
+                    lg: "0 2.1rem",
+                    // md: "0 1.5rem"
+                  } }}>
+                <AutocompleteInputChip
+                  options={options}
+                  setOptions={setOptions}
+                  selectedValue={selectedSkills}
+                  setSelectedValue={setSelectedSkills}
+                  newValues={newValues}
+                  setNewValues={setNewValues}
+                  allowAdd
+                />
               </Grid>
               <Grid item xs={12} sm={12} md={5} lg={5} alignSelf="flex-start">
                 <FormControlLabel

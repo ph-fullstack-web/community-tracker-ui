@@ -9,23 +9,30 @@ export default function AutocompleteInputChip(props) {
 
   const themeForDarkOnly = (color) => (currentTheme === "dark" ? color : null);
 
-  // const { options, setOptions, setSelectedValue, setNewValues, newValues } =
-  //   props;
-  const { options, setSelectedValue } = props;
-  // const getMaxId = () => {
-  //   return Math.max(...options.map((opt) => opt.id)) + 1;
-  // };
+  const { 
+    options, 
+    setOptions, 
+    setSelectedValue, 
+    setNewValues, 
+    newValues, 
+    allowAdd, 
+    selectedValue,
+  } = props;
 
-  // const handlePressEnter = (value) => {
-  //   console.log(value, "ano to");
-  //   const labels = options.map((opt) => opt.label);
-  //   const included = labels.includes(value);
-  //   const newId = getMaxId();
-  //   if (!included) {
-  //     setOptions([...options, { id: newId, label: value }]);
-  //     setNewValues([...newValues, { id: newId, label: value }]);
-  //   }
-  // };
+  const getMaxId = () => {
+    return Math.max(...options.map((opt) => opt.id)) + 1;
+  };
+
+  const handlePressEnter = (value) => {
+    if (!allowAdd) return;
+    const labels = options.map((opt) => opt.label);
+    const included = labels.includes(value);
+    const newId = getMaxId();
+    if (!included) {
+      setOptions([...options, { id: newId, label: value }]);
+      setNewValues([...newValues, { id: newId, label: value }]);
+    }
+  };
 
   const CustomPaper = (props) => {
     return (
@@ -42,6 +49,10 @@ export default function AutocompleteInputChip(props) {
     );
   };
 
+  const values = options
+    .filter(opt => selectedValue.some(value => value.id === opt.id))
+    .map((opt) => ({id: opt.id, label: opt.label}));
+
   return (
     <Autocomplete
       multiple
@@ -53,6 +64,7 @@ export default function AutocompleteInputChip(props) {
       getOptionLabel={(option) => option.label}
       filterSelectedOptions
       PaperComponent={CustomPaper}
+      value={values}
       sx={{
         width: "100%",
         "& .MuiChip-root": {
@@ -77,11 +89,11 @@ export default function AutocompleteInputChip(props) {
           label="Skills"
           placeholder="Skills"
           key={params.id}
-          // onKeyPress={(e) => {
-          //   if (e.key === "Enter") {
-          //     handlePressEnter(e.target.value);
-          //   }
-          // }}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              handlePressEnter(e.target.value);
+            }
+          }}
         />
       )}
     />

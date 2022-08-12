@@ -6,7 +6,6 @@ const useGetJobLevel = () => {
     "joblevel",
     () => getJobLevel()
   );
-    console.log(data,'ano to job level')
   return {
     isLoading,
     isError,
