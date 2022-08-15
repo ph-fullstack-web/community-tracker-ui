@@ -49,9 +49,9 @@ export default function AutocompleteInputChip(props) {
     );
   };
 
-  const values = options
+  const values = selectedValue ? options
     .filter(opt => selectedValue.some(value => value.id === opt.id))
-    .map((opt) => ({id: opt.id, label: opt.label}));
+    .map((opt) => ({id: opt.id, label: opt.label})) : undefined;
 
   return (
     <Autocomplete
