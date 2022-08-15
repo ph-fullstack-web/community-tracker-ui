@@ -22,11 +22,6 @@ export const DRAWER_ROUTES = [
     icon: <PeopleIcon />,
   },
   {
-    name: "Add Member",
-    path: "/communities/add",
-    icon: <AccountCircleIcon />,
-  },
-  {
     name: "Report",
     path: "/skills",
     icon: <SummarizeIcon />,
