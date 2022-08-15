@@ -54,10 +54,16 @@ const MembersTable = ({
         // to at least one property value
         for (const property in member) {
           if (property === "people_id") continue;
-
-          const queryFound = member[property]
-            .toLowerCase()
-            .includes(search.toLowerCase());
+          
+          let queryFound = false;
+          if (property === "is_probationary") {
+            queryFound = (member[property] === true && "probitionary".includes(search.toLowerCase())) ||
+              (member[property] === false && "regular".includes(search.toLowerCase()));              
+          } else {
+            queryFound = member[property]
+              ?.toLowerCase()
+              .includes(search.toLowerCase());            
+          }
 
           if (!queryFound) continue;
 
@@ -72,9 +78,15 @@ const MembersTable = ({
             continue;
           }
 
-          const queryFound = member[property]
-            .toLowerCase()
-            .includes(search.toLowerCase());
+          let queryFound = false;
+          if (property === "is_probationary") {
+            queryFound = (member[property] === true && "probitionary".includes(search.toLowerCase())) ||
+              (member[property] === false && "regular".includes(search.toLowerCase()));              
+          } else {
+            queryFound = member[property]
+              ?.toLowerCase()
+              .includes(search.toLowerCase());            
+          }
 
           if (!queryFound) continue;
 
