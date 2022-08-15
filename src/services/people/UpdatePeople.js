@@ -21,6 +21,7 @@ const updatePeople = async ({ payload, peopleId }) => {
         middle_name: "",
         is_active: true,
         is_probationary: payload.is_probationary,
+        skills: payload.skills,
       },
       {
         headers: {
