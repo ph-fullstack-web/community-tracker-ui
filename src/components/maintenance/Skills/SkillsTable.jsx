@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from "react";
 import {
   Box,
   Checkbox,
-  FormControlLabel,
   IconButton,
   Skeleton,
   Table,
@@ -25,7 +24,7 @@ import { SkillFormModal } from ".";
 
 const SkillsTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   return (
-    <TableCell align="center" sx={sxProp} {...otherProps}>
+    <TableCell sx={sxProp} {...otherProps}>
       {children}
     </TableCell>
   );
@@ -145,8 +144,8 @@ export const SkillsTable = ({
   };
 
   const tableCellStyle = {
-    border: `2px solid ${currentThemePalette.light}`,
-    p: 1,
+    borderBottom: "none",
+    p: 1.7,
     color: currentThemePalette.text,
   };
 
@@ -256,51 +255,50 @@ export const SkillsTable = ({
   return (
     <Box sx={{ overflowX: "auto" }} id="skills-table-container">
       <Table
-        sx={{ mb: 0.5, mx: { xs: 1, sm: 0 }, minWidth: 825 }}
+        sx={{
+          mt: 0,
+          mb: 0.5,
+          mx: { xs: 1, sm: 0 },
+          minWidth: 825,
+          borderCollapse: "separate",
+          borderSpacing: "0px 8px",
+        }}
         aria-label="skills-table">
         <TableHead>
           <TableRow>
             {TABLE_HEADERS.map((header) => (
               <TableCell
                 key={header.value}
-                align="center"
                 sx={{
                   ...tableCellStyle,
-                  fontWeight: "bold",
-                  backgroundColor:
-                    currentTheme === "dark"
-                      ? currentThemePalette.dark
-                      : currentThemePalette.medium,
+                  fontWeight: "550",
+                  borderBottom: "none",
+                  backgroundColor: currentThemePalette.opacityBackground,
+                  fontSize: "13px",
                 }}
               >
-              <FormControlLabel
-                value={header.value}
-                control={
-                  header.filter ? (
-                    <Checkbox
-                      icon={<FilterAltOutlinedIcon />}
-                      checkedIcon={<FilterAltIcon />}
-                      sx={{
-                        color:
-                          currentTheme === "dark"
-                            ? currentThemePalette.light
-                            : "#293A46",
-                        "&.Mui-checked": {
-                          color:
-                            currentTheme === "dark"
-                              ? currentThemePalette.light
-                              : "#293A46",
-                        },
-                      }}
-                      onChange={(event) =>
-                        handleCheckboxChange(event, header.value)
-                      }
-                    />
-                 ) : <></>
-                }
-                label={header.name}
-                labelPlacement="start"
-              />
+              {header.name}
+                <Checkbox
+                  icon={<FilterAltOutlinedIcon />}
+                  checkedIcon={<FilterAltIcon />}
+                  size="small"
+                  sx={{
+                    color:
+                      currentTheme === "dark"
+                        ? currentThemePalette.light
+                        : "#293A46",
+                    "&.Mui-checked": {
+                      color:
+                        currentTheme === "dark"
+                          ? currentThemePalette.light
+                          : "#293A46",
+                    },
+                    margin: "-10px 0",
+                  }}
+                  onChange={(event) =>
+                    handleCheckboxChange(event, header.value)
+                  }
+                />
             </TableCell>
             ))}
           </TableRow>

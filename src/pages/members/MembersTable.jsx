@@ -4,7 +4,6 @@ import {
   Box,
   Skeleton,
   Checkbox,
-  FormControlLabel,
   Table,
   TableBody,
   TableCell,
@@ -21,7 +20,7 @@ import { useAuthContext } from 'contexts/auth/AuthContext';
 
 const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   return (
-    <TableCell align="center" sx={sxProp} {...otherProps}>
+    <TableCell sx={sxProp} {...otherProps}>
       {children}
     </TableCell>
   );
@@ -54,15 +53,15 @@ const MembersTable = ({
         // to at least one property value
         for (const property in member) {
           if (property === "people_id") continue;
-          
+
           let queryFound = false;
           if (property === "is_probationary") {
             queryFound = (member[property] === true && "probitionary".includes(search.toLowerCase())) ||
-              (member[property] === false && "regular".includes(search.toLowerCase()));              
+              (member[property] === false && "regular".includes(search.toLowerCase()));
           } else {
             queryFound = member[property]
               ?.toLowerCase()
-              .includes(search.toLowerCase());            
+              .includes(search.toLowerCase());
           }
 
           if (!queryFound) continue;
@@ -81,11 +80,11 @@ const MembersTable = ({
           let queryFound = false;
           if (property === "is_probationary") {
             queryFound = (member[property] === true && "probitionary".includes(search.toLowerCase())) ||
-              (member[property] === false && "regular".includes(search.toLowerCase()));              
+              (member[property] === false && "regular".includes(search.toLowerCase()));
           } else {
             queryFound = member[property]
               ?.toLowerCase()
-              .includes(search.toLowerCase());            
+              .includes(search.toLowerCase());
           }
 
           if (!queryFound) continue;
@@ -111,8 +110,8 @@ const MembersTable = ({
   };
 
   const tableCellStyle = {
-    border: `2px solid ${currentThemePalette.light}`,
-    p: 1,
+    borderBottom: "none",
+    p: 1.7,
     color: currentThemePalette.text,
   };
 
@@ -146,44 +145,48 @@ const MembersTable = ({
   return (
     <Box sx={{ overflowX: "auto" }} id="members-table-container">
       <Table
-        sx={{ mt: 3, mb: 0.5, mx: { xs: 1, sm: 0 }, minWidth: 825 }}
+        sx={{
+          mt: 0,
+          mb: 0.5,
+          mx: { xs: 1, sm: 0 },
+          minWidth: 825,
+          borderCollapse: "separate",
+          borderSpacing: "0px 8px",
+        }}
         aria-label="members-table">
         <TableHead>
           <TableRow>
             {TABLE_HEADERS.map((header) => (
               <TableCell
                 key={header.value}
-                align="center"
                 sx={{
                   ...tableCellStyle,
-                  fontWeight: "bold",
-                  backgroundColor: currentTheme === "dark" ? currentThemePalette.dark : currentThemePalette.medium
+                  fontWeight: "550",
+                  borderBottom: "none",
+                  backgroundColor: currentThemePalette.opacityBackground,
+                  fontSize: "13px",
                 }}>
-                <FormControlLabel
-                  value={header.value}
-                  control={
-                    <Checkbox
-                      icon={<FilterAltOutlinedIcon />}
-                      checkedIcon={<FilterAltIcon />}
-                      sx={{
-                        color:
-                          currentTheme === "dark"
-                            ? currentThemePalette.light
-                            : "#293A46",
-                        "&.Mui-checked": {
-                          color:
-                            currentTheme === "dark"
-                              ? currentThemePalette.light
-                              : "#293A46",
-                        },
-                      }}
-                      onChange={(event) =>
-                        handleCheckboxChange(event, header.value)
-                      }
-                    />
+                {header.name}
+                <Checkbox
+                  icon={<FilterAltOutlinedIcon />}
+                  checkedIcon={<FilterAltIcon />}
+                  size="small"
+                  sx={{
+                    color:
+                      currentTheme === "dark"
+                        ? currentThemePalette.light
+                        : "#293A46",
+                    "&.Mui-checked": {
+                      color:
+                        currentTheme === "dark"
+                          ? currentThemePalette.light
+                          : "#293A46",
+                    },
+                    margin: "-10px 0",
+                  }}
+                  onChange={(event) =>
+                    handleCheckboxChange(event, header.value)
                   }
-                  label={header.name}
-                  labelPlacement="start"
                 />
               </TableCell>
             ))}
@@ -217,7 +220,7 @@ const MembersTable = ({
         )}
         {isError && (
           <TableBody>
-            <TableRow 
+            <TableRow
               sx={{
                 backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
             }}>
