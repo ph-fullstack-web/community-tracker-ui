@@ -1,4 +1,4 @@
-import { MenuItem, Grid, Box, Card, FormControlLabel } from "@mui/material";
+import { MenuItem, Grid, Box, Card, FormControlLabel, Checkbox } from "@mui/material";
 import { FormSelect, FormTextField, FormSwitch } from "components";
 import useGetManagers from "hooks/people/useGetManagers";
 import useGetProjects from "hooks/projects/useGetProjects";
@@ -6,7 +6,7 @@ import useGetWorkState from "hooks/workstate/useGetWorkState";
 import useGetJobLevel from "hooks/joblevel/useGetJobLevel";
 import { useState, useEffect } from "react";
 import AppButton from "components/common/AppButton";
-import { useSwitchThemeContext, useGetSkills, usePostSkills } from "hooks";
+import { useSwitchThemeContext, useGetSkills, usePostSkills, useGetPeopleDetails } from "hooks";
 import SaveIcon from "@mui/icons-material/Save";
 import { AutocompleteInputChip } from "../../components/index.js";
 import { useNotificationContext } from "contexts/notification/NotificationContext";
@@ -24,12 +24,14 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
     cognizantId: "",
     isProbationary: true,
     skills: "",
+    details: "",
   });
   const [options, setOptions] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [newValues, setNewValues] = useState([]);
   const { mutate: postSkillMutate } = usePostSkills();
   const { dispatch: notificationDispatch } = useNotificationContext();
+  const [details, setDetails] = useState([]);
 
   useEffect(() => {
     if (resourcePerson) {
@@ -57,9 +59,14 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   const { data: workStateData, isLoading: isLoadingWorkState } = useGetWorkState();
   const { data: jobLevelData, isLoading: isLoadingJobLevel } = useGetJobLevel();
   const { data: skillsData, isLoading: getSkillsLoading } = useGetSkills();
+  const { data: detailsData, isLoading: getDetailsLoading } = useGetPeopleDetails();
 
   const onSubmit = (event) => {
     event.preventDefault();
+    resource.details = details
+      .filter(detail => detail.isActive)
+      .map(detail => detail.id)
+      .toString()
     onSubmitHandler(resource);
   };
 
@@ -72,6 +79,16 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
     return 0;
   })
 
+  const handleDetailChange = (detail) => {
+    setDetails(prev => 
+      prev.map(dtl => {
+        if (dtl.id === detail.id) {
+          return {...dtl, isActive: !dtl.isActive};
+        }
+        return dtl;
+      }),);
+  }
+
   useEffect(() => {
     if (!getSkillsLoading) {
       setOptions(
@@ -81,6 +98,24 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
       );
     }
   }, [skillsData, getSkillsLoading]);
+
+  useEffect(() => {
+    const details = typeof resource.details === 'string' ? resource.details.split(',') : resource.details;
+
+    if (!getDetailsLoading) {
+      setDetails(
+        detailsData?.map(detail => {
+          return {
+            id: detail.people_details_desc_id,
+            label: detail.people_details_desc,
+            isActive: details ? details
+              .some(resourceDetail => resourceDetail.people_details_desc_id === detail.people_details_desc_id)
+              ? true : false : false
+          }
+        })
+      )
+    }
+  }, [detailsData, getDetailsLoading, resource.details]);
 
   useEffect(() => {
     if (newValues && newValues.length > 0) {
@@ -327,7 +362,6 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
               <Grid item xs={12} sm={12} md={12} lg={11} 
                   sx={{ padding: {
                     lg: "0 2.1rem",
-                    // md: "0 1.5rem"
                   } }}>
                 <AutocompleteInputChip
                   options={options}
@@ -339,7 +373,16 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   allowAdd
                 />
               </Grid>
-              <Grid item xs={12} sm={12} md={5} lg={5} alignSelf="flex-start">
+              <Grid 
+                item 
+                xs={12} 
+                sm={12} 
+                md={12} 
+                lg={11} 
+                alignSelf="flex-start"
+                sx={{ padding: {
+                  lg: "0 2.1rem",
+                } }}>
                 <FormControlLabel
                   sx={{
                     color: currentThemePalette.text,
@@ -352,18 +395,43 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                         '& .MuiSvgIcon-root': { fontSize: 28 }
                       }}
                       checked={resource.isProbationary}
-                      disabled={resourcePerson?.isProbationary === false}
                     />
                   }
                   label="Probitionary"
                 /> 
               </Grid>
+              <Grid 
+                item 
+                xs={12} 
+                sm={12} 
+                md={12} 
+                lg={11} 
+                sx={{ padding: {
+                  lg: "0 2.1rem",
+                } }}>
+                <Grid container>
+                  {details.map(detail => 
+                    <Grid item xs={12} md={6} key={detail.id}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox 
+                            checked={detail.isActive} 
+                            onChange={() => handleDetailChange(detail)} 
+                            disabled={!resource.isProbationary}
+                          />
+                        }
+                      label={detail.label}
+                      />
+                    </Grid>
+                  )}
+                </Grid>
+              </Grid>
               <Grid
                 item
                 xs={12}
                 sm={12}
-                md={5}
-                lg={5}
+                md={12}
+                lg={12}
                 container
                 justifyContent="flex-end"
               >

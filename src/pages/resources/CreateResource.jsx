@@ -17,7 +17,6 @@ const CreateResource = () => {
     resourcePayload.community = parseInt(communityId);
     mutate(resourcePayload, {
       onSuccess: (response) => {
-        alert(response.message)
         navigate(`/members/${communityId}`);
         notificationDispatch({
           type: 'NOTIFY',
