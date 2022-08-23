@@ -16,6 +16,7 @@ import usePostSkills from "./skills/usePostSkills";
 import useMemberWithSkill from "./skills/useMemberWithSkills";
 import useUpdateSkill from './skills/useUpdateSkill';
 import useDeleteSkill from "./skills/useDeleteSkill";
+import useInviteAdmin from "./invite/useInviteAdmin";
 
 export {
   useCreatePeople,
@@ -36,4 +37,5 @@ export {
   useDeleteSkill,
   useUpdateProject,
   useDeleteProject,
+  useInviteAdmin
 };
