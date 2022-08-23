@@ -19,6 +19,7 @@ import updatePassword from "./communityadminandmanager/UpdatePassword";
 import login from "./login/Login";
 import getJobLevel from "./joblevel/GetJobLevel";
 import getWorkState from "./workstate/GetWorkState";
+import getPeopleDetails from "./people-details/GetPeopleDetails";
 
 export {
   addCommunityService,
@@ -41,5 +42,6 @@ export {
   updatePassword,
   login,
   getJobLevel,
-  getWorkState
+  getWorkState,
+  getPeopleDetails,
 };
