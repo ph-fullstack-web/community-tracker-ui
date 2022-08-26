@@ -49,6 +49,7 @@ const UpdateResource = () => {
   const resourcePerson = useMemo(() => {
     if (resourceData) {
       const hiredDate = moment(resourceData.hired_date, 'YYYY-MM-DD').format('YYYY-MM-DD');
+
       return {
         id: resourceData.people_id,
         name: resourceData.full_name,
@@ -62,7 +63,9 @@ const UpdateResource = () => {
 
 
         assignedTo: "",
-        projectLead: "",
+        projectLead: resourceData.project_lead,
+        skills: resourceData.skills,
+        details: resourceData.details
       }
     }
   }, [resourceData])

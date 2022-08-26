@@ -17,6 +17,9 @@ import deleteSkill from "./people-skills/DeletePeopleSkill";
 import updateSkill from "./people-skills/UpdatePeopleSkill";
 import updatePassword from "./communityadminandmanager/UpdatePassword";
 import login from "./login/Login";
+import getJobLevel from "./joblevel/GetJobLevel";
+import getWorkState from "./workstate/GetWorkState";
+import getPeopleDetails from "./people-details/GetPeopleDetails";
 
 export {
   addCommunityService,
@@ -38,4 +41,7 @@ export {
   updateProject,
   updatePassword,
   login,
+  getJobLevel,
+  getWorkState,
+  getPeopleDetails,
 };

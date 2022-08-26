@@ -1,7 +1,9 @@
 import axiosInstance from "../axios/index";
+import { GetAccessToken } from 'utils';
 
 const updateSkill = async ({ payload, peopleSkillId }) => {
   try {
+    const token = GetAccessToken();
     const response = await axiosInstance.put(
       `/api/peopleskills/${peopleSkillId}`,
       {
@@ -12,6 +14,7 @@ const updateSkill = async ({ payload, peopleSkillId }) => {
         headers: {
           "Content-Type": "application/json",
           Accepts: "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );

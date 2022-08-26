@@ -1,7 +1,9 @@
+import { GetAccessToken } from "utils";
 import axiosInstance from "../axios/index";
 
 const updatePassword = async ({ payload, communityAdminAndManagerId }) => {
   try {
+    const token = GetAccessToken();
     const response = await axiosInstance.put(
       `/api/admin/${communityAdminAndManagerId}/password`,
       {
@@ -12,6 +14,7 @@ const updatePassword = async ({ payload, communityAdminAndManagerId }) => {
         headers: {
           "Content-Type": "application/json",
           Accepts: "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );

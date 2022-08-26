@@ -5,7 +5,7 @@ import Construction from "@mui/icons-material/Construction";
 import Password from "@mui/icons-material/Password";
 import { ThemeSwitchButton } from "components";
 
-const DRAWER_ROUTES = [
+export const DRAWER_ROUTES = [
   {
     name: "Communities",
     path: "/communities",
@@ -22,13 +22,8 @@ const DRAWER_ROUTES = [
     icon: <PeopleIcon />,
   },
   {
-    name: "Add Member",
-    path: "/communities/add",
-    icon: <AccountCircleIcon />,
-  },
-  {
     name: "Report",
-    path: "/communities/add",
+    path: "/skills",
     icon: <SummarizeIcon />,
   },
   {
@@ -52,5 +47,27 @@ const DRAWER_ROUTES = [
   }
 ];
 
+export const GUEST_DRAWER_ROUTES = [
+  {
+    name: "Communities",
+    path: "/communities",
+    icon: <PeopleIcon />,
+  },
+  {
+    name: "Members",
+    path: "/communities",
+    icon: <PeopleIcon />,
+  },
+  {
+    name: "Report",
+    path: "/skills",
+    icon: <SummarizeIcon />,
+  },
+  {
+    name: "Themes",
+    path: "",
+    icon: <ThemeSwitchButton />,
+  },
+];
 
 export default DRAWER_ROUTES;

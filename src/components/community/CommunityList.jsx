@@ -11,11 +11,13 @@ import CommunityCard from "./CommunityCard";
 import { useNavigate } from "react-router-dom";
 import { useSwitchThemeContext } from "hooks";
 import React, { useState, useEffect } from "react";
+import { useAuthContext } from 'contexts/auth/AuthContext';
 
 const CommunityList = () => {
   const navigator = useNavigate();
   const [communityListData, setCommunityListData] = useState([]);
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+  const {state: {isAuthenticated}} = useAuthContext();
   // hook to fetch communities
   const {
     isLoading,
@@ -122,7 +124,7 @@ const CommunityList = () => {
                   alignItems: "center",
                 }}
               >
-                <PlusIconButton
+                {isAuthenticated && (<PlusIconButton
                   title="Go to input community"
                   ariaLabel="Add community"
                   onClickCallback={() => navigator("/communities/add")}
@@ -130,7 +132,7 @@ const CommunityList = () => {
                     height: "5rem",
                     width: "5rem",
                   }}
-                />
+                />)}
               </Grid>
             </Grid>
           </>

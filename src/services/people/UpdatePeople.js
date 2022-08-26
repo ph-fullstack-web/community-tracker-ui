@@ -1,7 +1,9 @@
 import axiosInstance from "../axios/index";
+import { GetAccessToken } from 'utils';
 
 const updatePeople = async ({ payload, peopleId }) => {
   try {
+    const token = GetAccessToken();
     const response = await axiosInstance.put(
       `/api/people/peopleid=${peopleId}`,
       {
@@ -18,12 +20,16 @@ const updatePeople = async ({ payload, peopleId }) => {
         first_name: "",
         middle_name: "",
         is_active: true,
-        is_probationary: payload.is_probationary,
+        is_probationary: payload.isProbationary,
+        skills: payload.skills,
+        details: payload.details,
+        project_lead: payload.projectLead,
       },
       {
         headers: {
           "Content-Type": "application/json",
           Accepts: "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );

@@ -1,3 +1,4 @@
+import { Routes as ReactRoutes, Route } from 'react-router-dom';
 import { 
   AddCommunity, 
   UpdateCommunity, 
@@ -11,8 +12,9 @@ import {
   InviteAdmin,
   Maintenance,
 } from 'pages';
+import { useAuthContext } from 'contexts/auth/AuthContext';
 
-const routes = [
+const authRoutes = [
   {
     path: 'communities',
     element: <Communities />,
@@ -74,4 +76,71 @@ const routes = [
   },
 ];
 
-export default routes;
+export const guestRoutes = [
+  {
+    path: 'communities',
+    element: <Communities />,
+    name: 'Communities',
+    children: [
+      {
+        path: ':id',
+        element: <GetCommunity />,
+        name: 'Get Community',
+      },
+      {
+        path: 'add',
+        element: <NotFound />,
+        name: 'Not Found'
+      },
+    ]
+  },
+  {
+    path: 'members/:communityId',
+    element: <Members />,
+    name: 'Resources',
+  },
+  {
+    path: 'skills',
+    element: <GetSkills />,
+    name: 'Get Skills',
+  },
+  {
+    path: '*',
+    element: <NotFound />,
+    name: 'Not Found'
+  },
+];
+
+export const Routes = () => {
+  const {state: {isAuthenticated}} = useAuthContext();
+
+  const getRoutes = (list) => {
+    return (
+      <>
+        {list.map(({ element: Element, name, path, children }) =>
+          children ? (
+            <Route key={name} path={path}>
+              <Route key={name + "-index"} index element={Element} />
+              {children.map(
+                ({ element: ChElement, name: chName, path: chPath }) => (
+                  <Route key={chName} path={chPath} element={ChElement} />
+                )
+              )}
+            </Route>
+          ) : (
+            <Route key={name} path={path} element={Element} />
+          )
+        )}
+      </>
+    )
+  };
+
+  return (
+    <ReactRoutes>
+      <Route index path="/" element={<Communities />} />
+        {getRoutes(isAuthenticated ? authRoutes : guestRoutes)}
+    </ReactRoutes>
+  )
+};
+
+export default Routes;
