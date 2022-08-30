@@ -21,6 +21,7 @@ import useLogin from "./login/useLogin";
 import useGetWorkState from "./workstate/useGetWorkState";
 import useGetJobLevel from "./joblevel/useGetJobLevel";
 import useGetPeopleDetails from "./people-details/useGetPeopleDetails";
+import useUpdateCommunity from "./communities/useUpdateCommunity";
 
 export {
   useCreatePeople,
@@ -45,5 +46,6 @@ export {
   useLogin,
   useGetWorkState,
   useGetJobLevel,
-  useGetPeopleDetails
+  useGetPeopleDetails,
+  useUpdateCommunity,
 };

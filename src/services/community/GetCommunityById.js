@@ -6,7 +6,7 @@ const getCommunityById = async (id) => {
     if (response.status !== 200) {
       throw new Error(response.data);
     }
-    return response.data;
+    return await response.data.data;
   } catch (error) {
     if (error?.response?.data?.message) {
       throw new Error(error.response.data.message);
