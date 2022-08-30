@@ -13,7 +13,6 @@ import { useSwitchThemeContext } from "hooks";
 import { WHITE } from "theme";
 
 const CommunityForm = ({ onClickHandler, buttonText, community }) => {
-
     const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
     const [communityDetails, setCommunityDetails] = useState({
@@ -39,8 +38,11 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
     }, [community])
 
     const handleFieldChange = (e) => {
-        setCommunityDetails({ ...communityDetails, [e.target.name]: e.target.value });
-    }
+        setCommunityDetails((prevState) => ({ 
+            ...prevState, 
+            [e.target.name]: e.target.value,
+        }));
+    };
 
     const handleOnButtonClick = (e) => {
         e.preventDefault()
@@ -101,9 +103,6 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
             <Grid container>
                 <Grid item xs={12} md={5}>
                     <FormTextField 
-                        inputProps={{
-                            readOnly: community ? true : false,
-                        }}
                         required={community ? false : true}
                         fullWidth
                         value={communityDetails.communityName}
@@ -133,7 +132,6 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                         }}
                         InputLabelChildren="Community Assigned To"
                         SelectProps={{
-                            inputProps: { readOnly: community ? true : false },
                             required: true,
                             id: "communityManager",
                             name: "communityManagerId",
@@ -155,9 +153,6 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                 </Grid>
                 <Grid item xs={12} md={7}>
                     <FormTextField
-                        InputProps={{
-                            readOnly: community ? true : false,
-                        }}
                         required
                         fullWidth
                         id="communityDescription"
