@@ -7,7 +7,7 @@ const updatePeople = async ({ payload, peopleId }) => {
     const response = await axiosInstance.put(
       `/api/people/peopleid=${peopleId}`,
       {
-        cognizantid_id: payload.cognizantId,
+        cognizantid_id: parseInt(payload.cognizantId),
         full_name: payload.name,
         csv_email: payload.email,
         hired_date: payload.hiredDate,
