@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import {
-    MenuItem, Grid, Box, Card
+    MenuItem, Grid, Box, Card, IconButton
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetManagers } from "hooks";
@@ -9,8 +9,40 @@ import AppButton from "components/common/AppButton";
 import UploadButton from "components/common/UploadButton";
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import ImageIcon from '@mui/icons-material/Image';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useSwitchThemeContext } from "hooks";
 import { WHITE } from "theme";
+import { styled } from "@mui/system";
+
+const ImageContainer = styled('div')({
+  position: "relative",
+  width: "50%",
+  '&:hover .image': {
+      opacity: 0.3,
+  },
+  '&:hover .middle': {
+      opacity: 1,
+  },
+});
+
+const Image = styled('img')({
+  opacity: 1,
+  display: "block",
+  width: "100%",
+  height: "auto",
+  transition: ".5s ease",
+  backfaceVisibility: "hidden",
+})
+
+const ImageButton = styled('div')({
+  transition: ".5s ease",
+  opacity: 0,
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  textAlign: "center",
+})
 
 const CommunityForm = ({ onClickHandler, buttonText, community }) => {
     const { currentTheme, currentThemePalette } = useSwitchThemeContext();
@@ -55,6 +87,13 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
         }
 
         onClickHandler({ id, data })
+    }
+
+    const handleDeleteIconClick = () => {
+      setCommunityDetails({
+        ...communityDetails,
+        selectedFile: ''
+      })
     }
 
     const fileSelectedHandler = async (e) => {
@@ -215,7 +254,15 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                         {
                             communityDetails.selectedFile
                             ? 
-                            <img width='100' height='100' src={communityDetails.selectedFile} alt='icon preview' />
+                            <ImageContainer>
+                              <Image src={communityDetails.selectedFile} alt="icon preview" className="image" width="100" height="100" />
+                              <ImageButton className="middle">
+                                <IconButton sx={{color: currentTheme === "dark" ? currentThemePalette.dark : currentThemePalette.light }}
+                                  onClick={handleDeleteIconClick}>
+                                  <DeleteIcon />
+                                </IconButton>
+                              </ImageButton>
+                            </ImageContainer>
                             : 
                             <ImageIcon sx={{width: 100, height: 100, color: currentTheme === "dark" ? currentThemePalette.dark : currentThemePalette.light }}/>
                         }
