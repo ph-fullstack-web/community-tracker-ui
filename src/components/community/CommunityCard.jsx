@@ -87,13 +87,8 @@ const CommunityCard = ({
                 }!important`,
               }}
             >
-              {
-                (image !== 'D:\\default_image.jpg' && image !== null)
-                ?
-                <img width='30' height='30' src={image} alt='icon' />
-                :
-                name.charAt(0)
-              }
+              {image && <img width='30' height='30' src={image} alt='icon' />}
+              {!image && name.charAt(0)}
             </Avatar>
           }
           action={
