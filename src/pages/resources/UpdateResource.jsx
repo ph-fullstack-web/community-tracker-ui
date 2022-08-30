@@ -63,7 +63,6 @@ const UpdateResource = () => {
 
 
         assignedTo: "",
-        projectLead: resourceData.project_lead,
         skills: resourceData.skills,
         details: resourceData.details
       }

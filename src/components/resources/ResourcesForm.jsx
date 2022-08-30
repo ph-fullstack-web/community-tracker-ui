@@ -1,6 +1,5 @@
 import { MenuItem, Grid, Box, Card, FormControlLabel, Checkbox } from "@mui/material";
 import { FormSelect, FormTextField, FormSwitch } from "components";
-import useGetManagers from "hooks/people/useGetManagers";
 import useGetProjects from "hooks/projects/useGetProjects";
 import useGetWorkState from "hooks/workstate/useGetWorkState";
 import useGetJobLevel from "hooks/joblevel/useGetJobLevel";
@@ -18,7 +17,6 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
     state: "",
     hiredDate: "",
     jobLevel: "",
-    projectLead: "",
     project: "",
     email: "",
     cognizantId: "",
@@ -55,7 +53,6 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   };
 
   const { data: projectsData, isLoading: isLoadingProjects } = useGetProjects();
-  const { isLoading, data: communityManagers } = useGetManagers();
   const { data: workStateData, isLoading: isLoadingWorkState } = useGetWorkState();
   const { data: jobLevelData, isLoading: isLoadingJobLevel } = useGetJobLevel();
   const { data: skillsData, isLoading: getSkillsLoading } = useGetSkills();
@@ -306,35 +303,6 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   FormControlProps={{
                     fullWidth: true,
                   }}
-                  InputLabelChildren="Project Lead"
-                  SelectProps={{
-                    name: "projectLead",
-                    required: true,
-                    value: resource.projectLead,
-                    label: "Project Lead",
-                    onChange: onChangeHandler,
-                  }}
-                >
-                  <MenuItem value="">Select Project Lead</MenuItem>
-                  {!isLoading &&
-                    (communityManagers || []).map((manager) => {
-                      return (
-                        <MenuItem
-                          key={manager.people_id}
-                          value={manager.people_id}
-                        >
-                          {" "}
-                          {manager.full_name}{" "}
-                        </MenuItem>
-                      );
-                    })}
-                </FormSelect>
-              </Grid>
-              <Grid item xs={12} sm={12} md={5} lg={5}>
-                <FormSelect
-                  FormControlProps={{
-                    fullWidth: true,
-                  }}
                   InputLabelChildren="Project"
                   SelectProps={{
                     name: "project",
@@ -359,6 +327,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                     )}
                 </FormSelect>
               </Grid>
+              <Grid item xs={12} sm={12} md={5} lg={5} />
               <Grid item xs={12} sm={12} md={12} lg={11} 
                   sx={{ padding: {
                     lg: "0 2.1rem",
@@ -397,7 +366,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                       checked={resource.isProbationary}
                     />
                   }
-                  label="Probitionary"
+                  label="Probationary"
                 /> 
               </Grid>
               <Grid 

@@ -56,7 +56,7 @@ const MembersTable = ({
 
           let queryFound = false;
           if (property === "is_probationary") {
-            queryFound = (member[property] === true && "probitionary".includes(search.toLowerCase())) ||
+            queryFound = (member[property] === true && "probationary".includes(search.toLowerCase())) ||
               (member[property] === false && "regular".includes(search.toLowerCase()));
           } else {
             queryFound = member[property]
@@ -79,7 +79,7 @@ const MembersTable = ({
 
           let queryFound = false;
           if (property === "is_probationary") {
-            queryFound = (member[property] === true && "probitionary".includes(search.toLowerCase())) ||
+            queryFound = (member[property] === true && "probationary".includes(search.toLowerCase())) ||
               (member[property] === false && "regular".includes(search.toLowerCase()));
           } else {
             queryFound = member[property]
