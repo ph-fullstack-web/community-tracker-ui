@@ -23,7 +23,6 @@ const updatePeople = async ({ payload, peopleId }) => {
         is_probationary: payload.isProbationary,
         skills: payload.skills,
         details: payload.details,
-        project_lead: payload.projectLead,
       },
       {
         headers: {

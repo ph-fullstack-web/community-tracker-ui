@@ -23,7 +23,6 @@ const createPeople = async (payload) => {
         is_probationary: payload.isProbationary,
         skills: payload.skills,
         details: payload.details,
-        project_lead: payload.projectLead,
       },
       {
         headers: {
