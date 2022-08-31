@@ -19,7 +19,7 @@ const updatePeople = async ({ payload, peopleId }) => {
         last_name: "",
         first_name: "",
         middle_name: "",
-        is_active: true,
+        is_active: payload.isActive,
         is_probationary: payload.isProbationary,
         skills: payload.skills,
         details: payload.details,

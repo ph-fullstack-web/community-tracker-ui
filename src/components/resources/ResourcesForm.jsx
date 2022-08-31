@@ -23,6 +23,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
     isProbationary: true,
     skills: "",
     details: "",
+    isActive: true,
   });
   const [options, setOptions] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState([]);
@@ -49,6 +50,13 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
     setResource((prevState) => ({
       ...prevState,
       isProbationary: !resource.isProbationary
+    }))
+  };
+
+  const onActiveChange = () => {
+    setResource((prevState) => ({
+      ...prevState,
+      isActive: !resource.isActive
     }))
   };
 
@@ -369,6 +377,33 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   label="Probationary"
                 /> 
               </Grid>
+              {resourcePerson && <Grid 
+                item 
+                xs={12} 
+                sm={12} 
+                md={12} 
+                lg={11} 
+                alignSelf="flex-start"
+                sx={{ padding: {
+                  lg: "0 2.1rem",
+                } }}>
+                <FormControlLabel
+                  sx={{
+                    color: currentThemePalette.text,
+                  }}
+                  value={resource.isActive}
+                  control={
+                    <FormSwitch
+                      onChange={onActiveChange}
+                      sx={{
+                        '& .MuiSvgIcon-root': { fontSize: 28 }
+                      }}
+                      checked={resource.isActive}
+                    />
+                  }
+                  label="Active"
+                /> 
+              </Grid>}
               <Grid 
                 item 
                 xs={12} 

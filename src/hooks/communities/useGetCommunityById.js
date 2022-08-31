@@ -5,9 +5,6 @@ const useGetCommunityById = (id) => {
   const { isLoading, isError, data, error, refetch } = useQuery(
     ["communityById", id],
     () => getCommunityById(id),
-    {
-      staleTime: 10000,
-    }
   );
 
   return {
