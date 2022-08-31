@@ -32,7 +32,7 @@ export const DRAWER_ROUTES = [
     icon: <ThemeSwitchButton />,
   },
   {
-    name: "Invite an Admin",
+    name: "Invite Manager",
     path: "/invite",
     icon: <PeopleIcon />,
   },

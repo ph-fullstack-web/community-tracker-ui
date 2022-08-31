@@ -6,7 +6,7 @@ import Members from './members';
 import GetSkills from './communities/GetSkills';
 import CreateResource from './resources/CreateResource';
 import UpdateResource from './resources/UpdateResource';
-import InviteAdmin from './invite';
+import InviteManager from './invite';
 import NotFound from './not-found'
 import Maintenance from './maintenance';
 
@@ -19,7 +19,7 @@ export {
   GetSkills,
   CreateResource,
   UpdateResource,
-  InviteAdmin,
+  InviteManager,
   NotFound,
   Maintenance,
 };

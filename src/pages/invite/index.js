@@ -1,1 +1,1 @@
-export { default } from "./InviteAdmin";
+export { default } from "./InviteManager";
