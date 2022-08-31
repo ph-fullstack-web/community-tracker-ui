@@ -33,6 +33,7 @@ const MembersTable = ({
   rowData,
   isError,
   error,
+  setFilteredRowData,
 }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
   const { state: {isAuthenticated}} = useAuthContext();
@@ -141,6 +142,10 @@ const MembersTable = ({
   useEffect(() => {
     setPage(0);
   }, [search]);
+
+  useEffect(() => {
+    setFilteredRowData(rowDataFiltered);
+  }, [rowDataFiltered, setFilteredRowData]);
 
   return (
     <Box sx={{ overflowX: "auto" }} id="members-table-container">

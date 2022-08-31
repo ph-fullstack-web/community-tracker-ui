@@ -55,6 +55,7 @@ const MembersMainContainer = () => {
   );
   const [search, setSearch] = useState("");
   const [searchField, setSearchField] = useState("");
+  const [filteredRowData, setFilteredRowData] = useState(rowData);
   const handleSearch = (event) => {
     setSearch(event.target.value);
   };
@@ -135,7 +136,9 @@ const MembersMainContainer = () => {
             <ExportButton
               isLoading={isLoading}
               membersData={membersData}
-              rowData={rowData}
+              rowData={filteredRowData?.map(data => {
+                return {...data, is_probationary: data.is_probationary ? 'Probationary' : 'Regular'}
+              })}
               isError={isError}
               error={error}
               tableHeaders={TABLE_HEADERS}
@@ -149,6 +152,7 @@ const MembersMainContainer = () => {
           rowData={rowData}
           isError={isError}
           error={error}
+          setFilteredRowData={setFilteredRowData}
         />
       </CardContent>
     </Card>
