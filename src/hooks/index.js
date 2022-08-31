@@ -22,6 +22,7 @@ import useGetWorkState from "./workstate/useGetWorkState";
 import useGetJobLevel from "./joblevel/useGetJobLevel";
 import useGetPeopleDetails from "./people-details/useGetPeopleDetails";
 import useUpdateCommunity from "./communities/useUpdateCommunity";
+import useCreateManager from "./communityadminandmanager/useCreateManager";
 
 export {
   useCreatePeople,
@@ -48,4 +49,5 @@ export {
   useGetJobLevel,
   useGetPeopleDetails,
   useUpdateCommunity,
+  useCreateManager,
 };
