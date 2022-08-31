@@ -48,7 +48,7 @@ const UpdateCommunity = () => {
         id: communityData.community_id,
         communityName: communityData.community_name,
         communityDescription: communityData.community_description,
-        isActive: true,
+        isActive: communityData.is_active,
         communityManagerId: communityData.community_manager,
         selectedFile: communityData.icon
       }

@@ -60,7 +60,7 @@ const UpdateResource = () => {
         email: resourceData.csv_email,
         cognizantId: resourceData.cognizantid_id,
         isProbationary: resourceData.is_probationary,
-
+        isActive: resourceData.is_active,
 
         assignedTo: "",
         skills: resourceData.skills,

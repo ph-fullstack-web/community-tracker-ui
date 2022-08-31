@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import {
-    MenuItem, Grid, Box, Card, IconButton
+    MenuItem, Grid, Box, Card, IconButton, FormControlLabel
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetManagers } from "hooks";
-import { FormSelect, FormTextField } from "components";
+import { FormSelect, FormTextField, FormSwitch } from "components";
 import AppButton from "components/common/AppButton";
 import UploadButton from "components/common/UploadButton";
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
@@ -83,7 +83,8 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
             community_name: communityDetails.communityName,
             community_manager: communityDetails.communityManagerId,
             community_description: communityDetails.communityDescription,
-            icon: communityDetails.selectedFile
+            icon: communityDetails.selectedFile,
+            is_active: communityDetails.isActive
         }
 
         onClickHandler({ id, data })
@@ -95,6 +96,13 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
         selectedFile: ''
       })
     }
+
+  const onActiveChange = () => {
+    setCommunityDetails((prevState) => ({
+      ...prevState,
+      isActive: !prevState.isActive
+    }))
+  };
 
     const fileSelectedHandler = async (e) => {
         const file = e.target.files[0];
@@ -234,6 +242,31 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                     </AppButton>
 
                 </Grid>
+                {community && <Grid 
+                  item 
+                  xs={12} 
+                  sm={12} 
+                  md={12} 
+                  lg={11} 
+                  alignSelf="flex-start"
+                  sx={{ mt: 2 }}>
+                  <FormControlLabel
+                    sx={{
+                      color: currentThemePalette.text,
+                    }}
+                    value={communityDetails.isActive}
+                    control={
+                      <FormSwitch
+                        onChange={onActiveChange}
+                        sx={{
+                          '& .MuiSvgIcon-root': { fontSize: 28 }
+                        }}
+                        checked={communityDetails.isActive}
+                      />
+                    }
+                    label="Active"
+                  /> 
+                </Grid>}
                 <Grid item xs={12} md={7}
                     sx={{
                         mt: {

@@ -11,7 +11,8 @@ const updateCommunityService = async ({id,data}) => {
         community_name: data.community_name,
         community_manager: parseInt(data.community_manager),
         community_description: data.community_description,
-        icon: data.icon
+        icon: data.icon,
+        is_active: data.is_active
       },
       {
         headers: {
