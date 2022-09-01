@@ -181,7 +181,7 @@ const GetSkills = () => {
                         return {
                           full_name: skl.full_name,
                           skills: skl.skills.join(" ,"),
-                          project_status: skl.project_id === 21 ? "Bench" : "In a Project",
+                          project_status: skl.project_id === 1 ? "Bench" : "In a Project",
                         }
                       })}
                       isLoading={memberSkillsData.length > 0 ? false : true}
