@@ -21,6 +21,7 @@ import getJobLevel from "./joblevel/GetJobLevel";
 import getWorkState from "./workstate/GetWorkState";
 import getPeopleDetails from "./people-details/GetPeopleDetails";
 import createManager from "./communityadminandmanager/CreateManager";
+import getCommunityManagers from "./communityadminandmanager/GetCommunityManagers";
 
 export {
   addCommunityService,
@@ -46,4 +47,5 @@ export {
   getWorkState,
   getPeopleDetails,
   createManager,
+  getCommunityManagers,
 };
