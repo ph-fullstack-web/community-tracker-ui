@@ -3,7 +3,7 @@ import {
     MenuItem, Grid, Box, Card, IconButton, FormControlLabel
 } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useGetManagers } from "hooks";
+import { useGetCommunityManagers } from "hooks";
 import { FormSelect, FormTextField, FormSwitch } from "components";
 import AppButton from "components/common/AppButton";
 import UploadButton from "components/common/UploadButton";
@@ -60,7 +60,7 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
         error: false 
     });
 
-    const { isLoading, data: communityManagers } = useGetManagers();
+    const { isLoading, data: communityManagers } = useGetCommunityManagers();
     const { id } = useParams()
 
     useEffect(() => {
@@ -190,7 +190,7 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                         {!isLoading && communityManagers && (
                             communityManagers.map((manager) => {
                                 return (
-                                    <MenuItem key={manager.people_id} value={manager.people_id}> {manager.first_name + " " + manager.last_name} </MenuItem>
+                                    <MenuItem key={manager.id} value={manager.id}> {manager.name} </MenuItem>
                                 )
                             })
                         )}
