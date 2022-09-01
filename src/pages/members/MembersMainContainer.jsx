@@ -1,10 +1,10 @@
 import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
-import { Box, Stack, Card, CardContent } from "@mui/material";
+import { Box, Stack, Card, CardContent, Checkbox, FormControlLabel } from "@mui/material";
 import { FormTextField, PlusIconButton } from "components";
 import { JOB_LEVELS, WORK_STATES, PROJECTS } from "utils/constants";
-import { useGetMembers } from "hooks";
+import { useGetMembers, useGetPeopleDetails, useGetPeopleDetailsDesc } from "hooks";
 import ExportButton from "components/members/ExportButton";
 import MembersTable from "./MembersTable";
 import {  useSwitchThemeContext } from "hooks";
@@ -31,6 +31,14 @@ const MembersMainContainer = () => {
     refetch
   } = useGetMembers(communityId);
 
+  const {
+    data: peopleDetails,
+  } = useGetPeopleDetails();
+
+  const {
+    data: peopleDetailsDesc,
+  } = useGetPeopleDetailsDesc();
+
   useEffect(() => {
     refetch();
   }, [communityId, refetch]);
@@ -56,6 +64,11 @@ const MembersMainContainer = () => {
   const [search, setSearch] = useState("");
   const [searchField, setSearchField] = useState("");
   const [filteredRowData, setFilteredRowData] = useState(rowData);
+  const [isIncludeProbationaryFields, setIsIncludeProbationaryFields] = useState(false);
+  const [exportHeaders, setExportHeaders] = useState(TABLE_HEADERS);
+  const [exportData, setExportData] = useState(filteredRowData?.map(data => {
+    return {...data, is_probationary: data.is_probationary ? 'Probationary' : 'Regular'}
+  }));
   const handleSearch = (event) => {
     setSearch(event.target.value);
   };
@@ -64,6 +77,44 @@ const MembersMainContainer = () => {
   const handleSearchClick = () => {
     setSearchField(search);
   }
+
+  const handleIsIncludeProbationaryFieldsCheckboxChange = () => {
+    setIsIncludeProbationaryFields(prev => !prev);
+  };
+
+  useEffect(() => {
+    if (!isIncludeProbationaryFields) {
+      setExportHeaders(TABLE_HEADERS);
+      return;
+    }
+    
+    const probationaryFieldsHeaders = peopleDetailsDesc.map(desc => {return {
+      value: desc.people_details_desc_id,
+      name: desc.people_details_desc,
+     }});
+
+    setExportHeaders([...TABLE_HEADERS, ...probationaryFieldsHeaders]);
+  }, [isIncludeProbationaryFields, peopleDetailsDesc])
+
+  useEffect(() => {
+    const data = filteredRowData?.map(data => {
+      const isProbationary = data.is_probationary ? 'Probationary' : 'Regular';
+
+      if (isIncludeProbationaryFields) {
+        peopleDetailsDesc.forEach(desc => {
+          const exist = peopleDetails
+                          .some(detail => detail.people_id === data.people_id && 
+                            detail.people_details_desc_id === desc.people_details_desc_id);
+          
+          data[desc.people_details_desc_id] = exist ? 'true' : 'false';
+        });
+      }
+
+      return {...data, is_probationary: isProbationary}
+    })
+    setExportData(data)
+  }, [filteredRowData, isIncludeProbationaryFields, peopleDetailsDesc, peopleDetails])
+
   return (
   <Box
     style={{
@@ -132,16 +183,23 @@ const MembersMainContainer = () => {
               />
             </Box>
           )}
-          <Box sx={{ ml: "auto" }}>
+          <Box sx={{ ml: "auto" }}> 
+            <FormControlLabel
+              control={
+                <Checkbox 
+                  checked={isIncludeProbationaryFields} 
+                  onChange={handleIsIncludeProbationaryFieldsCheckboxChange} 
+                /> 
+              }
+              label="Include probationary fields in export"
+            />
             <ExportButton
               isLoading={isLoading}
               membersData={membersData}
-              rowData={filteredRowData?.map(data => {
-                return {...data, is_probationary: data.is_probationary ? 'Probationary' : 'Regular'}
-              })}
+              rowData={exportData}
               isError={isError}
               error={error}
-              tableHeaders={TABLE_HEADERS}
+              tableHeaders={exportHeaders}
             />
           </Box>
         </Stack>

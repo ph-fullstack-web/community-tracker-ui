@@ -5,7 +5,7 @@ import useGetWorkState from "hooks/workstate/useGetWorkState";
 import useGetJobLevel from "hooks/joblevel/useGetJobLevel";
 import { useState, useEffect } from "react";
 import AppButton from "components/common/AppButton";
-import { useSwitchThemeContext, useGetSkills, usePostSkills, useGetPeopleDetails } from "hooks";
+import { useSwitchThemeContext, useGetSkills, usePostSkills, useGetPeopleDetailsDesc } from "hooks";
 import SaveIcon from "@mui/icons-material/Save";
 import { AutocompleteInputChip } from "../../components/index.js";
 import { useNotificationContext } from "contexts/notification/NotificationContext";
@@ -64,7 +64,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   const { data: workStateData, isLoading: isLoadingWorkState } = useGetWorkState();
   const { data: jobLevelData, isLoading: isLoadingJobLevel } = useGetJobLevel();
   const { data: skillsData, isLoading: getSkillsLoading } = useGetSkills();
-  const { data: detailsData, isLoading: getDetailsLoading } = useGetPeopleDetails();
+  const { data: detailsData, isLoading: getDetailsLoading } = useGetPeopleDetailsDesc();
 
   const onSubmit = (event) => {
     event.preventDefault();

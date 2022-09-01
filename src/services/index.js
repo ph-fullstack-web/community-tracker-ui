@@ -19,6 +19,7 @@ import updatePassword from "./communityadminandmanager/UpdatePassword";
 import login from "./login/Login";
 import getJobLevel from "./joblevel/GetJobLevel";
 import getWorkState from "./workstate/GetWorkState";
+import getPeopleDetailsDesc from "./people-details/GetPeopleDetailsDesc";
 import getPeopleDetails from "./people-details/GetPeopleDetails";
 import createManager from "./communityadminandmanager/CreateManager";
 import getCommunityManagers from "./communityadminandmanager/GetCommunityManagers";
@@ -45,6 +46,7 @@ export {
   login,
   getJobLevel,
   getWorkState,
+  getPeopleDetailsDesc,
   getPeopleDetails,
   createManager,
   getCommunityManagers,
