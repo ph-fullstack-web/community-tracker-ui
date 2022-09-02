@@ -3,8 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { Box, Stack, Card, CardContent, Checkbox, FormControlLabel } from "@mui/material";
 import { FormTextField, PlusIconButton } from "components";
-import { JOB_LEVELS, WORK_STATES, PROJECTS } from "utils/constants";
-import { useGetMembers, useGetPeopleDetails, useGetPeopleDetailsDesc } from "hooks";
+import { useGetMembers, useGetPeopleDetails, useGetPeopleDetailsDesc, useGetProjects, useGetWorkState, useGetJobLevel } from "hooks";
 import ExportButton from "components/members/ExportButton";
 import MembersTable from "./MembersTable";
 import {  useSwitchThemeContext } from "hooks";
@@ -39,6 +38,18 @@ const MembersMainContainer = () => {
     data: peopleDetailsDesc,
   } = useGetPeopleDetailsDesc();
 
+  const {
+    data: projects,
+  } = useGetProjects();
+
+  const {
+    data: workStates,
+  } = useGetWorkState();
+
+  const {
+    data: jobLevels,
+  } = useGetJobLevel();
+
   useEffect(() => {
     refetch();
   }, [communityId, refetch]);
@@ -62,13 +73,13 @@ const MembersMainContainer = () => {
             hired_date_formatted: moment(member.hired_date).format(
               "MM/DD/YYYY"
             ),
-            job_level: JOB_LEVELS[member.joblevel_id],
-            work_state: WORK_STATES[member.workstate_id],
-            project: PROJECTS[member.project_id],
+            job_level: jobLevels?.find(level => level.job_level_id === member.joblevel_id)?.job_level_desc ?? '',
+            work_state: workStates?.find(workState => workState.work_state_id === member.workstate_id)?.work_state_desc ?? '',
+            project: projects?.find(project => project.id === member.project_id)?.project ?? '',
             is_probationary: member.is_probationary
           }))
         : null,
-    [membersData]
+    [membersData, projects, jobLevels, workStates]
   );
   const [search, setSearch] = useState("");
   const [searchField, setSearchField] = useState("");

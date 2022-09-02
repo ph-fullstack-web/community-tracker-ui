@@ -23,7 +23,9 @@ export default function AutocompleteInputChip(props) {
     return Math.max(...options.map((opt) => opt.id)) + 1;
   };
 
-  const handlePressEnter = (value) => {
+  const handlePressEnter = (event) => {
+    event.preventDefault();
+    const value = event.target.value;
     if (!allowAdd) return;
     const labels = options.map((opt) => opt.label);
     const included = labels.includes(value);
@@ -91,7 +93,7 @@ export default function AutocompleteInputChip(props) {
           key={params.id}
           onKeyPress={(e) => {
             if (e.key === "Enter") {
-              handlePressEnter(e.target.value);
+              handlePressEnter(e);
             }
           }}
         />
