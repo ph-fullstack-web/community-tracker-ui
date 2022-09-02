@@ -8,7 +8,7 @@ import { useMemo } from "react";
 
 const UpdateCommunity = () => {
   const { id } = useParams();
-  const { isLoading, data: communityData } = useGetCommunityById(id)
+  const { isLoading, data: communityData, isError } = useGetCommunityById(id)
   const { dispatch: notificationDispatch } = useNotificationContext();
   const { mutate: updateCommunity } = useUpdateCommunity()
   const navigate = useNavigate();
@@ -54,9 +54,11 @@ const UpdateCommunity = () => {
       }
     }
   }, [communityData])
+
   return (
     <PageContainer>
-      {!isLoading && <CommunityForm onClickHandler={onUpdateCommunity} community={community} buttonText={"UPDATE"} />}
+      {isError && <div>Record not found!</div>}
+      {!isLoading && !isError && <CommunityForm onClickHandler={onUpdateCommunity} community={community} buttonText={"UPDATE"} />}
     </PageContainer>
   );
 };

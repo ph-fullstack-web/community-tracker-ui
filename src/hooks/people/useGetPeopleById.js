@@ -7,6 +7,7 @@ const useGetPeopleById = (peopleId) => {
     () => getPeopleById(peopleId),
     {
       staleTime: 10000,
+      refetchOnWindowFocus: false,
     }
   );
 

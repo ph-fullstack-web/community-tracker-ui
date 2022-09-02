@@ -5,6 +5,7 @@ const useGetCommunityById = (id) => {
   const { isLoading, isError, data, error, refetch } = useQuery(
     ["communityById", id],
     () => getCommunityById(id),
+    {refetchOnWindowFocus: false}
   );
 
   return {
