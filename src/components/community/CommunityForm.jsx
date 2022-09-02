@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import {
-    MenuItem, Grid, Box, Card, IconButton, FormControlLabel
+    MenuItem, Grid, Box, Card, IconButton, FormControlLabel, Tooltip
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetCommunityManagers } from "hooks";
@@ -13,6 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useSwitchThemeContext } from "hooks";
 import { WHITE } from "theme";
 import { styled } from "@mui/system";
+import InfoIcon from '@mui/icons-material/Info';
 
 const ImageContainer = styled('div')({
   position: "relative",
@@ -265,7 +266,15 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                       />
                     }
                     label="Active"
-                  /> 
+                    />                    
+                    <Tooltip
+                      title="Setting to inactive will hide this record. Contact your system administrator for re-activation." 
+                      placement="right"
+                    >
+                      <IconButton>
+                        <InfoIcon sx={{color: currentThemePalette.main,}} />
+                      </IconButton>
+                    </Tooltip> 
                 </Grid>}
                 <Grid item xs={12} md={7}
                     sx={{

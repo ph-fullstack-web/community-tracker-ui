@@ -1,4 +1,4 @@
-import { MenuItem, Grid, Box, Card, FormControlLabel, Checkbox } from "@mui/material";
+import { MenuItem, Grid, Box, Card, FormControlLabel, Checkbox, Tooltip, IconButton } from "@mui/material";
 import { FormSelect, FormTextField, FormSwitch } from "components";
 import useGetProjects from "hooks/projects/useGetProjects";
 import useGetWorkState from "hooks/workstate/useGetWorkState";
@@ -9,6 +9,7 @@ import { useSwitchThemeContext, useGetSkills, usePostSkills, useGetPeopleDetails
 import SaveIcon from "@mui/icons-material/Save";
 import { AutocompleteInputChip } from "../../components/index.js";
 import { useNotificationContext } from "contexts/notification/NotificationContext";
+import InfoIcon from '@mui/icons-material/Info';
 
 const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   const { currentThemePalette } = useSwitchThemeContext();
@@ -97,7 +98,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   useEffect(() => {
     if (!getSkillsLoading) {
       setOptions(
-        skillsData?.map((skl, idx) => {
+        skillsData?.filter(skill => skill.is_active).map((skl, idx) => {
           return { id: skl.peopleskills_id, label: skl.peopleskills_desc };
         })
       );
@@ -324,6 +325,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   <MenuItem value="">Select Project</MenuItem>
                   {!isLoadingProjects &&
                     (projectsData || [])
+                      .filter(project => project.is_active)
                       .sort(sortProjects)
                       .map((project) => {
                         return (
@@ -403,6 +405,14 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   }
                   label="Active"
                 /> 
+                <Tooltip
+                  title="Setting to inactive will hide this record. Contact your system administrator for re-activation." 
+                  placement="right"
+                >
+                  <IconButton>
+                    <InfoIcon sx={{color: currentThemePalette.main,}} />
+                  </IconButton>
+                </Tooltip>
               </Grid>}
               <Grid 
                 item 
@@ -417,14 +427,20 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   {details.map(detail => 
                     <Grid item xs={12} md={6} key={detail.id}>
                       <FormControlLabel
+                        sx={{
+                          color: currentThemePalette.text,
+                        }}
                         control={
                           <Checkbox 
                             checked={detail.isActive} 
                             onChange={() => handleDetailChange(detail)} 
                             disabled={!resource.isProbationary}
+                            sx={{
+                              color: currentThemePalette.main,
+                            }}
                           />
                         }
-                      label={detail.label}
+                        label={detail.label}
                       />
                     </Grid>
                   )}

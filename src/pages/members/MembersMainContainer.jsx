@@ -43,10 +43,19 @@ const MembersMainContainer = () => {
     refetch();
   }, [communityId, refetch]);
 
+  const sortMembers = ((a, b) => {
+    const memberA = a.full_name.toLowerCase();
+    const memberB = b.full_name.toLowerCase();
+
+    if (memberA < memberB) return -1;
+    if (memberA > memberB) return 1;
+    return 0;
+  });
+
   const rowData = useMemo(
     () =>
       membersData
-        ? membersData.members.map((member) => ({
+        ? membersData.members.sort(sortMembers).map((member) => ({
             people_id: member.people_id,
             full_name: member.full_name,
             assigned_to: membersData.manager?.full_name,
@@ -185,10 +194,16 @@ const MembersMainContainer = () => {
           )}
           <Box sx={{ ml: "auto" }}> 
             <FormControlLabel
+              sx={{
+                color: currentThemePalette.text,
+              }}
               control={
                 <Checkbox 
                   checked={isIncludeProbationaryFields} 
-                  onChange={handleIsIncludeProbationaryFieldsCheckboxChange} 
+                  onChange={handleIsIncludeProbationaryFieldsCheckboxChange}
+                  sx={{
+                    color: currentThemePalette.main,
+                  }}
                 /> 
               }
               label="Include probationary fields in export"
