@@ -23,6 +23,7 @@ import getPeopleDetailsDesc from "./people-details/GetPeopleDetailsDesc";
 import getPeopleDetails from "./people-details/GetPeopleDetails";
 import createManager from "./communityadminandmanager/CreateManager";
 import getCommunityManagers from "./communityadminandmanager/GetCommunityManagers";
+import createProject from "./project/CreateProject";
 
 export {
   addCommunityService,
@@ -50,4 +51,5 @@ export {
   getPeopleDetails,
   createManager,
   getCommunityManagers,
+  createProject,
 };

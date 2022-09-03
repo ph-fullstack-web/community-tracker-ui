@@ -9,7 +9,7 @@ export const MaintenanceTabPanel = ({children, index, value}) => {
       id={index}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box>
           <Typography component="span">{children}</Typography>
         </Box>
       )}
