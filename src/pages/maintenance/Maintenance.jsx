@@ -4,17 +4,26 @@ import {Box, Card, Stack, CardContent, Tab, Tabs} from '@mui/material';
 
 import AppButton from "components/common/AppButton.jsx";
 import { MaintenanceTabPanel, ProjectsTable, SkillsTable } from 'components/maintenance';
-import { FormTextField } from "components";
-import {  useSwitchThemeContext } from "hooks";
+import { FormTextField, PlusIconButton } from "components";
+import { useAuthContext } from 'contexts/auth/AuthContext';
+import { useCreateProject, useSwitchThemeContext, useGetProjects } from "hooks";
 import PageContainer from 'layout/PageContainer';
-
+import { WHITE } from "theme";
+import { ProjectFormModal } from "components/maintenance";
+import { useNotificationContext } from "contexts/notification/NotificationContext";
 
 const Maintenance = () => {
   const [tabValue, setTabValue] = useState(0);
   const [search, setSearch] = useState("");
   const [searchField, setSearchField] = useState("");
+  const [openAddProjectModal, setOpenAddProjectModal] = useState(false);
   
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+  const {state: {isAuthenticated}} = useAuthContext();
+  const { dispatch: notificationDispatch } = useNotificationContext();
+  const { mutate: projectMutate,  } = useCreateProject();
+  
+  const { refetch } = useGetProjects();
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
@@ -41,34 +50,41 @@ const Maintenance = () => {
     setTabValue(newValue);
   };
 
+  const handleAddProject = () => {
+    setOpenAddProjectModal(true);
+  };
+
+  const handleCancelAddProject = () => {
+    setOpenAddProjectModal(false);
+  }
+
+  const handleConfirmAddProject = (project) => {
+    setOpenAddProjectModal(false);
+    projectMutate(project, {
+      onSuccess: () => {
+        notificationDispatch({
+          type: 'NOTIFY',
+          payload: {
+            type: 'success',
+            message: 'Project has been added.'
+          }
+        });
+        refetch();
+      },
+      onError: (error) => {
+        notificationDispatch({
+          type: 'NOTIFY',
+          payload: {
+            type: 'error',
+            message: error.message
+          }
+        });
+      }
+    });
+  }
+
   return (
     <PageContainer>
-      {/* <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={tabValue} onChange={handleTabChange}>
-          {tabLabels.map(({label, value}) => (
-            <Tab key={value} label={label} id={value} />
-          ))}
-        </Tabs>
-      </Box>
-      <Box
-      style={{
-        marginBottom: "1rem",
-      }}>
-        <Card
-          sx={{padding: "2rem", backgroundColor: currentThemePalette.cardSecondary}}>
-          <Stack direction="row" alignItems="center">
-            <Box sx={{ width: { xs: "100%", md: "55ch" }, flex: "0 1 auto" }}>
-              <FormSearchInput value={search} onChangeCallback={handleSearch} />
-            </Box>
-          </Stack>
-          <MaintenanceTabPanel value={tabValue} index={0}>
-            <SkillsTable search={search} />
-          </MaintenanceTabPanel>
-          <MaintenanceTabPanel value={tabValue} index={1}>
-            <ProjectsTable search={search} />
-          </MaintenanceTabPanel>
-        </Card>
-      </Box> */}
       <Box
         style={{
           marginBottom: "1rem",
@@ -124,10 +140,34 @@ const Maintenance = () => {
               <SkillsTable search={searchField} />
             </MaintenanceTabPanel>
             <MaintenanceTabPanel value={tabValue} index={1}>
+              {isAuthenticated && (
+                <Box>
+                  <PlusIconButton
+                    onClickCallback={handleAddProject}
+                    sxProp={{
+                      "& .MuiSvgIcon-root": {
+                        color: `${currentTheme === "dark" ? WHITE : currentThemePalette.dark}!important`,
+                      },
+                      "&:hover .MuiSvgIcon-root": {
+                        color: `${currentTheme === "dark" ? "#141414" : WHITE} !important`,
+                      },
+                      "&:hover": {
+                        backgroundColor: currentTheme === "dark" ? WHITE : currentThemePalette.border
+                      },
+                      padding: 0
+                    }}
+                  />
+                </Box>
+              )}
               <ProjectsTable search={searchField} />
             </MaintenanceTabPanel>
           </CardContent>
         </Card>
+        <ProjectFormModal
+          open={openAddProjectModal}
+          onCancel={handleCancelAddProject}
+          onConfirm={handleConfirmAddProject}
+        />
       </Box>
     </PageContainer>
   );
