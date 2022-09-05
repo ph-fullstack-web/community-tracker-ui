@@ -1,16 +1,14 @@
 import { useQuery } from "react-query";
-import { getPeopleById } from "services";
+import { getCommunityManagers } from "services";
 
-const useGetPeopleById = (peopleId) => {
+const useGetCommunityManagers = () => {
   const { isLoading, isError, data, error, refetch } = useQuery(
-    ["people-by-id", peopleId],
-    () => getPeopleById(peopleId),
+    "community-managers",
+    () => getCommunityManagers(),
     {
       staleTime: 10000,
-      refetchOnWindowFocus: false,
     }
   );
-
   return {
     isLoading,
     isError,
@@ -20,4 +18,4 @@ const useGetPeopleById = (peopleId) => {
   };
 };
 
-export default useGetPeopleById;
+export default useGetCommunityManagers;

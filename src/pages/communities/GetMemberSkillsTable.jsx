@@ -51,7 +51,7 @@ export default function MemberSkillsTable({
             return {
               full_name: skl.full_name,
               skills: skl.skills,
-              project_status: skl.project_id === 21 ? "Bench" : "In a Project",
+              project_status: skl.project_id === 1 ? "Bench" : "In a Project",
             };
           })
         : [];
@@ -92,6 +92,27 @@ export default function MemberSkillsTable({
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const sortData = ((a, b) => {
+    const skillsCountA = a.skills.length;
+    const skillsCountB = b.skills.length;
+
+    if (skillsCountA > skillsCountB) return -1;
+    if (skillsCountA < skillsCountB) return 1;
+
+    if (a.project_status === 'In a Project' && b.project_status === 'Bench')
+    return 1;
+    if (b.project_status === 'In a Project' && a.project_status === 'Bench')
+    return -1;
+    
+    const resourceA = a.full_name.toLowerCase();
+    const resourceB = b.full_name.toLowerCase();
+
+    if (resourceA < resourceB) return -1;
+    if (resourceA > resourceB) return 1;
+    return 0;
+  });
+
   const tableCellStyle = {
     borderBottom: "none",
     p: 1.7,
@@ -200,7 +221,7 @@ export default function MemberSkillsTable({
                       page * rowsPerPage + rowsPerPage
                     )
                   : membersSkillsData
-                ).map((membersSkillsData) => (
+                ).sort(sortData).map((membersSkillsData) => (
                   <TableRow
                     key={membersSkillsData.full_name}
                     hover

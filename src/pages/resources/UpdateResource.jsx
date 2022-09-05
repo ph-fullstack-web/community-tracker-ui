@@ -9,7 +9,7 @@ import moment from "moment";
 const UpdateResource = () => {
 
   const { communityId, peopleId } = useParams();
-  const { isLoading, data: resourceData } = useGetPeopleById(peopleId)
+  const { isLoading, data: resourceData, isError } = useGetPeopleById(peopleId)
   const { mutate: updatePeople, isLoading: isUpdating } = useUpdatePeople()
   const { dispatch: notificationDispatch } = useNotificationContext();
   const navigate = useNavigate();
@@ -60,10 +60,9 @@ const UpdateResource = () => {
         email: resourceData.csv_email,
         cognizantId: resourceData.cognizantid_id,
         isProbationary: resourceData.is_probationary,
-
+        isActive: resourceData.is_active,
 
         assignedTo: "",
-        projectLead: resourceData.project_lead,
         skills: resourceData.skills,
         details: resourceData.details
       }
@@ -72,8 +71,8 @@ const UpdateResource = () => {
 
   return (
     <PageContainer>
-
-      {!isLoading && <ResourcesForm isProcessing={isUpdating} resourcePerson={resourcePerson} onSubmitHandler={onUpdateResource} />}
+      {isError && <div>Record not found!</div>}
+      {!isLoading && !isError && <ResourcesForm isProcessing={isUpdating} resourcePerson={resourcePerson} onSubmitHandler={onUpdateResource} />}
 
     </PageContainer>
   );

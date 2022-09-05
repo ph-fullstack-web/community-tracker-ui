@@ -9,7 +9,7 @@ import {
   Members, 
   GetSkills, 
   NotFound, 
-  InviteAdmin,
+  InviteManager,
   Maintenance,
 } from 'pages';
 import { useAuthContext } from 'contexts/auth/AuthContext';
@@ -61,8 +61,8 @@ const authRoutes = [
   },
   {
     path: 'invite',
-    element: <InviteAdmin />,
-    name: 'Invite Admin',
+    element: <InviteManager />,
+    name: 'Invite Manager',
   },
   {
     path: 'maintenance',

@@ -19,7 +19,7 @@ const LoginModal = ({ open, handleClose }) => {
   const { mutate: loginMutate } = useLogin();
   const [credentials, setCredentials] = useState({ id: "", password: "" });
   const [error, setError] = useState("");
-  const { dispatch, state } = useAuthContext();
+  const { dispatch } = useAuthContext();
 
   const handleCredentials = (e) => {
     const value = e.target.value;
@@ -64,7 +64,7 @@ const LoginModal = ({ open, handleClose }) => {
         }
       }}
     >
-      <DialogTitle onClick={() => console.log(state)} sx={{color: currentThemePalette.text}}>Login Modal</DialogTitle>
+      <DialogTitle sx={{color: currentThemePalette.text}}>Login</DialogTitle>
       <DialogContent>
         <Box
           display="flex"

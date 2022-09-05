@@ -1,19 +1,51 @@
 import { useEffect, useState } from "react"
 import {
-    MenuItem, Grid, Box, Card
+    MenuItem, Grid, Box, Card, IconButton, FormControlLabel, Tooltip
 } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useGetManagers } from "hooks";
-import { FormSelect, FormTextField } from "components";
+import { useGetCommunityManagers } from "hooks";
+import { FormSelect, FormTextField, FormSwitch } from "components";
 import AppButton from "components/common/AppButton";
 import UploadButton from "components/common/UploadButton";
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import ImageIcon from '@mui/icons-material/Image';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useSwitchThemeContext } from "hooks";
 import { WHITE } from "theme";
+import { styled } from "@mui/system";
+import InfoIcon from '@mui/icons-material/Info';
+
+const ImageContainer = styled('div')({
+  position: "relative",
+  width: "50%",
+  '&:hover .image': {
+      opacity: 0.3,
+  },
+  '&:hover .middle': {
+      opacity: 1,
+  },
+});
+
+const Image = styled('img')({
+  opacity: 1,
+  display: "block",
+  width: "100%",
+  height: "auto",
+  transition: ".5s ease",
+  backfaceVisibility: "hidden",
+})
+
+const ImageButton = styled('div')({
+  transition: ".5s ease",
+  opacity: 0,
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  textAlign: "center",
+})
 
 const CommunityForm = ({ onClickHandler, buttonText, community }) => {
-
     const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
     const [communityDetails, setCommunityDetails] = useState({
@@ -29,7 +61,7 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
         error: false 
     });
 
-    const { isLoading, data: communityManagers } = useGetManagers();
+    const { isLoading, data: communityManagers } = useGetCommunityManagers();
     const { id } = useParams()
 
     useEffect(() => {
@@ -39,8 +71,11 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
     }, [community])
 
     const handleFieldChange = (e) => {
-        setCommunityDetails({ ...communityDetails, [e.target.name]: e.target.value });
-    }
+        setCommunityDetails((prevState) => ({ 
+            ...prevState, 
+            [e.target.name]: e.target.value,
+        }));
+    };
 
     const handleOnButtonClick = (e) => {
         e.preventDefault()
@@ -49,11 +84,26 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
             community_name: communityDetails.communityName,
             community_manager: communityDetails.communityManagerId,
             community_description: communityDetails.communityDescription,
-            icon: communityDetails.selectedFile
+            icon: communityDetails.selectedFile,
+            is_active: communityDetails.isActive
         }
 
         onClickHandler({ id, data })
     }
+
+    const handleDeleteIconClick = () => {
+      setCommunityDetails({
+        ...communityDetails,
+        selectedFile: ''
+      })
+    }
+
+  const onActiveChange = () => {
+    setCommunityDetails((prevState) => ({
+      ...prevState,
+      isActive: !prevState.isActive
+    }))
+  };
 
     const fileSelectedHandler = async (e) => {
         const file = e.target.files[0];
@@ -101,9 +151,6 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
             <Grid container>
                 <Grid item xs={12} md={5}>
                     <FormTextField 
-                        inputProps={{
-                            readOnly: community ? true : false,
-                        }}
                         required={community ? false : true}
                         fullWidth
                         value={communityDetails.communityName}
@@ -133,7 +180,6 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                         }}
                         InputLabelChildren="Community Assigned To"
                         SelectProps={{
-                            inputProps: { readOnly: community ? true : false },
                             required: true,
                             id: "communityManager",
                             name: "communityManagerId",
@@ -145,7 +191,7 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                         {!isLoading && communityManagers && (
                             communityManagers.map((manager) => {
                                 return (
-                                    <MenuItem key={manager.people_id} value={manager.people_id}> {manager.first_name + " " + manager.last_name} </MenuItem>
+                                    <MenuItem key={manager.id} value={manager.id}> {manager.name} </MenuItem>
                                 )
                             })
                         )}
@@ -155,9 +201,6 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                 </Grid>
                 <Grid item xs={12} md={7}>
                     <FormTextField
-                        InputProps={{
-                            readOnly: community ? true : false,
-                        }}
                         required
                         fullWidth
                         id="communityDescription"
@@ -200,6 +243,39 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                     </AppButton>
 
                 </Grid>
+                {community && <Grid 
+                  item 
+                  xs={12} 
+                  sm={12} 
+                  md={12} 
+                  lg={11} 
+                  alignSelf="flex-start"
+                  sx={{ mt: 2 }}>
+                  <FormControlLabel
+                    sx={{
+                      color: currentThemePalette.text,
+                    }}
+                    value={communityDetails.isActive}
+                    control={
+                      <FormSwitch
+                        onChange={onActiveChange}
+                        sx={{
+                          '& .MuiSvgIcon-root': { fontSize: 28 }
+                        }}
+                        checked={communityDetails.isActive}
+                      />
+                    }
+                    label="Active"
+                    />                    
+                    <Tooltip
+                      title="Setting to inactive will hide this record. Contact your system administrator for re-activation." 
+                      placement="right"
+                    >
+                      <IconButton>
+                        <InfoIcon sx={{color: currentThemePalette.main,}} />
+                      </IconButton>
+                    </Tooltip> 
+                </Grid>}
                 <Grid item xs={12} md={7}
                     sx={{
                         mt: {
@@ -220,7 +296,15 @@ const CommunityForm = ({ onClickHandler, buttonText, community }) => {
                         {
                             communityDetails.selectedFile
                             ? 
-                            <img width='100' height='100' src={communityDetails.selectedFile} alt='icon preview' />
+                            <ImageContainer>
+                              <Image src={communityDetails.selectedFile} alt="icon preview" className="image" width="100" height="100" />
+                              <ImageButton className="middle">
+                                <IconButton sx={{color: currentTheme === "dark" ? currentThemePalette.dark : currentThemePalette.light }}
+                                  onClick={handleDeleteIconClick}>
+                                  <DeleteIcon />
+                                </IconButton>
+                              </ImageButton>
+                            </ImageContainer>
                             : 
                             <ImageIcon sx={{width: 100, height: 100, color: currentTheme === "dark" ? currentThemePalette.dark : currentThemePalette.light }}/>
                         }

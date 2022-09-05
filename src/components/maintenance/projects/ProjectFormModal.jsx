@@ -23,7 +23,7 @@ export const ProjectFormModal = ({
   });
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
-  const handleUpdate = () => onConfirm(project);
+  const handleConfirm = () => onConfirm(project);
   const handleCancel = () => onCancel();
 
   const onChangeHandler = (event) => {
@@ -47,6 +47,14 @@ export const ProjectFormModal = ({
     }
   }, [projectProp]);
   
+  useEffect(() => {
+    if (!projectProp)
+      setProject({
+        name: "",
+        is_active: true,
+      })
+    else setProject(projectProp);
+  }, [open, projectProp])
 
   if (!project) return <></>;
 
@@ -67,11 +75,13 @@ export const ProjectFormModal = ({
             backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
           }}
         >
-          Update project
+          {projectProp ? 'Update' : 'Add'} project
         </DialogTitle>
         <DialogContent>
           <FormTextField
+            autoComplete="off"
             fullWidth
+            required
             value={project.name}
             name="name"
             onChange={(e) => onChangeHandler(e)}
@@ -99,7 +109,7 @@ export const ProjectFormModal = ({
         </DialogContent>
         <DialogActions>
           <AppButton onClick={handleCancel}>Cancel</AppButton>
-          <AppButton onClick={handleUpdate}>Update</AppButton>
+          <AppButton disabled={!project.name} onClick={handleConfirm}>{projectProp ? 'Update' : 'Add'}</AppButton>
         </DialogActions>
       </Dialog>
   )

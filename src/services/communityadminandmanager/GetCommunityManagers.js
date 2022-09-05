@@ -1,9 +1,9 @@
 import axiosInstance from "../axios/index";
 
-const getCommunityById = async (id) => {
+const getCommunityManagers = async () => {
   try {
-    const response = await axiosInstance.get(`/api/community/${id}`);
-    if (response.status !== 200) {
+    const response = await axiosInstance.get("/api/managers/community");
+    if (response.status !== 200 && response.status !== 201) {
       throw new Error(response.data);
     }
     return await response.data.data;
@@ -14,4 +14,5 @@ const getCommunityById = async (id) => {
     throw new Error(error.message);
   }
 };
-export default getCommunityById;
+
+export default getCommunityManagers;

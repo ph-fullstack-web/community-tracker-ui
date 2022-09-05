@@ -20,7 +20,12 @@ import useUpdatePassword from "./communityadminandmanager/useUpdatePassword";
 import useLogin from "./login/useLogin";
 import useGetWorkState from "./workstate/useGetWorkState";
 import useGetJobLevel from "./joblevel/useGetJobLevel";
+import useGetPeopleDetailsDesc from "./people-details/useGetPeopleDetailsDesc";
 import useGetPeopleDetails from "./people-details/useGetPeopleDetails";
+import useUpdateCommunity from "./communities/useUpdateCommunity";
+import useCreateManager from "./communityadminandmanager/useCreateManager";
+import useGetCommunityManagers from "./communityadminandmanager/useGetCommunityManagers";
+import useCreateProject from "./projects/useCreateProject";
 
 export {
   useCreatePeople,
@@ -45,5 +50,10 @@ export {
   useLogin,
   useGetWorkState,
   useGetJobLevel,
-  useGetPeopleDetails
+  useGetPeopleDetailsDesc,
+  useGetPeopleDetails,
+  useUpdateCommunity,
+  useCreateManager,
+  useGetCommunityManagers,
+  useCreateProject,
 };

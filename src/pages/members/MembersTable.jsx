@@ -33,6 +33,7 @@ const MembersTable = ({
   rowData,
   isError,
   error,
+  setFilteredRowData,
 }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
   const { state: {isAuthenticated}} = useAuthContext();
@@ -56,7 +57,7 @@ const MembersTable = ({
 
           let queryFound = false;
           if (property === "is_probationary") {
-            queryFound = (member[property] === true && "probitionary".includes(search.toLowerCase())) ||
+            queryFound = (member[property] === true && "probationary".includes(search.toLowerCase())) ||
               (member[property] === false && "regular".includes(search.toLowerCase()));
           } else {
             queryFound = member[property]
@@ -79,7 +80,7 @@ const MembersTable = ({
 
           let queryFound = false;
           if (property === "is_probationary") {
-            queryFound = (member[property] === true && "probitionary".includes(search.toLowerCase())) ||
+            queryFound = (member[property] === true && "probationary".includes(search.toLowerCase())) ||
               (member[property] === false && "regular".includes(search.toLowerCase()));
           } else {
             queryFound = member[property]
@@ -141,6 +142,10 @@ const MembersTable = ({
   useEffect(() => {
     setPage(0);
   }, [search]);
+
+  useEffect(() => {
+    setFilteredRowData(rowDataFiltered);
+  }, [rowDataFiltered, setFilteredRowData]);
 
   return (
     <Box sx={{ overflowX: "auto" }} id="members-table-container">

@@ -1,15 +1,15 @@
-import { MenuItem, Grid, Box, Card, FormControlLabel, Checkbox } from "@mui/material";
+import { MenuItem, Grid, Box, Card, FormControlLabel, Checkbox, Tooltip, IconButton } from "@mui/material";
 import { FormSelect, FormTextField, FormSwitch } from "components";
-import useGetManagers from "hooks/people/useGetManagers";
 import useGetProjects from "hooks/projects/useGetProjects";
 import useGetWorkState from "hooks/workstate/useGetWorkState";
 import useGetJobLevel from "hooks/joblevel/useGetJobLevel";
 import { useState, useEffect } from "react";
 import AppButton from "components/common/AppButton";
-import { useSwitchThemeContext, useGetSkills, usePostSkills, useGetPeopleDetails } from "hooks";
+import { useSwitchThemeContext, useGetSkills, usePostSkills, useGetPeopleDetailsDesc } from "hooks";
 import SaveIcon from "@mui/icons-material/Save";
 import { AutocompleteInputChip } from "../../components/index.js";
 import { useNotificationContext } from "contexts/notification/NotificationContext";
+import InfoIcon from '@mui/icons-material/Info';
 
 const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   const { currentThemePalette } = useSwitchThemeContext();
@@ -18,13 +18,13 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
     state: "",
     hiredDate: "",
     jobLevel: "",
-    projectLead: "",
     project: "",
     email: "",
     cognizantId: "",
     isProbationary: true,
     skills: "",
     details: "",
+    isActive: true,
   });
   const [options, setOptions] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState([]);
@@ -54,12 +54,18 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
     }))
   };
 
+  const onActiveChange = () => {
+    setResource((prevState) => ({
+      ...prevState,
+      isActive: !resource.isActive
+    }))
+  };
+
   const { data: projectsData, isLoading: isLoadingProjects } = useGetProjects();
-  const { isLoading, data: communityManagers } = useGetManagers();
   const { data: workStateData, isLoading: isLoadingWorkState } = useGetWorkState();
   const { data: jobLevelData, isLoading: isLoadingJobLevel } = useGetJobLevel();
   const { data: skillsData, isLoading: getSkillsLoading } = useGetSkills();
-  const { data: detailsData, isLoading: getDetailsLoading } = useGetPeopleDetails();
+  const { data: detailsData, isLoading: getDetailsLoading } = useGetPeopleDetailsDesc();
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -92,7 +98,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
   useEffect(() => {
     if (!getSkillsLoading) {
       setOptions(
-        skillsData?.map((skl, idx) => {
+        skillsData?.filter(skill => skill.is_active).map((skl, idx) => {
           return { id: skl.peopleskills_id, label: skl.peopleskills_desc };
         })
       );
@@ -306,35 +312,6 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   FormControlProps={{
                     fullWidth: true,
                   }}
-                  InputLabelChildren="Project Lead"
-                  SelectProps={{
-                    name: "projectLead",
-                    required: true,
-                    value: resource.projectLead,
-                    label: "Project Lead",
-                    onChange: onChangeHandler,
-                  }}
-                >
-                  <MenuItem value="">Select Project Lead</MenuItem>
-                  {!isLoading &&
-                    (communityManagers || []).map((manager) => {
-                      return (
-                        <MenuItem
-                          key={manager.people_id}
-                          value={manager.people_id}
-                        >
-                          {" "}
-                          {manager.full_name}{" "}
-                        </MenuItem>
-                      );
-                    })}
-                </FormSelect>
-              </Grid>
-              <Grid item xs={12} sm={12} md={5} lg={5}>
-                <FormSelect
-                  FormControlProps={{
-                    fullWidth: true,
-                  }}
                   InputLabelChildren="Project"
                   SelectProps={{
                     name: "project",
@@ -348,6 +325,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   <MenuItem value="">Select Project</MenuItem>
                   {!isLoadingProjects &&
                     (projectsData || [])
+                      .filter(project => project.is_active)
                       .sort(sortProjects)
                       .map((project) => {
                         return (
@@ -359,6 +337,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                     )}
                 </FormSelect>
               </Grid>
+              <Grid item xs={12} sm={12} md={5} lg={5} />
               <Grid item xs={12} sm={12} md={12} lg={11} 
                   sx={{ padding: {
                     lg: "0 2.1rem",
@@ -397,9 +376,44 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                       checked={resource.isProbationary}
                     />
                   }
-                  label="Probitionary"
+                  label="Probationary"
                 /> 
               </Grid>
+              {resourcePerson && <Grid 
+                item 
+                xs={12} 
+                sm={12} 
+                md={12} 
+                lg={11} 
+                alignSelf="flex-start"
+                sx={{ padding: {
+                  lg: "0 2.1rem",
+                } }}>
+                <FormControlLabel
+                  sx={{
+                    color: currentThemePalette.text,
+                  }}
+                  value={resource.isActive}
+                  control={
+                    <FormSwitch
+                      onChange={onActiveChange}
+                      sx={{
+                        '& .MuiSvgIcon-root': { fontSize: 28 }
+                      }}
+                      checked={resource.isActive}
+                    />
+                  }
+                  label="Active"
+                /> 
+                <Tooltip
+                  title="Setting to inactive will hide this record. Contact your system administrator for re-activation." 
+                  placement="right"
+                >
+                  <IconButton>
+                    <InfoIcon sx={{color: currentThemePalette.main,}} />
+                  </IconButton>
+                </Tooltip>
+              </Grid>}
               <Grid 
                 item 
                 xs={12} 
@@ -413,14 +427,20 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   {details.map(detail => 
                     <Grid item xs={12} md={6} key={detail.id}>
                       <FormControlLabel
+                        sx={{
+                          color: currentThemePalette.text,
+                        }}
                         control={
                           <Checkbox 
                             checked={detail.isActive} 
                             onChange={() => handleDetailChange(detail)} 
                             disabled={!resource.isProbationary}
+                            sx={{
+                              color: currentThemePalette.main,
+                            }}
                           />
                         }
-                      label={detail.label}
+                        label={detail.label}
                       />
                     </Grid>
                   )}

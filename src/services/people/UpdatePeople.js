@@ -7,7 +7,7 @@ const updatePeople = async ({ payload, peopleId }) => {
     const response = await axiosInstance.put(
       `/api/people/peopleid=${peopleId}`,
       {
-        cognizantid_id: payload.cognizantId,
+        cognizantid_id: parseInt(payload.cognizantId),
         full_name: payload.name,
         csv_email: payload.email,
         hired_date: payload.hiredDate,
@@ -19,11 +19,10 @@ const updatePeople = async ({ payload, peopleId }) => {
         last_name: "",
         first_name: "",
         middle_name: "",
-        is_active: true,
+        is_active: payload.isActive,
         is_probationary: payload.isProbationary,
         skills: payload.skills,
         details: payload.details,
-        project_lead: payload.projectLead,
       },
       {
         headers: {
