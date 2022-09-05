@@ -105,6 +105,11 @@ export default function MemberSkillsTable({
     if (b.project_status === 'In a Project' && a.project_status === 'Bench')
     return -1;
     
+    const resourceA = a.full_name.toLowerCase();
+    const resourceB = b.full_name.toLowerCase();
+
+    if (resourceA < resourceB) return -1;
+    if (resourceA > resourceB) return 1;
     return 0;
   });
 

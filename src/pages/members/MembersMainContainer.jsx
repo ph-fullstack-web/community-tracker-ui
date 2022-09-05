@@ -126,7 +126,7 @@ const MembersMainContainer = () => {
                           .some(detail => detail.people_id === data.people_id && 
                             detail.people_details_desc_id === desc.people_details_desc_id);
           
-          data[desc.people_details_desc_id] = exist ? 'true' : 'false';
+          data[desc.people_details_desc_id] = exist ? 'Yes' : 'No';
         });
       }
 

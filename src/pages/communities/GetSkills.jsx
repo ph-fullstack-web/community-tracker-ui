@@ -62,6 +62,26 @@ const GetSkills = () => {
   };
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
 
+  const sortData = ((a, b) => {
+    const skillsCountA = a.skills.length;
+    const skillsCountB = b.skills.length;
+
+    if (skillsCountA > skillsCountB) return -1;
+    if (skillsCountA < skillsCountB) return 1;
+
+    if (a.project_status === 'In a Project' && b.project_status === 'Bench')
+    return 1;
+    if (b.project_status === 'In a Project' && a.project_status === 'Bench')
+    return -1;
+    
+    const resourceA = a.full_name.toLowerCase();
+    const resourceB = b.full_name.toLowerCase();
+
+    if (resourceA < resourceB) return -1;
+    if (resourceA > resourceB) return 1;
+    return 0;
+  });
+
   return (
     <PageContainer>
       <Typography
@@ -177,11 +197,11 @@ const GetSkills = () => {
                 <Stack direction="row" sx={{}}>
                   <Box sx={{ ml: "auto" }}>
                     <ExportButton
-                      rowData={memberSkillsData.map((skl, idx) => {
+                      rowData={memberSkillsData.sort(sortData).map((skl) => {
                         return {
                           full_name: skl.full_name,
                           skills: skl.skills.join(" ,"),
-                          project_status: skl.project_id === 1 ? "Bench" : "In a Project",
+                          project_status: skl.project_status,
                         }
                       })}
                       isLoading={memberSkillsData.length > 0 ? false : true}
