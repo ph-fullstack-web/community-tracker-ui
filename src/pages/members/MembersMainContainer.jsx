@@ -69,7 +69,7 @@ const MembersMainContainer = () => {
         ? membersData.members.sort(sortMembers).map((member) => ({
             people_id: member.people_id,
             full_name: member.full_name,
-            assigned_to: membersData.manager?.full_name,
+            assigned_to: membersData.manager?.name,
             hired_date_formatted: moment(member.hired_date).format(
               "MM/DD/YYYY"
             ),
