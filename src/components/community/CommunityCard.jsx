@@ -27,6 +27,7 @@ const CommunityCard = ({
   manager,
   percentage,
   chartData,
+  members,
 }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
   const {state: {isAuthenticated}} = useAuthContext();
@@ -180,7 +181,7 @@ const CommunityCard = ({
             component={Link}
             to={`/members/${id}`}
           >
-            View Members
+            {members && members > 0 ? `View (${members}) Members` : "View Members"}
           </Button>
           <HtmlTooltip
             title={

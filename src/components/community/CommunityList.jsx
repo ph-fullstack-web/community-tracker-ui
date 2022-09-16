@@ -110,6 +110,7 @@ const CommunityList = () => {
                     },
                   ]}
                   percentage={community.percentage}
+                  members={community.members}
                 />
               ))}
               <Grid
