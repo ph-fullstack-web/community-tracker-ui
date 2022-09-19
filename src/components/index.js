@@ -14,6 +14,7 @@ import ConfirmModal from "./common/ConfirmModal";
 import PieChartDashBoard from "./Dashboards/SinglePieChart"
 import ChangePasswordModal from "./change-password/ChangePasswordModal";
 import SkillsCard from "./skills/SkillsCard"
+import EmployeeListModal from "./navbar/EmployeeListModal";
 
 export {
   LoginModal,
@@ -31,5 +32,6 @@ export {
   ConfirmModal,
   PieChartDashBoard,
   ChangePasswordModal,
-  SkillsCard
+  SkillsCard,
+  EmployeeListModal,
 };
