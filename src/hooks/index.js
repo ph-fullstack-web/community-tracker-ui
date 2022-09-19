@@ -26,6 +26,7 @@ import useUpdateCommunity from "./communities/useUpdateCommunity";
 import useCreateManager from "./communityadminandmanager/useCreateManager";
 import useGetCommunityManagers from "./communityadminandmanager/useGetCommunityManagers";
 import useCreateProject from "./projects/useCreateProject";
+import useGetPeopleBySearchCriteria from "./people/useGetPeopleBySearchCriteria";
 
 export {
   useCreatePeople,
@@ -56,4 +57,5 @@ export {
   useCreateManager,
   useGetCommunityManagers,
   useCreateProject,
+  useGetPeopleBySearchCriteria,
 };

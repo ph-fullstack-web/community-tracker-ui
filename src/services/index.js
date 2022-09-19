@@ -24,6 +24,7 @@ import getPeopleDetails from "./people-details/GetPeopleDetails";
 import createManager from "./communityadminandmanager/CreateManager";
 import getCommunityManagers from "./communityadminandmanager/GetCommunityManagers";
 import createProject from "./project/CreateProject";
+import getPeopleBySearchCriteria from "./people/GetPeopleBySearchCriteria";
 
 export {
   addCommunityService,
@@ -52,4 +53,5 @@ export {
   createManager,
   getCommunityManagers,
   createProject,
+  getPeopleBySearchCriteria,
 };
