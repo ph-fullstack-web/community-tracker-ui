@@ -8,6 +8,7 @@ const updateProject = async ({ payload, projectId }) => {
       `/api/projects/${projectId}`,
       {
         project_name: payload.name,
+        project_code: payload.code,
         is_active: payload.is_active,
       },
       {
