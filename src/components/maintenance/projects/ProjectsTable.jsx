@@ -35,6 +35,7 @@ export const ProjectsTable = ({
 }) => {
   const TABLE_HEADERS = [
     { value: "name", name: "Project", filter: true },
+    { value: "code", name: "Code", filter: true},
     { value: "is_active", name: "Status", filter: true },
     { value: "actions", name: "Actions", filter: false },
   ];
@@ -67,6 +68,7 @@ export const ProjectsTable = ({
         ? projectsData.map((project) => ({
             id: project.id,
             name: project.project,
+            code: project.project_code,
             is_active: project.is_active,
           })).sort(sortProjects)
         : null,
@@ -150,7 +152,7 @@ export const ProjectsTable = ({
   };
 
   const rowPlaceholders = [...Array(5).keys()];
-  const columnPlaceholders = [...Array(6).keys()];
+  const columnPlaceholders = [...Array(4).keys()];
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -379,6 +381,9 @@ export const ProjectsTable = ({
                   }}>
                   <ProjectsTableBodyCell sxProp={tableCellStyle}>
                     {row.name}
+                  </ProjectsTableBodyCell>
+                  <ProjectsTableBodyCell sxProp={tableCellStyle}>
+                    {row.code}
                   </ProjectsTableBodyCell>
                   <ProjectsTableBodyCell sxProp={tableCellStyle}>
                     {row.is_active ? "Active" : "Inactive"}

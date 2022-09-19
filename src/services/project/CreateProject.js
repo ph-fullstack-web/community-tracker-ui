@@ -8,6 +8,7 @@ const createProject = async (project) => {
       "/api/projects",
       {
         project: project.name,
+        project_code: project.code,
         is_active: project.is_active,
       },
       {
