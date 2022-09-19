@@ -19,6 +19,7 @@ export const ProjectFormModal = ({
 }) => {
   const [project, setProject] = useState({
     name: "",
+    code: "",
     is_active: true
   });
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
@@ -88,6 +89,18 @@ export const ProjectFormModal = ({
             variant="outlined"
             id="name"
             label="Name"
+            sx={{marginTop: "1rem"}}
+          />
+          <FormTextField
+            autoComplete="off"
+            fullWidth
+            required
+            value={project.code}
+            name="code"
+            onChange={(e) => onChangeHandler(e)}
+            variant="outlined"
+            id="code"
+            label="Code"
             sx={{marginTop: "1rem"}}
           />
           <FormControlLabel
