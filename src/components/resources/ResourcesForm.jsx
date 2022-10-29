@@ -69,6 +69,7 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    resource.project = resource.project ?? null;
     resource.details = details
       .filter(detail => detail.isActive)
       .map(detail => detail.id)
@@ -315,7 +316,6 @@ const ResourcesForm = ({ onSubmitHandler, isProcessing, resourcePerson }) => {
                   InputLabelChildren="Project"
                   SelectProps={{
                     name: "project",
-                    required: true,
                     value: resource.project,
                     defaultValue: "",
                     label: "Projects",

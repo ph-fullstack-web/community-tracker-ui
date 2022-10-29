@@ -14,7 +14,7 @@ const updatePeople = async ({ payload, peopleId }) => {
         community_id: payload.community,
         workstate_id: parseInt(payload.state),
         joblevel_id: parseInt(payload.jobLevel),
-        project_id: payload.project,
+        project_id: payload.project ? parseInt(payload.project) : null,
 
         last_name: "",
         first_name: "",
