@@ -13,6 +13,12 @@ import { useAuthContext } from "contexts/auth/AuthContext";
 import { useLogin, useSwitchThemeContext } from "hooks";
 import AppButton from "components/common/AppButton";
 import { useEffect } from "react";
+import { GoogleLoginButton } from "./GoogleLoginButton";
+
+const googleButtonStyle = {
+  margin: 'auto',
+  padding: '1rem'
+};
 
 const LoginModal = ({ open, handleClose }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
@@ -46,6 +52,14 @@ const LoginModal = ({ open, handleClose }) => {
        setError(error.message);
       }
     });
+  };
+
+  const handleGoogleLogin = (response) => {
+    dispatch({
+      type: "LOGIN",
+      payload: { success: "success", data: response.credential},
+    });
+    handleClose();
   };
 
   useEffect(() => {
@@ -108,6 +122,10 @@ const LoginModal = ({ open, handleClose }) => {
         <AppButton onClick={handleClose}>Cancel</AppButton>
         <AppButton onClick={handleSubmit}>Login</AppButton>
       </DialogActions>
+      <GoogleLoginButton
+        style={googleButtonStyle}
+        onCallbackResponse={handleGoogleLogin}
+      />
     </Dialog>
   );
 };
