@@ -9,6 +9,7 @@ import createPeople from "./people/CreatePeople";
 import getManagers from "./people/GetManagers";
 import getMembers from "./people/GetMembers";
 import getPeopleById from "./people/GetPeopleById";
+import getPeopleByCSVEmail from "./people/GetPeopleByCSVEmail";
 import updatePeople from "./people/UpdatePeople";
 import getProjects from "./project/GetProjects";
 import deleteProject from "./project/DeleteProject";
@@ -38,6 +39,7 @@ export {
   getProjects,
   updatePeople,
   getPeopleById,
+  getPeopleByCSVEmail,
   createPeople,
   getMemberWithSkills,
   deleteSkill,

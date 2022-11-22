@@ -7,6 +7,7 @@ import useGetMembers from "./people/useGetMembers";
 import useLocalStorage from "./common/useLocalStorage";
 import useCreatePeople from "./people/useCreatePeople";
 import useGetPeopleById from "./people/useGetPeopleById";
+import useGetPeopleByCSVEmail from "./people/useGetPeopleByCSVEmail";
 import useUpdatePeople from "./people/useUpdatePeople";
 import useGetProjects from "./projects/useGetProjects";
 import useUpdateProject from "./projects/useUpdateProject";
@@ -38,6 +39,7 @@ export {
   useGetCommunityById,
   useSwitchThemeContext,
   useGetPeopleById,
+  useGetPeopleByCSVEmail,
   useUpdatePeople,
   useGetSkills,
   useGetProjects,
