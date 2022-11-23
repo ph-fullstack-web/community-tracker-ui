@@ -18,6 +18,7 @@ import deleteSkill from "./people-skills/DeletePeopleSkill";
 import updateSkill from "./people-skills/UpdatePeopleSkill";
 import updatePassword from "./communityadminandmanager/UpdatePassword";
 import login from "./login/Login";
+import googleLogin from "./login/GoogleLogin";
 import getJobLevel from "./joblevel/GetJobLevel";
 import getWorkState from "./workstate/GetWorkState";
 import getPeopleDetailsDesc from "./people-details/GetPeopleDetailsDesc";
@@ -48,6 +49,7 @@ export {
   updateProject,
   updatePassword,
   login,
+  googleLogin,
   getJobLevel,
   getWorkState,
   getPeopleDetailsDesc,

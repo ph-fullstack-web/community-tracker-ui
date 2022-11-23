@@ -19,6 +19,7 @@ import useUpdateSkill from './skills/useUpdateSkill';
 import useDeleteSkill from "./skills/useDeleteSkill";
 import useUpdatePassword from "./communityadminandmanager/useUpdatePassword";
 import useLogin from "./login/useLogin";
+import useGoogleLogin from "./login/useGoogleLogin";
 import useGetWorkState from "./workstate/useGetWorkState";
 import useGetJobLevel from "./joblevel/useGetJobLevel";
 import useGetPeopleDetailsDesc from "./people-details/useGetPeopleDetailsDesc";
@@ -51,6 +52,7 @@ export {
   useDeleteProject,
   useUpdatePassword,
   useLogin,
+  useGoogleLogin,
   useGetWorkState,
   useGetJobLevel,
   useGetPeopleDetailsDesc,

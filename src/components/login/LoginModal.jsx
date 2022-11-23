@@ -10,11 +10,10 @@ import {
 } from "@mui/material";
 import { FormTextField } from "components";
 import { useAuthContext } from "contexts/auth/AuthContext";
-import { useLogin, useGetPeopleByCSVEmail, useSwitchThemeContext } from "hooks";
+import { useLogin, useGoogleLogin, useSwitchThemeContext } from "hooks";
 import AppButton from "components/common/AppButton";
 import { useEffect } from "react";
 import { GoogleLoginButton } from "./GoogleLoginButton";
-import jwtDecode from "jwt-decode";
 
 const googleButtonStyle = {
   margin: 'auto',
@@ -23,9 +22,8 @@ const googleButtonStyle = {
 
 const LoginModal = ({ open, handleClose }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const [ googleLoginDetails, setGoogleLoginDetails] = useState({});
   const { mutate: loginMutate } = useLogin();
-  const { data: people, isError: getPeopleByCSVEmailHasError, error: getPeopleByCSVEmailError, refetch: getPeopleByCSVEmail } = useGetPeopleByCSVEmail(googleLoginDetails?.email);
+  const { mutate: googleLoginMutate } = useGoogleLogin();
   const [credentials, setCredentials] = useState({ id: "", password: "" });
   const [error, setError] = useState("");
   const { dispatch } = useAuthContext();
@@ -61,8 +59,24 @@ const LoginModal = ({ open, handleClose }) => {
   const handleGoogleLogin = (response) => {
     const token = response?.credential;
     if(token) {
-      const { email } = jwtDecode(token);
-      setGoogleLoginDetails({ email, token });
+      googleLoginMutate({ token } , {
+        onSuccess: ({ access_token, data: people }) => {
+          dispatch({
+            type: "LOGIN",
+            payload: { success: "success", data: {
+              access_token,
+              data: {
+                ...people,
+                cognizant_id: people?.cognizantid_id
+              }
+            }},
+          });
+          handleClose();
+        },
+        onError: (error) => {
+         setError(error.message);
+        }
+      })
     }   
   };
 
@@ -70,32 +84,6 @@ const LoginModal = ({ open, handleClose }) => {
     setCredentials({ id: "", password: "" });
     setError("");
   }, [open])
-
-  useEffect(() => {
-    const { email } = googleLoginDetails;
-    if(email) {
-      getPeopleByCSVEmail(email);
-    }
-  }, [googleLoginDetails.email])
-
-  useEffect(() => {
-    if(!(!getPeopleByCSVEmailHasError && people)) {
-      setError(getPeopleByCSVEmailError?.message);
-    } else {
-      const { token } = googleLoginDetails;
-      dispatch({
-        type: "LOGIN",
-        payload: { success: "success", data: {
-          access_token: token,
-          data: {
-            ...people,
-            cognizant_id: people?.cognizantid_id
-          }
-        }},
-      });
-      handleClose();
-    }
-  }, [getPeopleByCSVEmailHasError, getPeopleByCSVEmailError, people])
 
   return (
     <Dialog 
