@@ -8,12 +8,12 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { FormTextField } from "components";
+import { FormTextField, GoogleLoginButton } from "components";
 import { useAuthContext } from "contexts/auth/AuthContext";
 import { useLogin, useSwitchThemeContext } from "hooks";
 import AppButton from "components/common/AppButton";
 import { useEffect } from "react";
-import { GoogleLoginButton } from "./GoogleLoginButton";
+import { useNavigate } from 'react-router-dom';
 
 const googleButtonStyle = {
   margin: 'auto',
@@ -26,6 +26,7 @@ const LoginModal = ({ open, handleClose }) => {
   const [credentials, setCredentials] = useState({ id: "", password: "" });
   const [error, setError] = useState("");
   const { dispatch } = useAuthContext();
+  const navigate = useNavigate();
 
   const handleCredentials = (e) => {
     const value = e.target.value;
@@ -47,6 +48,7 @@ const LoginModal = ({ open, handleClose }) => {
           payload: { success: "success", data},
         });
         handleClose();
+        navigate('/communities');
       },
       onError: (error) => {
        setError(error.message);
@@ -55,11 +57,25 @@ const LoginModal = ({ open, handleClose }) => {
   };
 
   const handleGoogleLogin = (response) => {
-    dispatch({
-      type: "LOGIN",
-      payload: { success: "success", data: response.credential},
-    });
-    handleClose();
+    const token = response?.credential;
+    if(token) {
+      googleLoginMutate({ token } , {
+        onSuccess: ({ access_token, data: people }) => {
+          dispatch({
+            type: "LOGIN",
+            payload: { success: "success", data: {
+              access_token,
+              data: {...people }
+            }},
+          });
+          handleClose();
+          navigate('/communities');
+        },
+        onError: (error) => {
+         setError(error.message);
+        }
+      })
+    }   
   };
 
   useEffect(() => {

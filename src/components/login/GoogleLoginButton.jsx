@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 
-export const GoogleLoginButton = ({ style, onCallbackResponse }) => {
+const GoogleLoginButton = ({ style, onCallbackResponse }) => {
   const clientId =
     '1090992123059-dts3p5cf117rq6mqlkbitupdbfssrnd7.apps.googleusercontent.com';
 
@@ -21,3 +21,5 @@ export const GoogleLoginButton = ({ style, onCallbackResponse }) => {
 
   return <div id="signInDiv" style={style} />;
 };
+
+export default GoogleLoginButton;

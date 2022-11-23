@@ -11,6 +11,7 @@ import {
   NotFound, 
   InviteManager,
   Maintenance,
+  Login,
 } from 'pages';
 import { useAuthContext } from 'contexts/auth/AuthContext';
 
@@ -78,31 +79,9 @@ const authRoutes = [
 
 export const guestRoutes = [
   {
-    path: 'communities',
-    element: <Communities />,
-    name: 'Communities',
-    children: [
-      {
-        path: ':id',
-        element: <GetCommunity />,
-        name: 'Get Community',
-      },
-      {
-        path: 'add',
-        element: <NotFound />,
-        name: 'Not Found'
-      },
-    ]
-  },
-  {
-    path: 'members/:communityId',
-    element: <Members />,
-    name: 'Resources',
-  },
-  {
-    path: 'skills',
-    element: <GetSkills />,
-    name: 'Get Skills',
+    path: 'login',
+    element: <Login />,
+    name: 'Login',
   },
   {
     path: '*',
@@ -137,7 +116,7 @@ export const Routes = () => {
 
   return (
     <ReactRoutes>
-      <Route index path="/" element={<Communities />} />
+      <Route index path="/" element={<Login />} />
         {getRoutes(isAuthenticated ? authRoutes : guestRoutes)}
     </ReactRoutes>
   )

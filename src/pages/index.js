@@ -9,6 +9,7 @@ import UpdateResource from './resources/UpdateResource';
 import InviteManager from './invite';
 import NotFound from './not-found'
 import Maintenance from './maintenance';
+import Login from './login';
 
 export {
   Communities,
@@ -22,4 +23,5 @@ export {
   InviteManager,
   NotFound,
   Maintenance,
+  Login,
 };

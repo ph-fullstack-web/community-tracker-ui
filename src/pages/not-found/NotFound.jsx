@@ -1,12 +1,14 @@
 import PageContainer from "layout/PageContainer";
 import { Card, Paper, Typography } from "@mui/material";
 import { useSwitchThemeContext } from "hooks";
+import { useAuthContext } from 'contexts/auth/AuthContext';
 
 const NotFound = () => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+  const {state: {isAuthenticated}} = useAuthContext();
 
-  return (
-    <PageContainer>
+  const renderCard = () => {
+    return (
       <Card
         sx={{
           display: "flex",
@@ -95,8 +97,18 @@ const NotFound = () => {
           the server has been instructed not to let you have it.
         </Typography>
       </Card>
-    </PageContainer>
-  );
+    )
+  }
+
+  if(isAuthenticated) {
+    return (
+      <PageContainer>
+        {renderCard()}
+      </PageContainer>
+    )
+  }
+
+  return renderCard()
 };
 
 export default NotFound;

@@ -77,6 +77,7 @@ const PersistentDrawerLeft = ({ children }) => {
       authDispatch({
         type: "LOGOUT",
       });
+      router('/login');
     }
 
     const { currentTheme, currentThemePalette } = useSwitchThemeContext();
