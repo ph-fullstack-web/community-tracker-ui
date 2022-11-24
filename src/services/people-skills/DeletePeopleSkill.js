@@ -1,29 +1,8 @@
-import axiosInstance from "../axios/index";
-import { GetAccessToken } from 'utils';
+import remove from "../axios/remove";
 
 const deleteSkill = async (peopleSkillId) => {
-  try {
-    const token = GetAccessToken();
-    const response = await axiosInstance.delete(
-      `/api/peopleskills/${peopleSkillId}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Accepts: "application/json",
-          Authorization: `Bearer ${token}`
-        },
-      }
-    );
-
-    if (response.status !== 200 && response.status !== 201) {
-      throw new Error(response.data);
-    }
-    return await response.data;
-  } catch (error) {
-    if (error?.response?.data?.message) {
-      throw new Error(error.response.data.message);
-    }
-    throw new Error(error.message);
-  }
+  const response = await remove(`/api/peopleskills/${peopleSkillId}`);
+  return response?.data;
 };
+
 export default deleteSkill;

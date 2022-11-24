@@ -42,7 +42,7 @@ export const EmployeeListModal = ({
   const [rowsPerPage, setRowsPerPage] = useState(6);
 
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const { state: {isAuthenticated}} = useAuthContext();
+  const { state: { isAuthenticated, credentials : { isMember }}} = useAuthContext();
   const navigate = useNavigate();
 
   const {
@@ -204,7 +204,7 @@ export const EmployeeListModal = ({
                           },
                         }}
                         onClick={() => {
-                            if (isAuthenticated) navigateToUpdate(row.community.community_id, row.people_id)
+                            if (isAuthenticated && !isMember) navigateToUpdate(row.community.community_id, row.people_id)
                           }
                         }>
                         <EmployeesTableBodyCell sxProp={tableCellStyle}>

@@ -15,7 +15,7 @@ import AppButton from "components/common/AppButton.jsx";
 import SearchIcon from "@mui/icons-material/Search";
 
 const MembersMainContainer = () => {
-  const {state: {isAuthenticated}} = useAuthContext();
+  const { state: { isAuthenticated, credentials : { isMember }}} = useAuthContext();
   const { communityId } = useParams();
   const navigate = useNavigate();
   const navigateToCreate = (communityId) => {
@@ -182,7 +182,7 @@ const MembersMainContainer = () => {
         }}
       >
         <Stack direction="row">
-          {isAuthenticated && (
+          {(isAuthenticated && !isMember) && (
             <Box>
               <PlusIconButton
                 title="Go to Input Page"

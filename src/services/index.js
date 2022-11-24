@@ -9,6 +9,7 @@ import createPeople from "./people/CreatePeople";
 import getManagers from "./people/GetManagers";
 import getMembers from "./people/GetMembers";
 import getPeopleById from "./people/GetPeopleById";
+import getPeopleByCSVEmail from "./people/GetPeopleByCSVEmail";
 import updatePeople from "./people/UpdatePeople";
 import getProjects from "./project/GetProjects";
 import deleteProject from "./project/DeleteProject";
@@ -17,6 +18,7 @@ import deleteSkill from "./people-skills/DeletePeopleSkill";
 import updateSkill from "./people-skills/UpdatePeopleSkill";
 import updatePassword from "./communityadminandmanager/UpdatePassword";
 import login from "./login/Login";
+import googleLogin from "./login/GoogleLogin";
 import getJobLevel from "./joblevel/GetJobLevel";
 import getWorkState from "./workstate/GetWorkState";
 import getPeopleDetailsDesc from "./people-details/GetPeopleDetailsDesc";
@@ -38,6 +40,7 @@ export {
   getProjects,
   updatePeople,
   getPeopleById,
+  getPeopleByCSVEmail,
   createPeople,
   getMemberWithSkills,
   deleteSkill,
@@ -46,6 +49,7 @@ export {
   updateProject,
   updatePassword,
   login,
+  googleLogin,
   getJobLevel,
   getWorkState,
   getPeopleDetailsDesc,

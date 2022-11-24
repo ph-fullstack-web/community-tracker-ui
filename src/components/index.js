@@ -5,6 +5,8 @@ import PlusIconButton from "./common/PlusIconButton";
 import FormSearchInput from "./common/form-controls/FormSearchInput";
 import ThemeSwitchButton from "./theme-switcher/ThemeSwitchButton";
 import LoginModal from "./login/LoginModal";
+import GoogleLoginButton from "./login/GoogleLoginButton";
+import LoginTemplate from "./login/LoginTemplate";
 import FormTextField from "./common/form-controls/FormTextField";
 import FormSelect from "./common/form-controls/FormSelect";
 import FormSwitch from "./common/form-controls/FormSwitch";
@@ -18,6 +20,8 @@ import EmployeeListModal from "./navbar/EmployeeListModal";
 
 export {
   LoginModal,
+  GoogleLoginButton,
+  LoginTemplate,
   PlusIconButton,
   FormSearchInput,
   AutocompleteInputChip,
