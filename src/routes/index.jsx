@@ -1,4 +1,4 @@
-import { Routes as ReactRoutes, Route } from 'react-router-dom';
+import { Routes as ReactRoutes, Route, Navigate } from 'react-router-dom';
 import { 
   AddCommunity, 
   UpdateCommunity, 
@@ -116,8 +116,8 @@ export const Routes = () => {
 
   return (
     <ReactRoutes>
-      <Route index path="/" element={<Login />} />
-        {getRoutes(isAuthenticated ? authRoutes : guestRoutes)}
+      <Route index path="/" element={isAuthenticated ? <Navigate to ="/communities" /> : <Navigate to ="/login" />} />
+      {getRoutes(isAuthenticated ? authRoutes : guestRoutes)}
     </ReactRoutes>
   )
 };

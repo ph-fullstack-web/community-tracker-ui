@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import {LoginTemplate} from 'components';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from "contexts/auth/AuthContext";
@@ -11,11 +11,16 @@ const Login = () => {
   const navigate = useNavigate();  
 
   const [error, setError] = useState("");
-  const [credentials, setCredentials] = useState({ id: "", password: "" });
+
+  const idRef = useRef();
+  const passwordRef = useRef();
 
   const handleCredentials = (e) => {
-    const value = e.target.value;
-    setCredentials({ ...credentials, [e.target.name]: value });
+    const { name, value } = e.target;
+    switch(name) {
+      case 'id': idRef.current = value; break;
+      case 'password': passwordRef.current = value; break;
+    }
   };
 
   const handleSubmit = (e) => {
@@ -23,8 +28,8 @@ const Login = () => {
     dispatch({ type: "AUTH_LOADING" });
 
     const args = {
-      cognizant_id: credentials.id,
-      password: credentials.password,
+      cognizant_id: idRef.current,
+      password: passwordRef.current,
     }
     
     loginMutate(args, {
@@ -65,7 +70,6 @@ const Login = () => {
   return (
     <LoginTemplate
       handleCredentials={handleCredentials}
-      credentials={credentials}
       handleGoogleLogin={handleGoogleLogin}
       handleSubmit={handleSubmit}
       error={error}

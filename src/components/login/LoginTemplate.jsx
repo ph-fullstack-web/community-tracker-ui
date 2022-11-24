@@ -20,7 +20,7 @@ const googleButtonStyle = {
   padding: '1rem'
 };
 
-const LoginTemplate = ({ handleCredentials, credentials, handleGoogleLogin, handleSubmit, error }) => {
+const LoginTemplate = ({ handleCredentials, handleGoogleLogin, handleSubmit, error }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
     
   const Wrapper = styled('div')({
@@ -32,7 +32,7 @@ const LoginTemplate = ({ handleCredentials, credentials, handleGoogleLogin, hand
     backgroundColor: 'white',
   });
 
-  const Form = styled('div')({
+  const FormContainer = styled('div')({
     borderRight: `1px solid rgb(222, 226, 230)`,
     minHeight: 'inherit',
     maxWidth: 450,
@@ -45,7 +45,7 @@ const LoginTemplate = ({ handleCredentials, credentials, handleGoogleLogin, hand
 
   return (
     <Wrapper>
-      <Form>
+      <FormContainer>
         <Stack alignItems="center">
           <img src={logo} height={128} width={350} />
           <DialogContent>
@@ -69,7 +69,6 @@ const LoginTemplate = ({ handleCredentials, credentials, handleGoogleLogin, hand
             >
               <FormTextField
                 onChange={handleCredentials}
-                value={credentials.id}
                 name="id"
                 label="Cognizant ID"
                 required
@@ -78,7 +77,6 @@ const LoginTemplate = ({ handleCredentials, credentials, handleGoogleLogin, hand
               />
               <FormTextField
                 onChange={handleCredentials}
-                value={credentials.password}
                 name="password"
                 label="Password"
                 required
@@ -95,7 +93,7 @@ const LoginTemplate = ({ handleCredentials, credentials, handleGoogleLogin, hand
             onCallbackResponse={handleGoogleLogin}
           />
         </Stack>
-      </Form>
+      </FormContainer>
     </Wrapper>
   );
 };
