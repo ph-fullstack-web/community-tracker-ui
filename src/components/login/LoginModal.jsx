@@ -1,4 +1,4 @@
-import React, { useState, } from "react";
+import React, { useState } from "react";
 import {
   Alert,
   AlertTitle,
@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { FormTextField, GoogleLoginButton } from "components";
 import { useAuthContext } from "contexts/auth/AuthContext";
-import { useLogin, useSwitchThemeContext } from "hooks";
+import { useLogin, useGoogleLogin, useSwitchThemeContext } from "hooks";
 import AppButton from "components/common/AppButton";
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
@@ -23,10 +23,12 @@ const googleButtonStyle = {
 const LoginModal = ({ open, handleClose }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
   const { mutate: loginMutate } = useLogin();
+  const { mutate: googleLoginMutate } = useGoogleLogin();
   const [credentials, setCredentials] = useState({ id: "", password: "" });
   const [error, setError] = useState("");
   const { dispatch } = useAuthContext();
   const navigate = useNavigate();
+
 
   const handleCredentials = (e) => {
     const value = e.target.value;
@@ -82,6 +84,7 @@ const LoginModal = ({ open, handleClose }) => {
     setCredentials({ id: "", password: "" });
     setError("");
   }, [open])
+
   return (
     <Dialog 
       open={open}
