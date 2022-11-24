@@ -29,7 +29,7 @@ const CommunityCard = ({
   chartData,
 }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const {state: {isAuthenticated}} = useAuthContext();
+  const { state: { isAuthenticated, credentials : { isMember }}} = useAuthContext();
   const label = "Members"
   const managerValue = `Manager: ${manager}`;
   const contrastingColors =
@@ -92,7 +92,7 @@ const CommunityCard = ({
             </Avatar>
           }
           action={
-            isAuthenticated && <IconButton
+            (isAuthenticated && !isMember) && <IconButton
               sx={{
                 color: `${
                   currentTheme === "dark" ? "#0a7578" : currentThemePalette.dark

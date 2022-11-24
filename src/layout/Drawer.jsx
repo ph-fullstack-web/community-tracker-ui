@@ -54,7 +54,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const PersistentDrawerLeft = ({ children }) => {
     const { isLoading, data: communityData, isError, error } = useGetCommunities();
     const router = useNavigate();
-    const {state, dispatch: authDispatch} = useAuthContext();
+    const { state: { isAuthenticated, credentials : { isMember, data: { cognizant_id } }} , dispatch: authDispatch } = useAuthContext();
 
     const theme = useTheme();
     const [toggle, setToggle] = useToggle();
@@ -92,7 +92,7 @@ const PersistentDrawerLeft = ({ children }) => {
         setOpen(!open);
       };
 
-    const ROUTES = state.isAuthenticated ? DRAWER_ROUTES : GUEST_DRAWER_ROUTES
+    const ROUTES = (isAuthenticated && !isMember) ? DRAWER_ROUTES : GUEST_DRAWER_ROUTES
 
     return (
         <>
@@ -138,7 +138,7 @@ const PersistentDrawerLeft = ({ children }) => {
                     open={toggle}
                 >
                     <DrawerHeader>
-                        {state.isAuthenticated && (<Box 
+                        {isAuthenticated && (<Box 
                             sx={{color: themeForDarkOnly(currentThemePalette.light),
                                 display: 'flex',
                                 margin: 'auto'}}
@@ -148,7 +148,7 @@ const PersistentDrawerLeft = ({ children }) => {
                                 alignSelf: 'center',
                                 borderRight: `5px solid  ${currentThemePalette.main}`}}
                             >
-                                {state?.credentials?.data?.cognizant_id}
+                                {cognizant_id}
                             </Box>
                             <Box 
                                 component={Button}
@@ -158,7 +158,7 @@ const PersistentDrawerLeft = ({ children }) => {
                                 Sign out
                             </Box>
                         </Box>)}
-                            {!state.isAuthenticated && (
+                            {!isAuthenticated && (
                                 <Box 
                                 sx={{color: themeForDarkOnly(currentThemePalette.light),
                                     display: 'flex',
@@ -208,7 +208,7 @@ const PersistentDrawerLeft = ({ children }) => {
                                 :
                                 name === 'Change Password' ? (
                                   <div key={name}>
-                                    {state.isAuthenticated && (
+                                    {isAuthenticated && (
                                       <ListItemButton 
                                         onClick={handleChangePasswordClick} 
                                         sx={{

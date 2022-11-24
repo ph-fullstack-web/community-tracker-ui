@@ -19,7 +19,7 @@ const Maintenance = () => {
   const [openAddProjectModal, setOpenAddProjectModal] = useState(false);
   
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const {state: {isAuthenticated}} = useAuthContext();
+  const { state: { isAuthenticated, credentials : { isMember }}} = useAuthContext();
   const { dispatch: notificationDispatch } = useNotificationContext();
   const { mutate: projectMutate,  } = useCreateProject();
   
@@ -140,7 +140,7 @@ const Maintenance = () => {
               <SkillsTable search={searchField} />
             </MaintenanceTabPanel>
             <MaintenanceTabPanel value={tabValue} index={1}>
-              {isAuthenticated && (
+              {(isAuthenticated && !isMember) && (
                 <Box>
                   <PlusIconButton
                     onClickCallback={handleAddProject}
