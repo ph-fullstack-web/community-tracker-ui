@@ -1,4 +1,4 @@
 import convertCamelCaseToTitleCase from "./format/Case";
-import {GetAccessToken} from './auth';
+import {GetAccessToken, authorizedHeaders, genericHeaders } from './auth';
 
-export { convertCamelCaseToTitleCase, GetAccessToken };
+export { convertCamelCaseToTitleCase, GetAccessToken, authorizedHeaders, genericHeaders };

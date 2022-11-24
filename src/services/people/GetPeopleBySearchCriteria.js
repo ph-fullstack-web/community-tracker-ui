@@ -1,18 +1,8 @@
-import axiosInstance from "../axios/index";
+import read from "../axios/read";
 
 const getPeopleBySearchCriteria = async (searchCriteria) => {
-  try {
-    const response = await axiosInstance.get('/api/people', {params: {searchCriteria}});
-    if (response.status !== 200) {
-      throw new Error(response.data);
-    }
-
-    return response.data.data;
-  } catch (error) {
-    if (error?.response?.data?.message) {
-      throw new Error(error.response.data.message);
-    }
-    throw new Error(error.message);
-  }
+  const response = await read('/api/people', {searchCriteria});
+  return response?.data?.data;
 };
+
 export default getPeopleBySearchCriteria;

@@ -1,20 +1,8 @@
-import axiosInstance from "../axios";
+import read from "../axios/read";
 
 const getPeopleByCSVEmail = async (csvEmail) => {
-  try {
-    if(csvEmail) {
-      const response = await axiosInstance.get(`/api/people/email/${csvEmail}`);
-      if (response.status !== 200) {
-        throw new Error(response.data);
-      }
-      return await response.data.data;
-    }    
-  } catch (error) {
-    if (error?.response?.data?.message) {
-      throw new Error(error.response.data.message);
-    }
-    throw new Error(error.message);
-  }
+  const response = await read(`/api/people/email/${csvEmail}`, {}, false);
+  return response?.data?.data;
 };
 
 export default getPeopleByCSVEmail;

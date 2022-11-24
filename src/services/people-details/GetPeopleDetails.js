@@ -1,20 +1,8 @@
-import axiosInstance from "../axios/index";
+import read from "../axios/read";
 
 const getPeopleDetails = async () => {
-  try {
-    const response = await axiosInstance.get("/api/peopledetails");
-    if (response.status >= 200 && response.status <= 299) {
-      //check valid http response
-      return response?.data?.data;
-    } else {
-      throw new Error(response.data);
-    }
-  } catch (error) {
-    if (error?.response?.data?.message) {
-      throw new Error(error.response.data.message);
-    }
-    throw new Error(error.message);
-  }
+  const response = await read('/api/peopledetails');
+  return response?.data?.data;
 };
 
 export default getPeopleDetails;
