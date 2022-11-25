@@ -1,16 +1,30 @@
-import { useState, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import {useState, useMemo} from "react";
+import {useParams, useNavigate} from "react-router-dom";
 import moment from "moment";
-import { Box, Stack, Card, CardContent, Checkbox, FormControlLabel } from "@mui/material";
-import { FormTextField, PlusIconButton } from "components";
-import { useGetMembers, useGetPeopleDetails, useGetPeopleDetailsDesc, useGetProjects, useGetWorkState, useGetJobLevel } from "hooks";
+import {
+  Box,
+  Stack,
+  Card,
+  CardContent,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
+import {FormTextField, PlusIconButton} from "components";
+import {
+  useGetMembers,
+  useGetPeopleDetails,
+  useGetPeopleDetailsDesc,
+  useGetProjects,
+  useGetWorkState,
+  useGetJobLevel,
+} from "hooks";
 import ExportButton from "components/members/ExportButton";
 import MembersTable from "./MembersTable";
-import {  useSwitchThemeContext } from "hooks";
-import { useEffect } from "react";
-import { WHITE } from "theme";
-import { TABLE_HEADERS } from "utils/constants";
-import { useAuthContext } from 'contexts/auth/AuthContext';
+import {useSwitchThemeContext} from "hooks";
+import {useEffect} from "react";
+import {WHITE} from "theme";
+import {TABLE_HEADERS} from "utils/constants";
+import {useAuthContext} from "contexts/auth/AuthContext";
 import AppButton from "components/common/AppButton.jsx";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -18,65 +32,63 @@ const MembersMainContainer = () => {
   const { state: { isAuthenticated, credentials : { isMember }}} = useAuthContext();
   const { communityId } = useParams();
   const navigate = useNavigate();
-  const navigateToCreate = (communityId) => {
+  const navigateToCreate = communityId => {
     navigate(`/members/${communityId}/create`);
   };
-  
+
   const {
     isLoading,
     data: membersData,
     isError,
     error,
-    refetch
+    refetch,
   } = useGetMembers(communityId);
 
-  const {
-    data: peopleDetails,
-  } = useGetPeopleDetails();
+  const {data: peopleDetails} = useGetPeopleDetails();
 
-  const {
-    data: peopleDetailsDesc,
-  } = useGetPeopleDetailsDesc();
+  const {data: peopleDetailsDesc} = useGetPeopleDetailsDesc();
 
-  const {
-    data: projects,
-  } = useGetProjects();
+  const {data: projects} = useGetProjects();
 
-  const {
-    data: workStates,
-  } = useGetWorkState();
+  const {data: workStates} = useGetWorkState();
 
-  const {
-    data: jobLevels,
-  } = useGetJobLevel();
+  const {data: jobLevels} = useGetJobLevel();
 
   useEffect(() => {
     refetch();
   }, [communityId, refetch]);
 
-  const sortMembers = ((a, b) => {
+  const sortMembers = (a, b) => {
     const memberA = a.full_name.toLowerCase();
     const memberB = b.full_name.toLowerCase();
 
     if (memberA < memberB) return -1;
     if (memberA > memberB) return 1;
     return 0;
-  });
+  };
 
   const rowData = useMemo(
     () =>
       membersData
-        ? membersData.members.sort(sortMembers).map((member) => ({
+        ? membersData.members.sort(sortMembers).map(member => ({
             people_id: member.people_id,
             full_name: member.full_name,
             assigned_to: membersData.manager?.name,
             hired_date_formatted: moment(member.hired_date).format(
               "MM/DD/YYYY"
             ),
-            job_level: jobLevels?.find(level => level.job_level_id === member.joblevel_id)?.job_level_desc ?? '',
-            work_state: workStates?.find(workState => workState.work_state_id === member.workstate_id)?.work_state_desc ?? '',
-            project: projects?.find(project => project.id === member.project_id)?.project ?? '',
-            is_probationary: member.is_probationary
+            job_level:
+              jobLevels?.find(
+                level => level.job_level_id === member.joblevel_id
+              )?.job_level_desc ?? "",
+            work_state:
+              workStates?.find(
+                workState => workState.work_state_id === member.workstate_id
+              )?.work_state_desc ?? "",
+            project:
+              projects?.find(project => project.id === member.project_id)
+                ?.project ?? "",
+            is_probationary: member.is_probationary,
           }))
         : null,
     [membersData, projects, jobLevels, workStates]
@@ -84,19 +96,25 @@ const MembersMainContainer = () => {
   const [search, setSearch] = useState("");
   const [searchField, setSearchField] = useState("");
   const [filteredRowData, setFilteredRowData] = useState(rowData);
-  const [isIncludeProbationaryFields, setIsIncludeProbationaryFields] = useState(false);
+  const [isIncludeProbationaryFields, setIsIncludeProbationaryFields] =
+    useState(false);
   const [exportHeaders, setExportHeaders] = useState(TABLE_HEADERS);
-  const [exportData, setExportData] = useState(filteredRowData?.map(data => {
-    return {...data, is_probationary: data.is_probationary ? 'Probationary' : 'Regular'}
-  }));
-  const handleSearch = (event) => {
+  const [exportData, setExportData] = useState(
+    filteredRowData?.map(data => {
+      return {
+        ...data,
+        is_probationary: data.is_probationary ? "Probationary" : "Regular",
+      };
+    })
+  );
+  const handleSearch = event => {
     setSearch(event.target.value);
   };
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+  const {currentTheme, currentThemePalette} = useSwitchThemeContext();
 
   const handleSearchClick = () => {
     setSearchField(search);
-  }
+  };
 
   const handleIsIncludeProbationaryFieldsCheckboxChange = () => {
     setIsIncludeProbationaryFields(prev => !prev);
@@ -107,33 +125,42 @@ const MembersMainContainer = () => {
       setExportHeaders(TABLE_HEADERS);
       return;
     }
-    
-    const probationaryFieldsHeaders = peopleDetailsDesc.map(desc => {return {
-      value: desc.people_details_desc_id,
-      name: desc.people_details_desc,
-     }});
+
+    const probationaryFieldsHeaders = peopleDetailsDesc.map(desc => {
+      return {
+        value: desc.people_details_desc_id,
+        name: desc.people_details_desc,
+      };
+    });
 
     setExportHeaders([...TABLE_HEADERS, ...probationaryFieldsHeaders]);
-  }, [isIncludeProbationaryFields, peopleDetailsDesc])
+  }, [isIncludeProbationaryFields, peopleDetailsDesc]);
 
   useEffect(() => {
     const data = filteredRowData?.map(data => {
-      const isProbationary = data.is_probationary ? 'Probationary' : 'Regular';
+      const isProbationary = data.is_probationary ? "Probationary" : "Regular";
 
       if (isIncludeProbationaryFields) {
         peopleDetailsDesc.forEach(desc => {
-          const exist = peopleDetails
-                          .some(detail => detail.people_id === data.people_id && 
-                            detail.people_details_desc_id === desc.people_details_desc_id);
-          
-          data[desc.people_details_desc_id] = exist ? 'Yes' : 'No';
+          const exist = peopleDetails.some(
+            detail =>
+              detail.people_id === data.people_id &&
+              detail.people_details_desc_id === desc.people_details_desc_id
+          );
+
+          data[desc.people_details_desc_id] = exist ? "Yes" : "No";
         });
       }
 
-      return {...data, is_probationary: isProbationary}
-    })
-    setExportData(data)
-  }, [filteredRowData, isIncludeProbationaryFields, peopleDetailsDesc, peopleDetails])
+      return {...data, is_probationary: isProbationary};
+    });
+    setExportData(data);
+  }, [
+    filteredRowData,
+    isIncludeProbationaryFields,
+    peopleDetailsDesc,
+    peopleDetails,
+  ]);
 
   return (
   <Box
