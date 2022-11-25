@@ -17,7 +17,7 @@ const CommunityList = () => {
   const navigator = useNavigate();
   const [communityListData, setCommunityListData] = useState([]);
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const {state: {isAuthenticated}} = useAuthContext();
+  const { state: { isAuthenticated, credentials : { isMember }}} = useAuthContext();
   // hook to fetch communities
   const {
     isLoading,
@@ -125,7 +125,7 @@ const CommunityList = () => {
                   alignItems: "center",
                 }}
               >
-                {isAuthenticated && (<PlusIconButton
+                {(isAuthenticated && !isMember) && (<PlusIconButton
                   title="Go to input community"
                   ariaLabel="Add community"
                   onClickCallback={() => navigator("/communities/add")}

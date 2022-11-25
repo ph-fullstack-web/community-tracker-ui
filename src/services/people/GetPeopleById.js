@@ -1,18 +1,8 @@
-import axiosInstance from "../axios";
+import read from "../axios/read";
 
 const getPeopleById = async (peopleId) => {
-  try {
-    const response = await axiosInstance.get(`/api/people/${peopleId}`);
-    if (response.status !== 200) {
-      throw new Error(response.data);
-    }
-    return await response.data.data;
-  } catch (error) {
-    if (error?.response?.data?.message) {
-      throw new Error(error.response.data.message);
-    }
-    throw new Error(error.message);
-  }
+  const response = await read(`/api/people/${peopleId}`);
+  return response?.data?.data;
 };
 
 export default getPeopleById;

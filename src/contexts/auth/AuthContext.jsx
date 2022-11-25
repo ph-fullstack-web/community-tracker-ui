@@ -1,5 +1,6 @@
 import { useLocalStorage } from "hooks";
 import { createContext, useReducer, useContext, useEffect } from "react"
+import jwtDecode from "jwt-decode";
 
 const AuthContext = createContext();
 
@@ -23,7 +24,7 @@ const authReducer = (state, action) => {
             return {
                 ...state,
                 loading: false,
-                credentials: { ...data },
+                credentials: { ...data, isMember: jwtDecode(data.access_token).iss === "member" },
                 success,
                 isAuthenticated: true,
             }

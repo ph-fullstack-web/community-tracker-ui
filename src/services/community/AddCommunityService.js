@@ -1,24 +1,8 @@
-import { GetAccessToken } from 'utils';
-import axiosInstance from '../axios/index';
+import create from "../axios/create";
 
 const addCommunityService = async ({data}) => {
-    try{
-    const token = GetAccessToken();
-        const response = await axiosInstance({
-            headers:{
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-            method:"POST",
-            url: '/api/community',
-            data: data
-        })
-        return response.status
-    }
-    catch(err){
-        throw new Error(err.message)
-    }
-
+    const response = await create('/api/community', data)
+    return response?.status
 }
 
 export default addCommunityService

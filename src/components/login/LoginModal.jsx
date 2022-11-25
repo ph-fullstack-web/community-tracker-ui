@@ -1,4 +1,4 @@
-import React, { useState, } from "react";
+import React, { useState } from "react";
 import {
   Alert,
   AlertTitle,
@@ -8,18 +8,27 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { FormTextField } from "components";
+import { FormTextField, GoogleLoginButton } from "components";
 import { useAuthContext } from "contexts/auth/AuthContext";
-import { useLogin, useSwitchThemeContext } from "hooks";
+import { useLogin, useGoogleLogin, useSwitchThemeContext } from "hooks";
 import AppButton from "components/common/AppButton";
 import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+
+const googleButtonStyle = {
+  margin: 'auto',
+  padding: '1rem'
+};
 
 const LoginModal = ({ open, handleClose }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
   const { mutate: loginMutate } = useLogin();
+  const { mutate: googleLoginMutate } = useGoogleLogin();
   const [credentials, setCredentials] = useState({ id: "", password: "" });
   const [error, setError] = useState("");
   const { dispatch } = useAuthContext();
+  const navigate = useNavigate();
+
 
   const handleCredentials = (e) => {
     const value = e.target.value;
@@ -41,6 +50,7 @@ const LoginModal = ({ open, handleClose }) => {
           payload: { success: "success", data},
         });
         handleClose();
+        navigate('/communities');
       },
       onError: (error) => {
        setError(error.message);
@@ -48,10 +58,33 @@ const LoginModal = ({ open, handleClose }) => {
     });
   };
 
+  const handleGoogleLogin = (response) => {
+    const token = response?.credential;
+    if(token) {
+      googleLoginMutate({ token } , {
+        onSuccess: ({ access_token, data: people }) => {
+          dispatch({
+            type: "LOGIN",
+            payload: { success: "success", data: {
+              access_token,
+              data: {...people }
+            }},
+          });
+          handleClose();
+          navigate('/communities');
+        },
+        onError: (error) => {
+         setError(error.message);
+        }
+      })
+    }   
+  };
+
   useEffect(() => {
     setCredentials({ id: "", password: "" });
     setError("");
   }, [open])
+
   return (
     <Dialog 
       open={open}
@@ -108,6 +141,10 @@ const LoginModal = ({ open, handleClose }) => {
         <AppButton onClick={handleClose}>Cancel</AppButton>
         <AppButton onClick={handleSubmit}>Login</AppButton>
       </DialogActions>
+      <GoogleLoginButton
+        style={googleButtonStyle}
+        onCallbackResponse={handleGoogleLogin}
+      />
     </Dialog>
   );
 };

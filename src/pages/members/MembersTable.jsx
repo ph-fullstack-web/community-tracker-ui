@@ -36,7 +36,7 @@ const MembersTable = ({
   setFilteredRowData,
 }) => {
   const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const { state: {isAuthenticated}} = useAuthContext();
+  const { state: { isAuthenticated, credentials : { isMember }}} = useAuthContext();
 
   const navigate = useNavigate();
   const navigateToUpdate = (communityId, peopleId) => {
@@ -272,7 +272,7 @@ const MembersTable = ({
                     },
                   }}
                   onClick={() => {
-                      if (isAuthenticated) navigateToUpdate(membersData.community_id, row.people_id)
+                      if (isAuthenticated && !isMember) navigateToUpdate(membersData.community_id, row.people_id)
                     }
                   }>
                   <MembersTableBodyCell sxProp={tableCellStyle}>
