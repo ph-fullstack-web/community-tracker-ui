@@ -70,7 +70,11 @@ export const EmployeeListModal = ({
     color: currentThemePalette.text,
   };
 
-  const handleClose = () => onClose();
+  const handleClose = () => {
+    // Reset page count
+    setPage(0);
+    onClose();
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
