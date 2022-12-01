@@ -85,8 +85,8 @@ export const guestRoutes = [
   },
   {
     path: '*',
-    element: <NotFound />,
-    name: 'Not Found'
+    element: <Navigate to ="/login" />,
+    name: 'Login'
   },
 ];
 
