@@ -33,11 +33,11 @@ const LoginTemplate = ({ handleCredentials, handleGoogleLogin, handleSubmit, err
   });
 
   const FormContainer = styled('div')({
-    borderRight: `1px solid rgb(222, 226, 230)`,
+    borderRight: `1px solid ${currentThemePalette.loginBorder}`,
     minHeight: 'inherit',
     maxWidth: 450,
     paddingTop: 80,
-    backgroundColor: 'rgb(248, 249, 250)',
+    backgroundColor: `${currentThemePalette.loginBackground}`,
     [`@media (max-width: 800px)`]: {
       maxWidth: '100%',
     },

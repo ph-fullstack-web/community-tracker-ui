@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useSwitchThemeContext } from "hooks";
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from 'contexts/auth/AuthContext';
+import { DARK_BACKGROUND } from "theme";
 
 const CommunityList = () => {
   const navigator = useNavigate();
@@ -41,6 +42,7 @@ const CommunityList = () => {
     <Card
       style={{
         marginBottom: "1rem",
+        backgroundColor: `${currentTheme === 'dark' ? DARK_BACKGROUND : 'none'}`
       }}
     >
       {isLoading && (
@@ -50,9 +52,18 @@ const CommunityList = () => {
             justifyContent: "center",
             justifyItems: "center",
             marginTop: "5rem",
+            backgroundColor:  `${currentTheme === 'dark' ? DARK_BACKGROUND : 'none'}`
           }}
         >
-          <CircularProgress />
+          <CircularProgress
+            sx={{
+              color:
+                currentTheme === "dark" || currentTheme === "teal"
+                  ? "#0a7578 !important"
+                  : currentThemePalette.dark,
+            }}
+            size="5rem"
+          />
         </Container>
       )}
       {isError && (
