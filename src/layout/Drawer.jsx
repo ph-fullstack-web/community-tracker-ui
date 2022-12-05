@@ -54,7 +54,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const PersistentDrawerLeft = ({ children }) => {
     const { isLoading, data: communityData, isError, error } = useGetCommunities();
     const router = useNavigate();
-    const { state: { isAuthenticated, credentials : { isMember, data: { cognizant_id } }} , dispatch: authDispatch } = useAuthContext();
+    const { state: { isAuthenticated, credentials : { isMember }} , dispatch: authDispatch } = useAuthContext();
 
     const theme = useTheme();
     const [toggle, setToggle] = useToggle();
@@ -143,13 +143,6 @@ const PersistentDrawerLeft = ({ children }) => {
                                 display: 'flex',
                                 margin: 'auto'}}
                         >
-                            <Box sx={{
-                                paddingRight: '1rem',
-                                alignSelf: 'center',
-                                borderRight: `5px solid  ${currentThemePalette.main}`}}
-                            >
-                                {cognizant_id}
-                            </Box>
                             <Box 
                                 component={Button}
                                 onClick={handleLogout}
