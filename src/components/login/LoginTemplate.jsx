@@ -48,7 +48,7 @@ const LoginTemplate = ({ handleCredentials, handleGoogleLogin, handleSubmit, err
       <FormContainer>
         <Stack alignItems="center">
           <img src={logo} height={128} width={350} />
-          <DialogContent>
+          {/* <DialogContent>
           {error && (
               <Alert severity="error" sx={{
                   marginTop: "1rem", 
@@ -87,7 +87,7 @@ const LoginTemplate = ({ handleCredentials, handleGoogleLogin, handleSubmit, err
           </DialogContent>
           <DialogActions>
             <AppButton onClick={handleSubmit}>Login</AppButton>
-          </DialogActions>
+          </DialogActions> */}
           <GoogleLoginButton
             style={googleButtonStyle}
             onCallbackResponse={handleGoogleLogin}
