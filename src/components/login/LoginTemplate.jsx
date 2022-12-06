@@ -33,11 +33,11 @@ const LoginTemplate = ({ handleCredentials, handleGoogleLogin, handleSubmit, err
   });
 
   const FormContainer = styled('div')({
-    borderRight: `1px solid rgb(222, 226, 230)`,
+    borderRight: `1px solid ${currentThemePalette.loginBorder}`,
     minHeight: 'inherit',
     maxWidth: 450,
     paddingTop: 80,
-    backgroundColor: 'rgb(248, 249, 250)',
+    backgroundColor: `${currentThemePalette.loginBackground}`,
     [`@media (max-width: 800px)`]: {
       maxWidth: '100%',
     },
@@ -48,7 +48,7 @@ const LoginTemplate = ({ handleCredentials, handleGoogleLogin, handleSubmit, err
       <FormContainer>
         <Stack alignItems="center">
           <img src={logo} height={128} width={350} />
-          <DialogContent>
+          {/* <DialogContent>
           {error && (
               <Alert severity="error" sx={{
                   marginTop: "1rem", 
@@ -87,7 +87,7 @@ const LoginTemplate = ({ handleCredentials, handleGoogleLogin, handleSubmit, err
           </DialogContent>
           <DialogActions>
             <AppButton onClick={handleSubmit}>Login</AppButton>
-          </DialogActions>
+          </DialogActions> */}
           <GoogleLoginButton
             style={googleButtonStyle}
             onCallbackResponse={handleGoogleLogin}

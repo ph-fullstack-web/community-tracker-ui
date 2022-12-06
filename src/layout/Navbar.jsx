@@ -1,14 +1,13 @@
-import {Box} from "@mui/material";
-import Logo from "./Logo";
-import {useGetPeopleBySearchCriteria, useToggle} from "hooks";
-import {LoginModal, FormTextField, EmployeeListModal} from "components";
-
-import SearchIcon from "@mui/icons-material/Search";
-import AppButton from "components/common/AppButton.jsx";
 import {useState} from "react";
+import {Grid} from "@mui/material";
+
+import Logo from "./Logo";
+import EmployeeSearch from "./EmployeeSearch";
+
+import {useGetPeopleBySearchCriteria} from "hooks";
+import {EmployeeListModal} from "components";
 
 const Navbar = () => {
-  const [toggle, setToggle] = useToggle();
   const [search, setSearch] = useState("");
   const [openEmployeeListModal, setOpenEmployeeListModal] = useState(false);
 
@@ -19,10 +18,6 @@ const Navbar = () => {
     error: peopleDataError,
     refetch,
   } = useGetPeopleBySearchCriteria(search);
-
-  const handleToggle = () => {
-    setToggle(!toggle);
-  };
 
   const handleSearchClick = () => {
     refetch();
@@ -38,29 +33,17 @@ const Navbar = () => {
   };
 
   return (
-    <Box display="flex" justifyContent="space-between" flex={1}>
-      <Logo />
-      <Box pt={3}>
-        <form onSubmit={e => e.preventDefault()}>
-          <FormTextField
-            sx={{width: {xs: "100%", lg: "50ch"}}}
-            placeholder="Search Employee"
-            label="Search Employee"
-            value={search}
-            autoComplete="off"
-            onChange={handleSearchChange}
-          />
-          <AppButton
-            type="submit"
-            variant={"contained"}
-            sx={{width: 150, height: 50, mt: 0.5, ml: {xs: 1, sm: 3}}}
-            startIcon={<SearchIcon />}
-            onClick={handleSearchClick}
-          >
-            Search
-          </AppButton>
-        </form>
-      </Box>
+    <Grid container spacing={3} mt={1} mb={4} mx={1}>
+      <Grid xs={12} md={7}>
+        <Logo />
+      </Grid>
+      <Grid xs={12} md={5} sx={{ mt: { xs: 4 }}}>
+        <EmployeeSearch 
+          handleSearchChange={handleSearchChange}
+          handleSearchClick={handleSearchClick}
+          search={search}
+        />
+      </Grid>      
       <EmployeeListModal
         open={openEmployeeListModal}
         onClose={handleCloseEmployeeListModal}
@@ -69,8 +52,7 @@ const Navbar = () => {
         employees={peopleData}
         error={peopleDataError}
       />
-      <LoginModal open={toggle} handleClose={handleToggle} />
-    </Box>
+    </Grid>
   );
 };
 
