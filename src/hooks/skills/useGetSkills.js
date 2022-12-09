@@ -1,9 +1,9 @@
-import { useQuery } from "react-query";
-import { getSkills } from "services";
+import {useQuery} from 'react-query';
+import {getSkills} from 'services';
 
 const useGetSkills = () => {
-  const { isLoading, isError, data, error, refetch } = useQuery(
-    "peopleskills",
+  const {isLoading, isError, data, error, refetch} = useQuery(
+    'peopleskills',
     () => getSkills()
   );
 

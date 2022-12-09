@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 
-const GoogleLoginButton = ({ style, onCallbackResponse }) => {
+const GoogleLoginButton = ({style, onCallbackResponse}) => {
   const clientId =
     '1090992123059-dts3p5cf117rq6mqlkbitupdbfssrnd7.apps.googleusercontent.com';
 
@@ -16,7 +16,7 @@ const GoogleLoginButton = ({ style, onCallbackResponse }) => {
       text: 'signin_with',
       shape: 'pill',
     });
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div id="signInDiv" style={style} />;

@@ -1,8 +1,10 @@
-import { useMutation } from 'react-query';
-import { createProject } from 'services';
+import {useMutation} from 'react-query';
+import {createProject} from 'services';
 
 const useCreateProject = () => {
-  const { mutate, isLoading, isError, data } = useMutation((project) => createProject(project));
+  const {mutate, isLoading, isError, data} = useMutation(project =>
+    createProject(project)
+  );
 
   return {
     isLoading,

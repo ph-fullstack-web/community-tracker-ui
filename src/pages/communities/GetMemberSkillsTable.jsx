@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from 'react';
 import {
   Box,
   TableFooter,
@@ -10,12 +10,12 @@ import {
   Table,
   CircularProgress,
   Chip,
-} from "@mui/material";
-import { MEMBERS_TABLE_SKILLS } from "utils/constants";
-import { useSwitchThemeContext } from "hooks";
-import { useMemberWithSkill } from "hooks";
+} from '@mui/material';
+import {MEMBERS_TABLE_SKILLS} from 'utils/constants';
+import {useSwitchThemeContext} from 'hooks';
+import {useMemberWithSkill} from 'hooks';
 
-const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
+const MembersTableBodyCell = ({children, sxProp, ...otherProps}) => {
   return (
     <TableCell sx={sxProp} {...otherProps}>
       {children}
@@ -31,7 +31,7 @@ export default function MemberSkillsTable({
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+  const {currentTheme, currentThemePalette} = useSwitchThemeContext();
   const [membersSkillsData, setmembersSkillsData] = useState([]);
   const {
     data: rawData,
@@ -47,11 +47,11 @@ export default function MemberSkillsTable({
   useEffect(() => {
     if (!getMemberSkillsLoading) {
       const skillsData = rawData
-        ? rawData.map((skl, idx) => {
+        ? rawData.map(skl => {
             return {
               full_name: skl.full_name,
               skills: skl.skills,
-              project_status: skl.project_id === 1 ? "Bench" : "In a Project",
+              project_status: skl.project_id === 1 ? 'Bench' : 'In a Project',
             };
           })
         : [];
@@ -88,12 +88,12 @@ export default function MemberSkillsTable({
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = event => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
-  const sortData = ((a, b) => {
+  const sortData = (a, b) => {
     const skillsCountA = a.skills.length;
     const skillsCountB = b.skills.length;
 
@@ -101,48 +101,48 @@ export default function MemberSkillsTable({
     if (skillsCountA < skillsCountB) return 1;
 
     if (a.project_status === 'In a Project' && b.project_status === 'Bench')
-    return 1;
+      return 1;
     if (b.project_status === 'In a Project' && a.project_status === 'Bench')
-    return -1;
-    
+      return -1;
+
     const resourceA = a.full_name.toLowerCase();
     const resourceB = b.full_name.toLowerCase();
 
     if (resourceA < resourceB) return -1;
     if (resourceA > resourceB) return 1;
     return 0;
-  });
+  };
 
   const tableCellStyle = {
-    borderBottom: "none",
+    borderBottom: 'none',
     p: 1.7,
     color: currentThemePalette.text,
   };
 
   return (
-    <Box sx={{ overflowX: "auto" }} id="get-member-skills-container">
+    <Box sx={{overflowX: 'auto'}} id="get-member-skills-container">
       <Table
         sx={{
           mt: 0,
           mb: 0.5,
-          mx: { xs: 1, sm: 0 },
+          mx: {xs: 1, sm: 0},
           minWidth: 825,
-          borderCollapse: "separate",
-          borderSpacing: "0px 8px",
+          borderCollapse: 'separate',
+          borderSpacing: '0px 8px',
         }}
         aria-label="member-skills-table"
       >
         <TableHead>
           <TableRow>
-            {MEMBERS_TABLE_SKILLS.map((column) => (
+            {MEMBERS_TABLE_SKILLS.map(column => (
               <TableCell
                 key={column.value}
                 sx={{
                   ...tableCellStyle,
-                  fontWeight: "550",
-                  borderBottom: "none",
+                  fontWeight: '550',
+                  borderBottom: 'none',
                   backgroundColor: currentThemePalette.opacityBackground,
-                  fontSize: "13px",
+                  fontSize: '13px',
                 }}
               >
                 {column.name}
@@ -155,13 +155,13 @@ export default function MemberSkillsTable({
             <TableRow>
               <MembersTableBodyCell
                 colSpan={6}
-                sxProp={{ ...tableCellStyle, py: 2.5 }}
+                sxProp={{...tableCellStyle, py: 2.5}}
               >
                 <CircularProgress
                   sx={{
                     color:
-                      currentTheme === "dark" || currentTheme === "teal"
-                        ? "#0a7578 !important"
+                      currentTheme === 'dark' || currentTheme === 'teal'
+                        ? '#0a7578 !important'
                         : currentThemePalette.dark,
                   }}
                   size="5rem"
@@ -175,14 +175,14 @@ export default function MemberSkillsTable({
             <TableRow
               sx={{
                 backgroundColor:
-                  currentTheme === "dark"
+                  currentTheme === 'dark'
                     ? currentThemePalette.medium
-                    : "#FFFFFF",
+                    : '#FFFFFF',
               }}
             >
               <MembersTableBodyCell
                 colSpan={6}
-                sxProp={{ ...tableCellStyle, py: 2.5 }}
+                sxProp={{...tableCellStyle, py: 2.5}}
               >
                 Error: {error.message}
               </MembersTableBodyCell>
@@ -196,16 +196,16 @@ export default function MemberSkillsTable({
               <TableRow
                 sx={{
                   backgroundColor:
-                    currentTheme === "dark"
+                    currentTheme === 'dark'
                       ? currentThemePalette.medium
-                      : "#FFFFFF",
+                      : '#FFFFFF',
                 }}
               >
                 <MembersTableBodyCell
                   colSpan={6}
-                  sxProp={{ ...tableCellStyle, py: 2.5 }}
+                  sxProp={{...tableCellStyle, py: 2.5}}
                 >
-                  {"No members found for this skills"}
+                  {'No members found for this skills'}
                 </MembersTableBodyCell>
               </TableRow>
             </TableBody>
@@ -221,55 +221,60 @@ export default function MemberSkillsTable({
                       page * rowsPerPage + rowsPerPage
                     )
                   : membersSkillsData
-                ).sort(sortData).map((membersSkillsData) => (
-                  <TableRow
-                    key={membersSkillsData.full_name}
-                    hover
-                    sx={{
-                      cursor: "pointer",
-                      backgroundColor:
-                        currentTheme === "dark"
-                          ? currentThemePalette.medium
-                          : "#FFFFFF",
-                      "&:hover": {
+                )
+                  .sort(sortData)
+                  .map(membersSkillsData => (
+                    <TableRow
+                      key={membersSkillsData.full_name}
+                      hover
+                      sx={{
+                        cursor: 'pointer',
                         backgroundColor:
-                          currentTheme === "dark" ? "#293A46 !important" : null,
-                      },
-                    }}
-                  >
-                    <MembersTableBodyCell sxProp={tableCellStyle}>
-                      {membersSkillsData.full_name}
-                    </MembersTableBodyCell>
-                    <MembersTableBodyCell sxProp={tableCellStyle}>
-                      {membersSkillsData.skills.map((skills) => (
-                        <Chip
-                          label={skills}
-                          sx={{
-                            marginLeft: "10px",
-                            border: `2px solid ${currentThemePalette.medium}`,
-                            backgroundColor:
-                              currentTheme === "dark"
-                                ? "rgba(250, 250, 250, .07)"
-                                : currentThemePalette.bgSecondary,
-                            color: "#FFFFFF",
-                            fontWeight: 550,
-                          }}
-                        />
-                      ))}
-                    </MembersTableBodyCell>
-                    <MembersTableBodyCell sxProp={tableCellStyle}>
-                      {membersSkillsData.project_status}
-                    </MembersTableBodyCell>
-                  </TableRow>
-                ))}
+                          currentTheme === 'dark'
+                            ? currentThemePalette.medium
+                            : '#FFFFFF',
+                        '&:hover': {
+                          backgroundColor:
+                            currentTheme === 'dark'
+                              ? '#293A46 !important'
+                              : null,
+                        },
+                      }}
+                    >
+                      <MembersTableBodyCell sxProp={tableCellStyle}>
+                        {membersSkillsData.full_name}
+                      </MembersTableBodyCell>
+                      <MembersTableBodyCell sxProp={tableCellStyle}>
+                        {membersSkillsData.skills.map(skills => (
+                          <Chip
+                            key={skills}
+                            label={skills}
+                            sx={{
+                              marginLeft: '10px',
+                              border: `2px solid ${currentThemePalette.medium}`,
+                              backgroundColor:
+                                currentTheme === 'dark'
+                                  ? 'rgba(250, 250, 250, .07)'
+                                  : currentThemePalette.bgSecondary,
+                              color: '#FFFFFF',
+                              fontWeight: 550,
+                            }}
+                          />
+                        ))}
+                      </MembersTableBodyCell>
+                      <MembersTableBodyCell sxProp={tableCellStyle}>
+                        {membersSkillsData.project_status}
+                      </MembersTableBodyCell>
+                    </TableRow>
+                  ))}
               </TableBody>
               <TableFooter>
                 <TableRow
                   sx={{
                     backgroundColor:
-                      currentTheme === "dark"
+                      currentTheme === 'dark'
                         ? currentThemePalette.medium
-                        : "#FFFFFF",
+                        : '#FFFFFF',
                   }}
                 >
                   <TablePagination
@@ -282,23 +287,23 @@ export default function MemberSkillsTable({
                     SelectProps={{
                       sx: {
                         border:
-                          currentTheme === "dark"
+                          currentTheme === 'dark'
                             ? `1px solid ${currentThemePalette.light}`
                             : null,
-                        borderRadius: currentTheme === "dark" ? 1 : null,
-                        "& .MuiSvgIcon-root": {
+                        borderRadius: currentTheme === 'dark' ? 1 : null,
+                        '& .MuiSvgIcon-root': {
                           color:
-                            currentTheme === "dark"
+                            currentTheme === 'dark'
                               ? currentThemePalette.light
                               : null,
                         },
                       },
                       MenuProps: {
                         sx: {
-                          "& .MuiList-root": {
-                            borderRadius: currentTheme === "dark" ? 1 : null,
+                          '& .MuiList-root': {
+                            borderRadius: currentTheme === 'dark' ? 1 : null,
                             border:
-                              currentTheme === "dark"
+                              currentTheme === 'dark'
                                 ? `1px solid ${currentThemePalette.light} !important`
                                 : null,
                             backgroundColor: currentThemePalette.bgPrimary,
@@ -309,8 +314,8 @@ export default function MemberSkillsTable({
                     }}
                     sx={{
                       ...tableCellStyle,
-                      "& .MuiButtonBase-root.MuiIconButton-root.Mui-disabled": {
-                        color: currentTheme === "dark" ? "#293A46" : null,
+                      '& .MuiButtonBase-root.MuiIconButton-root.Mui-disabled': {
+                        color: currentTheme === 'dark' ? '#293A46' : null,
                       },
                     }}
                   />

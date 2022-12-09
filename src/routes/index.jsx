@@ -1,19 +1,19 @@
-import { Routes as ReactRoutes, Route, Navigate } from 'react-router-dom';
-import { 
-  AddCommunity, 
-  UpdateCommunity, 
-  CreateResource, 
-  UpdateResource, 
-  GetCommunity, 
-  Communities, 
-  Members, 
-  GetSkills, 
-  NotFound, 
+import {Routes as ReactRoutes, Route, Navigate} from 'react-router-dom';
+import {
+  AddCommunity,
+  UpdateCommunity,
+  CreateResource,
+  UpdateResource,
+  GetCommunity,
+  Communities,
+  Members,
+  GetSkills,
+  NotFound,
   InviteManager,
   Maintenance,
   Login,
 } from 'pages';
-import { useAuthContext } from 'contexts/auth/AuthContext';
+import {useAuthContext} from 'contexts/auth/AuthContext';
 
 const authRoutes = [
   {
@@ -36,7 +36,7 @@ const authRoutes = [
         element: <GetCommunity />,
         name: 'Get Community',
       },
-    ]
+    ],
   },
   {
     path: 'members/:communityId',
@@ -53,7 +53,7 @@ const authRoutes = [
         element: <UpdateResource />,
         name: 'Update Resource',
       },
-    ]
+    ],
   },
   {
     path: 'skills',
@@ -68,12 +68,12 @@ const authRoutes = [
   {
     path: 'maintenance',
     element: <Maintenance />,
-    name: 'Maintenance'
+    name: 'Maintenance',
   },
   {
     path: '*',
     element: <NotFound />,
-    name: 'Not Found'
+    name: 'Not Found',
   },
 ];
 
@@ -85,23 +85,25 @@ export const guestRoutes = [
   },
   {
     path: '*',
-    element: <Navigate to ="/login" />,
-    name: 'Login'
+    element: <Navigate to="/login" />,
+    name: 'Login',
   },
 ];
 
 export const Routes = () => {
-  const {state: {isAuthenticated}} = useAuthContext();
+  const {
+    state: {isAuthenticated},
+  } = useAuthContext();
 
-  const getRoutes = (list) => {
+  const getRoutes = list => {
     return (
       <>
-        {list.map(({ element: Element, name, path, children }) =>
+        {list.map(({element: Element, name, path, children}) =>
           children ? (
             <Route key={name} path={path}>
-              <Route key={name + "-index"} index element={Element} />
+              <Route key={name + '-index'} index element={Element} />
               {children.map(
-                ({ element: ChElement, name: chName, path: chPath }) => (
+                ({element: ChElement, name: chName, path: chPath}) => (
                   <Route key={chName} path={chPath} element={ChElement} />
                 )
               )}
@@ -111,15 +113,25 @@ export const Routes = () => {
           )
         )}
       </>
-    )
+    );
   };
 
   return (
     <ReactRoutes>
-      <Route index path="/" element={isAuthenticated ? <Navigate to ="/communities" /> : <Navigate to ="/login" />} />
+      <Route
+        index
+        path="/"
+        element={
+          isAuthenticated ? (
+            <Navigate to="/communities" />
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
+      />
       {getRoutes(isAuthenticated ? authRoutes : guestRoutes)}
     </ReactRoutes>
-  )
+  );
 };
 
 export default Routes;

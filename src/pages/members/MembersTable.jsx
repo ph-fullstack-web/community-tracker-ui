@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import {useState, useEffect, useMemo} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {
   Box,
   Skeleton,
@@ -11,14 +11,14 @@ import {
   TableRow,
   TableFooter,
   TablePagination,
-} from "@mui/material";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import { useSwitchThemeContext } from "hooks";
-import { TABLE_HEADERS } from "utils/constants";
-import { useAuthContext } from 'contexts/auth/AuthContext';
+} from '@mui/material';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
+import {useSwitchThemeContext} from 'hooks';
+import {TABLE_HEADERS} from 'utils/constants';
+import {useAuthContext} from 'contexts/auth/AuthContext';
 
-const MembersTableBodyCell = ({ children, sxProp, ...otherProps }) => {
+const MembersTableBodyCell = ({children, sxProp, ...otherProps}) => {
   return (
     <TableCell sx={sxProp} {...otherProps}>
       {children}
@@ -35,8 +35,13 @@ const MembersTable = ({
   error,
   setFilteredRowData,
 }) => {
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const { state: { isAuthenticated, credentials : { isMember }}} = useAuthContext();
+  const {currentTheme, currentThemePalette} = useSwitchThemeContext();
+  const {
+    state: {
+      isAuthenticated,
+      credentials: {isMember},
+    },
+  } = useAuthContext();
 
   const navigate = useNavigate();
   const navigateToUpdate = (communityId, peopleId) => {
@@ -48,17 +53,20 @@ const MembersTable = ({
   const rowDataFiltered = useMemo(() => {
     if (!search) return rowData;
 
-    return rowData.filter((member) => {
+    return rowData.filter(member => {
       if (filters.length === 0) {
         // Loop over member object and see if search is matched
         // to at least one property value
         for (const property in member) {
-          if (property === "people_id") continue;
+          if (property === 'people_id') continue;
 
           let queryFound = false;
-          if (property === "is_probationary") {
-            queryFound = (member[property] === true && "probationary".includes(search.toLowerCase())) ||
-              (member[property] === false && "regular".includes(search.toLowerCase()));
+          if (property === 'is_probationary') {
+            queryFound =
+              (member[property] === true &&
+                'probationary'.includes(search.toLowerCase())) ||
+              (member[property] === false &&
+                'regular'.includes(search.toLowerCase()));
           } else {
             queryFound = member[property]
               ?.toLowerCase()
@@ -74,14 +82,17 @@ const MembersTable = ({
         // but add another validation that checks if current property
         // is not included in filters state so that it can skip it
         for (const property in member) {
-          if (property === "people_id" || !filters.includes(property)) {
+          if (property === 'people_id' || !filters.includes(property)) {
             continue;
           }
 
           let queryFound = false;
-          if (property === "is_probationary") {
-            queryFound = (member[property] === true && "probationary".includes(search.toLowerCase())) ||
-              (member[property] === false && "regular".includes(search.toLowerCase()));
+          if (property === 'is_probationary') {
+            queryFound =
+              (member[property] === true &&
+                'probationary'.includes(search.toLowerCase())) ||
+              (member[property] === false &&
+                'regular'.includes(search.toLowerCase()));
           } else {
             queryFound = member[property]
               ?.toLowerCase()
@@ -104,14 +115,14 @@ const MembersTable = ({
     if (event.target.checked) {
       filterArray = [...filters, headerValue];
     } else {
-      filterArray = filters.filter((filter) => filter !== headerValue);
+      filterArray = filters.filter(filter => filter !== headerValue);
     }
 
     setFilters(filterArray);
   };
 
   const tableCellStyle = {
-    borderBottom: "none",
+    borderBottom: 'none',
     p: 1.7,
     color: currentThemePalette.text,
   };
@@ -126,7 +137,7 @@ const MembersTable = ({
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -134,7 +145,7 @@ const MembersTable = ({
   // Automatically scroll to top with some conditions
   useEffect(() => {
     if (rowsPerPage !== 10) {
-      document.querySelector("body").scrollIntoView({ behavior: "smooth" });
+      document.querySelector('body').scrollIntoView({behavior: 'smooth'});
     }
   }, [page, rowsPerPage]);
 
@@ -148,29 +159,31 @@ const MembersTable = ({
   }, [rowDataFiltered, setFilteredRowData]);
 
   return (
-    <Box sx={{ overflowX: "auto" }} id="members-table-container">
+    <Box sx={{overflowX: 'auto'}} id="members-table-container">
       <Table
         sx={{
           mt: 0,
           mb: 0.5,
-          mx: { xs: 1, sm: 0 },
+          mx: {xs: 1, sm: 0},
           minWidth: 825,
-          borderCollapse: "separate",
-          borderSpacing: "0px 8px",
+          borderCollapse: 'separate',
+          borderSpacing: '0px 8px',
         }}
-        aria-label="members-table">
+        aria-label="members-table"
+      >
         <TableHead>
           <TableRow>
-            {TABLE_HEADERS.map((header) => (
+            {TABLE_HEADERS.map(header => (
               <TableCell
                 key={header.value}
                 sx={{
                   ...tableCellStyle,
-                  fontWeight: "550",
-                  borderBottom: "none",
+                  fontWeight: '550',
+                  borderBottom: 'none',
                   backgroundColor: currentThemePalette.opacityBackground,
-                  fontSize: "13px",
-                }}>
+                  fontSize: '13px',
+                }}
+              >
                 {header.name}
                 <Checkbox
                   icon={<FilterAltOutlinedIcon />}
@@ -178,20 +191,18 @@ const MembersTable = ({
                   size="small"
                   sx={{
                     color:
-                      currentTheme === "dark"
+                      currentTheme === 'dark'
                         ? currentThemePalette.light
-                        : "#293A46",
-                    "&.Mui-checked": {
+                        : '#293A46',
+                    '&.Mui-checked': {
                       color:
-                        currentTheme === "dark"
+                        currentTheme === 'dark'
                           ? currentThemePalette.light
-                          : "#293A46",
+                          : '#293A46',
                     },
-                    margin: "-10px 0",
+                    margin: '-10px 0',
                   }}
-                  onChange={(event) =>
-                    handleCheckboxChange(event, header.value)
-                  }
+                  onChange={event => handleCheckboxChange(event, header.value)}
                 />
               </TableCell>
             ))}
@@ -199,20 +210,24 @@ const MembersTable = ({
         </TableHead>
         {isLoading && (
           <TableBody>
-            {rowPlaceholders.map((slot) => (
+            {rowPlaceholders.map(slot => (
               <TableRow key={slot}>
-                {columnPlaceholders.map((innerSlot) => (
+                {columnPlaceholders.map(innerSlot => (
                   <TableCell
                     key={innerSlot}
                     align="center"
                     sx={{
                       ...tableCellStyle,
-                      backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF"
-                    }}>
+                      backgroundColor:
+                        currentTheme === 'dark'
+                          ? currentThemePalette.medium
+                          : '#FFFFFF',
+                    }}
+                  >
                     <Skeleton
                       sx={{
                         backgroundColor:
-                          currentTheme === "dark"
+                          currentTheme === 'dark'
                             ? currentThemePalette.light
                             : null,
                       }}
@@ -227,11 +242,16 @@ const MembersTable = ({
           <TableBody>
             <TableRow
               sx={{
-                backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
-            }}>
+                backgroundColor:
+                  currentTheme === 'dark'
+                    ? currentThemePalette.medium
+                    : '#FFFFFF',
+              }}
+            >
               <MembersTableBodyCell
                 colSpan={6}
-                sxProp={{ ...tableCellStyle, py: 2.5 }}>
+                sxProp={{...tableCellStyle, py: 2.5}}
+              >
                 Error: {error.message}
               </MembersTableBodyCell>
             </TableRow>
@@ -242,10 +262,11 @@ const MembersTable = ({
             <TableRow>
               <MembersTableBodyCell
                 colSpan={7}
-                sxProp={{ ...tableCellStyle, py: 2.5 }}>
+                sxProp={{...tableCellStyle, py: 2.5}}
+              >
                 {search || filters.length > 0
-                  ? "No search results found"
-                  : "No members found for this community"}
+                  ? 'No search results found'
+                  : 'No members found for this community'}
               </MembersTableBodyCell>
             </TableRow>
           </TableBody>
@@ -259,22 +280,26 @@ const MembersTable = ({
                     page * rowsPerPage + rowsPerPage
                   )
                 : rowDataFiltered
-              ).map((row) => (
+              ).map(row => (
                 <TableRow
                   key={row.people_id}
                   hover
                   sx={{
-                    cursor: "pointer",
-                    backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
-                    "&:hover": {
+                    cursor: 'pointer',
+                    backgroundColor:
+                      currentTheme === 'dark'
+                        ? currentThemePalette.medium
+                        : '#FFFFFF',
+                    '&:hover': {
                       backgroundColor:
-                        currentTheme === "dark" ? "#293A46 !important" : null,
+                        currentTheme === 'dark' ? '#293A46 !important' : null,
                     },
                   }}
                   onClick={() => {
-                      if (isAuthenticated && !isMember) navigateToUpdate(membersData.community_id, row.people_id)
-                    }
-                  }>
+                    if (isAuthenticated && !isMember)
+                      navigateToUpdate(membersData.community_id, row.people_id);
+                  }}
+                >
                   <MembersTableBodyCell sxProp={tableCellStyle}>
                     {row.full_name}
                   </MembersTableBodyCell>
@@ -300,9 +325,14 @@ const MembersTable = ({
               ))}
             </TableBody>
             <TableFooter>
-              <TableRow sx={{
-                backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
-              }}>
+              <TableRow
+                sx={{
+                  backgroundColor:
+                    currentTheme === 'dark'
+                      ? currentThemePalette.medium
+                      : '#FFFFFF',
+                }}
+              >
                 <TablePagination
                   colSpan={7}
                   count={rowDataFiltered.length}
@@ -313,23 +343,23 @@ const MembersTable = ({
                   SelectProps={{
                     sx: {
                       border:
-                        currentTheme === "dark"
+                        currentTheme === 'dark'
                           ? `1px solid ${currentThemePalette.light}`
                           : null,
-                      borderRadius: currentTheme === "dark" ? 1 : null,
-                      "& .MuiSvgIcon-root": {
+                      borderRadius: currentTheme === 'dark' ? 1 : null,
+                      '& .MuiSvgIcon-root': {
                         color:
-                          currentTheme === "dark"
+                          currentTheme === 'dark'
                             ? currentThemePalette.light
                             : null,
                       },
                     },
                     MenuProps: {
                       sx: {
-                        "& .MuiList-root": {
-                          borderRadius: currentTheme === "dark" ? 1 : null,
+                        '& .MuiList-root': {
+                          borderRadius: currentTheme === 'dark' ? 1 : null,
                           border:
-                            currentTheme === "dark"
+                            currentTheme === 'dark'
                               ? `1px solid ${currentThemePalette.light} !important`
                               : null,
                           backgroundColor: currentThemePalette.bgPrimary,
@@ -340,8 +370,8 @@ const MembersTable = ({
                   }}
                   sx={{
                     ...tableCellStyle,
-                    "& .MuiButtonBase-root.MuiIconButton-root.Mui-disabled": {
-                      color: currentTheme === "dark" ? "#293A46" : null,
+                    '& .MuiButtonBase-root.MuiIconButton-root.Mui-disabled': {
+                      color: currentTheme === 'dark' ? '#293A46' : null,
                     },
                   }}
                 />

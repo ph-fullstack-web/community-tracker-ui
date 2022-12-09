@@ -1,8 +1,8 @@
-import { useMutation } from "react-query";
-import { updateCommunityService } from "services";
+import {useMutation} from 'react-query';
+import {updateCommunityService} from 'services';
 
 const useUpdateCommunity = () => {
-  const { mutate, isLoading } = useMutation((args) => updateCommunityService(args));
+  const {mutate, isLoading} = useMutation(args => updateCommunityService(args));
 
   return {
     isLoading,

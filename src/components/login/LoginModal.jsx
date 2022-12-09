@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   Alert,
   AlertTitle,
@@ -7,101 +7,109 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-} from "@mui/material";
-import { FormTextField, GoogleLoginButton } from "components";
-import { useAuthContext } from "contexts/auth/AuthContext";
-import { useLogin, useGoogleLogin, useSwitchThemeContext } from "hooks";
-import AppButton from "components/common/AppButton";
-import { useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+} from '@mui/material';
+import {FormTextField, GoogleLoginButton} from 'components';
+import {useAuthContext} from 'contexts/auth/AuthContext';
+import {useLogin, useGoogleLogin, useSwitchThemeContext} from 'hooks';
+import AppButton from 'components/common/AppButton';
+import {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 const googleButtonStyle = {
   margin: 'auto',
-  padding: '1rem'
+  padding: '1rem',
 };
 
-const LoginModal = ({ open, handleClose }) => {
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const { mutate: loginMutate } = useLogin();
-  const { mutate: googleLoginMutate } = useGoogleLogin();
-  const [credentials, setCredentials] = useState({ id: "", password: "" });
-  const [error, setError] = useState("");
-  const { dispatch } = useAuthContext();
+const LoginModal = ({open, handleClose}) => {
+  const {currentTheme, currentThemePalette} = useSwitchThemeContext();
+  const {mutate: loginMutate} = useLogin();
+  const {mutate: googleLoginMutate} = useGoogleLogin();
+  const [credentials, setCredentials] = useState({id: '', password: ''});
+  const [error, setError] = useState('');
+  const {dispatch} = useAuthContext();
   const navigate = useNavigate();
 
-
-  const handleCredentials = (e) => {
+  const handleCredentials = e => {
     const value = e.target.value;
-    setCredentials({ ...credentials, [e.target.name]: value });
+    setCredentials({...credentials, [e.target.name]: value});
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    dispatch({ type: "AUTH_LOADING" });
+    dispatch({type: 'AUTH_LOADING'});
 
     const args = {
       cognizant_id: credentials.id,
       password: credentials.password,
-    }
-    
+    };
+
     loginMutate(args, {
-      onSuccess: (data) => {
+      onSuccess: data => {
         dispatch({
-          type: "LOGIN",
-          payload: { success: "success", data},
+          type: 'LOGIN',
+          payload: {success: 'success', data},
         });
         handleClose();
         navigate('/communities');
       },
-      onError: (error) => {
-       setError(error.message);
-      }
+      onError: error => {
+        setError(error.message);
+      },
     });
   };
 
-  const handleGoogleLogin = (response) => {
+  const handleGoogleLogin = response => {
     const token = response?.credential;
-    if(token) {
-      googleLoginMutate({ token } , {
-        onSuccess: ({ access_token, data: people }) => {
-          dispatch({
-            type: "LOGIN",
-            payload: { success: "success", data: {
-              access_token,
-              data: {...people }
-            }},
-          });
-          handleClose();
-          navigate('/communities');
-        },
-        onError: (error) => {
-         setError(error.message);
+    if (token) {
+      googleLoginMutate(
+        {token},
+        {
+          onSuccess: ({access_token, data: people}) => {
+            dispatch({
+              type: 'LOGIN',
+              payload: {
+                success: 'success',
+                data: {
+                  access_token,
+                  data: {...people},
+                },
+              },
+            });
+            handleClose();
+            navigate('/communities');
+          },
+          onError: error => {
+            setError(error.message);
+          },
         }
-      })
-    }   
+      );
+    }
   };
 
   useEffect(() => {
-    setCredentials({ id: "", password: "" });
-    setError("");
-  }, [open])
+    setCredentials({id: '', password: ''});
+    setError('');
+  }, [open]);
 
   return (
-    <Dialog 
+    <Dialog
       open={open}
       onClose={handleClose}
       fullWidth
       PaperProps={{
-        sx:{
-          backgroundColor: currentTheme === "dark" ? "#202124" : null,
-          border: currentTheme === "dark" ? `2px solid ${currentThemePalette.light}` : null
-        }
+        sx: {
+          backgroundColor: currentTheme === 'dark' ? '#202124' : null,
+          border:
+            currentTheme === 'dark'
+              ? `2px solid ${currentThemePalette.light}`
+              : null,
+        },
       }}
     >
       <DialogTitle sx={{color: currentThemePalette.text}}>Login</DialogTitle>
       <DialogContent>
         <Box
           display="flex"
-          sx={{ height: "20vh" }}
+          sx={{height: '20vh'}}
           flexDirection="column"
           justifyContent="space-evenly"
         >
@@ -112,7 +120,7 @@ const LoginModal = ({ open, handleClose }) => {
             required
             type="number"
             value={credentials.id}
-            sx={{marginTop: "1.5rem"}}
+            sx={{marginTop: '1.5rem'}}
           />
           <FormTextField
             name="password"
@@ -121,15 +129,23 @@ const LoginModal = ({ open, handleClose }) => {
             required
             type="password"
             value={credentials.password}
-            sx={{marginTop: "1rem"}}
+            sx={{marginTop: '1rem'}}
           />
         </Box>
         {error && (
-          <Alert severity="error" sx={{
-              marginTop: "1rem", 
-              backgroundColor: currentTheme === "dark" ? "#202124" : null,
-              border: currentTheme === "dark" ? `2px solid ${currentThemePalette.light}` : null,
-              color: currentTheme === "dark" ? currentThemePalette.light : currentThemePalette.dark
+          <Alert
+            severity="error"
+            sx={{
+              marginTop: '1rem',
+              backgroundColor: currentTheme === 'dark' ? '#202124' : null,
+              border:
+                currentTheme === 'dark'
+                  ? `2px solid ${currentThemePalette.light}`
+                  : null,
+              color:
+                currentTheme === 'dark'
+                  ? currentThemePalette.light
+                  : currentThemePalette.dark,
             }}
           >
             <AlertTitle>Error</AlertTitle>

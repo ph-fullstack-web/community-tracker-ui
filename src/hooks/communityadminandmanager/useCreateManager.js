@@ -1,8 +1,10 @@
-import { useMutation } from 'react-query';
-import { createManager } from 'services';
+import {useMutation} from 'react-query';
+import {createManager} from 'services';
 
 const useCreateManager = () => {
-  const { mutate, isLoading, isError, data } = useMutation((payload) => createManager(payload));
+  const {mutate, isLoading, isError, data} = useMutation(payload =>
+    createManager(payload)
+  );
 
   return {
     isLoading,

@@ -1,9 +1,9 @@
-import { useQuery } from "react-query";
-import { getPeopleDetails } from "services";
+import {useQuery} from 'react-query';
+import {getPeopleDetails} from 'services';
 
 const useGetPeopleDetails = () => {
-  const { isLoading, isError, data, error, refetch } = useQuery(
-    "peopledetails",
+  const {isLoading, isError, data, error, refetch} = useQuery(
+    'peopledetails',
     () => getPeopleDetails()
   );
 

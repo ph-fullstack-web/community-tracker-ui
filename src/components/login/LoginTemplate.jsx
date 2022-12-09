@@ -1,34 +1,33 @@
-import React from "react";
-import { styled } from "@mui/system";
-import {
-  Alert,
-  AlertTitle,
-  Box,
-  DialogActions,
-  DialogContent,
-  Stack,
-} from "@mui/material";
-import { FormTextField, GoogleLoginButton } from "components";
-import { useSwitchThemeContext } from "hooks";
-import AppButton from "components/common/AppButton";
+import React from 'react';
+import {styled} from '@mui/system';
+import {Stack} from '@mui/material';
+import {GoogleLoginButton} from 'components';
+import {useSwitchThemeContext} from 'hooks';
 import darkBackground from 'lib/assets/cognizant_background_right_dark.png';
 import lightBackground from 'lib/assets/cognizant_background_right.png';
 import logo from 'lib/assets/softvision_teal.png';
 
 const googleButtonStyle = {
   margin: 'auto',
-  padding: '1rem'
+  padding: '1rem',
 };
 
-const LoginTemplate = ({ handleCredentials, handleGoogleLogin, handleSubmit, error }) => {
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-    
+const LoginTemplate = ({
+  // handleCredentials,
+  handleGoogleLogin,
+  // handleSubmit,
+  // error,
+}) => {
+  const {currentTheme, currentThemePalette} = useSwitchThemeContext();
+
   const Wrapper = styled('div')({
     minHeight: '100vh',
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'right',
-    backgroundImage: `url(${currentTheme === 'dark' ? darkBackground : lightBackground})`,
+    backgroundImage: `url(${
+      currentTheme === 'dark' ? darkBackground : lightBackground
+    })`,
     backgroundColor: 'white',
   });
 
@@ -47,7 +46,12 @@ const LoginTemplate = ({ handleCredentials, handleGoogleLogin, handleSubmit, err
     <Wrapper>
       <FormContainer>
         <Stack alignItems="center">
-          <img src={logo} height={128} width={350} />
+          <img
+            src={logo}
+            height={128}
+            width={350}
+            alt="Cognizant Softvision Logo"
+          />
           {/* <DialogContent>
           {error && (
               <Alert severity="error" sx={{

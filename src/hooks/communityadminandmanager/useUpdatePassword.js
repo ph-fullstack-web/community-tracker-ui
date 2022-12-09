@@ -1,8 +1,8 @@
-import { useMutation } from "react-query";
-import { updatePassword } from "services";
+import {useMutation} from 'react-query';
+import {updatePassword} from 'services';
 
 const useUpdatePassword = () => {
-  const { mutate, isLoading } = useMutation((args) => updatePassword(args));
+  const {mutate, isLoading} = useMutation(args => updatePassword(args));
 
   return {
     isLoading,

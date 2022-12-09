@@ -1,10 +1,9 @@
-import { useQuery } from "react-query";
-import { getWorkState } from "services";
+import {useQuery} from 'react-query';
+import {getWorkState} from 'services';
 
 const useGetWorkState = () => {
-  const { isLoading, isError, data, error, refetch } = useQuery(
-    "workstate",
-    () => getWorkState()
+  const {isLoading, isError, data, error, refetch} = useQuery('workstate', () =>
+    getWorkState()
   );
 
   return {

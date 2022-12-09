@@ -1,5 +1,5 @@
-import { FormControl, InputLabel, Select } from "@mui/material";
-import { useSwitchThemeContext } from "hooks";
+import {FormControl, InputLabel, Select} from '@mui/material';
+import {useSwitchThemeContext} from 'hooks';
 
 const FormSelect = ({
   children,
@@ -8,17 +8,17 @@ const FormSelect = ({
   InputLabelChildren,
   SelectProps,
 }) => {
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const themeForDarkOnly = (color) => (currentTheme === "dark" ? color : null);
+  const {currentTheme, currentThemePalette} = useSwitchThemeContext();
+  const themeForDarkOnly = color => (currentTheme === 'dark' ? color : null);
 
   return (
     <FormControl {...FormControlProps}>
       <InputLabel
         sx={{
           color: themeForDarkOnly(currentThemePalette.light),
-          "&.Mui-focused": {
+          '&.Mui-focused': {
             color:
-              currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.dark,
+              currentTheme === 'dark' ? '#FFFFFF' : currentThemePalette.dark,
           },
         }}
         {...InputLabelProps}
@@ -28,39 +28,39 @@ const FormSelect = ({
       <Select
         MenuProps={{
           sx: {
-            "& .MuiPaper-root": {
+            '& .MuiPaper-root': {
               borderRadius: themeForDarkOnly(1),
               border: themeForDarkOnly(
                 `1px solid ${currentThemePalette.light}`
               ),
               backgroundColor: currentThemePalette.bgPrimary,
               color: currentThemePalette.text,
-              "& .MuiMenuItem-root:hover": {
-                backgroundColor: themeForDarkOnly("#293A46"),
+              '& .MuiMenuItem-root:hover': {
+                backgroundColor: themeForDarkOnly('#293A46'),
               },
             },
           },
         }}
         sx={{
-          color: themeForDarkOnly("#FFFFFF"),
+          color: themeForDarkOnly('#FFFFFF'),
           backgroundColor: themeForDarkOnly(currentThemePalette.medium),
-          "& .MuiSvgIcon-root": {
+          '& .MuiSvgIcon-root': {
             color:
-              currentTheme === "dark" || currentTheme === "teal"
-                ? "#0a7578 !important"
+              currentTheme === 'dark' || currentTheme === 'teal'
+                ? '#0a7578 !important'
                 : currentThemePalette.dark,
           },
-          "& .MuiOutlinedInput-notchedOutline": {
+          '& .MuiOutlinedInput-notchedOutline': {
             borderColor:
-              currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.medium,
+              currentTheme === 'dark' ? '#FFFFFF' : currentThemePalette.medium,
           },
-          "&:hover .MuiOutlinedInput-notchedOutline": {
+          '&:hover .MuiOutlinedInput-notchedOutline': {
             borderColor:
-              currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.dark,
+              currentTheme === 'dark' ? '#FFFFFF' : currentThemePalette.dark,
           },
-          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
             border: `2px solid ${
-              currentTheme === "dark"
+              currentTheme === 'dark'
                 ? currentThemePalette.light
                 : currentThemePalette.dark
             }`,

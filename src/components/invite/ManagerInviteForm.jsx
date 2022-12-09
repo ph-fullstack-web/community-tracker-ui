@@ -1,30 +1,31 @@
-import { useState } from "react"
-import {
-  Grid, Box
-} from "@mui/material";
-import { FormTextField } from "components";
-import AppButton from "components/common/AppButton";
+import {useState} from 'react';
+import {Grid, Box} from '@mui/material';
+import {FormTextField} from 'components';
+import AppButton from 'components/common/AppButton';
 
 const initialValue = {
   cognizantId: '',
   name: '',
   email: '',
-}
+};
 
-const ManagerInviteForm = ({ onClickHandler, isProcessing, buttonText = "invite" }) => {
+const ManagerInviteForm = ({
+  onClickHandler,
+  isProcessing,
+  buttonText = 'invite',
+}) => {
+  const [managerDetails, setManagerDetails] = useState(initialValue);
 
-  const [managerDetails, setManagerDetails] = useState(initialValue)
-
-  const handleFieldChange = (e) => {
-    setManagerDetails({ ...managerDetails, [e.target.name]: e.target.value });
-  }
-  const handleOnButtonClick = (e) => {
-    e.preventDefault()
-    onClickHandler(managerDetails)
-  }
+  const handleFieldChange = e => {
+    setManagerDetails({...managerDetails, [e.target.name]: e.target.value});
+  };
+  const handleOnButtonClick = e => {
+    e.preventDefault();
+    onClickHandler(managerDetails);
+  };
 
   return (
-    <Box component='form' onSubmit={handleOnButtonClick}>
+    <Box component="form" onSubmit={handleOnButtonClick}>
       <Grid container>
         <Grid item xs={12} md={5}>
           <FormTextField
@@ -33,7 +34,7 @@ const ManagerInviteForm = ({ onClickHandler, isProcessing, buttonText = "invite"
             autoComplete="off"
             value={managerDetails.cognizantId}
             onChange={handleFieldChange}
-            name='cognizantId'
+            name="cognizantId"
             label="Cognizant Id"
             variant="outlined"
             sx={{
@@ -49,7 +50,7 @@ const ManagerInviteForm = ({ onClickHandler, isProcessing, buttonText = "invite"
             autoComplete="off"
             value={managerDetails.name}
             onChange={handleFieldChange}
-            name='name'
+            name="name"
             label="Name"
             variant="outlined"
             sx={{
@@ -65,7 +66,7 @@ const ManagerInviteForm = ({ onClickHandler, isProcessing, buttonText = "invite"
             autoComplete="off"
             value={managerDetails.email}
             onChange={handleFieldChange}
-            name='email'
+            name="email"
             label="Email"
             variant="outlined"
             sx={{
@@ -77,32 +78,32 @@ const ManagerInviteForm = ({ onClickHandler, isProcessing, buttonText = "invite"
           item
           xs={4}
           sx={{
-            display: "flex",
-            alignContent: "center",
+            display: 'flex',
+            alignContent: 'center',
             ml: {
-              md: "3rem"
+              md: '3rem',
             },
             mt: {
-              xs: "2rem"
-            }
-          }}>
+              xs: '2rem',
+            },
+          }}
+        >
           <AppButton
             disabled={isProcessing}
-            type='submit'
+            type="submit"
             size="large"
             sx={{
-              mt: "auto",
-              width: "10rem",
-              height: "4rem",
+              mt: 'auto',
+              width: '10rem',
+              height: '4rem',
             }}
           >
             {buttonText}
           </AppButton>
-
         </Grid>
       </Grid>
     </Box>
-  )
-}
+  );
+};
 
-export default ManagerInviteForm
+export default ManagerInviteForm;

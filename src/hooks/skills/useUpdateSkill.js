@@ -1,8 +1,8 @@
-import { useMutation } from "react-query";
-import { updateSkill } from "services";
+import {useMutation} from 'react-query';
+import {updateSkill} from 'services';
 
 const useUpdateSkill = () => {
-  const { mutate, isLoading } = useMutation((args) => updateSkill(args));
+  const {mutate, isLoading} = useMutation(args => updateSkill(args));
 
   return {
     isLoading,

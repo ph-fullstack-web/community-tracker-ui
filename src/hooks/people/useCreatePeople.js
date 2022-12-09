@@ -1,8 +1,10 @@
-import { useMutation } from 'react-query';
-import { createPeople } from 'services';
+import {useMutation} from 'react-query';
+import {createPeople} from 'services';
 
 const useCreatePeople = () => {
-  const { mutate, isLoading, isError, data } = useMutation((payload) => createPeople(payload));
+  const {mutate, isLoading, isError, data} = useMutation(payload =>
+    createPeople(payload)
+  );
 
   return {
     isLoading,

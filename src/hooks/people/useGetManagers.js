@@ -1,9 +1,9 @@
-import { useQuery } from "react-query";
-import { getManagers } from "services";
+import {useQuery} from 'react-query';
+import {getManagers} from 'services';
 
 const useGetManagers = () => {
-  const { isLoading, isError, data, error, refetch } = useQuery(
-    "managers",
+  const {isLoading, isError, data, error, refetch} = useQuery(
+    'managers',
     () => getManagers(),
     {
       staleTime: 10000,

@@ -4,21 +4,26 @@ import {
   Grid,
   CircularProgress,
   Container,
-} from "@mui/material";
-import { PlusIconButton } from "components";
-import useGetCommunities from "hooks/communities/useGetCommunities";
-import CommunityCard from "./CommunityCard";
-import { useNavigate } from "react-router-dom";
-import { useSwitchThemeContext } from "hooks";
-import React, { useState, useEffect } from "react";
-import { useAuthContext } from 'contexts/auth/AuthContext';
-import { DARK_BACKGROUND } from "theme";
+} from '@mui/material';
+import {PlusIconButton} from 'components';
+import useGetCommunities from 'hooks/communities/useGetCommunities';
+import CommunityCard from './CommunityCard';
+import {useNavigate} from 'react-router-dom';
+import {useSwitchThemeContext} from 'hooks';
+import React, {useState, useEffect} from 'react';
+import {useAuthContext} from 'contexts/auth/AuthContext';
+import {DARK_BACKGROUND} from 'theme';
 
 const CommunityList = () => {
   const navigator = useNavigate();
   const [communityListData, setCommunityListData] = useState([]);
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const { state: { isAuthenticated, credentials : { isMember }}} = useAuthContext();
+  const {currentTheme, currentThemePalette} = useSwitchThemeContext();
+  const {
+    state: {
+      isAuthenticated,
+      credentials: {isMember},
+    },
+  } = useAuthContext();
   // hook to fetch communities
   const {
     isLoading,
@@ -41,25 +46,29 @@ const CommunityList = () => {
   return (
     <Card
       style={{
-        marginBottom: "1rem",
-        backgroundColor: `${currentTheme === 'dark' ? DARK_BACKGROUND : 'none'}`
+        marginBottom: '1rem',
+        backgroundColor: `${
+          currentTheme === 'dark' ? DARK_BACKGROUND : 'none'
+        }`,
       }}
     >
       {isLoading && (
         <Container
           style={{
-            display: "flex",
-            justifyContent: "center",
-            justifyItems: "center",
-            marginTop: "5rem",
-            backgroundColor:  `${currentTheme === 'dark' ? DARK_BACKGROUND : 'none'}`
+            display: 'flex',
+            justifyContent: 'center',
+            justifyItems: 'center',
+            marginTop: '5rem',
+            backgroundColor: `${
+              currentTheme === 'dark' ? DARK_BACKGROUND : 'none'
+            }`,
           }}
         >
           <CircularProgress
             sx={{
               color:
-                currentTheme === "dark" || currentTheme === "teal"
-                  ? "#0a7578 !important"
+                currentTheme === 'dark' || currentTheme === 'teal'
+                  ? '#0a7578 !important'
                   : currentThemePalette.dark,
             }}
             size="5rem"
@@ -69,10 +78,10 @@ const CommunityList = () => {
       {isError && (
         <Container
           style={{
-            display: "flex",
-            justifyContent: "center",
-            justifyItems: "center",
-            marginTop: "3rem",
+            display: 'flex',
+            justifyContent: 'center',
+            justifyItems: 'center',
+            marginTop: '3rem',
           }}
         >
           <label>{`Error: ${error.message}`}</label>
@@ -80,7 +89,7 @@ const CommunityList = () => {
       )}
       <CardContent
         className="community-container"
-        sx={{ backgroundColor: currentThemePalette.cardSecondary }}
+        sx={{backgroundColor: currentThemePalette.cardSecondary}}
       >
         {!isLoading && communityListData && (
           <>
@@ -89,10 +98,10 @@ const CommunityList = () => {
               spacing={3}
               className="community-list"
               style={{
-                color: "#FFFFFF",
+                color: '#FFFFFF',
               }}
             >
-              {(communityListData || []).map((community) => (
+              {(communityListData || []).map(community => (
                 <CommunityCard
                   key={community.community_id}
                   id={community.community_id}
@@ -102,21 +111,21 @@ const CommunityList = () => {
                   manager={community.manager_full_name}
                   chartData={[
                     {
-                      name: "percentage",
+                      name: 'percentage',
                       value: community.percentage,
                       fill: `${
-                        currentTheme === "dark"
-                          ? "#0a7578"
+                        currentTheme === 'dark'
+                          ? '#0a7578'
                           : currentThemePalette.dark
                       }`,
                     },
                     {
-                      name: "max",
+                      name: 'max',
                       value: 100 - community.percentage,
                       fill: `${
-                        currentTheme === "dark"
-                          ? "rgba(250, 250, 250, .07)"
-                          : "#b6bbc2"
+                        currentTheme === 'dark'
+                          ? 'rgba(250, 250, 250, .07)'
+                          : '#b6bbc2'
                       }`,
                     },
                   ]}
@@ -131,20 +140,22 @@ const CommunityList = () => {
                 md={4}
                 lg={3}
                 style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
-                {(isAuthenticated && !isMember) && (<PlusIconButton
-                  title="Go to input community"
-                  ariaLabel="Add community"
-                  onClickCallback={() => navigator("/communities/add")}
-                  style={{
-                    height: "5rem",
-                    width: "5rem",
-                  }}
-                />)}
+                {isAuthenticated && !isMember && (
+                  <PlusIconButton
+                    title="Go to input community"
+                    ariaLabel="Add community"
+                    onClickCallback={() => navigator('/communities/add')}
+                    style={{
+                      height: '5rem',
+                      width: '5rem',
+                    }}
+                  />
+                )}
               </Grid>
             </Grid>
           </>

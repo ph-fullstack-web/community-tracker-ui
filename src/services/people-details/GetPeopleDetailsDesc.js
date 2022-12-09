@@ -1,4 +1,4 @@
-import read from "../axios/read";
+import read from '../axios/read';
 
 const getPeopleDetailsDesc = async () => {
   const response = await read('/api/peopledetails/description');

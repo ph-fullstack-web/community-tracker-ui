@@ -1,8 +1,8 @@
-import { useMutation } from "react-query";
-import { updateProject } from "services";
+import {useMutation} from 'react-query';
+import {updateProject} from 'services';
 
 const useUpdateProject = () => {
-  const { mutate, isLoading } = useMutation((args) => updateProject(args));
+  const {mutate, isLoading} = useMutation(args => updateProject(args));
 
   return {
     isLoading,
