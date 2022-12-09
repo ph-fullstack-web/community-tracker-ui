@@ -1,0 +1,40 @@
+name: community-tracker-ui Deploy
+
+on:
+  workflow_run:
+    workflows: ["community-tracker-ui Build"]
+    branches: [main]
+    types: [completed]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    
+    steps:
+    - name: Download artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: main_ci.yml
+        workflow_conclusion: success
+    
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Azure account set
+      run: |
+            az account set -s ${{ secrets.AZURE_SUBSCRIPTION }}
+    
+    - name: Upload to Azure blob storage
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.30.0
+        inlineScript: |
+            az storage blob upload-batch --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} -d '$web' -s ./artifact
+    
+    - name: Azure logout
+      run: |
+            az logout
