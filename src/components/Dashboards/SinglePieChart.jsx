@@ -5,7 +5,7 @@ const PieChartDashBoard = ({chartData, percentage, count, label}) => {
   return (
     <PieChart width={220} height={160}>
       	<text x={113} y={75} textAnchor="middle" dominantBaseline="middle" fontSize="24px" fontWeight="600" style={{fill: `${currentTheme === "dark" ? "#ffffff" : "#141414"}`}}>
-        	{percentage}{!count && (<a fontSize="12px" fontWeight="800">%</a>)}
+        	{percentage}{!count && (<a href={() => false} fontSize="12px" fontWeight="800">%</a>)}
         </text>
         <text x={110} y={92} textAnchor="middle" dominantBaseline="middle" fontSize="11px" style={{fill: `${currentTheme === "dark" ? "rgba(255, 255, 255, 0.6)" : "rgba(0, 0, 0, 0.6)"}`}}>{label}</text>
       <Pie

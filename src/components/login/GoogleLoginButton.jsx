@@ -16,7 +16,7 @@ const GoogleLoginButton = ({ style, onCallbackResponse }) => {
       text: 'signin_with',
       shape: 'pill',
     });
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div id="signInDiv" style={style} />;

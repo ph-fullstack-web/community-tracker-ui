@@ -20,6 +20,7 @@ const Login = () => {
     switch(name) {
       case 'id': idRef.current = value; break;
       case 'password': passwordRef.current = value; break;
+      default: // do nothing
     }
   };
 
