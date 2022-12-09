@@ -1,0 +1,36 @@
+name: community-tracker-ui Build
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-test:
+    name: Build
+    
+    runs-on: ubuntu-latest
+
+    env:
+      REACT_APP_API_URI: ${{ secrets.REACT_APP_API_URI }}
+    
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - run: npm install
+    - run: npm run build
+
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        path: ./build
