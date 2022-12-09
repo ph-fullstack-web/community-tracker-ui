@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REACT_APP_API_URI: ${{ secrets.REACT_APP_API_URI }}
+      REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
     
     strategy:
       matrix:
