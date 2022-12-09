@@ -1,47 +1,45 @@
-import TextField from "@mui/material/TextField";
-import { useSwitchThemeContext } from "hooks";
+import TextField from '@mui/material/TextField';
+import {useSwitchThemeContext} from 'hooks';
 
-const FormTextField = ({ sx: restOfSxProp, ...otherProps }) => {
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const themeForDarkOnly = (color) => (currentTheme === "dark" ? color : null);
-  
+const FormTextField = ({sx: restOfSxProp, ...otherProps}) => {
+  const {currentTheme, currentThemePalette} = useSwitchThemeContext();
+  const themeForDarkOnly = color => (currentTheme === 'dark' ? color : null);
+
   return (
     <TextField
       sx={{
         input: {
-          color: themeForDarkOnly("#FFFFFF"),
+          color: themeForDarkOnly('#FFFFFF'),
           // For input[type=date]'s calendar icon and calendar UI
-          colorScheme: themeForDarkOnly("dark"),
+          colorScheme: themeForDarkOnly('dark'),
         },
         textarea: {
-          color: themeForDarkOnly("#FFFFFF"),
+          color: themeForDarkOnly('#FFFFFF'),
         },
-        backgroundColor: themeForDarkOnly("rgba(20, 20, 20)"),
+        backgroundColor: themeForDarkOnly('rgba(20, 20, 20)'),
         label: {
           color: themeForDarkOnly(currentThemePalette.light),
           borderBottomColor: themeForDarkOnly(currentThemePalette.light),
         },
-        "& label.Mui-focused": {
-          color: currentTheme === "dark" ? "#FFFFFF" : currentThemePalette.dark,
+        '& label.Mui-focused': {
+          color: currentTheme === 'dark' ? '#FFFFFF' : currentThemePalette.dark,
         },
-        "& .MuiInput-underline:after": {
+        '& .MuiInput-underline:after': {
           borderBottomColor:
-            currentTheme === "dark" ? "#141414" : currentThemePalette.dark,
+            currentTheme === 'dark' ? '#141414' : currentThemePalette.dark,
         },
-        "& .MuiOutlinedInput-root": {
-          "& fieldset": {
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
             borderColor:
-              currentTheme === "dark" ? "#141414" : currentThemePalette.medium,
+              currentTheme === 'dark' ? '#141414' : currentThemePalette.medium,
           },
-          "&:hover fieldset": {
+          '&:hover fieldset': {
             borderColor:
-              currentTheme === "dark" ? "#141414" : currentThemePalette.dark,
+              currentTheme === 'dark' ? '#141414' : currentThemePalette.dark,
           },
-          "&.Mui-focused fieldset": {
+          '&.Mui-focused fieldset': {
             borderColor:
-              currentTheme === "dark"
-                ? "#141414"
-                : currentThemePalette.dark,
+              currentTheme === 'dark' ? '#141414' : currentThemePalette.dark,
           },
         },
         ...restOfSxProp,

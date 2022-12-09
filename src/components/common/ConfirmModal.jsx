@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  Button, 
-  Dialog, 
-  DialogActions, 
-  DialogContent, 
-  DialogContentText, 
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
   DialogTitle,
 } from '@mui/material';
 
@@ -21,7 +21,7 @@ export const ConfirmModal = ({
   const handleCancel = () => onCancel();
 
   return (
-    <Dialog open={open} onClose={handleCancel} >
+    <Dialog open={open} onClose={handleCancel}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <DialogContentText>{message}</DialogContentText>

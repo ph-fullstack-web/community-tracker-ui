@@ -10,7 +10,7 @@ const PlusIconButton = ({
   sxProp,
   onClickCallback,
 }) => {
-  const { currentThemePalette } = useSwitchThemeContext();
+  const {currentThemePalette} = useSwitchThemeContext();
 
   return (
     <IconButton
@@ -19,7 +19,8 @@ const PlusIconButton = ({
       color={color ? color : 'primary'}
       size={size ? size : 'medium'}
       sx={sxProp}
-      onClick={onClickCallback}>
+      onClick={onClickCallback}
+    >
       <AddCircleOutlineIcon
         fontSize="large"
         style={{

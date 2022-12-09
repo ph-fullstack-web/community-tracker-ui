@@ -1,9 +1,9 @@
-import { TextField, InputAdornment } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import useSwitchThemeContext from "hooks/theme/useSwitchThemeContext";
+import {TextField, InputAdornment} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import useSwitchThemeContext from 'hooks/theme/useSwitchThemeContext';
 
-export default function FormSearchInput({ onChangeCallback, value }) {
-  const { currentThemePalette } = useSwitchThemeContext();
+export default function FormSearchInput({onChangeCallback, value}) {
+  const {currentThemePalette} = useSwitchThemeContext();
   const inputStyle = {
     border: `2px solid ${currentThemePalette.main}`,
     borderRadius: 999,
@@ -13,23 +13,26 @@ export default function FormSearchInput({ onChangeCallback, value }) {
     <TextField
       fullWidth
       InputProps={{
-        placeholder: "Search",
+        placeholder: 'Search',
         startAdornment: (
           <InputAdornment position="start">
-            <SearchIcon sx={{ color: currentThemePalette.main }} fontSize="medium" />
+            <SearchIcon
+              sx={{color: currentThemePalette.main}}
+              fontSize="medium"
+            />
           </InputAdornment>
         ),
       }}
       sx={{
-        ml: { xs: 1, sm: 0 },
-        "& .MuiOutlinedInput-root": {
-          "& > fieldset": inputStyle,
+        ml: {xs: 1, sm: 0},
+        '& .MuiOutlinedInput-root': {
+          '& > fieldset': inputStyle,
         },
-        "& .MuiOutlinedInput-root.Mui-focused": {
-          "& > fieldset": { ...inputStyle, borderWidth: 3 },
+        '& .MuiOutlinedInput-root.Mui-focused': {
+          '& > fieldset': {...inputStyle, borderWidth: 3},
         },
-        "& .MuiOutlinedInput-root:hover": {
-          "& > fieldset": inputStyle,
+        '& .MuiOutlinedInput-root:hover': {
+          '& > fieldset': inputStyle,
         },
         input: {
           py: 0.75,

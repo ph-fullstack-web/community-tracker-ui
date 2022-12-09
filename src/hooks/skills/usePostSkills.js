@@ -1,9 +1,9 @@
-import { useMutation } from "react-query";
-import { postSkills } from "services";
+import {useMutation} from 'react-query';
+import {postSkills} from 'services';
 
 const usePostSkills = () => {
-  const { isLoading, isError, data, error, mutate } = useMutation(
-    (payload) => postSkills(payload)
+  const {isLoading, isError, data, error, mutate} = useMutation(payload =>
+    postSkills(payload)
   );
 
   return {

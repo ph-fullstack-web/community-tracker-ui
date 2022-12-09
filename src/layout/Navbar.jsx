@@ -1,14 +1,14 @@
-import {useState} from "react";
-import {Grid} from "@mui/material";
+import {useState} from 'react';
+import {Grid} from '@mui/material';
 
-import Logo from "./Logo";
-import EmployeeSearch from "./EmployeeSearch";
+import Logo from './Logo';
+import EmployeeSearch from './EmployeeSearch';
 
-import {useGetPeopleBySearchCriteria} from "hooks";
-import {EmployeeListModal} from "components";
+import {useGetPeopleBySearchCriteria} from 'hooks';
+import {EmployeeListModal} from 'components';
 
 const Navbar = () => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [openEmployeeListModal, setOpenEmployeeListModal] = useState(false);
 
   const {
@@ -37,13 +37,13 @@ const Navbar = () => {
       <Grid xs={12} md={7}>
         <Logo />
       </Grid>
-      <Grid xs={12} md={5} sx={{ mt: { xs: 4 }}}>
-        <EmployeeSearch 
+      <Grid xs={12} md={5} sx={{mt: {xs: 4}}}>
+        <EmployeeSearch
           handleSearchChange={handleSearchChange}
           handleSearchClick={handleSearchClick}
           search={search}
         />
-      </Grid>      
+      </Grid>
       <EmployeeListModal
         open={openEmployeeListModal}
         onClose={handleCloseEmployeeListModal}

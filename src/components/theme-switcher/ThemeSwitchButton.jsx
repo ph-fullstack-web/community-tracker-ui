@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import {useState, useRef} from 'react';
 import {
   IconButton,
   Popper,
@@ -7,29 +7,29 @@ import {
   ClickAwayListener,
   MenuItem,
   MenuList,
-} from "@mui/material";
-import Brightness6Icon from "@mui/icons-material/Brightness6";
+} from '@mui/material';
+import Brightness6Icon from '@mui/icons-material/Brightness6';
 
-import useSwitchThemeContext from "hooks/theme/useSwitchThemeContext";
+import useSwitchThemeContext from 'hooks/theme/useSwitchThemeContext';
 
-const options = ["blue", "plum", "teal", "dark"];
+const options = ['blue', 'plum', 'teal', 'dark'];
 
 const ThemeSwitchButton = () => {
-  const { currentTheme, currentThemePalette, setAndStoreCurrentTheme } =
+  const {currentTheme, currentThemePalette, setAndStoreCurrentTheme} =
     useSwitchThemeContext();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
 
-  const handleMenuItemClick = (option) => {
+  const handleMenuItemClick = option => {
     setAndStoreCurrentTheme(option);
     setOpen(false);
   };
 
   const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
+    setOpen(prevOpen => !prevOpen);
   };
 
-  const handleClose = (event) => {
+  const handleClose = event => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -43,7 +43,8 @@ const ThemeSwitchButton = () => {
         variant="outlined"
         onClick={handleToggle}
         ref={anchorRef}
-        color={currentTheme}>
+        color={currentTheme}
+      >
         <Brightness6Icon />
       </IconButton>
       <Popper
@@ -51,33 +52,37 @@ const ThemeSwitchButton = () => {
         anchorEl={anchorRef.current}
         role={undefined}
         transition
-        disablePortal>
-        {({ TransitionProps, placement }) => (
+        disablePortal
+      >
+        {({TransitionProps, placement}) => (
           <Grow
             {...TransitionProps}
             style={{
               transformOrigin:
-                placement === "bottom" ? "center top" : "center bottom",
-            }}>
+                placement === 'bottom' ? 'center top' : 'center bottom',
+            }}
+          >
             <Paper
               sx={{
-                "& .MuiList-root": {
-                  borderRadius: currentTheme === "dark" ? 1 : null,
+                '& .MuiList-root': {
+                  borderRadius: currentTheme === 'dark' ? 1 : null,
                   border:
-                    currentTheme === "dark"
+                    currentTheme === 'dark'
                       ? `1px solid ${currentThemePalette.light}`
                       : null,
                   backgroundColor: currentThemePalette.bgPrimary,
                   color: currentThemePalette.text,
                 },
-              }}>
+              }}
+            >
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="split-button-menu" autoFocusItem>
-                  {options.map((option) => (
+                  {options.map(option => (
                     <MenuItem
                       key={option}
                       selected={option === currentTheme}
-                      onClick={() => handleMenuItemClick(option)}>
+                      onClick={() => handleMenuItemClick(option)}
+                    >
                       {option}
                     </MenuItem>
                   ))}

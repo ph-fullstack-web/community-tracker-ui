@@ -1,16 +1,10 @@
-import {
-  Typography,
-  Card,
-  CardContent,
-  Grid,
-  CardActions,
-} from "@mui/material";
-import { useSwitchThemeContext } from "hooks";
-import { PieChartDashBoard } from "components";
+import {Typography, Card, CardContent, Grid, CardActions} from '@mui/material';
+import {useSwitchThemeContext} from 'hooks';
+import {PieChartDashBoard} from 'components';
 
-const SkillsCard = ({ id, name, chartData, percentage }) => {
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const label = "Members";
+const SkillsCard = ({id, name, chartData, percentage}) => {
+  const {currentTheme, currentThemePalette} = useSwitchThemeContext();
+  const label = 'Members';
   return (
     <Grid
       key={id}
@@ -21,32 +15,32 @@ const SkillsCard = ({ id, name, chartData, percentage }) => {
       lg={2}
       xl={2}
       style={{
-        display: "flex",
-        justifyContent: "center",
-        justifyItems: "center",
-        marginBottom: "7px",
+        display: 'flex',
+        justifyContent: 'center',
+        justifyItems: 'center',
+        marginBottom: '7px',
       }}
     >
       <Card
         elevation={2}
         className="member-skills-list-item"
         sx={{
-          width: "100%",
-          display: "block",
-          flexDirection: "column",
-          marginTop: "1rem",
+          width: '100%',
+          display: 'block',
+          flexDirection: 'column',
+          marginTop: '1rem',
           backgroundColor: `${
-            currentTheme === "dark" ? "rgba(20, 20, 20, .4)" : "#ffffff"
+            currentTheme === 'dark' ? 'rgba(20, 20, 20, .4)' : '#ffffff'
           }!important`,
-          paddingTop: "0px",
+          paddingTop: '0px',
         }}
       >
         <CardContent
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "0px !important",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0px !important',
             backgroundColor: currentThemePalette.opacityBackground,
           }}
         >
@@ -59,10 +53,10 @@ const SkillsCard = ({ id, name, chartData, percentage }) => {
         <CardActions>
           <Typography
             sx={{
-              fontSize: "13px",
+              fontSize: '13px',
               fontWeight: 700,
               color: `${
-                currentTheme === "dark" ? "#ffffff" : "#141414"
+                currentTheme === 'dark' ? '#ffffff' : '#141414'
               }!important`,
             }}
           >

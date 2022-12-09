@@ -1,4 +1,4 @@
-import read from "../axios/read";
+import read from '../axios/read';
 
 const getManagers = async () => {
   const response = await read('/api/managers');

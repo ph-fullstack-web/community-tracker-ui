@@ -1,8 +1,10 @@
-import { useMutation } from 'react-query';
-import { login } from 'services';
+import {useMutation} from 'react-query';
+import {login} from 'services';
 
 const useLogin = () => {
-  const { mutate, isLoading, isError, data } = useMutation((payload) => login(payload));
+  const {mutate, isLoading, isError, data} = useMutation(payload =>
+    login(payload)
+  );
 
   return {
     isLoading,

@@ -1,9 +1,9 @@
-import { useQuery } from "react-query";
-import { getCommunityManagers } from "services";
+import {useQuery} from 'react-query';
+import {getCommunityManagers} from 'services';
 
 const useGetCommunityManagers = () => {
-  const { isLoading, isError, data, error, refetch } = useQuery(
-    "community-managers",
+  const {isLoading, isError, data, error, refetch} = useQuery(
+    'community-managers',
     () => getCommunityManagers(),
     {
       staleTime: 10000,

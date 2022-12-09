@@ -1,6 +1,6 @@
-import remove from "../axios/remove";
+import remove from '../axios/remove';
 
-const deleteSkill = async (peopleSkillId) => {
+const deleteSkill = async peopleSkillId => {
   const response = await remove(`/api/peopleskills/${peopleSkillId}`);
   return response?.data;
 };

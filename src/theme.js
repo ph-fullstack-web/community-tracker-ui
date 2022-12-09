@@ -1,7 +1,7 @@
 import createTheme from '@mui/material/styles/createTheme';
 
 const DARK_LIGHT = '#BDBDBD';
-const DARK_MEDIUM = "#212121";
+const DARK_MEDIUM = '#212121';
 const DARK_DARK_PLUM = '#6363e0';
 const DARK_DARK_TEAL = '#04dbe0';
 const DARK_DARK_BLUE = '#5995d4';
@@ -31,9 +31,8 @@ const LIGHT_BORDER = 'rgb(222, 226, 230)';
 export const DARK_BACKGROUND = '#3C4043';
 export const LIGHT_BACKGROUND = 'rgb(248, 249, 250)';
 
-export const DARK_DARK = "#141414";
+export const DARK_DARK = '#141414';
 export const WHITE = '#FFFFFF';
-
 
 const theme = createTheme({
   palette: {
@@ -71,7 +70,7 @@ const theme = createTheme({
       bgIcon: WHITE,
       opacityBackground: OPACITY_PLUM,
       loginBorder: LIGHT_BORDER,
-      loginBackground: LIGHT_BACKGROUND
+      loginBackground: LIGHT_BACKGROUND,
     },
     blue: {
       main: BLUE_MEDIUM,
@@ -89,7 +88,7 @@ const theme = createTheme({
       border: DARK_DARK_BLUE,
       bgIcon: WHITE,
       loginBorder: LIGHT_BORDER,
-      loginBackground: LIGHT_BACKGROUND
+      loginBackground: LIGHT_BACKGROUND,
     },
     teal: {
       main: TEAL_DARK,
@@ -107,7 +106,7 @@ const theme = createTheme({
       bgIcon: WHITE,
       opacityBackground: OPACITY_TEAL,
       loginBorder: LIGHT_BORDER,
-      loginBackground: LIGHT_BACKGROUND
+      loginBackground: LIGHT_BACKGROUND,
     },
   },
 });

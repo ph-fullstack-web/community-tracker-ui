@@ -1,6 +1,6 @@
-import read from "../axios/read";
+import read from '../axios/read';
 
-const getPeopleById = async (peopleId) => {
+const getPeopleById = async peopleId => {
   const response = await read(`/api/people/${peopleId}`);
   return response?.data?.data;
 };

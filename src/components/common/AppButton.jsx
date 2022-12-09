@@ -1,16 +1,19 @@
-import { Button } from "@mui/material";
-import { useSwitchThemeContext } from "hooks";
+import {Button} from '@mui/material';
+import {useSwitchThemeContext} from 'hooks';
 
-const AppButton = ({ children, variant, sx: restOfSxProp, ...otherProps }) => {
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
+const AppButton = ({children, variant, sx: restOfSxProp, ...otherProps}) => {
+  const {currentTheme, currentThemePalette} = useSwitchThemeContext();
 
   return (
     <Button
-      variant={variant ? variant : "contained"}
+      variant={variant ? variant : 'contained'}
       sx={{
-        backgroundColor: currentTheme === "dark" ? "rgba(20, 20, 20, .6)" : currentThemePalette.medium,
-        "&:hover": {
-          backgroundColor: currentThemePalette.dark
+        backgroundColor:
+          currentTheme === 'dark'
+            ? 'rgba(20, 20, 20, .6)'
+            : currentThemePalette.medium,
+        '&:hover': {
+          backgroundColor: currentThemePalette.dark,
         },
         ...restOfSxProp,
       }}

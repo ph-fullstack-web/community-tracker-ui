@@ -7,7 +7,7 @@ import GetSkills from './communities/GetSkills';
 import CreateResource from './resources/CreateResource';
 import UpdateResource from './resources/UpdateResource';
 import InviteManager from './invite';
-import NotFound from './not-found'
+import NotFound from './not-found';
 import Maintenance from './maintenance';
 import Login from './login';
 

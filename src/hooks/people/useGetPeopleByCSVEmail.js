@@ -1,9 +1,9 @@
-import { useQuery } from "react-query";
-import { getPeopleByCSVEmail } from "services";
+import {useQuery} from 'react-query';
+import {getPeopleByCSVEmail} from 'services';
 
-const useGetPeopleByCSVEmail = (csvEmail) => {
-  const { isLoading, isError, data, error, refetch } = useQuery(
-    ["people-by-csvEmail", csvEmail],
+const useGetPeopleByCSVEmail = csvEmail => {
+  const {isLoading, isError, data, error, refetch} = useQuery(
+    ['people-by-csvEmail', csvEmail],
     () => getPeopleByCSVEmail(csvEmail),
     {
       staleTime: 10000,

@@ -9,15 +9,15 @@ import {
   CardHeader,
   Avatar,
   IconButton,
-} from "@mui/material";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import { Link } from "react-router-dom";
-import SettingsIcon from "@mui/icons-material/Settings";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import { useSwitchThemeContext } from "hooks";
-import { PieChartDashBoard } from "components";
-import InfoIcon from "@mui/icons-material/Info";
-import { useAuthContext } from 'contexts/auth/AuthContext';
+} from '@mui/material';
+import Tooltip, {tooltipClasses} from '@mui/material/Tooltip';
+import {Link} from 'react-router-dom';
+import SettingsIcon from '@mui/icons-material/Settings';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import {useSwitchThemeContext} from 'hooks';
+import {PieChartDashBoard} from 'components';
+import InfoIcon from '@mui/icons-material/Info';
+import {useAuthContext} from 'contexts/auth/AuthContext';
 
 const CommunityCard = ({
   id,
@@ -29,19 +29,25 @@ const CommunityCard = ({
   chartData,
   members,
 }) => {
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const { state: { isAuthenticated, credentials : { isMember }}} = useAuthContext();
-  const label = "Members"
+  const {currentTheme, currentThemePalette} = useSwitchThemeContext();
+  const {
+    state: {
+      isAuthenticated,
+      credentials: {isMember},
+    },
+  } = useAuthContext();
+  const label = 'Members';
   const managerValue = `Manager: ${manager}`;
   const contrastingColors =
-    currentTheme === "dark"
+    currentTheme === 'dark'
       ? currentThemePalette.light
       : currentThemePalette.medium;
-  const HtmlTooltip = styled(({ className, ...props }) => (
-    <Tooltip {...props} classes={{ popper: className }} />
-  ))(({ theme }) => ({
+  const HtmlTooltip = styled(({className, ...props}) => (
+    <Tooltip {...props} classes={{popper: className}} />
+  ))(() => ({
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: currentTheme === "dark" ? "rgba(20, 20, 20, .8)" : "#ffffff",
+      backgroundColor:
+        currentTheme === 'dark' ? 'rgba(20, 20, 20, .8)' : '#ffffff',
       maxWidth: 300,
     },
   }));
@@ -55,23 +61,23 @@ const CommunityCard = ({
       lg={3}
       xl={3}
       style={{
-        display: "flex",
-        justifyContent: "center",
-        justifyItems: "center",
+        display: 'flex',
+        justifyContent: 'center',
+        justifyItems: 'center',
       }}
     >
       <Card
         elevation={2}
         className="community-list-item"
         sx={{
-          width: "100%",
-          display: "block",
-          flexDirection: "column",
-          marginTop: "1rem",
+          width: '100%',
+          display: 'block',
+          flexDirection: 'column',
+          marginTop: '1rem',
           backgroundColor: `${
-            currentTheme === "dark" ? "rgba(20, 20, 20, .4)" : "#ffffff"
+            currentTheme === 'dark' ? 'rgba(20, 20, 20, .4)' : '#ffffff'
           }!important`,
-          paddingTop: "0px",
+          paddingTop: '0px',
         }}
       >
         <CardHeader
@@ -79,45 +85,50 @@ const CommunityCard = ({
             <Avatar
               sx={{
                 bgcolor: `${
-                  currentTheme === "dark"
-                    ? "#141414"
+                  currentTheme === 'dark'
+                    ? '#141414'
                     : currentThemePalette.light
                 }`,
                 color: `${
-                  currentTheme === "dark" ? "#ffffff" : "#141414"
+                  currentTheme === 'dark' ? '#ffffff' : '#141414'
                 }!important`,
               }}
             >
-              {image && <img width='30' height='30' src={image} alt='icon' />}
+              {image && <img width="30" height="30" src={image} alt="icon" />}
               {!image && name.charAt(0)}
             </Avatar>
           }
           action={
-            (isAuthenticated && !isMember) && <IconButton
-              sx={{
-                color: `${
-                  currentTheme === "dark" ? "#0a7578" : currentThemePalette.dark
-                }`,
-              }}
-              aria-label="settings"
-              component={Link}
-              to={`/communities/update/${id}`}
-            >
-              <SettingsIcon />
-            </IconButton>
+            isAuthenticated &&
+            !isMember && (
+              <IconButton
+                sx={{
+                  color: `${
+                    currentTheme === 'dark'
+                      ? '#0a7578'
+                      : currentThemePalette.dark
+                  }`,
+                }}
+                aria-label="settings"
+                component={Link}
+                to={`/communities/update/${id}`}
+              >
+                <SettingsIcon />
+              </IconButton>
+            )
           }
           titleTypographyProps={{
             fontWeight: 600,
             color: `${
-              currentTheme === "dark" ? "#ffffff" : "#141414"
+              currentTheme === 'dark' ? '#ffffff' : '#141414'
             }!important`,
           }}
           subheaderTypographyProps={{
-            fontSize: "12px",
+            fontSize: '12px',
             color: `${
-              currentTheme === "dark"
-                ? "rgba(255, 255, 255, 0.6)"
-                : "rgba(0, 0, 0, 0.6)"
+              currentTheme === 'dark'
+                ? 'rgba(255, 255, 255, 0.6)'
+                : 'rgba(0, 0, 0, 0.6)'
             }!important`,
           }}
           title={name}
@@ -125,10 +136,10 @@ const CommunityCard = ({
         />
         <CardContent
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "0px !important",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0px !important',
             backgroundColor: currentThemePalette.opacityBackground,
           }}
         >
@@ -147,41 +158,41 @@ const CommunityCard = ({
               <VisibilityIcon
                 sx={{
                   color: `${
-                    currentTheme === "dark"
-                      ? "#0a7578"
+                    currentTheme === 'dark'
+                      ? '#0a7578'
                       : currentThemePalette.dark
                   }`,
                 }}
               />
             }
             sx={{
-              fontSize: "12px",
+              fontSize: '12px',
               borderWidth: 1,
               borderColor: `${
-                currentTheme === "dark" ? "#0a7578" : currentThemePalette.dark
+                currentTheme === 'dark' ? '#0a7578' : currentThemePalette.dark
               }`,
               backgroundColor: currentThemePalette.bgPrimary,
-              color: `${
-                currentTheme === "dark" ? "#FFFFFF" : "#141414"
-              }`,
-              "&:hover": {
+              color: `${currentTheme === 'dark' ? '#FFFFFF' : '#141414'}`,
+              '&:hover': {
                 borderWidth: 2,
                 borderColor: contrastingColors,
                 backgroundColor:
-                  currentTheme === "dark" ? "#293A46 !important" : null,
+                  currentTheme === 'dark' ? '#293A46 !important' : null,
               },
-              "&:disabled": {
+              '&:disabled': {
                 borderWidth: 1,
                 borderColor:
-                  currentTheme === "dark" ? currentThemePalette.medium : null,
+                  currentTheme === 'dark' ? currentThemePalette.medium : null,
                 backgroundColor:
-                  currentTheme === "dark" ? "#293A46 !important" : null,
+                  currentTheme === 'dark' ? '#293A46 !important' : null,
               },
             }}
             component={Link}
             to={`/members/${id}`}
           >
-            {members && members > 0 ? `View (${members}) Members` : "View Members"}
+            {members && members > 0
+              ? `View (${members}) Members`
+              : 'View Members'}
           </Button>
           <HtmlTooltip
             title={
@@ -190,18 +201,18 @@ const CommunityCard = ({
                   sx={{
                     maxWidth: 345,
                     backgroundColor: `${
-                      currentTheme === "dark" ? "#141414" : "#ffffff"
+                      currentTheme === 'dark' ? '#141414' : '#ffffff'
                     }`,
-                    marginBottom: "5px",
+                    marginBottom: '5px',
                   }}
                 >
                   <CardContent>
                     <Typography
                       sx={{
-                        fontWeight: "540",
-                        fontSize: "0.875rem",
+                        fontWeight: '540',
+                        fontSize: '0.875rem',
                         color: `${
-                          currentTheme === "dark" ? "#ffffff" : "#141414"
+                          currentTheme === 'dark' ? '#ffffff' : '#141414'
                         }`,
                       }}
                       variant="body2"
@@ -216,9 +227,9 @@ const CommunityCard = ({
             <IconButton
               aria-label="add to favorites"
               sx={{
-                marginLeft: "auto",
+                marginLeft: 'auto',
                 color: `${
-                  currentTheme === "dark" ? "#0a7578" : currentThemePalette.dark
+                  currentTheme === 'dark' ? '#0a7578' : currentThemePalette.dark
                 }`,
               }}
             >

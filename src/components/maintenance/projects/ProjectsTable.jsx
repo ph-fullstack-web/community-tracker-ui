@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import {useState, useEffect, useMemo} from 'react';
 import {
   Box,
   Checkbox,
@@ -11,18 +11,23 @@ import {
   TableRow,
   TableFooter,
   TablePagination,
-} from "@mui/material";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
+} from '@mui/material';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-import { ConfirmModal } from "components";
-import { useNotificationContext } from "contexts/notification/NotificationContext";
-import { useGetProjects, useSwitchThemeContext, useDeleteProject, useUpdateProject } from "hooks";
-import { ProjectFormModal } from ".";
+import {ConfirmModal} from 'components';
+import {useNotificationContext} from 'contexts/notification/NotificationContext';
+import {
+  useGetProjects,
+  useSwitchThemeContext,
+  useDeleteProject,
+  useUpdateProject,
+} from 'hooks';
+import {ProjectFormModal} from '.';
 
-const ProjectsTableBodyCell = ({ children, sxProp, ...otherProps }) => {
+const ProjectsTableBodyCell = ({children, sxProp, ...otherProps}) => {
   return (
     <TableCell sx={sxProp} {...otherProps}>
       {children}
@@ -30,18 +35,16 @@ const ProjectsTableBodyCell = ({ children, sxProp, ...otherProps }) => {
   );
 };
 
-export const ProjectsTable = ({
-  search,
-}) => {
+export const ProjectsTable = ({search}) => {
   const TABLE_HEADERS = [
-    { value: "name", name: "Project", filter: true },
-    { value: "code", name: "Code", filter: true},
-    { value: "is_active", name: "Status", filter: true },
-    { value: "actions", name: "Actions", filter: false },
+    {value: 'name', name: 'Project', filter: true},
+    {value: 'code', name: 'Code', filter: true},
+    {value: 'is_active', name: 'Status', filter: true},
+    {value: 'actions', name: 'Actions', filter: false},
   ];
 
-  const { currentTheme, currentThemePalette } = useSwitchThemeContext();
-  const { dispatch: notificationDispatch } = useNotificationContext();
+  const {currentTheme, currentThemePalette} = useSwitchThemeContext();
+  const {dispatch: notificationDispatch} = useNotificationContext();
 
   const {
     isLoading,
@@ -50,30 +53,32 @@ export const ProjectsTable = ({
     error,
     refetch,
   } = useGetProjects();
-  const { mutate } = useDeleteProject();
-  const { mutate: updateProjectMutate } = useUpdateProject();
+  const {mutate} = useDeleteProject();
+  const {mutate: updateProjectMutate} = useUpdateProject();
 
-  const sortProjects = ((a, b) => {
+  const sortProjects = (a, b) => {
     const projectA = a.name.toLowerCase();
     const projectB = b.name.toLowerCase();
 
     if (projectA < projectB) return -1;
     if (projectA > projectB) return 1;
     return 0;
-  });
+  };
 
   const rowData = useMemo(
     () =>
       projectsData
-        ? projectsData.map((project) => ({
-            id: project.id,
-            name: project.project,
-            code: project.project_code,
-            is_active: project.is_active,
-          })).sort(sortProjects)
+        ? projectsData
+            .map(project => ({
+              id: project.id,
+              name: project.project,
+              code: project.project_code,
+              is_active: project.is_active,
+            }))
+            .sort(sortProjects)
         : null,
     [projectsData]
-  );  
+  );
 
   const [filters, setFilters] = useState([]);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -83,21 +88,24 @@ export const ProjectsTable = ({
   const rowDataFiltered = useMemo(() => {
     if (!search) return rowData;
 
-    return rowData.filter((project) => {
+    return rowData.filter(project => {
       if (filters.length === 0) {
         // Loop over member object and see if search is matched
         // to at least one property value
         for (const property in project) {
-          if (property === "id") continue;
+          if (property === 'id') continue;
 
           let queryFound = false;
-          if (property === "name") {
+          if (property === 'name') {
             queryFound = project[property]
               .toLowerCase()
               .includes(search.toLowerCase());
-          } else if (property === "is_active") {
-            queryFound = (project[property] === true && "active".includes(search.toLowerCase())) ||
-              (project[property] === false && "inactive".includes(search.toLowerCase()));
+          } else if (property === 'is_active') {
+            queryFound =
+              (project[property] === true &&
+                'active'.includes(search.toLowerCase())) ||
+              (project[property] === false &&
+                'inactive'.includes(search.toLowerCase()));
           }
 
           if (!queryFound) continue;
@@ -109,18 +117,21 @@ export const ProjectsTable = ({
         // but add another validation that checks if current property
         // is not included in filters state so that it can skip it
         for (const property in project) {
-          if (property === "id" || !filters.includes(property)) {
+          if (property === 'id' || !filters.includes(property)) {
             continue;
           }
 
           let queryFound = false;
-          if (property === "name") {
+          if (property === 'name') {
             queryFound = project[property]
               .toLowerCase()
               .includes(search.toLowerCase());
-          } else if (property === "is_active") {
-            queryFound = (project[property] === true && "active".includes(search.toLowerCase())) ||
-              (project[property] === false && "inactive".includes(search.toLowerCase()));
+          } else if (property === 'is_active') {
+            queryFound =
+              (project[property] === true &&
+                'active'.includes(search.toLowerCase())) ||
+              (project[property] === false &&
+                'inactive'.includes(search.toLowerCase()));
           }
 
           if (!queryFound) continue;
@@ -139,14 +150,14 @@ export const ProjectsTable = ({
     if (event.target.checked) {
       filterArray = [...filters, headerValue];
     } else {
-      filterArray = filters.filter((filter) => filter !== headerValue);
+      filterArray = filters.filter(filter => filter !== headerValue);
     }
 
     setFilters(filterArray);
   };
 
   const tableCellStyle = {
-    borderBottom: "none",
+    borderBottom: 'none',
     p: 1.7,
     color: currentThemePalette.text,
   };
@@ -161,12 +172,12 @@ export const ProjectsTable = ({
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const handleDeleteButtonClick = (project) => {
+  const handleDeleteButtonClick = project => {
     setSelectedProject(project);
     setOpenDeleteModal(true);
   };
@@ -174,35 +185,35 @@ export const ProjectsTable = ({
   const handleCancelDelete = () => {
     setOpenDeleteModal(false);
     setSelectedProject(undefined);
-  }
+  };
 
   const handleConfirmDelete = () => {
     setOpenDeleteModal(false);
     mutate(selectedProject.id, {
-      onSuccess: (response) => {
+      onSuccess: () => {
         notificationDispatch({
           type: 'NOTIFY',
           payload: {
             type: 'success',
-            message: `${selectedProject.name} has been deleted.`
-          }
+            message: `${selectedProject.name} has been deleted.`,
+          },
         });
         refetch();
       },
-      onError: (error) => {
+      onError: error => {
         notificationDispatch({
           type: 'NOTIFY',
           payload: {
             type: 'error',
-            message: error.message
-          }
+            message: error.message,
+          },
         });
       },
-    })
+    });
     setSelectedProject(undefined);
-  }
+  };
 
-  const handleUpdateButtonClick = (project) => {
+  const handleUpdateButtonClick = project => {
     setSelectedProject(project);
     setOpenUpdateModal(true);
   };
@@ -210,42 +221,42 @@ export const ProjectsTable = ({
   const handleCancelUpdate = () => {
     setOpenUpdateModal(false);
     setSelectedProject(undefined);
-  }
+  };
 
-  const handleConfirmUpdate = (project) => {
+  const handleConfirmUpdate = project => {
     setOpenUpdateModal(false);
     const args = {
       projectId: project.id,
-      payload: project
-    }
+      payload: project,
+    };
     updateProjectMutate(args, {
       onSuccess: () => {
         notificationDispatch({
           type: 'NOTIFY',
           payload: {
             type: 'success',
-            message: 'Project has been updated.'
-          }
+            message: 'Project has been updated.',
+          },
         });
         refetch();
       },
-      onError: (error) => {
+      onError: error => {
         notificationDispatch({
           type: 'NOTIFY',
           payload: {
             type: 'error',
-            message: error.message
-          }
+            message: error.message,
+          },
         });
-      }
+      },
     });
     setSelectedProject(undefined);
-  }
+  };
 
   // Automatically scroll to top with some conditions
   useEffect(() => {
     if (rowsPerPage !== 10) {
-      document.querySelector("body").scrollIntoView({ behavior: "smooth" });
+      document.querySelector('body').scrollIntoView({behavior: 'smooth'});
     }
   }, [page, rowsPerPage]);
 
@@ -255,72 +266,75 @@ export const ProjectsTable = ({
   }, [search]);
 
   return (
-    <Box sx={{ overflowX: "auto" }} id="projects-table-container">
+    <Box sx={{overflowX: 'auto'}} id="projects-table-container">
       <Table
         sx={{
           mt: 0,
           mb: 0.5,
-          mx: { xs: 1, sm: 0 },
+          mx: {xs: 1, sm: 0},
           minWidth: 825,
-          borderCollapse: "separate",
-          borderSpacing: "0px 8px",
+          borderCollapse: 'separate',
+          borderSpacing: '0px 8px',
         }}
-        aria-label="projects-table">
+        aria-label="projects-table"
+      >
         <TableHead>
           <TableRow>
-            {TABLE_HEADERS.map((header) => (
+            {TABLE_HEADERS.map(header => (
               <TableCell
                 key={header.value}
                 sx={{
                   ...tableCellStyle,
-                  fontWeight: "550",
-                  borderBottom: "none",
+                  fontWeight: '550',
+                  borderBottom: 'none',
                   backgroundColor: currentThemePalette.opacityBackground,
-                  fontSize: "13px",
+                  fontSize: '13px',
                 }}
               >
-              {header.name}
+                {header.name}
                 <Checkbox
                   icon={<FilterAltOutlinedIcon />}
                   checkedIcon={<FilterAltIcon />}
                   size="small"
                   sx={{
                     color:
-                      currentTheme === "dark"
+                      currentTheme === 'dark'
                         ? currentThemePalette.light
-                        : "#293A46",
-                    "&.Mui-checked": {
+                        : '#293A46',
+                    '&.Mui-checked': {
                       color:
-                        currentTheme === "dark"
+                        currentTheme === 'dark'
                           ? currentThemePalette.light
-                          : "#293A46",
+                          : '#293A46',
                     },
-                    margin: "-10px 0",
+                    margin: '-10px 0',
                   }}
-                  onChange={(event) =>
-                    handleCheckboxChange(event, header.value)
-                  }
+                  onChange={event => handleCheckboxChange(event, header.value)}
                 />
-            </TableCell>
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
         {isLoading && (
           <TableBody>
-            {rowPlaceholders.map((slot) => (
+            {rowPlaceholders.map(slot => (
               <TableRow key={slot}>
-                {columnPlaceholders.map((innerSlot) => (
+                {columnPlaceholders.map(innerSlot => (
                   <TableCell
                     key={innerSlot}
                     align="center"
                     sx={{
                       ...tableCellStyle,
-                      backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF"
-                    }}>
+                      backgroundColor:
+                        currentTheme === 'dark'
+                          ? currentThemePalette.medium
+                          : '#FFFFFF',
+                    }}
+                  >
                     <Skeleton
                       sx={{
                         backgroundColor:
-                          currentTheme === "dark"
+                          currentTheme === 'dark'
                             ? currentThemePalette.light
                             : null,
                       }}
@@ -333,13 +347,18 @@ export const ProjectsTable = ({
         )}
         {isError && (
           <TableBody>
-            <TableRow 
+            <TableRow
               sx={{
-                backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
-            }}>
+                backgroundColor:
+                  currentTheme === 'dark'
+                    ? currentThemePalette.medium
+                    : '#FFFFFF',
+              }}
+            >
               <ProjectsTableBodyCell
                 colSpan={6}
-                sxProp={{ ...tableCellStyle, py: 2.5 }}>
+                sxProp={{...tableCellStyle, py: 2.5}}
+              >
                 Error: {error.message}
               </ProjectsTableBodyCell>
             </TableRow>
@@ -350,10 +369,11 @@ export const ProjectsTable = ({
             <TableRow>
               <ProjectsTableBodyCell
                 colSpan={6}
-                sxProp={{ ...tableCellStyle, py: 2.5 }}>
+                sxProp={{...tableCellStyle, py: 2.5}}
+              >
                 {search || filters.length > 0
-                  ? "No search results found"
-                  : "No projects found"}
+                  ? 'No search results found'
+                  : 'No projects found'}
               </ProjectsTableBodyCell>
             </TableRow>
           </TableBody>
@@ -367,18 +387,22 @@ export const ProjectsTable = ({
                     page * rowsPerPage + rowsPerPage
                   )
                 : rowDataFiltered
-              ).map((row) => (
+              ).map(row => (
                 <TableRow
                   key={row.people_id}
                   hover
                   sx={{
-                    cursor: "pointer",
-                    backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
-                    "&:hover": {
+                    cursor: 'pointer',
+                    backgroundColor:
+                      currentTheme === 'dark'
+                        ? currentThemePalette.medium
+                        : '#FFFFFF',
+                    '&:hover': {
                       backgroundColor:
-                        currentTheme === "dark" ? "#293A46 !important" : null,
+                        currentTheme === 'dark' ? '#293A46 !important' : null,
                     },
-                  }}>
+                  }}
+                >
                   <ProjectsTableBodyCell sxProp={tableCellStyle}>
                     {row.name}
                   </ProjectsTableBodyCell>
@@ -386,30 +410,30 @@ export const ProjectsTable = ({
                     {row.code}
                   </ProjectsTableBodyCell>
                   <ProjectsTableBodyCell sxProp={tableCellStyle}>
-                    {row.is_active ? "Active" : "Inactive"}
+                    {row.is_active ? 'Active' : 'Inactive'}
                   </ProjectsTableBodyCell>
-                  <ProjectsTableBodyCell sxProp={{...tableCellStyle, p:0}}>
+                  <ProjectsTableBodyCell sxProp={{...tableCellStyle, p: 0}}>
                     <Box>
-                      <IconButton 
+                      <IconButton
                         sx={{
                           color:
-                            currentTheme === "dark"
+                            currentTheme === 'dark'
                               ? currentThemePalette.light
                               : currentThemePalette.dark,
                         }}
-                        size="small" 
+                        size="small"
                         onClick={() => handleUpdateButtonClick(row)}
                       >
                         <EditIcon />
                       </IconButton>
-                      <IconButton 
+                      <IconButton
                         sx={{
                           color:
-                            currentTheme === "dark"
+                            currentTheme === 'dark'
                               ? currentThemePalette.light
                               : currentThemePalette.dark,
                         }}
-                        size="small" 
+                        size="small"
                         onClick={() => handleDeleteButtonClick(row)}
                       >
                         <DeleteIcon />
@@ -420,9 +444,14 @@ export const ProjectsTable = ({
               ))}
             </TableBody>
             <TableFooter>
-              <TableRow sx={{
-                backgroundColor: currentTheme === "dark" ? currentThemePalette.medium : "#FFFFFF",
-              }}>
+              <TableRow
+                sx={{
+                  backgroundColor:
+                    currentTheme === 'dark'
+                      ? currentThemePalette.medium
+                      : '#FFFFFF',
+                }}
+              >
                 <TablePagination
                   colSpan={7}
                   count={rowDataFiltered.length}
@@ -433,23 +462,23 @@ export const ProjectsTable = ({
                   SelectProps={{
                     sx: {
                       border:
-                        currentTheme === "dark"
+                        currentTheme === 'dark'
                           ? `1px solid ${currentThemePalette.light}`
                           : null,
-                      borderRadius: currentTheme === "dark" ? 1 : null,
-                      "& .MuiSvgIcon-root": {
+                      borderRadius: currentTheme === 'dark' ? 1 : null,
+                      '& .MuiSvgIcon-root': {
                         color:
-                          currentTheme === "dark"
+                          currentTheme === 'dark'
                             ? currentThemePalette.light
                             : null,
                       },
                     },
                     MenuProps: {
                       sx: {
-                        "& .MuiList-root": {
-                          borderRadius: currentTheme === "dark" ? 1 : null,
+                        '& .MuiList-root': {
+                          borderRadius: currentTheme === 'dark' ? 1 : null,
                           border:
-                            currentTheme === "dark"
+                            currentTheme === 'dark'
                               ? `1px solid ${currentThemePalette.light} !important`
                               : null,
                           backgroundColor: currentThemePalette.bgPrimary,
@@ -460,8 +489,8 @@ export const ProjectsTable = ({
                   }}
                   sx={{
                     ...tableCellStyle,
-                    "& .MuiButtonBase-root.MuiIconButton-root.Mui-disabled": {
-                      color: currentTheme === "dark" ? "#293A46" : null,
+                    '& .MuiButtonBase-root.MuiIconButton-root.Mui-disabled': {
+                      color: currentTheme === 'dark' ? '#293A46' : null,
                     },
                   }}
                 />

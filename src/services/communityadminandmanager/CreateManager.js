@@ -1,6 +1,6 @@
-import create from "../axios/create";
+import create from '../axios/create';
 
-const createManager = async (payload) => {
+const createManager = async payload => {
   const response = await create('/api/admin', {
     cognizant_id: payload.cognizantId,
     email: payload.email,

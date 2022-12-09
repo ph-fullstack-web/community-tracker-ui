@@ -1,6 +1,6 @@
-import read from "../axios/read";
+import read from '../axios/read';
 
-const getPeopleBySearchCriteria = async (searchCriteria) => {
+const getPeopleBySearchCriteria = async searchCriteria => {
   const response = await read('/api/people', {searchCriteria});
   return response?.data?.data;
 };
