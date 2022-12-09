@@ -1,8 +1,10 @@
 module.exports = {
   plugins: [
-    "react"
+    "react",
+    "react-hooks"
  ],
   rules: {
+    "react-hooks/exhaustive-deps": "warn",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "prettier/prettier": [
