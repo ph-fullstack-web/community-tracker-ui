@@ -1,6 +1,7 @@
 import React from 'react';
-import {Typography} from '@mui/material';
+import {Container, Typography} from '@mui/material';
 import {useAuthContext} from 'contexts/auth/AuthContext';
+import {useSwitchThemeContext} from 'hooks';
 
 const Header = () => {
   const {
@@ -10,20 +11,30 @@ const Header = () => {
       },
     },
   } = useAuthContext();
+  const {currentTheme} = useSwitchThemeContext();
+
   const pageHeaderStyle = {
     textAlign: 'right',
     marginTop: '1rem',
-    paddingRight: '1.5rem',
+    paddingRight: '1rem',
     position: 'relative',
     right: '-50%',
     width: '50%',
     wordBreak: 'break-all',
+    color: currentTheme === 'dark' ? '#FFFFFF' : null,
   };
 
   return (
-    <Typography variant="subtitle2" component="div" sx={{...pageHeaderStyle}}>
-      {email}
-    </Typography>
+    <Container
+      maxWidth="xl"
+      sx={{
+        padding: '1px',
+      }}
+    >
+      <Typography variant="subtitle2" component="div" sx={{...pageHeaderStyle}}>
+        {email}
+      </Typography>
+    </Container>
   );
 };
 
