@@ -14,6 +14,9 @@ import {
   Login,
 } from 'pages';
 import {useAuthContext} from 'contexts/auth/AuthContext';
+import {useEffect} from 'react';
+import jwtDecode from 'jwt-decode';
+import {GetAccessToken} from '../utils';
 
 const authRoutes = [
   {
@@ -93,7 +96,20 @@ export const guestRoutes = [
 export const Routes = () => {
   const {
     state: {isAuthenticated},
+    dispatch: authDispatch,
   } = useAuthContext();
+
+  const token = GetAccessToken();
+
+  useEffect(() => {
+    if (token) {
+      const exp = jwtDecode(token)?.exp;
+      if (!exp || (exp && new Date().getTime() > new Date(exp * 1000))) {
+        authDispatch({type: 'LOGOUT'});
+      }
+    }
+    // eslint-disable-next-line
+  }, [token]);
 
   const getRoutes = list => {
     return (
