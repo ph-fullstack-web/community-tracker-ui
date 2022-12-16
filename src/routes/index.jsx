@@ -74,6 +74,11 @@ const authRoutes = [
     name: 'Maintenance',
   },
   {
+    path: 'login',
+    element: <Login />,
+    name: 'Login',
+  },
+  {
     path: '*',
     element: <NotFound />,
     name: 'Not Found',
