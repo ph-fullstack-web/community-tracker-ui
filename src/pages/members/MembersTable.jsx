@@ -1,5 +1,5 @@
 import {useState, useEffect, useMemo} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import {
   Box,
   Skeleton,
@@ -44,6 +44,8 @@ const MembersTable = ({
   } = useAuthContext();
 
   const navigate = useNavigate();
+  const location = useLocation();
+
   const navigateToUpdate = (communityId, peopleId) => {
     navigate(`/members/${communityId}/update/${peopleId}`);
   };
@@ -141,6 +143,12 @@ const MembersTable = ({
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  // Reset page count on new route
+  useEffect(() => {
+    setPage(0);
+    // eslint-disable-next-line
+  }, [location]);
 
   // Automatically scroll to top with some conditions
   useEffect(() => {

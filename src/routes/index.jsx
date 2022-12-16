@@ -74,6 +74,11 @@ const authRoutes = [
     name: 'Maintenance',
   },
   {
+    path: 'login',
+    element: <Navigate to="/communities" />,
+    name: 'Communities',
+  },
+  {
     path: '*',
     element: <NotFound />,
     name: 'Not Found',
