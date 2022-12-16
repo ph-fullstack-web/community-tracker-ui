@@ -75,8 +75,8 @@ const authRoutes = [
   },
   {
     path: 'login',
-    element: <Login />,
-    name: 'Login',
+    element: <Navigate to="/communities" />,
+    name: 'Communities',
   },
   {
     path: '*',
