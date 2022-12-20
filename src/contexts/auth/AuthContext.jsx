@@ -26,7 +26,9 @@ const authReducer = (state, action) => {
         loading: false,
         credentials: {
           ...data,
-          isMember: jwtDecode(data.access_token).iss === 'member',
+          isMember: data?.access_token
+            ? jwtDecode(data.access_token).iss === 'member'
+            : true,
         },
         success,
         isAuthenticated: true,
