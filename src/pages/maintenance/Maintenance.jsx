@@ -101,7 +101,14 @@ const Maintenance = () => {
       >
         <Tabs value={tabValue} onChange={handleTabChange}>
           {tabLabels.map(({label, value}) => (
-            <Tab key={value} label={label} id={value} />
+            <Tab
+              key={value}
+              label={label}
+              id={value}
+              sx={{
+                color: `${currentTheme === 'dark' ? '#ffffff' : '#141414'}`,
+              }}
+            />
           ))}
         </Tabs>
         <Card

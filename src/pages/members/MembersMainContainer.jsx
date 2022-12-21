@@ -8,6 +8,7 @@ import {
   CardContent,
   Checkbox,
   FormControlLabel,
+  Typography,
 } from '@mui/material';
 import {FormTextField, PlusIconButton} from 'components';
 import {
@@ -78,6 +79,7 @@ const MembersMainContainer = () => {
         ? membersData.members.sort(sortMembers).map(member => ({
             people_id: member.people_id,
             full_name: member.full_name,
+            csv_email: member.csv_email,
             assigned_to: membersData.manager?.name,
             hired_date_formatted: moment(member.hired_date).format(
               'MM/DD/YYYY'
@@ -168,121 +170,145 @@ const MembersMainContainer = () => {
   ]);
 
   return (
-    <Box
-      style={{
-        marginBottom: '1rem',
-      }}
-    >
-      <Card
+    <>
+      <Typography
+        pt={2}
         sx={{
-          backgroundColor: currentThemePalette.cardSecondary,
-          maxWidth: '1430px !important',
+          fontWeight: '500',
+          fontSize: '2.5rem',
+          color: `${currentTheme === 'dark' ? '#ffffff' : '#141414'}`,
+        }}
+        variant="body2"
+      >
+        {membersData?.community_name}
+      </Typography>
+      <Typography
+        pb={4}
+        sx={{
+          fontWeight: '500',
+          fontSize: '1rem',
+          color: `${currentTheme === 'dark' ? '#ffffff' : '#141414'}`,
+        }}
+        variant="body2"
+      >
+        Managed by: {membersData?.manager?.name}
+      </Typography>
+      <Box
+        style={{
+          marginBottom: '1rem',
         }}
       >
-        <Stack
-          direction="row"
-          alignItems="center"
-          sx={{padding: '2rem 2rem 0px 2rem'}}
-        >
-          <Box sx={{width: {xs: '100%', lg: '135ch'}, flex: '0 1 auto'}}>
-            <FormTextField
-              sx={{width: '100%'}}
-              placeholder="Search"
-              label="Search"
-              autoComplete="off"
-              onChange={handleSearch}
-            />
-          </Box>
-          <Box>
-            <AppButton
-              variant={'contained'}
-              sx={{width: 150, height: 50, ml: {xs: 1, sm: 3}}}
-              startIcon={<SearchIcon />}
-              onClick={handleSearchClick}
-            >
-              Search
-            </AppButton>
-          </Box>
-        </Stack>
-        <CardContent
+        <Card
           sx={{
-            marginTop: '24px',
-            padding: '14px 2rem 0px 2rem',
-            backgroundColor:
-              currentTheme === 'dark'
-                ? 'rgba(20, 20, 20, .4)'
-                : 'rgba(191, 191, 191, 0.1)',
+            backgroundColor: currentThemePalette.cardSecondary,
+            maxWidth: '1430px !important',
           }}
         >
-          <Stack direction="row">
-            {isAuthenticated && !isMember && (
-              <Box>
-                <PlusIconButton
-                  title="Go to Input Page"
-                  ariaLabel="Go to Input Page"
-                  onClickCallback={() => navigateToCreate(communityId)}
-                  sxProp={{
-                    '& .MuiSvgIcon-root': {
-                      color: `${
-                        currentTheme === 'dark'
-                          ? WHITE
-                          : currentThemePalette.dark
-                      }!important`,
-                    },
-                    '&:hover .MuiSvgIcon-root': {
-                      color: `${
-                        currentTheme === 'dark' ? '#141414' : WHITE
-                      } !important`,
-                    },
-                    '&:hover': {
-                      backgroundColor:
-                        currentTheme === 'dark'
-                          ? WHITE
-                          : currentThemePalette.border,
-                    },
-                    padding: 0,
-                  }}
-                />
-              </Box>
-            )}
-            <Box sx={{ml: 'auto'}}>
-              <FormControlLabel
-                sx={{
-                  color: currentThemePalette.text,
-                }}
-                control={
-                  <Checkbox
-                    checked={isIncludeProbationaryFields}
-                    onChange={handleIsIncludeProbationaryFieldsCheckboxChange}
-                    sx={{
-                      color: currentThemePalette.main,
-                    }}
-                  />
-                }
-                label="Include probationary fields in export"
-              />
-              <ExportButton
-                isLoading={isLoading}
-                membersData={membersData}
-                rowData={exportData}
-                isError={isError}
-                error={error}
-                tableHeaders={exportHeaders}
+          <Stack
+            direction="row"
+            alignItems="center"
+            sx={{padding: '2rem 2rem 0px 2rem'}}
+          >
+            <Box sx={{width: {xs: '100%', lg: '135ch'}, flex: '0 1 auto'}}>
+              <FormTextField
+                sx={{width: '100%'}}
+                placeholder="Search"
+                label="Search"
+                autoComplete="off"
+                onChange={handleSearch}
               />
             </Box>
+            <Box>
+              <AppButton
+                variant={'contained'}
+                sx={{width: 150, height: 50, ml: {xs: 1, sm: 3}}}
+                startIcon={<SearchIcon />}
+                onClick={handleSearchClick}
+              >
+                Search
+              </AppButton>
+            </Box>
           </Stack>
-          <MembersTable
-            search={searchField}
-            isLoading={isLoading}
-            membersData={membersData}
-            rowData={rowData}
-            isError={isError}
-            error={error}
-            setFilteredRowData={setFilteredRowData}
-          />
-        </CardContent>
-      </Card>
-    </Box>
+          <CardContent
+            sx={{
+              marginTop: '24px',
+              padding: '14px 2rem 0px 2rem',
+              backgroundColor:
+                currentTheme === 'dark'
+                  ? 'rgba(20, 20, 20, .4)'
+                  : 'rgba(191, 191, 191, 0.1)',
+            }}
+          >
+            <Stack direction="row">
+              {isAuthenticated && !isMember && (
+                <Box>
+                  <PlusIconButton
+                    title="Go to Input Page"
+                    ariaLabel="Go to Input Page"
+                    onClickCallback={() => navigateToCreate(communityId)}
+                    sxProp={{
+                      '& .MuiSvgIcon-root': {
+                        color: `${
+                          currentTheme === 'dark'
+                            ? WHITE
+                            : currentThemePalette.dark
+                        }!important`,
+                      },
+                      '&:hover .MuiSvgIcon-root': {
+                        color: `${
+                          currentTheme === 'dark' ? '#141414' : WHITE
+                        } !important`,
+                      },
+                      '&:hover': {
+                        backgroundColor:
+                          currentTheme === 'dark'
+                            ? WHITE
+                            : currentThemePalette.border,
+                      },
+                      padding: 0,
+                    }}
+                  />
+                </Box>
+              )}
+              <Box sx={{ml: 'auto'}}>
+                <FormControlLabel
+                  sx={{
+                    color: currentThemePalette.text,
+                  }}
+                  control={
+                    <Checkbox
+                      checked={isIncludeProbationaryFields}
+                      onChange={handleIsIncludeProbationaryFieldsCheckboxChange}
+                      sx={{
+                        color: currentThemePalette.main,
+                      }}
+                    />
+                  }
+                  label="Include probationary fields in export"
+                />
+                <ExportButton
+                  isLoading={isLoading}
+                  membersData={membersData}
+                  rowData={exportData}
+                  isError={isError}
+                  error={error}
+                  tableHeaders={exportHeaders}
+                />
+              </Box>
+            </Stack>
+            <MembersTable
+              search={searchField}
+              isLoading={isLoading}
+              membersData={membersData}
+              rowData={rowData}
+              isError={isError}
+              error={error}
+              setFilteredRowData={setFilteredRowData}
+            />
+          </CardContent>
+        </Card>
+      </Box>
+    </>
   );
 };
 
