@@ -1,5 +1,6 @@
 const TABLE_HEADERS = [
   {value: 'full_name', name: 'Name'},
+  {value: 'csv_email', name: 'Email'},
   {value: 'assigned_to', name: 'Assigned To'},
   {
     value: 'hired_date_formatted',

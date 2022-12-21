@@ -358,10 +358,7 @@ const PersistentDrawerLeft = ({children}) => {
             </List>
           </Scrollbars>
         </Drawer>
-        <Main open={toggle}>
-          <DrawerHeader />
-          {children}
-        </Main>
+        <Main open={toggle}>{children}</Main>
       </Box>
       <ChangePasswordModal
         open={openChangePasswordModal}

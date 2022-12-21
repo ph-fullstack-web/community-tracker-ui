@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {LoginTemplate} from 'components';
 import {useNavigate} from 'react-router-dom';
 import {useAuthContext} from 'contexts/auth/AuthContext';
@@ -14,6 +14,11 @@ const Login = () => {
 
   const idRef = useRef();
   const passwordRef = useRef();
+
+  useEffect(() => {
+    dispatch({type: 'LOGOUT'});
+    // eslint-disable-next-line
+  }, []);
 
   const handleCredentials = e => {
     const {name, value} = e.target;
