@@ -33,11 +33,11 @@ const Navbar = () => {
   };
 
   return (
-    <Grid container spacing={3} mt={1} mb={4} mx={1}>
-      <Grid xs={12} md={7}>
+    <Grid container spacing={3} my={1} mx={1}>
+      <Grid item xs={12} md={7}>
         <Logo />
       </Grid>
-      <Grid xs={12} md={5} sx={{mt: {xs: 4}}}>
+      <Grid item xs={12} md={5} sx={{mt: {xs: 4}}}>
         <EmployeeSearch
           handleSearchChange={handleSearchChange}
           handleSearchClick={handleSearchClick}

@@ -46,8 +46,12 @@ const MembersTable = ({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const navigateToUpdate = (communityId, peopleId) => {
-    navigate(`/members/${communityId}/update/${peopleId}`);
+  const hiddenColumns = ['assigned_to'];
+
+  const navigateToUpdate = peopleId => {
+    if (isAuthenticated && !isMember) {
+      navigate(`/members/${membersData.community_id}/update/${peopleId}`);
+    }
   };
 
   const [filters, setFilters] = useState([]);
@@ -181,39 +185,45 @@ const MembersTable = ({
       >
         <TableHead>
           <TableRow>
-            {TABLE_HEADERS.map(header => (
-              <TableCell
-                key={header.value}
-                sx={{
-                  ...tableCellStyle,
-                  fontWeight: '550',
-                  borderBottom: 'none',
-                  backgroundColor: currentThemePalette.opacityBackground,
-                  fontSize: '13px',
-                }}
-              >
-                {header.name}
-                <Checkbox
-                  icon={<FilterAltOutlinedIcon />}
-                  checkedIcon={<FilterAltIcon />}
-                  size="small"
-                  sx={{
-                    color:
-                      currentTheme === 'dark'
-                        ? currentThemePalette.light
-                        : '#293A46',
-                    '&.Mui-checked': {
-                      color:
-                        currentTheme === 'dark'
-                          ? currentThemePalette.light
-                          : '#293A46',
-                    },
-                    margin: '-10px 0',
-                  }}
-                  onChange={event => handleCheckboxChange(event, header.value)}
-                />
-              </TableCell>
-            ))}
+            {TABLE_HEADERS.map(header => {
+              if (!hiddenColumns.includes(header.value)) {
+                return (
+                  <TableCell
+                    key={header.value}
+                    sx={{
+                      ...tableCellStyle,
+                      fontWeight: '550',
+                      borderBottom: 'none',
+                      backgroundColor: currentThemePalette.opacityBackground,
+                      fontSize: '13px',
+                    }}
+                  >
+                    {header.name}
+                    <Checkbox
+                      icon={<FilterAltOutlinedIcon />}
+                      checkedIcon={<FilterAltIcon />}
+                      size="small"
+                      sx={{
+                        color:
+                          currentTheme === 'dark'
+                            ? currentThemePalette.light
+                            : '#293A46',
+                        '&.Mui-checked': {
+                          color:
+                            currentTheme === 'dark'
+                              ? currentThemePalette.light
+                              : '#293A46',
+                        },
+                        margin: '-10px 0',
+                      }}
+                      onChange={event =>
+                        handleCheckboxChange(event, header.value)
+                      }
+                    />
+                  </TableCell>
+                );
+              }
+            })}
           </TableRow>
         </TableHead>
         {isLoading && (
@@ -293,7 +303,8 @@ const MembersTable = ({
                   key={row.people_id}
                   hover
                   sx={{
-                    cursor: 'pointer',
+                    cursor:
+                      isAuthenticated && !isMember ? 'pointer' : 'default',
                     backgroundColor:
                       currentTheme === 'dark'
                         ? currentThemePalette.medium
@@ -303,30 +314,49 @@ const MembersTable = ({
                         currentTheme === 'dark' ? '#293A46 !important' : null,
                     },
                   }}
-                  onClick={() => {
-                    if (isAuthenticated && !isMember)
-                      navigateToUpdate(membersData.community_id, row.people_id);
-                  }}
                 >
-                  <MembersTableBodyCell sxProp={tableCellStyle}>
+                  <MembersTableBodyCell
+                    sxProp={tableCellStyle}
+                    onClick={() => navigateToUpdate(row.people_id)}
+                  >
                     {row.full_name}
                   </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableCellStyle}>
-                    {row.assigned_to}
+                  <MembersTableBodyCell
+                    sxProp={tableCellStyle}
+                    onClick={() =>
+                      (window.location = `mailto:${row.csv_email}`)
+                    }
+                  >
+                    {row.csv_email}
                   </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableCellStyle}>
+                  <MembersTableBodyCell
+                    sxProp={tableCellStyle}
+                    onClick={() => navigateToUpdate(row.people_id)}
+                  >
                     {row.hired_date_formatted}
                   </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableCellStyle}>
+                  <MembersTableBodyCell
+                    sxProp={tableCellStyle}
+                    onClick={() => navigateToUpdate(row.people_id)}
+                  >
                     {row.work_state}
                   </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableCellStyle}>
+                  <MembersTableBodyCell
+                    sxProp={tableCellStyle}
+                    onClick={() => navigateToUpdate(row.people_id)}
+                  >
                     {row.job_level}
                   </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableCellStyle}>
+                  <MembersTableBodyCell
+                    sxProp={tableCellStyle}
+                    onClick={() => navigateToUpdate(row.people_id)}
+                  >
                     {row.project}
                   </MembersTableBodyCell>
-                  <MembersTableBodyCell sxProp={tableCellStyle}>
+                  <MembersTableBodyCell
+                    sxProp={tableCellStyle}
+                    onClick={() => navigateToUpdate(row.people_id)}
+                  >
                     {row.is_probationary ? 'Probationary' : 'Regular'}
                   </MembersTableBodyCell>
                 </TableRow>
