@@ -31,7 +31,7 @@ const ResourcesForm = ({onSubmitHandler, isProcessing, resourcePerson}) => {
     name: '',
     state: '',
     hiredDate: '',
-    jobLevel: '',
+    jobLevel: null,
     project: '',
     email: '',
     cognizantId: '',
@@ -302,10 +302,9 @@ const ResourcesForm = ({onSubmitHandler, isProcessing, resourcePerson}) => {
                   FormControlProps={{
                     fullWidth: true,
                   }}
-                  InputLabelChildren="Job Level"
+                  InputLabelChildren={resource.jobLevel ? '' : 'Job Level'}
                   SelectProps={{
                     name: 'jobLevel',
-                    required: true,
                     value: resource.jobLevel,
                     label: 'Job Level',
                     onChange: onChangeHandler,
