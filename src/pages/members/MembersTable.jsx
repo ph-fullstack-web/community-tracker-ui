@@ -323,9 +323,11 @@ const MembersTable = ({
                   </MembersTableBodyCell>
                   <MembersTableBodyCell
                     sxProp={tableCellStyle}
-                    onClick={() =>
-                      (window.location = `mailto:${row.csv_email}`)
-                    }
+                    onClick={() => {
+                      if (isAuthenticated && !isMember) {
+                        window.location = `mailto:${row.csv_email}`;
+                      }
+                    }}
                   >
                     {row.csv_email}
                   </MembersTableBodyCell>

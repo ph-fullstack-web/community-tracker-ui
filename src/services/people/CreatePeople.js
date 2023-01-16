@@ -8,7 +8,7 @@ const createPeople = async payload => {
     hired_date: payload.hiredDate,
     community_id: payload.community,
     workstate_id: parseInt(payload.state),
-    joblevel_id: parseInt(payload.jobLevel),
+    joblevel_id: payload.jobLevel ? parseInt(payload.jobLevel) : 10,
     project_id: payload.project ? parseInt(payload.project) : null,
     last_name: '',
     first_name: '',
